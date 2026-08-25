@@ -2,6 +2,7 @@ import Navbar from './components/Navbar';
 import Hero from './components/Hero';
 import SearchCard from './components/SearchCard';
 import TravelMoods from './components/TravelMoods';
+import FeaturedDestinations from './components/FeaturedDestinations';
 
 export default function App() {
   return (
@@ -20,6 +21,7 @@ export default function App() {
       </div>
 
       <TravelMoods />
+      <FeaturedDestinations />
 
       {/* Placeholder spacer — more sections coming */}
       <section
