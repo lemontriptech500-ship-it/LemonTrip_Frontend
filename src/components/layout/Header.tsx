@@ -17,7 +17,7 @@ export function Header() {
     <header className="sticky top-0 z-50 w-full flex flex-col shadow-sm" role="banner">
       <UtilityBar />
       
-      <div className="border-b border-[var(--color-border)] bg-[var(--color-surface)]/95 backdrop-blur-sm">
+      <div className="border-b border-[var(--color-border)] bg-white backdrop-blur-sm">
         <Container as="div" className="flex h-16 items-center justify-between">
           
           {/* Left: Brand Logo */}

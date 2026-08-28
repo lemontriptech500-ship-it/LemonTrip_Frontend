@@ -2,10 +2,6 @@ import React from 'react'
 import { cn } from '@/lib/utils'
 import type { BadgeVariant } from '@/types'
 
-// ============================================================
-// Badge — Semantic status indicator / label chip.
-// ============================================================
-
 interface BadgeProps {
   variant?: BadgeVariant
   className?: string
@@ -13,7 +9,7 @@ interface BadgeProps {
 }
 
 const variantStyles: Record<BadgeVariant, string> = {
-  default: 'bg-[var(--color-border)] text-[var(--color-text-secondary)]',
+  default: 'bg-[var(--color-surface-secondary)] text-[var(--color-text-secondary)] border border-[var(--color-border)]',
   success: 'bg-[var(--color-success-bg)] text-[var(--color-success)]',
   warning: 'bg-[var(--color-warning-bg)] text-[var(--color-warning)]',
   error: 'bg-[var(--color-error-bg)] text-[var(--color-error)]',
@@ -25,8 +21,8 @@ export function Badge({ variant = 'default', className, children }: BadgeProps) 
   return (
     <span
       className={cn(
-        'inline-flex items-center rounded-full px-2.5 py-0.5',
-        'text-xs font-medium leading-none',
+        'inline-flex items-center rounded-[var(--radius-sm)] px-2 py-0.5',
+        'text-xs font-semibold leading-none',
         variantStyles[variant],
         className,
       )}

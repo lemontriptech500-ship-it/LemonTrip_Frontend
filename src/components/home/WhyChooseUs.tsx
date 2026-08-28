@@ -43,7 +43,7 @@ const features = [
 
 export function WhyChooseUs() {
   return (
-    <section className="section-gap bg-[var(--color-surface-secondary)]">
+    <section className="section-gap bg-[var(--color-surface)]">
       <Container>
         <SectionHeading 
           title="Why Choose LemonTrip" 
@@ -51,18 +51,18 @@ export function WhyChooseUs() {
           align="center"
         />
 
-        <div className="mt-16 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 lg:gap-12">
+        <div className="mt-10 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {features.map((feature) => {
             const Icon = feature.icon
             return (
-              <div key={feature.id} className="flex gap-4">
+              <div key={feature.id} className="flex gap-4 p-5 rounded-[var(--radius-lg)] border border-[var(--color-border-light)] bg-white hover:shadow-sm transition-shadow">
                 <div className="shrink-0">
-                  <div className="w-12 h-12 rounded-xl bg-[var(--color-primary-soft)] text-[var(--color-primary-active)] flex items-center justify-center">
-                    <Icon size={24} />
+                  <div className="w-10 h-10 rounded-[var(--radius-md)] bg-[var(--color-primary-soft)] text-[var(--color-primary)] flex items-center justify-center">
+                    <Icon size={20} />
                   </div>
                 </div>
                 <div>
-                  <h3 className="text-h4 mb-2">{feature.title}</h3>
+                  <h3 className="text-h4 mb-1.5">{feature.title}</h3>
                   <p className="text-body-sm text-[var(--color-text-secondary)]">
                     {feature.description}
                   </p>

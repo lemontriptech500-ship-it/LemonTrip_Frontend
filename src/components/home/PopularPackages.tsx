@@ -6,7 +6,7 @@ import { Clock, CheckCircle2 } from 'lucide-react'
 
 export function PopularPackages() {
   return (
-    <section className="section-gap bg-[var(--color-surface-secondary)]">
+    <section className="section-gap bg-[var(--color-background)]">
       <Container>
         <SectionHeading 
           title="Popular Holiday Packages" 
@@ -14,39 +14,39 @@ export function PopularPackages() {
           action={{ label: 'Explore Packages', href: '/packages' }}
         />
 
-        <div className="mt-10 grid grid-cols-1 lg:grid-cols-3 gap-8">
+        <div className="mt-8 grid grid-cols-1 lg:grid-cols-3 gap-6">
           {popularPackages.map((pkg) => (
-            <Card key={pkg.id} hover className="overflow-hidden border-none flex flex-col h-full bg-white">
-              <div className={`relative h-52 w-full ${pkg.imageFallbackColor}`}>
+            <Card key={pkg.id} hover className="overflow-hidden flex flex-col h-full">
+              <div className={`relative h-48 w-full ${pkg.imageFallbackColor}`}>
                 {pkg.imageUrl && <img src={pkg.imageUrl} alt={`${pkg.destination} travel package`} className="h-full w-full object-cover" />}
-                <div className="absolute inset-0 bg-gradient-to-t from-black/45 to-transparent" />
-                <div className="absolute top-4 right-4 bg-white/90 backdrop-blur-sm px-3 py-1 rounded-full text-sm font-semibold shadow-sm">
+                <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent" />
+                <div className="absolute top-3 right-3 bg-white/95 backdrop-blur-sm px-2.5 py-1 rounded-[var(--radius-sm)] text-xs font-bold shadow-sm">
                   {pkg.startingPrice}
                 </div>
               </div>
               
-              <div className="p-6 flex flex-col flex-grow">
-                <div className="flex items-center gap-2 text-[var(--color-text-secondary)] mb-3">
-                  <Clock size={16} />
-                  <span className="text-sm font-medium">{pkg.duration}</span>
+              <div className="p-5 flex flex-col flex-grow">
+                <div className="flex items-center gap-2 text-[var(--color-text-secondary)] mb-2">
+                  <Clock size={14} />
+                  <span className="text-xs font-medium">{pkg.duration}</span>
                 </div>
                 
-                <h3 className="text-h3 mb-3">{pkg.destination}</h3>
-                <p className="text-body text-[var(--color-text-secondary)] mb-6 flex-grow">
+                <h3 className="text-h3 mb-2">{pkg.destination}</h3>
+                <p className="text-body-sm text-[var(--color-text-secondary)] mb-4 flex-grow">
                   {pkg.description}
                 </p>
                 
-                <div className="space-y-2 mb-6">
-                  {pkg.highlights.map((highlight, i) => (
-                    <div key={i} className="flex items-center gap-2 text-sm text-[var(--color-text-primary)]">
-                      <CheckCircle2 size={16} className="text-[var(--color-success)]" />
+                <div className="space-y-1.5 mb-5">
+                  {pkg.highlights.slice(0, 3).map((highlight, i) => (
+                    <div key={i} className="flex items-center gap-2 text-xs text-[var(--color-text-primary)]">
+                      <CheckCircle2 size={14} className="text-[var(--color-success)] shrink-0" />
                       <span>{highlight}</span>
                     </div>
                   ))}
                 </div>
                 
                 <Button variant="outline" fullWidth asChild>
-                  <Link href="/packages">View Details</Link>
+                  <Link href={`/packages/${pkg.id}`}>View Details</Link>
                 </Button>
               </div>
             </Card>

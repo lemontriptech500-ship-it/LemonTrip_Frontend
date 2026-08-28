@@ -26,8 +26,9 @@ export default function LoginPage() {
 
   return (
     <AuthShell mode="signin">
-      <form onSubmit={handleSubmit} noValidate className="space-y-5">
+      <form onSubmit={handleSubmit} noValidate className="space-y-4">
         {error && <Alert variant="info" title="Demo account status">{error}</Alert>}
+        
         <Input
           label="Email address"
           type="email"
@@ -35,9 +36,10 @@ export default function LoginPage() {
           placeholder="you@example.com"
           value={email}
           onChange={(event) => { setEmail(event.target.value); setError('') }}
-          leadingIcon={<Mail size={18} />}
+          leadingIcon={<Mail size={16} />}
           required
         />
+        
         <Input
           label="Password"
           type={showPassword ? 'text' : 'password'}
@@ -45,15 +47,29 @@ export default function LoginPage() {
           placeholder="Enter your password"
           value={password}
           onChange={(event) => { setPassword(event.target.value); setError('') }}
-          leadingIcon={<LockKeyhole size={18} />}
-          trailingIcon={<button type="button" onClick={() => setShowPassword((visible) => !visible)} aria-label={showPassword ? 'Hide password' : 'Show password'} className="text-[var(--color-text-secondary)] hover:text-[var(--color-accent)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-primary)]">{showPassword ? <EyeOff size={18} /> : <Eye size={18} />}</button>}
+          leadingIcon={<LockKeyhole size={16} />}
+          trailingIcon={
+            <button 
+              type="button" 
+              onClick={() => setShowPassword((visible) => !visible)} 
+              aria-label={showPassword ? 'Hide password' : 'Show password'} 
+              className="text-[var(--color-text-muted)] hover:text-[var(--color-primary)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-primary)]"
+            >
+              {showPassword ? <EyeOff size={16} /> : <Eye size={16} />}
+            </button>
+          }
           required
         />
+        
         <div className="flex justify-end">
-          <button type="button" className="text-sm font-semibold text-[var(--color-accent)] hover:text-[var(--color-accent-hover)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-primary)]">Forgot password?</button>
+          <button type="button" className="text-xs font-semibold text-[var(--color-primary)] hover:text-[var(--color-primary-hover)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-primary)]">
+            Forgot password?
+          </button>
         </div>
+        
         <Button type="submit" fullWidth size="lg">Sign in</Button>
       </form>
+      
       <AuthSwitch mode="signin" />
     </AuthShell>
   )

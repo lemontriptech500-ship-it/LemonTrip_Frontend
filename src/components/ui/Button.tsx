@@ -3,11 +3,6 @@ import { Loader2 } from 'lucide-react'
 import { cn } from '@/lib/utils'
 import type { ButtonVariant, ButtonSize } from '@/types'
 
-// ============================================================
-// Button — Foundational reusable button component.
-// Supports variants, sizes, loading/disabled state, and icons.
-// ============================================================
-
 interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   variant?: ButtonVariant
   size?: ButtonSize
@@ -20,21 +15,21 @@ interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
 
 const variantStyles: Record<ButtonVariant, string> = {
   primary:
-    'bg-[var(--color-primary)] text-[var(--color-text-primary)] hover:bg-[var(--color-primary-hover)] active:bg-[var(--color-primary-active)] focus-visible:ring-[var(--color-primary)]',
+    'bg-[var(--color-primary)] text-white hover:bg-[var(--color-primary-hover)] active:bg-[var(--color-primary-active)] focus-visible:ring-[var(--color-primary)] shadow-sm',
   secondary:
-    'bg-[var(--color-secondary)] text-[var(--color-text-primary)] hover:bg-[var(--color-secondary-hover)] hover:text-white focus-visible:ring-[var(--color-secondary-hover)]',
+    'bg-[var(--color-secondary)] text-white hover:bg-[var(--color-secondary-hover)] active:bg-[var(--color-secondary-hover)] focus-visible:ring-[var(--color-secondary)] shadow-sm',
   outline:
-    'border border-[var(--color-border)] bg-transparent text-[var(--color-text-primary)] hover:bg-[var(--color-surface-secondary)] focus-visible:ring-[var(--color-primary)]',
+    'border border-[var(--color-border-strong)] bg-white text-[var(--color-text-primary)] hover:bg-[var(--color-surface-secondary)] hover:border-[var(--color-text-muted)] focus-visible:ring-[var(--color-primary)]',
   ghost:
-    'bg-transparent text-[var(--color-text-secondary)] hover:bg-[var(--color-border-light)] hover:text-[var(--color-text-primary)] focus-visible:ring-[var(--color-primary)]',
+    'bg-transparent text-[var(--color-text-secondary)] hover:bg-[var(--color-surface-secondary)] hover:text-[var(--color-text-primary)] focus-visible:ring-[var(--color-primary)]',
   danger:
-    'bg-[var(--color-error)] text-white hover:bg-[var(--color-error)]/90 active:bg-[var(--color-error)]/80 focus-visible:ring-[var(--color-error)]',
+    'bg-[var(--color-error)] text-white hover:bg-[var(--color-error)]/90 active:bg-[var(--color-error)]/80 focus-visible:ring-[var(--color-error)] shadow-sm',
 }
 
 const sizeStyles: Record<ButtonSize, string> = {
-  sm: 'h-8 px-3 text-sm gap-1.5 rounded-[var(--radius-md)]',
-  md: 'h-10 px-5 text-sm gap-2   rounded-[var(--radius-md)]',
-  lg: 'h-12 px-7 text-base gap-2.5 rounded-[var(--radius-lg)]',
+  sm: 'h-8 px-3 text-xs gap-1.5 rounded-[var(--radius-md)]',
+  md: 'h-10 px-4 text-sm gap-2 rounded-[var(--radius-md)]',
+  lg: 'h-11 px-6 text-sm gap-2 rounded-[var(--radius-lg)]',
 }
 
 export function Button({
@@ -53,16 +48,12 @@ export function Button({
   const isDisabled = disabled || loading
 
   const compClassName = cn(
-    // Base
     'inline-flex items-center justify-center font-semibold',
     'transition-all duration-150',
     'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2',
-    // Disabled
     'disabled:pointer-events-none disabled:opacity-50',
-    // Variant & size
     variantStyles[variant],
     sizeStyles[size],
-    // Full width
     fullWidth && 'w-full',
     className,
   )
@@ -82,7 +73,7 @@ export function Button({
           </span>
         )
       )}
-      {innerChildren && <span>{innerChildren}</span>}
+      {innerChildren && <span className="truncate">{innerChildren}</span>}
       {!loading && iconPosition === 'right' && icon && (
         <span className="shrink-0" aria-hidden>
           {icon}

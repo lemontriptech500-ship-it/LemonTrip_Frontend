@@ -3,58 +3,60 @@
 @tailwind utilities;
 
 /* ============================================================
-   LEMONTRIP DESIGN TOKENS
+   LEMONTRIP DESIGN TOKENS — B2B Professional
    Single source of truth for all visual decisions.
    Update here to retheme the entire application.
    ============================================================ */
 
 :root {
-  /* ─── Official LemonTrip brand palette ─── */
-  --color-primary:        #FF5A5F;   /* Coral Red: high-priority actions */
-  --color-primary-hover:  #E5484D;   /* Accessible darker coral hover */
-  --color-primary-active: #C9363C;   /* Pressed coral */
-  --color-primary-dark:   #C9363C;   /* Legacy alias */
-  --color-primary-soft:   #FFF1F2;   /* Soft coral tint */
+  /* ─── Brand Primary — Deep Navy (trust, authority) ─── */
+  --color-primary:        #1B365D;   /* Deep Navy: primary actions */
+  --color-primary-hover:  #152A4A;   /* Darker navy hover */
+  --color-primary-active: #0F1F38;   /* Pressed navy */
+  --color-primary-dark:   #0F1F38;   /* Legacy alias */
+  --color-primary-soft:   #E8EEF5;   /* Soft navy tint for backgrounds */
 
-  --color-secondary:       #38BDF8;  /* Bright Sky Blue */
-  --color-secondary-hover: #0284C7;  /* Ocean Blue interaction state */
-  --color-secondary-soft:  #E0F2FE;  /* Soft sky tint */
+  /* ─── Brand Secondary — Teal (growth, action) ─── */
+  --color-secondary:       #0D9394;  /* Teal: secondary actions */
+  --color-secondary-hover: #0A7A7B;  /* Darker teal hover */
+  --color-secondary-soft:  #E0F4F4;  /* Soft teal tint */
 
-  --color-accent:          #0284C7;  /* Ocean Blue */
-  --color-accent-hover:    #0369A1;
-  --color-accent-soft:     #E0F2FE;
+  /* ─── Brand Accent — Warm Gold (highlights, CTAs) ─── */
+  --color-accent:          #D4A843;  /* Warm gold accent */
+  --color-accent-hover:    #B8922E;  /* Darker gold hover */
+  --color-accent-soft:     #FBF6EB;  /* Soft gold tint */
 
   /* ─── Neutral Surfaces ─── */
-  --color-background:        #FFFFFF; /* Main application background */
+  --color-background:        #FAFBFC; /* Off-white app background */
   --color-surface:           #FFFFFF; /* Card / panel surface */
-  --color-background-soft:   #F0F9FF; /* Ice Blue section background */
-  --color-surface-secondary: #F0F9FF; /* Ice Blue secondary surface */
+  --color-background-soft:   #F0F4F8; /* Soft gray section background */
+  --color-surface-secondary: #F0F4F8; /* Secondary surface */
 
   /* ─── Text ─── */
-  --color-text-primary:   #0F172A;   /* Main body text */
-  --color-text-secondary: #64748B;   /* Slate Gray supporting text */
-  --color-text-muted:     #64748B;   /* Slate Gray metadata */
+  --color-text-primary:   #1A2332;   /* Deep charcoal for headings */
+  --color-text-secondary: #5A6B7F;   /* Slate blue for body text */
+  --color-text-muted:     #8899AA;   /* Muted blue-gray for metadata */
 
   /* ─── Borders ─── */
-  --color-border:       #BAE6FD;     /* Soft sky border */
-  --color-border-light: #E0F2FE;     /* Very subtle sky separator */
-  --color-border-strong: #7DD3FC;    /* Focused and emphasized border */
+  --color-border:       #D9E2EC;     /* Soft blue-gray border */
+  --color-border-light: #EDF2F7;     /* Very subtle separator */
+  --color-border-strong: #B8C8D8;    /* Emphasized border */
 
   /* ─── Semantic: Success ─── */
-  --color-success:    #10B981;
+  --color-success:    #057A55;
   --color-success-bg: #ECFDF5;
 
   /* ─── Semantic: Warning ─── */
-  --color-warning:    #F59E0B;
+  --color-warning:    #B45309;
   --color-warning-bg: #FFFBEB;
 
   /* ─── Semantic: Error ─── */
-  --color-error:    #EF4444;
+  --color-error:    #DC2626;
   --color-error-bg: #FEF2F2;
 
   /* ─── Semantic: Info ─── */
-  --color-info:    #0284C7;
-  --color-info-bg: #F0F9FF;
+  --color-info:    #1B365D;
+  --color-info-bg: #E8EEF5;
 
   /* ─── Layout ─── */
   --max-content-width: 1280px;
@@ -63,19 +65,19 @@
 
   /* ─── Border Radius Scale ─── */
   --radius-sm:   0.25rem;   /* 4px  — tags, small chips */
-  --radius-md:   0.5rem;    /* 8px  — inputs, selects */
-  --radius-lg:   0.75rem;   /* 12px — cards */
-  --radius-xl:   1rem;      /* 16px — panels, modals */
-  --radius-2xl:  1.5rem;    /* 24px — large feature cards */
+  --radius-md:   0.375rem;  /* 6px  — inputs, selects */
+  --radius-lg:   0.5rem;    /* 8px  — cards */
+  --radius-xl:   0.75rem;   /* 12px — panels, modals */
+  --radius-2xl:  1rem;      /* 16px — large feature cards */
   --radius-pill: 9999px;    /* fully rounded — badges, chips */
 
   /* ─── Shadow / Elevation Scale ─── */
   --shadow-none: none;
-  --shadow-xs:   0 1px 2px 0 rgb(0 0 0 / 0.05);
-  --shadow-sm:   0 1px 3px 0 rgb(0 0 0 / 0.08), 0 1px 2px -1px rgb(0 0 0 / 0.06);
-  --shadow-md:   0 4px 6px -1px rgb(0 0 0 / 0.07), 0 2px 4px -2px rgb(0 0 0 / 0.05);
-  --shadow-lg:   0 10px 15px -3px rgb(0 0 0 / 0.07), 0 4px 6px -4px rgb(0 0 0 / 0.05);
-  --shadow-xl:   0 20px 25px -5px rgb(0 0 0 / 0.07), 0 8px 10px -6px rgb(0 0 0 / 0.04);
+  --shadow-xs:   0 1px 2px 0 rgb(26 35 50 / 0.04);
+  --shadow-sm:   0 1px 3px 0 rgb(26 35 50 / 0.06), 0 1px 2px -1px rgb(26 35 50 / 0.04);
+  --shadow-md:   0 4px 8px -2px rgb(26 35 50 / 0.08), 0 2px 4px -2px rgb(26 35 50 / 0.04);
+  --shadow-lg:   0 10px 20px -5px rgb(26 35 50 / 0.08), 0 4px 8px -4px rgb(26 35 50 / 0.04);
+  --shadow-xl:   0 20px 40px -10px rgb(26 35 50 / 0.10), 0 8px 16px -8px rgb(26 35 50 / 0.06);
 }
 
 /* ── Responsive token overrides ── */
@@ -124,8 +126,8 @@
     background-color: var(--color-background);
     color: var(--color-text-primary);
     font-family: var(--font-jakarta), system-ui, sans-serif;
-    font-size: 1rem;
-    line-height: 1.6;
+    font-size: 0.9375rem; /* 15px base for B2B readability */
+    line-height: 1.65;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     overflow-x: clip;
@@ -161,55 +163,75 @@
 }
 
 /* ============================================================
-   TYPOGRAPHY SYSTEM
+   TYPOGRAPHY SYSTEM — B2B Professional
    Use these utility classes for consistent text hierarchy.
    Never scatter arbitrary font-size/weight values in components.
    ============================================================ */
 
 @layer components {
-  /* Display — hero headings, massive callouts */
+  /* Display — hero headings */
   .text-display {
-    @apply text-4xl font-extrabold leading-[1.08] tracking-tight;
+    @apply text-4xl font-bold leading-[1.10] tracking-tight;
   }
   @media (min-width: 768px) {
     .text-display {
-      font-size: 3.5rem; /* 56px */
+      font-size: 3.25rem; /* 52px */
     }
   }
 
   /* H1 — primary page heading */
   .text-h1 {
-    @apply text-3xl font-bold leading-[1.12] tracking-tight;
+    @apply text-2xl font-bold leading-[1.15] tracking-tight;
   }
   @media (min-width: 768px) {
     .text-h1 {
-      font-size: 2.75rem; /* 44px */
+      font-size: 2.25rem; /* 36px */
     }
   }
 
   /* H2 — section heading */
   .text-h2 {
-    @apply text-3xl font-bold leading-[1.18] tracking-tight;
+    @apply text-xl font-semibold leading-[1.20] tracking-tight;
+  }
+  @media (min-width: 768px) {
+    .text-h2 {
+      font-size: 1.625rem; /* 26px */
+    }
   }
 
   /* H3 — sub-section / card heading */
   .text-h3 {
-    @apply text-2xl font-bold leading-[1.22];
+    @apply text-lg font-semibold leading-[1.25];
+  }
+  @media (min-width: 768px) {
+    .text-h3 {
+      font-size: 1.25rem; /* 20px */
+    }
   }
 
   /* H4 — smaller section sub-heading */
   .text-h4 {
-    @apply text-xl font-semibold leading-snug;
+    @apply text-base font-semibold leading-snug;
   }
 
   /* Body large — emphasized body text, intros */
   .text-body-lg {
-    @apply text-lg font-normal leading-relaxed;
+    @apply text-base font-normal leading-relaxed;
+  }
+  @media (min-width: 768px) {
+    .text-body-lg {
+      font-size: 1.0625rem; /* 17px */
+    }
   }
 
   /* Body regular — default body */
   .text-body {
-    @apply text-base font-normal leading-relaxed;
+    @apply text-sm font-normal leading-relaxed;
+  }
+  @media (min-width: 768px) {
+    .text-body {
+      font-size: 0.9375rem; /* 15px */
+    }
   }
 
   /* Body small — secondary details, meta */
@@ -219,7 +241,7 @@
 
   /* Label — form labels, tight UI text */
   .text-label {
-    @apply text-sm font-medium leading-tight;
+    @apply text-xs font-semibold uppercase tracking-wider;
   }
 
   /* Caption — timestamps, fine print, metadata */
@@ -228,8 +250,8 @@
   }
 
   /* ============================================================
-     LAYOUT UTILITIES
-     ============================================================ */
+      LAYOUT UTILITIES
+      ============================================================ */
 
   /* Max-width container with responsive horizontal padding */
   .container-lemon {
@@ -245,9 +267,8 @@
   }
 
   /* ============================================================
-     SKELETON SHIMMER ANIMATION
-     Used by the Skeleton component.
-     ============================================================ */
+      SKELETON SHIMMER ANIMATION
+      ============================================================ */
 
   @keyframes skeleton-shimmer {
     0%   { background-position: -400px 0; }
@@ -266,14 +287,14 @@
   }
 
   /* ============================================================
-     SWITCH COMPONENT STYLES
-     ============================================================ */
+      SWITCH COMPONENT STYLES
+      ============================================================ */
 
   .switch-track {
     display: inline-flex;
     align-items: center;
-    width: 2.75rem;  /* 44px */
-    height: 1.5rem;  /* 24px */
+    width: 2.5rem;  /* 40px */
+    height: 1.375rem; /* 22px */
     border-radius: var(--radius-pill);
     padding: 2px;
     transition: background-color 150ms ease;
@@ -295,8 +316,8 @@
   }
 
   .switch-thumb {
-    width: 1.25rem;   /* 20px */
-    height: 1.25rem;
+    width: 1.125rem;   /* 18px */
+    height: 1.125rem;
     border-radius: 50%;
     background-color: #ffffff;
     box-shadow: var(--shadow-sm);
@@ -305,7 +326,7 @@
   }
 
   .switch-thumb[data-checked="true"] {
-    transform: translateX(1.25rem); /* 20px */
+    transform: translateX(1.125rem);
   }
 
   .switch-thumb[data-checked="false"] {

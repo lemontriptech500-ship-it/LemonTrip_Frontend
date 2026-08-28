@@ -13,27 +13,27 @@ export function BlogPreview() {
           action={{ label: 'View All Articles', href: '/blog' }}
         />
 
-        <div className="mt-10 grid grid-cols-1 md:grid-cols-3 gap-8">
+        <div className="mt-8 grid grid-cols-1 md:grid-cols-3 gap-5">
           {blogPosts.map((post) => (
-            <Card key={post.id} hover className="overflow-hidden border-none flex flex-col h-full bg-white">
-              <div className={`h-48 w-full ${post.imageFallbackColor}`}>
+            <Card key={post.id} hover className="overflow-hidden flex flex-col h-full">
+              <div className={`h-44 w-full ${post.imageFallbackColor}`}>
                 {post.imageUrl && <img src={post.imageUrl} alt="" className="h-full w-full object-cover" />}
               </div>
               
-              <div className="p-6 flex flex-col flex-grow">
-                <div className="flex items-center justify-between mb-3 text-caption text-[var(--color-text-muted)]">
-                  <span className="font-semibold uppercase tracking-wider text-[var(--color-primary-active)]">{post.category}</span>
+              <div className="p-5 flex flex-col flex-grow">
+                <div className="flex items-center justify-between mb-2.5 text-caption text-[var(--color-text-muted)]">
+                  <span className="font-semibold text-[var(--color-primary)]">{post.category}</span>
                   <span>{post.date}</span>
                 </div>
                 
-                <h3 className="text-h4 mb-3 leading-snug line-clamp-2">{post.title}</h3>
-                <p className="text-body-sm text-[var(--color-text-secondary)] mb-4 flex-grow line-clamp-3">
+                <h3 className="text-h4 mb-2 leading-snug line-clamp-2">{post.title}</h3>
+                <p className="text-body-sm text-[var(--color-text-secondary)] mb-3 flex-grow line-clamp-3">
                   {post.excerpt}
                 </p>
                 
                 <Link 
-                  href="/blog" 
-                  className="inline-flex font-medium text-[var(--color-primary-active)] hover:text-[var(--color-primary)] transition-colors mt-auto"
+                  href={`/blog/${post.id}`} 
+                  className="inline-flex font-semibold text-sm text-[var(--color-primary)] hover:text-[var(--color-primary-hover)] transition-colors mt-auto"
                 >
                   Read More &rarr;
                 </Link>
