@@ -26,19 +26,17 @@ export default function SignupPage() {
 
   return (
     <AuthShell mode="signup">
-      <form onSubmit={handleSubmit} noValidate className="space-y-4">
+      <form onSubmit={handleSubmit} noValidate className="space-y-3">
         {error && <Alert variant="info" title="Demo account status">{error}</Alert>}
-        
         <Input
           label="Full name"
           autoComplete="name"
           placeholder="Your full name"
           value={form.name}
           onChange={(event) => update('name', event.target.value)}
-          leadingIcon={<UserRound size={16} />}
+          leadingIcon={<UserRound size={18} />}
           required
         />
-        
         <Input
           label="Email address"
           type="email"
@@ -46,10 +44,9 @@ export default function SignupPage() {
           placeholder="you@example.com"
           value={form.email}
           onChange={(event) => update('email', event.target.value)}
-          leadingIcon={<Mail size={16} />}
+          leadingIcon={<Mail size={18} />}
           required
         />
-        
         <Input
           label="Create password"
           type={showPassword ? 'text' : 'password'}
@@ -57,20 +54,10 @@ export default function SignupPage() {
           placeholder="At least 6 characters"
           value={form.password}
           onChange={(event) => update('password', event.target.value)}
-          leadingIcon={<LockKeyhole size={16} />}
-          trailingIcon={
-            <button 
-              type="button" 
-              onClick={() => setShowPassword((visible) => !visible)} 
-              aria-label={showPassword ? 'Hide password' : 'Show password'} 
-              className="text-[var(--color-text-muted)] hover:text-[var(--color-primary)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-primary)]"
-            >
-              {showPassword ? <EyeOff size={16} /> : <Eye size={16} />}
-            </button>
-          }
+          leadingIcon={<LockKeyhole size={18} />}
+          trailingIcon={<button type="button" onClick={() => setShowPassword((visible) => !visible)} aria-label={showPassword ? 'Hide password' : 'Show password'} className="text-[var(--color-text-secondary)] hover:text-[var(--color-accent)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-primary)]">{showPassword ? <EyeOff size={18} /> : <Eye size={18} />}</button>}
           required
         />
-        
         <Input
           label="Confirm password"
           type={showPassword ? 'text' : 'password'}
@@ -78,17 +65,11 @@ export default function SignupPage() {
           placeholder="Repeat your password"
           value={form.confirmPassword}
           onChange={(event) => update('confirmPassword', event.target.value)}
-          leadingIcon={<LockKeyhole size={16} />}
           required
         />
-        
-        <p className="text-xs leading-relaxed text-[var(--color-text-muted)]">
-          By creating an account, you agree to keep your travel information accurate.
-        </p>
-        
+        <p className="text-xs leading-relaxed text-[var(--color-text-secondary)]">By creating an account, you agree to keep your travel information accurate.</p>
         <Button type="submit" fullWidth size="lg">Create account</Button>
       </form>
-      
       <AuthSwitch mode="signup" />
     </AuthShell>
   )
