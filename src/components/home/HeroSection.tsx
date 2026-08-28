@@ -21,7 +21,7 @@ export function HeroSection() {
             Your next great escape starts here.
           </h1>
           <p className="text-body-lg text-white/85">
-            Book flights, hotels, trains, buses, and holiday packages all in one place. Need a visa? We've got you covered with expert assistance.
+            Book flights, hotels, trains, buses, and holiday packages all in one place. Need a visa? We&apos;ve got you covered with expert assistance.
           </p>
         </div>
 

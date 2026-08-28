@@ -24,7 +24,7 @@ export function VisaHighlight() {
             </h2>
             
             <p className="text-body-lg text-[var(--color-text-secondary)] mb-8 max-w-xl">
-              Don't let visa complexities delay your travel plans. Explore requirements, check necessary documents, and track your application progress all in one place.
+              Don&apos;t let visa complexities delay your travel plans. Explore requirements, check necessary documents, and track your application progress all in one place.
             </p>
             
             <div className="grid sm:grid-cols-2 gap-4 mb-8">
