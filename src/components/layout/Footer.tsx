@@ -1,53 +1,64 @@
 import React from 'react'
 import Link from 'next/link'
-import { Facebook, Twitter, Instagram, Linkedin } from 'lucide-react'
+import { Facebook, Instagram, Linkedin, Mail, MessageCircle, ArrowUpRight } from 'lucide-react'
 import { Container } from '@/components/ui'
 import { SITE_NAME, SITE_TAGLINE, FOOTER_NAV } from '@/constants'
-
-// ============================================================
-// Footer — Main application footer.
-// ============================================================
 
 export function Footer() {
   const currentYear = new Date().getFullYear()
 
   return (
-    <footer
-      className="border-t border-[var(--color-border)] bg-[var(--color-text-primary)] text-white"
-      role="contentinfo"
-    >
-      <Container className="py-16">
-        {/* Main Footer Content */}
-        <div className="grid gap-12 sm:grid-cols-2 lg:grid-cols-12">
-          
-          {/* Brand & Tagline - spans 4 columns on large screens */}
-          <div className="flex flex-col gap-6 lg:col-span-4">
+    <footer className="border-t border-[var(--color-border)] bg-[var(--color-text-primary)] text-white" role="contentinfo">
+      <Container className="py-14">
+        <div className="grid gap-10 sm:grid-cols-2 lg:grid-cols-12">
+          <div className="flex flex-col gap-5 lg:col-span-4">
             <Link
               href="/"
-              className="inline-flex items-center gap-1.5 text-2xl font-extrabold tracking-tight text-white"
+              className="inline-flex items-center gap-1.5 text-2xl font-bold tracking-tight text-white hover:opacity-90 transition-opacity"
               aria-label={`${SITE_NAME} — Go to homepage`}
             >
               <span>Lemon</span>
-              <span className="text-[var(--color-primary)]">Trip</span>
+              <span className="text-[var(--color-secondary)]">Trip</span>
             </Link>
-            <p className="text-body text-white/80 max-w-sm">
+            <p className="text-sm text-white/90 max-w-sm leading-relaxed">
               {SITE_TAGLINE} Book flights, hotels, and holiday packages with ease.
             </p>
-            
-            {/* Social Placeholders */}
-            <div className="flex items-center gap-4 mt-2">
-              <SocialLink href="#" ariaLabel="Facebook" icon={<Facebook size={20} />} />
-              <SocialLink href="#" ariaLabel="Twitter" icon={<Twitter size={20} />} />
-              <SocialLink href="#" ariaLabel="Instagram" icon={<Instagram size={20} />} />
-              <SocialLink href="#" ariaLabel="LinkedIn" icon={<Linkedin size={20} />} />
+
+            <div className="flex flex-col gap-3 mt-2">
+              <h4 className="text-xs font-semibold uppercase tracking-widest text-[var(--color-secondary)]">Connect With Us</h4>
+              <div className="flex flex-col gap-2.5">
+                <SocialLink
+                  href="https://www.instagram.com/lemontripofficial?igsi=NWpxNjUwaWo4ODZp"
+                  ariaLabel="Follow us on Instagram"
+                  icon={<Instagram size={18} />}
+                  label="@lemontripofficial"
+                />
+                <SocialLink
+                  href="https://www.facebook.com/61590521547706"
+                  ariaLabel="Follow us on Facebook"
+                  icon={<Facebook size={18} />}
+                  label="LemonTrip"
+                />
+                <SocialLink
+                  href="https://wa.me/919876543210"
+                  ariaLabel="Join our WhatsApp Community"
+                  icon={<MessageCircle size={18} />}
+                  label="WhatsApp Community"
+                />
+                <SocialLink
+                  href="mailto:lemontripindia@gmail.com"
+                  ariaLabel="Email us"
+                  icon={<Mail size={18} />}
+                  label="lemontripindia@gmail.com"
+                />
+              </div>
             </div>
           </div>
 
-          {/* Navigation Links - spreads across remaining columns */}
-          <div className="grid grid-cols-2 gap-8 sm:grid-cols-3 lg:col-span-8 lg:gap-12">
+          <div className="grid grid-cols-2 gap-8 sm:grid-cols-3 lg:col-span-8 lg:gap-10">
             {FOOTER_NAV.map((group) => (
               <div key={group.heading} className="flex flex-col gap-4">
-                <h3 className="text-body-sm font-semibold uppercase tracking-widest text-[var(--color-secondary)]">
+                <h3 className="text-sm font-semibold uppercase tracking-widest text-[var(--color-secondary)]">
                   {group.heading}
                 </h3>
                 <ul className="flex flex-col gap-3">
@@ -55,27 +66,54 @@ export function Footer() {
                     <li key={link.href}>
                       <Link
                         href={link.href}
-                        className="text-body-sm text-white/80 hover:text-white hover:underline transition-all"
+                        className="group inline-flex items-center gap-1 text-sm text-white/85 hover:text-white transition-colors"
                       >
-                        {link.label}
+                        <span className="border-b border-transparent group-hover:border-white transition-all">
+                          {link.label}
+                        </span>
+                        <ArrowUpRight size={12} className="opacity-0 group-hover:opacity-100 transition-opacity" />
                       </Link>
                     </li>
                   ))}
                 </ul>
               </div>
             ))}
+
+            <div className="flex flex-col gap-4">
+              <h3 className="text-sm font-semibold uppercase tracking-widest text-[var(--color-secondary)]">Contact</h3>
+              <ul className="flex flex-col gap-3">
+                <li>
+                  <a
+                    href="mailto:lemontripindia@gmail.com"
+                    className="group inline-flex items-center gap-1 text-sm text-white/85 hover:text-white transition-colors"
+                  >
+                    <span className="border-b border-transparent group-hover:border-white transition-all">
+                      lemontripindia@gmail.com
+                    </span>
+                  </a>
+                </li>
+                <li>
+                  <a
+                    href="https://wa.me/919876543210"
+                    className="group inline-flex items-center gap-1 text-sm text-white/85 hover:text-white transition-colors"
+                  >
+                    <span className="border-b border-transparent group-hover:border-white transition-all">
+                      WhatsApp Us
+                    </span>
+                  </a>
+                </li>
+              </ul>
+            </div>
           </div>
-          
         </div>
 
-        {/* Bottom Bar */}
-        <div className="mt-16 border-t border-white/10 pt-8 flex flex-col md:flex-row items-center justify-between gap-4">
-          <p className="text-caption text-white/60 text-center md:text-left">
+        <div className="mt-12 border-t border-white/15 pt-8 flex flex-col md:flex-row items-center justify-between gap-4">
+          <p className="text-xs text-white/70 text-center md:text-left">
             © {currentYear} {SITE_NAME}. All rights reserved.
           </p>
-          <div className="flex gap-6 text-caption text-white/60">
-            <Link href="/privacy" className="hover:text-white transition-colors">Privacy Policy</Link>
-            <Link href="/terms" className="hover:text-white transition-colors">Terms of Service</Link>
+          <div className="flex gap-6 text-xs text-white/70">
+            <Link href="/privacy" className="hover:text-white hover:underline transition-colors">Privacy Policy</Link>
+            <Link href="/terms" className="hover:text-white hover:underline transition-colors">Terms of Service</Link>
           </div>
         </div>
       </Container>
@@ -83,16 +121,19 @@ export function Footer() {
   )
 }
 
-function SocialLink({ href, ariaLabel, icon }: { href: string, ariaLabel: string, icon: React.ReactNode }) {
+function SocialLink({ href, ariaLabel, icon, label }: { href: string; ariaLabel: string; icon: React.ReactNode; label: string }) {
   return (
     <a
       href={href}
       aria-label={ariaLabel}
       target="_blank"
       rel="noopener noreferrer"
-      className="flex h-10 w-10 items-center justify-center rounded-full bg-white/10 text-white hover:bg-[var(--color-primary)] hover:text-[var(--color-text-primary)] transition-all duration-200"
+      className="group inline-flex items-center gap-3 text-sm text-white/85 hover:text-white transition-colors"
     >
-      {icon}
+      <span className="flex h-8 w-8 items-center justify-center rounded-full bg-white/10 group-hover:bg-[var(--color-secondary)] transition-all duration-200">
+        {icon}
+      </span>
+      <span className="border-b border-transparent group-hover:border-white transition-all">{label}</span>
     </a>
   )
 }

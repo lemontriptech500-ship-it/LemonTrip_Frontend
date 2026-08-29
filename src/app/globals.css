@@ -3,44 +3,44 @@
 @tailwind utilities;
 
 /* ============================================================
-   LEMONTRIP DESIGN TOKENS — B2B Professional
+   LEMONTRIP DESIGN TOKENS — Premium B2B
    Single source of truth for all visual decisions.
    Update here to retheme the entire application.
    ============================================================ */
 
 :root {
   /* ─── Brand Primary — Deep Navy (trust, authority) ─── */
-  --color-primary:        #1B365D;   /* Deep Navy: primary actions */
-  --color-primary-hover:  #152A4A;   /* Darker navy hover */
-  --color-primary-active: #0F1F38;   /* Pressed navy */
-  --color-primary-dark:   #0F1F38;   /* Legacy alias */
-  --color-primary-soft:   #E8EEF5;   /* Soft navy tint for backgrounds */
+  --color-primary:        #1B365D;
+  --color-primary-hover:  #152A4A;
+  --color-primary-active: #0F1F38;
+  --color-primary-dark:   #0F1F38;
+  --color-primary-soft:   #E8EEF5;
 
   /* ─── Brand Secondary — Teal (growth, action) ─── */
-  --color-secondary:       #0D9394;  /* Teal: secondary actions */
-  --color-secondary-hover: #0A7A7B;  /* Darker teal hover */
-  --color-secondary-soft:  #E0F4F4;  /* Soft teal tint */
+  --color-secondary:       #0D9394;
+  --color-secondary-hover: #0A7A7B;
+  --color-secondary-soft:  #E0F4F4;
 
   /* ─── Brand Accent — Warm Gold (highlights, CTAs) ─── */
-  --color-accent:          #D4A843;  /* Warm gold accent */
-  --color-accent-hover:    #B8922E;  /* Darker gold hover */
-  --color-accent-soft:     #FBF6EB;  /* Soft gold tint */
+  --color-accent:          #D4A843;
+  --color-accent-hover:    #B8922E;
+  --color-accent-soft:     #FBF6EB;
 
   /* ─── Neutral Surfaces ─── */
-  --color-background:        #FAFBFC; /* Off-white app background */
-  --color-surface:           #FFFFFF; /* Card / panel surface */
-  --color-background-soft:   #F0F4F8; /* Soft gray section background */
-  --color-surface-secondary: #F0F4F8; /* Secondary surface */
+  --color-background:        #FAFBFC;
+  --color-surface:           #FFFFFF;
+  --color-background-soft:   #F0F4F8;
+  --color-surface-secondary: #F0F4F8;
 
   /* ─── Text ─── */
-  --color-text-primary:   #1A2332;   /* Deep charcoal for headings */
-  --color-text-secondary: #5A6B7F;   /* Slate blue for body text */
-  --color-text-muted:     #8899AA;   /* Muted blue-gray for metadata */
+  --color-text-primary:   #1A2332;
+  --color-text-secondary: #5A6B7F;
+  --color-text-muted:     #8899AA;
 
   /* ─── Borders ─── */
-  --color-border:       #D9E2EC;     /* Soft blue-gray border */
-  --color-border-light: #EDF2F7;     /* Very subtle separator */
-  --color-border-strong: #B8C8D8;    /* Emphasized border */
+  --color-border:       #D9E2EC;
+  --color-border-light: #EDF2F7;
+  --color-border-strong: #B8C8D8;
 
   /* ─── Semantic: Success ─── */
   --color-success:    #057A55;
@@ -60,16 +60,16 @@
 
   /* ─── Layout ─── */
   --max-content-width: 1280px;
-  --gutter-x:          1rem;     /* 16px — mobile */
-  --section-gap:       4rem;     /* 64px — mobile vertical section spacing */
+  --gutter-x:          1rem;
+  --section-gap:       4rem;
 
   /* ─── Border Radius Scale ─── */
-  --radius-sm:   0.25rem;   /* 4px  — tags, small chips */
-  --radius-md:   0.375rem;  /* 6px  — inputs, selects */
-  --radius-lg:   0.5rem;    /* 8px  — cards */
-  --radius-xl:   0.75rem;   /* 12px — panels, modals */
-  --radius-2xl:  1rem;      /* 16px — large feature cards */
-  --radius-pill: 9999px;    /* fully rounded — badges, chips */
+  --radius-sm:   0.25rem;
+  --radius-md:   0.375rem;
+  --radius-lg:   0.5rem;
+  --radius-xl:   0.75rem;
+  --radius-2xl:  1rem;
+  --radius-pill: 9999px;
 
   /* ─── Shadow / Elevation Scale ─── */
   --shadow-none: none;
@@ -78,19 +78,23 @@
   --shadow-md:   0 4px 8px -2px rgb(26 35 50 / 0.08), 0 2px 4px -2px rgb(26 35 50 / 0.04);
   --shadow-lg:   0 10px 20px -5px rgb(26 35 50 / 0.08), 0 4px 8px -4px rgb(26 35 50 / 0.04);
   --shadow-xl:   0 20px 40px -10px rgb(26 35 50 / 0.10), 0 8px 16px -8px rgb(26 35 50 / 0.06);
+
+  /* ─── Transitions ─── */
+  --transition-fast: 150ms cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-base: 200ms cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-slow: 300ms cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-/* ── Responsive token overrides ── */
 @media (min-width: 640px) {
   :root {
-    --gutter-x: 1.5rem; /* 24px — tablet */
+    --gutter-x: 1.5rem;
   }
 }
 
 @media (min-width: 1024px) {
   :root {
-    --gutter-x:   2rem;  /* 32px — desktop */
-    --section-gap: 6rem; /* 96px — desktop vertical section spacing */
+    --gutter-x:   2rem;
+    --section-gap: 6rem;
   }
 }
 
@@ -126,15 +130,14 @@
     background-color: var(--color-background);
     color: var(--color-text-primary);
     font-family: var(--font-jakarta), system-ui, sans-serif;
-    font-size: 0.9375rem; /* 15px base for B2B readability */
+    font-size: 0.9375rem;
     line-height: 1.65;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     overflow-x: clip;
   }
 
-  img,
-  video {
+  img, video {
     max-width: 100%;
     display: block;
   }
@@ -148,14 +151,12 @@
     cursor: pointer;
   }
 
-  /* ─── Global focus-visible — accessibility ─── */
   :focus-visible {
     outline: 2px solid var(--color-primary);
     outline-offset: 2px;
     border-radius: var(--radius-sm);
   }
 
-  /* ─── Selection colour ─── */
   ::selection {
     background-color: var(--color-primary-soft);
     color: var(--color-text-primary);
@@ -163,88 +164,64 @@
 }
 
 /* ============================================================
-   TYPOGRAPHY SYSTEM — B2B Professional
-   Use these utility classes for consistent text hierarchy.
-   Never scatter arbitrary font-size/weight values in components.
+   TYPOGRAPHY SYSTEM
    ============================================================ */
 
 @layer components {
-  /* Display — hero headings */
   .text-display {
     @apply text-4xl font-bold leading-[1.10] tracking-tight;
   }
   @media (min-width: 768px) {
-    .text-display {
-      font-size: 3.25rem; /* 52px */
-    }
+    .text-display { font-size: 3.5rem; }
   }
 
-  /* H1 — primary page heading */
   .text-h1 {
     @apply text-2xl font-bold leading-[1.15] tracking-tight;
   }
   @media (min-width: 768px) {
-    .text-h1 {
-      font-size: 2.25rem; /* 36px */
-    }
+    .text-h1 { font-size: 2.25rem; }
   }
 
-  /* H2 — section heading */
   .text-h2 {
     @apply text-xl font-semibold leading-[1.20] tracking-tight;
   }
   @media (min-width: 768px) {
-    .text-h2 {
-      font-size: 1.625rem; /* 26px */
-    }
+    .text-h2 { font-size: 1.625rem; }
   }
 
-  /* H3 — sub-section / card heading */
   .text-h3 {
     @apply text-lg font-semibold leading-[1.25];
   }
   @media (min-width: 768px) {
-    .text-h3 {
-      font-size: 1.25rem; /* 20px */
-    }
+    .text-h3 { font-size: 1.25rem; }
   }
 
-  /* H4 — smaller section sub-heading */
   .text-h4 {
     @apply text-base font-semibold leading-snug;
   }
 
-  /* Body large — emphasized body text, intros */
   .text-body-lg {
     @apply text-base font-normal leading-relaxed;
   }
   @media (min-width: 768px) {
-    .text-body-lg {
-      font-size: 1.0625rem; /* 17px */
-    }
+    .text-body-lg { font-size: 1.0625rem; }
   }
 
-  /* Body regular — default body */
   .text-body {
     @apply text-sm font-normal leading-relaxed;
   }
   @media (min-width: 768px) {
-    .text-body {
-      font-size: 0.9375rem; /* 15px */
-    }
+    .text-body { font-size: 0.9375rem; }
   }
 
-  /* Body small — secondary details, meta */
   .text-body-sm {
     @apply text-sm font-normal leading-normal;
   }
 
-  /* Label — form labels, tight UI text */
   .text-label {
     @apply text-xs font-semibold uppercase tracking-wider;
   }
 
-  /* Caption — timestamps, fine print, metadata */
   .text-caption {
     @apply text-xs font-normal leading-normal tracking-wide;
   }
@@ -253,7 +230,6 @@
       LAYOUT UTILITIES
       ============================================================ */
 
-  /* Max-width container with responsive horizontal padding */
   .container-lemon {
     width: 100%;
     max-width: var(--max-content-width);
@@ -261,13 +237,12 @@
     padding-inline: var(--gutter-x);
   }
 
-  /* Consistent vertical section padding */
   .section-gap {
     padding-block: var(--section-gap);
   }
 
   /* ============================================================
-      SKELETON SHIMMER ANIMATION
+      ANIMATIONS
       ============================================================ */
 
   @keyframes skeleton-shimmer {
@@ -286,50 +261,85 @@
     animation: skeleton-shimmer 1.4s ease-in-out infinite;
   }
 
+  @keyframes fade-in {
+    from { opacity: 0; transform: translateY(8px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  .animate-fade-in {
+    animation: fade-in 0.4s ease-out forwards;
+  }
+
+  @keyframes fade-in-up {
+    from { opacity: 0; transform: translateY(16px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  .animate-fade-in-up {
+    animation: fade-in-up 0.5s ease-out forwards;
+  }
+
+  @keyframes pulse-subtle {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.7; }
+  }
+
+  .animate-pulse-subtle {
+    animation: pulse-subtle 2s ease-in-out infinite;
+  }
+
   /* ============================================================
-      SWITCH COMPONENT STYLES
+      SWITCH COMPONENT
       ============================================================ */
 
   .switch-track {
     display: inline-flex;
     align-items: center;
-    width: 2.5rem;  /* 40px */
-    height: 1.375rem; /* 22px */
+    width: 2.5rem;
+    height: 1.375rem;
     border-radius: var(--radius-pill);
     padding: 2px;
-    transition: background-color 150ms ease;
+    transition: background-color var(--transition-fast);
     cursor: pointer;
     flex-shrink: 0;
   }
 
-  .switch-track[data-checked="true"] {
-    background-color: var(--color-primary);
-  }
-
-  .switch-track[data-checked="false"] {
-    background-color: var(--color-border);
-  }
-
-  .switch-track[data-disabled="true"] {
-    opacity: 0.5;
-    cursor: not-allowed;
-  }
+  .switch-track[data-checked="true"] { background-color: var(--color-primary); }
+  .switch-track[data-checked="false"] { background-color: var(--color-border); }
+  .switch-track[data-disabled="true"] { opacity: 0.5; cursor: not-allowed; }
 
   .switch-thumb {
-    width: 1.125rem;   /* 18px */
+    width: 1.125rem;
     height: 1.125rem;
     border-radius: 50%;
     background-color: #ffffff;
     box-shadow: var(--shadow-sm);
-    transition: transform 150ms ease;
+    transition: transform var(--transition-fast);
     flex-shrink: 0;
   }
 
-  .switch-thumb[data-checked="true"] {
-    transform: translateX(1.125rem);
+  .switch-thumb[data-checked="true"] { transform: translateX(1.125rem); }
+  .switch-thumb[data-checked="false"] { transform: translateX(0); }
+
+  /* ============================================================
+      SCROLLBAR STYLING
+      ============================================================ */
+
+  ::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
   }
 
-  .switch-thumb[data-checked="false"] {
-    transform: translateX(0);
+  ::-webkit-scrollbar-track {
+    background: var(--color-background-soft);
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: var(--color-border-strong);
+    border-radius: var(--radius-pill);
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background: var(--color-text-muted);
   }
 }

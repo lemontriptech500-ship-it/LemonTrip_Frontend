@@ -2,19 +2,42 @@
 
 import React from 'react'
 import Link from 'next/link'
-import { BookOpen } from 'lucide-react'
+import { BookOpen, Calendar, ArrowRight } from 'lucide-react'
 import { Button, Card, Container, SectionHeading } from '@/components/ui'
 import { blogPosts } from '@/data/blogPosts'
 
 export default function BlogPage() {
   return (
-    <div className="section-gap bg-[var(--color-surface-secondary)]">
+    <div className="section-gap bg-[var(--color-background)]">
       <Container>
-        <SectionHeading title="Travel Journal" description="Read practical guides and inspiration for your next journey." />
-        <div className="mt-10 grid gap-8 md:grid-cols-3">
-          {blogPosts.map((post) => <Card key={post.id} className="overflow-hidden bg-white" hover padding="none"><div className={`h-52 ${post.imageFallbackColor}`}>{post.imageUrl && <img src={post.imageUrl} alt="" className="h-full w-full object-cover" />}</div><div className="p-6"><div className="flex items-center justify-between gap-3 text-xs font-semibold uppercase tracking-wider"><span className="text-[var(--color-primary)]">{post.category}</span><span className="text-[var(--color-text-secondary)]">{post.date}</span></div><h2 className="mt-3 text-xl font-bold text-[var(--color-text-primary)]">{post.title}</h2><p className="mt-3 text-sm leading-relaxed text-[var(--color-text-secondary)]">{post.excerpt}</p><Button className="mt-5 px-0" variant="ghost" asChild><Link href={`/blog/${post.id}`}>Read article <BookOpen size={15} /></Link></Button></div></Card>)}
+        <SectionHeading
+          title="Travel Journal"
+          description="Read practical guides and inspiration for your next journey."
+        />
+        <div className="mt-8 grid gap-5 md:grid-cols-2 lg:grid-cols-3">
+          {blogPosts.map((post) => (
+            <Card key={post.id} className="overflow-hidden" hover padding="none">
+              <div className={`h-48 ${post.imageFallbackColor}`}>
+                {post.imageUrl && <img src={post.imageUrl} alt="" className="h-full w-full object-cover" />}
+              </div>
+              <div className="p-5">
+                <div className="flex items-center justify-between gap-3 text-caption">
+                  <span className="font-semibold text-[var(--color-primary)]">{post.category}</span>
+                  <span className="flex items-center gap-1 text-[var(--color-text-muted)]">
+                    <Calendar size={12} />
+                    {post.date}
+                  </span>
+                </div>
+                <h2 className="mt-3 text-h4 leading-snug">{post.title}</h2>
+                <p className="mt-2 text-body-sm text-[var(--color-text-secondary)] line-clamp-3">{post.excerpt}</p>
+                <Button className="mt-4 px-0" variant="ghost" icon={<ArrowRight size={14} />} iconPosition="right" asChild>
+                  <Link href={`/blog/${post.id}`}>Read article</Link>
+                </Button>
+              </div>
+            </Card>
+          ))}
         </div>
-        <p className="mt-8 text-sm text-[var(--color-text-secondary)]">Articles shown are mock content for frontend development.</p>
+        <p className="mt-6 text-sm text-[var(--color-text-muted)]">Articles shown are mock content for frontend development.</p>
       </Container>
     </div>
   )
