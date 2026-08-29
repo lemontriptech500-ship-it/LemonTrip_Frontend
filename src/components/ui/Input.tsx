@@ -19,14 +19,14 @@ export interface InputProps
 
 const inputSizeStyles: Record<InputSize, string> = {
   sm: 'h-8  px-3 text-xs',
-  md: 'h-10 px-3 text-sm',
-  lg: 'h-11 px-4 text-sm',
+  md: 'h-11 px-3 text-sm',
+  lg: 'h-12 px-4 text-sm',
 }
 
 const iconSizeStyles: Record<InputSize, string> = {
   sm: 'h-8  w-8',
-  md: 'h-10 w-10',
-  lg: 'h-11 w-11',
+  md: 'h-11 w-11',
+  lg: 'h-12 w-12',
 }
 
 export function Input({
@@ -41,12 +41,14 @@ export function Input({
   className,
   wrapperClassName,
   id: idProp,
+  type,
   ...props
 }: InputProps) {
   const generatedId = useId()
   const id = idProp ?? generatedId
   const helperId = `${id}-helper`
   const hasError = Boolean(error)
+  const isDate = type === 'date' || type === 'month'
 
   return (
     <div className={cn('flex flex-col gap-1.5', wrapperClassName)}>
@@ -83,16 +85,17 @@ export function Input({
 
         <input
           id={id}
+          type={type}
           disabled={disabled}
           aria-invalid={hasError}
           aria-describedby={helperText || error ? helperId : undefined}
           className={cn(
             'w-full rounded-[var(--radius-md)] border bg-[var(--color-surface)]',
             'text-[var(--color-text-primary)] placeholder:text-[var(--color-text-muted)]',
-            'transition-colors duration-150',
+            'transition-all duration-150',
             'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-0',
             inputSizeStyles[size],
-            leadingIcon  && 'pl-10',
+            leadingIcon && 'pl-10',
             trailingIcon && 'pr-10',
             !hasError && [
               'border-[var(--color-border)]',
@@ -104,6 +107,7 @@ export function Input({
               'focus-visible:border-[var(--color-error)] focus-visible:ring-[var(--color-error)]/20',
             ],
             disabled && 'cursor-not-allowed opacity-50 bg-[var(--color-surface-secondary)]',
+            isDate && 'cursor-pointer',
             className,
           )}
           {...props}

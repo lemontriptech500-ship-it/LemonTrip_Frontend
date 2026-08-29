@@ -2,7 +2,7 @@
 
 import React, { useState } from 'react'
 import { useRouter } from 'next/navigation'
-import { Plane, MapPin, Calendar, Users, ArrowRightLeft } from 'lucide-react'
+import { Plane, MapPin, Calendar, ArrowRightLeft } from 'lucide-react'
 import { Input, Button, Select } from '@/components/ui'
 import { buildSearchUrl } from '@/lib/searchParams'
 
@@ -12,11 +12,11 @@ export function FlightSearchForm() {
 
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault()
-    
+
     const formData = new FormData(e.currentTarget as HTMLFormElement)
     const from = formData.get('from') as string
     const to = formData.get('to') as string
-    
+
     if (from && to && from.trim().toLowerCase() === to.trim().toLowerCase()) {
       alert("Origin and destination cannot be the same.")
       return
@@ -38,52 +38,50 @@ export function FlightSearchForm() {
   }
 
   return (
-    <form onSubmit={handleSearch} className="flex flex-col gap-4">
+    <form onSubmit={handleSearch} className="flex flex-col gap-5">
       {/* Trip Type Toggle */}
-      <div className="flex items-center gap-4">
-        <label className="flex items-center gap-2 cursor-pointer text-sm font-medium">
-          <input
-            type="radio"
-            name="tripType"
-            value="oneway"
-            checked={tripType === 'oneway'}
-            onChange={() => setTripType('oneway')}
-            className="text-[var(--color-primary)] focus:ring-[var(--color-primary)] h-4 w-4"
-          />
+      <div className="flex items-center gap-2">
+        <button
+          type="button"
+          onClick={() => setTripType('oneway')}
+          className={`px-4 py-1.5 rounded-full text-sm font-medium transition-all ${
+            tripType === 'oneway'
+              ? 'bg-[var(--color-primary)] text-white shadow-sm'
+              : 'bg-[var(--color-surface-secondary)] text-[var(--color-text-secondary)] hover:bg-[var(--color-border-light)]'
+          }`}
+        >
           One Way
-        </label>
-        <label className="flex items-center gap-2 cursor-pointer text-sm font-medium">
-          <input
-            type="radio"
-            name="tripType"
-            value="roundtrip"
-            checked={tripType === 'roundtrip'}
-            onChange={() => setTripType('roundtrip')}
-            className="text-[var(--color-primary)] focus:ring-[var(--color-primary)] h-4 w-4"
-          />
+        </button>
+        <button
+          type="button"
+          onClick={() => setTripType('roundtrip')}
+          className={`px-4 py-1.5 rounded-full text-sm font-medium transition-all ${
+            tripType === 'roundtrip'
+              ? 'bg-[var(--color-primary)] text-white shadow-sm'
+              : 'bg-[var(--color-surface-secondary)] text-[var(--color-text-secondary)] hover:bg-[var(--color-border-light)]'
+          }`}
+        >
           Round Trip
-        </label>
+        </button>
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4 items-end">
-        {/* From / To Wrapper */}
         <div className="lg:col-span-2 grid grid-cols-1 md:grid-cols-2 gap-4 relative">
           <Input
             name="from"
             label="From"
             placeholder="Departure City"
-            leadingIcon={<Plane size={18} />}
+            leadingIcon={<Plane size={16} />}
             required
           />
-          
-          {/* Swap Button - Absolute positioning on desktop, hidden on mobile for simplicity or shown between */}
+
           <div className="hidden md:flex absolute left-1/2 top-1/2 -translate-x-1/2 translate-y-1/4 z-10">
             <button
               type="button"
-              className="bg-white border border-[var(--color-border)] rounded-full p-1.5 shadow-sm hover:shadow-md transition-shadow text-[var(--color-primary)]"
+              className="bg-[var(--color-primary)] text-white rounded-full p-2 shadow-md hover:bg-[var(--color-primary-hover)] transition-colors"
               aria-label="Swap origins"
             >
-              <ArrowRightLeft size={16} />
+              <ArrowRightLeft size={14} />
             </button>
           </div>
 
@@ -91,31 +89,29 @@ export function FlightSearchForm() {
             name="to"
             label="To"
             placeholder="Arrival City"
-            leadingIcon={<MapPin size={18} />}
+            leadingIcon={<MapPin size={16} />}
             required
           />
         </div>
 
-        {/* Dates */}
         <div className="grid grid-cols-2 gap-4 lg:col-span-2">
           <Input
             name="departureDate"
             type="date"
             label="Departure"
-            leadingIcon={<Calendar size={18} />}
+            leadingIcon={<Calendar size={16} />}
             required
           />
           <Input
             name="returnDate"
             type="date"
             label="Return"
-            leadingIcon={<Calendar size={18} />}
+            leadingIcon={<Calendar size={16} />}
             disabled={tripType === 'oneway'}
             required={tripType === 'roundtrip'}
           />
         </div>
 
-        {/* Travellers & Class */}
         <Select
           name="travelClass"
           label="Travellers & Class"
@@ -128,8 +124,8 @@ export function FlightSearchForm() {
         </Select>
       </div>
 
-      <div className="flex justify-end mt-2">
-        <Button type="submit" size="lg" className="w-full md:w-auto px-8">
+      <div className="flex justify-end">
+        <Button type="submit" size="lg" className="w-full md:w-auto px-10">
           Search Flights
         </Button>
       </div>

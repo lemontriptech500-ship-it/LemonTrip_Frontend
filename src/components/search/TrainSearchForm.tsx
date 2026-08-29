@@ -14,7 +14,7 @@ export function TrainSearchForm() {
     const formData = new FormData(e.currentTarget as HTMLFormElement)
     const from = formData.get('from') as string
     const to = formData.get('to') as string
-    
+
     if (from && to && from.trim().toLowerCase() === to.trim().toLowerCase()) {
       alert("Origin and destination cannot be the same.")
       return
@@ -25,24 +25,24 @@ export function TrainSearchForm() {
   }
 
   return (
-    <form onSubmit={handleSearch} className="flex flex-col gap-4">
+    <form onSubmit={handleSearch} className="flex flex-col gap-5">
       <div className="grid grid-cols-1 md:grid-cols-4 gap-4 items-end relative">
         <div className="md:col-span-2 grid grid-cols-1 md:grid-cols-2 gap-4 relative">
           <Input
             name="from"
             label="From"
             placeholder="Leaving from"
-            leadingIcon={<MapPin size={18} />}
+            leadingIcon={<MapPin size={16} />}
             required
           />
-          
+
           <div className="hidden md:flex absolute left-1/2 top-1/2 -translate-x-1/2 translate-y-1/4 z-10">
             <button
               type="button"
-              className="bg-white border border-[var(--color-border)] rounded-full p-1.5 shadow-sm hover:shadow-md transition-shadow text-[var(--color-primary)]"
+              className="bg-[var(--color-primary)] text-white rounded-full p-2 shadow-md hover:bg-[var(--color-primary-hover)] transition-colors"
               aria-label="Swap stations"
             >
-              <ArrowRightLeft size={16} />
+              <ArrowRightLeft size={14} />
             </button>
           </div>
 
@@ -50,7 +50,7 @@ export function TrainSearchForm() {
             name="to"
             label="To"
             placeholder="Going to"
-            leadingIcon={<MapPin size={18} />}
+            leadingIcon={<MapPin size={16} />}
             required
           />
         </div>
@@ -59,7 +59,7 @@ export function TrainSearchForm() {
           name="journeyDate"
           type="date"
           label="Journey Date"
-          leadingIcon={<Calendar size={18} />}
+          leadingIcon={<Calendar size={16} />}
           required
         />
 
@@ -75,8 +75,8 @@ export function TrainSearchForm() {
         </Select>
       </div>
 
-      <div className="flex justify-end mt-2">
-        <Button type="submit" size="lg" className="w-full md:w-auto px-8">
+      <div className="flex justify-end">
+        <Button type="submit" size="lg" className="w-full md:w-auto px-10">
           Search Trains
         </Button>
       </div>

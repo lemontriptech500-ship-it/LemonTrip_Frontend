@@ -57,14 +57,14 @@ export function HotelSearchForm({ defaults, onSuccess }: HotelSearchFormProps) {
   }
 
   return (
-    <form onSubmit={handleSearch} className="flex flex-col gap-4">
+    <form onSubmit={handleSearch} className="flex flex-col gap-5">
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-4 items-end">
         <div className="lg:col-span-3">
           <Input
             name="destination"
             label="Destination"
             placeholder="City, Hotel, or Landmark"
-            leadingIcon={<MapPin size={18} />}
+            leadingIcon={<MapPin size={16} />}
             defaultValue={defaults?.destination ?? ''}
             required
           />
@@ -75,7 +75,7 @@ export function HotelSearchForm({ defaults, onSuccess }: HotelSearchFormProps) {
             name="checkIn"
             type="date"
             label="Check-In"
-            leadingIcon={<Calendar size={18} />}
+            leadingIcon={<Calendar size={16} />}
             defaultValue={defaults?.checkIn ?? ''}
             required
           />
@@ -83,7 +83,7 @@ export function HotelSearchForm({ defaults, onSuccess }: HotelSearchFormProps) {
             name="checkOut"
             type="date"
             label="Check-Out"
-            leadingIcon={<Calendar size={18} />}
+            leadingIcon={<Calendar size={16} />}
             defaultValue={defaults?.checkOut ?? ''}
             required
           />
@@ -114,8 +114,8 @@ export function HotelSearchForm({ defaults, onSuccess }: HotelSearchFormProps) {
         </div>
       </div>
 
-      <div className="flex justify-end mt-2">
-        <Button type="submit" size="lg" className="w-full md:w-auto px-8">
+      <div className="flex justify-end">
+        <Button type="submit" size="lg" className="w-full md:w-auto px-10">
           Search Hotels
         </Button>
       </div>

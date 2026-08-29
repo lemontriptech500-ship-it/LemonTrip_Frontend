@@ -15,48 +15,48 @@ export function TravelSearchWidget() {
     {
       id: 'flights',
       label: 'Flights',
-      icon: <Plane size={18} />,
+      icon: <Plane size={16} />,
       content: <FlightSearchForm />,
     },
     {
       id: 'hotels',
       label: 'Hotels',
-      icon: <Bed size={18} />,
+      icon: <Bed size={16} />,
       content: <HotelSearchForm />,
     },
     {
       id: 'bus',
       label: 'Buses',
-      icon: <BusFront size={18} />,
+      icon: <BusFront size={16} />,
       content: <BusSearchForm />,
     },
     {
       id: 'trains',
       label: 'Trains',
-      icon: <TrainFront size={18} />,
+      icon: <TrainFront size={16} />,
       content: <TrainSearchForm />,
     },
     {
       id: 'packages',
       label: 'Packages',
-      icon: <Briefcase size={18} />,
+      icon: <Briefcase size={16} />,
       content: <PackageSearchForm />,
     },
     {
       id: 'visa',
       label: 'Visa',
-      icon: <FileText size={18} />,
+      icon: <FileText size={16} />,
       content: <VisaSearchForm />,
     },
   ]
 
   return (
-    <div className="bg-white rounded-[var(--radius-xl)] shadow-xl border border-[var(--color-border)] overflow-hidden w-full max-w-5xl mx-auto">
+    <div className="bg-white rounded-[var(--radius-xl)] shadow-2xl border border-[var(--color-border)] overflow-hidden w-full max-w-5xl mx-auto">
       <Tabs
         items={tabItems}
         defaultTabId="flights"
         className="w-full"
-        tabListClassName="px-4 sm:px-6 pt-2 bg-[var(--color-surface-secondary)]"
+        tabListClassName="px-3 sm:px-5 pt-1.5 bg-[var(--color-primary-soft)]/40"
         tabContentClassName="p-4 sm:p-6 lg:p-8"
       />
     </div>

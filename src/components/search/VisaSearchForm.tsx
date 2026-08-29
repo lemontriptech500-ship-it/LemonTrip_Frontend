@@ -17,13 +17,13 @@ export function VisaSearchForm() {
   }
 
   return (
-    <form onSubmit={handleSearch} className="flex flex-col gap-4">
+    <form onSubmit={handleSearch} className="flex flex-col gap-5">
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4 items-end">
         <Input
           name="destinationCountry"
           label="Destination Country"
           placeholder="Where are you travelling to?"
-          leadingIcon={<Globe size={18} />}
+          leadingIcon={<Globe size={16} />}
           required
         />
 
@@ -39,8 +39,8 @@ export function VisaSearchForm() {
         </Select>
       </div>
 
-      <div className="flex justify-end mt-2">
-        <Button type="submit" size="lg" className="w-full md:w-auto px-8">
+      <div className="flex justify-end">
+        <Button type="submit" size="lg" className="w-full md:w-auto px-10">
           Check Requirements
         </Button>
       </div>

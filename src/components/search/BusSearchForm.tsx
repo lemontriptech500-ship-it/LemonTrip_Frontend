@@ -2,7 +2,7 @@
 
 import React from 'react'
 import { useRouter } from 'next/navigation'
-import { MapPin, Calendar, ArrowRightLeft, BusFront } from 'lucide-react'
+import { MapPin, Calendar, ArrowRightLeft } from 'lucide-react'
 import { Input, Button } from '@/components/ui'
 import { buildSearchUrl } from '@/lib/searchParams'
 
@@ -14,7 +14,7 @@ export function BusSearchForm() {
     const formData = new FormData(e.currentTarget as HTMLFormElement)
     const from = formData.get('from') as string
     const to = formData.get('to') as string
-    
+
     if (from && to && from.trim().toLowerCase() === to.trim().toLowerCase()) {
       alert("Origin and destination cannot be the same.")
       return
@@ -25,24 +25,23 @@ export function BusSearchForm() {
   }
 
   return (
-    <form onSubmit={handleSearch} className="flex flex-col gap-4">
+    <form onSubmit={handleSearch} className="flex flex-col gap-5">
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4 items-end relative">
         <Input
           name="from"
           label="From"
           placeholder="Leaving from"
-          leadingIcon={<MapPin size={18} />}
+          leadingIcon={<MapPin size={16} />}
           required
         />
-        
-        {/* Swap Button */}
+
         <div className="hidden md:flex absolute left-1/3 top-1/2 -translate-x-1/2 translate-y-1/4 z-10">
           <button
             type="button"
-            className="bg-white border border-[var(--color-border)] rounded-full p-1.5 shadow-sm hover:shadow-md transition-shadow text-[var(--color-primary)]"
+            className="bg-[var(--color-primary)] text-white rounded-full p-2 shadow-md hover:bg-[var(--color-primary-hover)] transition-colors"
             aria-label="Swap cities"
           >
-            <ArrowRightLeft size={16} />
+            <ArrowRightLeft size={14} />
           </button>
         </div>
 
@@ -50,7 +49,7 @@ export function BusSearchForm() {
           name="to"
           label="To"
           placeholder="Going to"
-          leadingIcon={<MapPin size={18} />}
+          leadingIcon={<MapPin size={16} />}
           required
         />
 
@@ -58,13 +57,13 @@ export function BusSearchForm() {
           name="travelDate"
           type="date"
           label="Travel Date"
-          leadingIcon={<Calendar size={18} />}
+          leadingIcon={<Calendar size={16} />}
           required
         />
       </div>
 
-      <div className="flex justify-end mt-2">
-        <Button type="submit" size="lg" className="w-full md:w-auto px-8">
+      <div className="flex justify-end">
+        <Button type="submit" size="lg" className="w-full md:w-auto px-10">
           Search Buses
         </Button>
       </div>

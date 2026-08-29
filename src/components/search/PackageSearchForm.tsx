@@ -17,13 +17,13 @@ export function PackageSearchForm() {
   }
 
   return (
-    <form onSubmit={handleSearch} className="flex flex-col gap-4">
+    <form onSubmit={handleSearch} className="flex flex-col gap-5">
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4 items-end">
         <Input
           name="destination"
           label="Destination"
           placeholder="Where do you want to go?"
-          leadingIcon={<MapPin size={18} />}
+          leadingIcon={<MapPin size={16} />}
           required
         />
 
@@ -31,7 +31,7 @@ export function PackageSearchForm() {
           name="travelMonth"
           type="month"
           label="Travel Month"
-          leadingIcon={<Calendar size={18} />}
+          leadingIcon={<Calendar size={16} />}
           required
         />
 
@@ -47,8 +47,8 @@ export function PackageSearchForm() {
         </Select>
       </div>
 
-      <div className="flex justify-end mt-2">
-        <Button type="submit" size="lg" className="w-full md:w-auto px-8">
+      <div className="flex justify-end">
+        <Button type="submit" size="lg" className="w-full md:w-auto px-10">
           Explore Packages
         </Button>
       </div>
