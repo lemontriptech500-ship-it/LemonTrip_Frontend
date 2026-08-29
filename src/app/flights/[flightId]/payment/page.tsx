@@ -242,10 +242,10 @@ export default function PaymentPage({ params }: { params: Promise<{ flightId: st
               flight={flight}
               selectedFare={selectedFare}
               travellersCount={bookingData.travellers.length}
-              onContinue={() => {}} // We override the button below manually to handle loading state
+              onContinue={() => {}}
+              hideButton
             />
             
-            {/* Custom overlay button for FlightBookingSummary to support loading state easily */}
             <div className="mt-4">
               <Button 
                 fullWidth 
@@ -264,16 +264,6 @@ export default function PaymentPage({ params }: { params: Promise<{ flightId: st
                 )}
               </Button>
             </div>
-            
-            {/* Note: In a real app we might pass `isLoading` directly to `FlightBookingSummary`, 
-                but since we can't easily modify it without breaking other pages, 
-                we can just hide its continue button with CSS or add an extra button.
-                Let's hide the one inside FlightBookingSummary with CSS below: */}
-            <style jsx global>{`
-              .lg\\:w-\\[350px\\] > div > button {
-                display: none;
-              }
-            `}</style>
           </div>
 
         </div>

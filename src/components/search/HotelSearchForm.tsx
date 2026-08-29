@@ -1,9 +1,10 @@
 'use client'
 
-import React from 'react'
+import React, { useState } from 'react'
 import { useRouter } from 'next/navigation'
-import { MapPin, Calendar } from 'lucide-react'
+import { MapPin } from 'lucide-react'
 import { Input, Button, Select } from '@/components/ui'
+import { DatePicker } from '@/components/ui/DatePicker'
 import type { HotelSearchParams } from '@/types/hotels'
 import {
   HOTEL_SEARCH_LIMITS,
@@ -32,6 +33,8 @@ interface HotelSearchFormProps {
 
 export function HotelSearchForm({ defaults, onSuccess }: HotelSearchFormProps) {
   const router = useRouter()
+  const [checkIn, setCheckIn] = useState(defaults?.checkIn ?? '')
+  const [checkOut, setCheckOut] = useState(defaults?.checkOut ?? '')
 
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault()
@@ -39,8 +42,8 @@ export function HotelSearchForm({ defaults, onSuccess }: HotelSearchFormProps) {
 
     const params = normalizeHotelSearchParams({
       destination: String(formData.get('destination') || ''),
-      checkIn: String(formData.get('checkIn') || ''),
-      checkOut: String(formData.get('checkOut') || ''),
+      checkIn,
+      checkOut,
       rooms: String(formData.get('rooms') || '1'),
       adults: String(formData.get('adults') || '2'),
       children: String(formData.get('children') || '0'),
@@ -55,6 +58,8 @@ export function HotelSearchForm({ defaults, onSuccess }: HotelSearchFormProps) {
     router.push(buildHotelSearchUrl(params))
     onSuccess?.()
   }
+
+  const today = new Date().toISOString().split('T')[0]
 
   return (
     <form onSubmit={handleSearch} className="flex flex-col gap-5">
@@ -71,20 +76,20 @@ export function HotelSearchForm({ defaults, onSuccess }: HotelSearchFormProps) {
         </div>
 
         <div className="lg:col-span-4 grid grid-cols-2 gap-4">
-          <Input
-            name="checkIn"
-            type="date"
+          <DatePicker
             label="Check-In"
-            leadingIcon={<Calendar size={16} />}
-            defaultValue={defaults?.checkIn ?? ''}
+            value={checkIn}
+            onChange={setCheckIn}
+            placeholder="Select date"
+            minDate={today}
             required
           />
-          <Input
-            name="checkOut"
-            type="date"
+          <DatePicker
             label="Check-Out"
-            leadingIcon={<Calendar size={16} />}
-            defaultValue={defaults?.checkOut ?? ''}
+            value={checkOut}
+            onChange={setCheckOut}
+            placeholder="Select date"
+            minDate={checkIn || today}
             required
           />
         </div>

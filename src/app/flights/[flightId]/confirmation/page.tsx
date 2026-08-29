@@ -174,14 +174,9 @@ export default function ConfirmationPage({ params }: { params: Promise<{ flightI
               flight={flight}
               selectedFare={selectedFare}
               travellersCount={bookingData.travellers.length}
-              onContinue={() => {}} // We override the button with CSS below since it's a display only component here
+              onContinue={() => {}}
+              hideButton
             />
-            
-            <style jsx global>{`
-              .lg\\:w-\\[350px\\] > div:first-child > button {
-                display: none;
-              }
-            `}</style>
 
             <div className="bg-[var(--color-surface)] border border-[var(--color-border)] rounded-[var(--radius-xl)] p-6 shadow-sm print:hidden">
               <h3 className="font-bold text-[var(--color-text-primary)] mb-4">Next Steps</h3>

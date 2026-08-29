@@ -7,9 +7,10 @@ interface FlightBookingSummaryProps {
   selectedFare: FareOption | null;
   travellersCount: number;
   onContinue: () => void;
+  hideButton?: boolean;
 }
 
-export function FlightBookingSummary({ flight, selectedFare, travellersCount, onContinue }: FlightBookingSummaryProps) {
+export function FlightBookingSummary({ flight, selectedFare, travellersCount, onContinue, hideButton = false }: FlightBookingSummaryProps) {
   
   const basePrice = selectedFare ? selectedFare.price : flight.price;
   const totalBase = basePrice * travellersCount;
@@ -50,14 +51,16 @@ export function FlightBookingSummary({ flight, selectedFare, travellersCount, on
         </div>
       </div>
 
-      <Button 
-        fullWidth 
-        size="lg" 
-        onClick={onContinue}
-        disabled={!selectedFare}
-      >
-        {selectedFare ? 'Continue' : 'Select a Fare'}
-      </Button>
+      {!hideButton && (
+        <Button 
+          fullWidth 
+          size="lg" 
+          onClick={onContinue}
+          disabled={!selectedFare}
+        >
+          {selectedFare ? 'Continue' : 'Select a Fare'}
+        </Button>
+      )}
     </div>
   );
 }
