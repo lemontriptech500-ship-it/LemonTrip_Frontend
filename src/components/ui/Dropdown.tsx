@@ -51,20 +51,35 @@ export function Dropdown({
     }
   }, [isOpen])
 
+  const triggerElement = React.isValidElement<{
+    onClick?: (event: React.MouseEvent) => void
+    onKeyDown?: (event: React.KeyboardEvent) => void
+    className?: string
+    children?: React.ReactNode
+  }>(trigger)
+    ? trigger
+    : null
+
   return (
     <div className={cn('relative inline-block text-left', className)} ref={dropdownRef}>
-      {React.isValidElement(trigger) ? (
-        React.cloneElement(trigger as React.ReactElement<any>, {
-          type: 'button',
+      {triggerElement ? (
+        React.cloneElement(triggerElement as React.ReactElement<any>, {
+          ...((triggerElement.props ?? {}) as Record<string, unknown>),
           onClick: (event: React.MouseEvent) => {
-            trigger.props.onClick?.(event)
-            setIsOpen(!isOpen)
+            const triggerProps = triggerElement.props as {
+              onClick?: (event: React.MouseEvent) => void
+            }
+            triggerProps.onClick?.(event)
+            setIsOpen((prev) => !prev)
           },
           onKeyDown: (event: React.KeyboardEvent) => {
-            trigger.props.onKeyDown?.(event)
+            const triggerProps = triggerElement.props as {
+              onKeyDown?: (event: React.KeyboardEvent) => void
+            }
+            triggerProps.onKeyDown?.(event)
             if (!event.defaultPrevented && (event.key === 'Enter' || event.key === ' ')) {
               event.preventDefault()
-              setIsOpen(!isOpen)
+              setIsOpen((prev) => !prev)
             }
           },
           'aria-expanded': isOpen,

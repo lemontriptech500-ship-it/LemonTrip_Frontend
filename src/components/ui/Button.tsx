@@ -58,8 +58,12 @@ export function Button({
     className,
   )
 
-  const innerChildren = asChild && React.isValidElement(children)
-    ? (children as React.ReactElement).props.children
+  const childElement = React.isValidElement<{ className?: string; children?: React.ReactNode }>(children)
+    ? children
+    : null
+
+  const innerChildren = asChild && childElement
+    ? childElement.props.children
     : children
 
   const innerContent = (
@@ -82,10 +86,9 @@ export function Button({
     </>
   )
 
-  if (asChild && React.isValidElement(children)) {
-    const child = children as React.ReactElement<any>
-    return React.cloneElement(child, {
-      className: cn(compClassName, child.props.className),
+  if (asChild && childElement) {
+    return React.cloneElement(childElement, {
+      className: cn(compClassName, childElement.props.className),
       ...props,
       children: innerContent,
     })
