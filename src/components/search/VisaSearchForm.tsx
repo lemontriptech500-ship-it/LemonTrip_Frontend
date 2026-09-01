@@ -17,20 +17,22 @@ export function VisaSearchForm() {
   }
 
   return (
-    <form onSubmit={handleSearch} className="flex flex-col gap-5">
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 items-end">
+    <form onSubmit={handleSearch} className="w-full min-h-[150px] rounded-lg bg-[#063b24] p-3 md:p-4 flex flex-col justify-between gap-3 md:gap-4">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-3 items-end md:gap-4">
         <Input
           name="destinationCountry"
           label="Destination Country"
           placeholder="Where are you travelling to?"
           leadingIcon={<Globe size={16} />}
           required
+          theme="dark-green"
         />
 
         <Select
           name="visaType"
           label="Visa Type"
           defaultValue="tourist"
+          theme="dark-green"
         >
           <option value="tourist">Tourist Visa</option>
           <option value="business">Business Visa</option>

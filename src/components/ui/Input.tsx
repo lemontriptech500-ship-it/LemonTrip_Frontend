@@ -15,6 +15,7 @@ export interface InputProps
   optional?: boolean
   className?: string
   wrapperClassName?: string
+  theme?: 'default' | 'dark-green'
 }
 
 const inputSizeStyles: Record<InputSize, string> = {
@@ -42,6 +43,7 @@ export function Input({
   wrapperClassName,
   id: idProp,
   type,
+  theme = 'default',
   ...props
 }: InputProps) {
   const generatedId = useId()
@@ -49,6 +51,7 @@ export function Input({
   const helperId = `${id}-helper`
   const hasError = Boolean(error)
   const isDate = type === 'date' || type === 'month'
+  const isDarkGreen = theme === 'dark-green'
 
   return (
     <div className={cn('flex flex-col gap-1.5', wrapperClassName)}>
@@ -56,7 +59,8 @@ export function Input({
         <label
           htmlFor={id}
           className={cn(
-            'text-label text-[var(--color-text-primary)]',
+            'text-label',
+            isDarkGreen ? 'text-[#FFD21A]' : 'text-[var(--color-text-primary)]',
             disabled && 'opacity-50',
           )}
         >
@@ -75,7 +79,7 @@ export function Input({
             aria-hidden
             className={cn(
               'pointer-events-none absolute left-0 flex items-center justify-center',
-              'text-[var(--color-text-muted)]',
+              isDarkGreen ? 'text-[#FFD21A]' : 'text-[var(--color-text-muted)]',
               iconSizeStyles[size],
             )}
           >
@@ -91,7 +95,9 @@ export function Input({
           aria-describedby={helperText || error ? helperId : undefined}
           className={cn(
             'w-full rounded-[var(--radius-md)] border bg-[var(--color-surface)]',
-            'text-[var(--color-text-primary)] placeholder:text-[var(--color-text-muted)]',
+            isDarkGreen
+              ? 'text-[var(--color-primary-dark)] placeholder:text-[var(--color-primary-dark)]/60'
+              : 'text-[var(--color-text-primary)] placeholder:text-[var(--color-text-muted)]',
             'transition-all duration-150',
             'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-0',
             inputSizeStyles[size],
@@ -117,7 +123,7 @@ export function Input({
           <span
             className={cn(
               'absolute right-0 flex items-center justify-center',
-              'text-[var(--color-text-muted)]',
+              isDarkGreen ? 'text-[#FFD21A]' : 'text-[var(--color-text-muted)]',
               iconSizeStyles[size],
             )}
           >

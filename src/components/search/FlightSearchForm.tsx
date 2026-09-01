@@ -46,7 +46,7 @@ export function FlightSearchForm() {
   }
 
   return (
-    <form onSubmit={handleSearch} className="bg-white rounded-lg p-3">
+    <form onSubmit={handleSearch} className="w-full min-h-[150px] rounded-lg bg-[#063b24] p-3">
       {/* Trip Type */}
       <div className="flex items-center gap-2 mb-2">
         <button
@@ -54,8 +54,8 @@ export function FlightSearchForm() {
           onClick={() => setTripType('oneway')}
           className={`px-3 py-1 rounded-full text-xs font-medium transition-all ${
             tripType === 'oneway'
-              ? 'bg-[var(--color-primary-soft)] text-[var(--color-primary-dark)]'
-              : 'bg-[#F5F7F8] text-[#7A8793] hover:bg-[#EEEEEE]'
+              ? 'bg-[#063b24] text-[#FFD21A]'
+              : 'bg-[#063b24] text-[#FFD21A] hover:bg-[#0a4b2c]'
           }`}
         >
           One Way
@@ -65,8 +65,8 @@ export function FlightSearchForm() {
           onClick={() => setTripType('roundtrip')}
           className={`px-3 py-1 rounded-full text-xs font-medium transition-all ${
             tripType === 'roundtrip'
-              ? 'bg-[var(--color-primary)] text-[var(--color-primary-dark)]'
-              : 'bg-[#F5F7F8] text-[#7A8793] hover:bg-[#EEEEEE]'
+              ? 'bg-[#063b24] text-[#FFD21A]'
+              : 'bg-[#063b24] text-[#FFD21A] hover:bg-[#0a4b2c]'
           }`}
         >
           Round Trip
@@ -78,14 +78,14 @@ export function FlightSearchForm() {
         {/* FROM */}
         <div className="flex-1 min-w-0">
           <div className="relative">
-            <Plane size={14} className="absolute left-2.5 top-1/2 -translate-y-1/2 text-[#7A8793] pointer-events-none" />
+            <Plane size={14} className="absolute left-2.5 top-1/2 -translate-y-1/2 text-[#FFD21A] pointer-events-none" />
             <input
               type="text"
               value={fromCity}
               onChange={(e) => setFromCity(e.target.value)}
               placeholder="Departure City"
               required
-              className="w-full h-10 pl-8 pr-2 rounded-[10px] border border-[#DDE2E6] bg-white text-xs text-[#263746] placeholder:text-[#7A8793] focus:outline-none focus:border-[var(--color-primary)] transition-colors"
+              className="w-full h-10 pl-8 pr-2 rounded-[10px] border border-[#063b24]/20 bg-white text-xs text-[#063b24] placeholder:text-[#063b24]/60 focus:outline-none focus:border-[#063b24] transition-colors"
             />
           </div>
         </div>
@@ -94,7 +94,7 @@ export function FlightSearchForm() {
         <button
           type="button"
           onClick={swapCities}
-          className="hidden md:flex w-7 h-7 rounded-full bg-[var(--color-primary)] text-[var(--color-primary-dark)] items-center justify-center shadow-sm hover:bg-[var(--color-primary-hover)] transition-colors shrink-0 mb-[1px]"
+          className="hidden md:flex w-7 h-7 rounded-full bg-[#063b24] text-white items-center justify-center shadow-sm hover:bg-[#0d4a2b] transition-colors shrink-0 mb-[1px]"
           aria-label="Swap cities"
         >
           <ArrowRightLeft size={12} />
@@ -105,7 +105,7 @@ export function FlightSearchForm() {
           <button
             type="button"
             onClick={swapCities}
-            className="w-7 h-7 rounded-full bg-[var(--color-primary)] text-[var(--color-primary-dark)] flex items-center justify-center shadow-sm hover:bg-[var(--color-primary-hover)] transition-colors"
+            className="w-7 h-7 rounded-full bg-[#063b24] text-white flex items-center justify-center shadow-sm hover:bg-[#0d4a2b] transition-colors"
             aria-label="Swap cities"
           >
             <ArrowRightLeft size={12} />
@@ -115,14 +115,14 @@ export function FlightSearchForm() {
         {/* TO */}
         <div className="flex-1 min-w-0">
           <div className="relative">
-            <MapPin size={14} className="absolute left-2.5 top-1/2 -translate-y-1/2 text-[#7A8793] pointer-events-none" />
+            <MapPin size={14} className="absolute left-2.5 top-1/2 -translate-y-1/2 text-[#FFD21A] pointer-events-none" />
             <input
               type="text"
               value={toCity}
               onChange={(e) => setToCity(e.target.value)}
               placeholder="Arrival City"
               required
-              className="w-full h-10 pl-8 pr-2 rounded-[10px] border border-[#DDE2E6] bg-white text-xs text-[#263746] placeholder:text-[#7A8793] focus:outline-none focus:border-[var(--color-primary)] transition-colors"
+              className="w-full h-10 pl-8 pr-2 rounded-[10px] border border-[#063b24]/20 bg-white text-xs text-[#063b24] placeholder:text-[#063b24]/60 focus:outline-none focus:border-[#063b24] transition-colors"
             />
           </div>
         </div>
@@ -135,6 +135,7 @@ export function FlightSearchForm() {
             placeholder="Select date"
             minDate={today}
             required
+            theme="dark-green"
           />
         </div>
 
@@ -147,6 +148,7 @@ export function FlightSearchForm() {
             minDate={departureDate || today}
             disabled={tripType === 'oneway'}
             required={tripType === 'roundtrip'}
+            theme="dark-green"
           />
         </div>
 
@@ -155,21 +157,21 @@ export function FlightSearchForm() {
           <div className="relative">
             <select
               defaultValue="1-economy"
-              className="w-full h-10 pl-2 pr-7 rounded-[10px] border border-[#DDE2E6] bg-white text-xs text-[#263746] appearance-none focus:outline-none focus:border-[var(--color-primary)] transition-colors cursor-pointer"
+              className="w-full h-10 pl-2 pr-7 rounded-[10px] border border-[#063b24]/20 bg-white text-xs text-[#063b24] appearance-none focus:outline-none focus:border-[#063b24] transition-colors cursor-pointer"
             >
               <option value="1-economy">1 Adult, Economy</option>
               <option value="2-economy">2 Adults, Economy</option>
               <option value="1-business">1 Adult, Business</option>
               <option value="2-business">2 Adults, Business</option>
             </select>
-            <ChevronDown size={12} className="absolute right-2 top-1/2 -translate-y-1/2 text-[#7A8793] pointer-events-none" />
+            <ChevronDown size={12} className="absolute right-2 top-1/2 -translate-y-1/2 text-[#063b24] pointer-events-none" />
           </div>
         </div>
 
         {/* Search */}
         <button
           type="submit"
-          className="w-full md:w-[130px] h-10 rounded-[10px] bg-[var(--color-primary)] hover:bg-[var(--color-primary-hover)] text-[var(--color-primary-dark)] font-semibold text-xs transition-colors flex items-center justify-center gap-1.5 shrink-0"
+          className="w-full md:w-[130px] h-10 rounded-[10px] bg-[#063b24] hover:bg-[#0d4a2b] text-white font-semibold text-xs transition-colors flex items-center justify-center gap-1.5 shrink-0"
         >
           <Plane size={14} />
           Search Flights

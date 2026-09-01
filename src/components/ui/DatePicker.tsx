@@ -13,6 +13,7 @@ interface DatePickerProps {
   required?: boolean
   minDate?: string
   className?: string
+  theme?: 'default' | 'dark-green'
 }
 
 export function DatePicker({
@@ -24,6 +25,7 @@ export function DatePicker({
   required = false,
   minDate,
   className,
+  theme = 'default',
 }: DatePickerProps) {
   const [isOpen, setIsOpen] = useState(false)
   const [currentMonth, setCurrentMonth] = useState(new Date())
@@ -101,13 +103,14 @@ export function DatePicker({
   const { daysInMonth, startingDay } = getDaysInMonth(currentMonth)
   const monthNames = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']
   const dayNames = ['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa']
+  const isDarkGreen = theme === 'dark-green'
 
   const displayValue = value ? parseDate(value).toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric' }) : ''
 
   return (
     <div ref={containerRef} className={cn('flex flex-col gap-1.5', className)}>
       {label && (
-        <label className="text-label text-[var(--color-text-primary)]">
+        <label className={cn('text-label', isDarkGreen ? 'text-[#FFD21A]' : 'text-[var(--color-text-primary)]')}>
           {label}
           {required && <span className="text-[var(--color-error)] ml-0.5">*</span>}
         </label>
@@ -126,19 +129,19 @@ export function DatePicker({
             !disabled && 'hover:border-[var(--color-border-strong)] cursor-pointer',
             disabled && 'cursor-not-allowed opacity-50 bg-[var(--color-surface-secondary)]',
             isOpen && 'border-[var(--color-primary)] ring-2 ring-[rgba(39, 174, 96, 0.20)',
-            !displayValue && 'text-[var(--color-text-muted)]'
+            !displayValue && (isDarkGreen ? 'text-[var(--color-primary-dark)]' : 'text-[var(--color-text-muted)]')
           )}
         >
-          <Calendar size={16} className="text-[var(--color-text-muted)] shrink-0" />
-          <span className={cn(displayValue ? 'text-[var(--color-text-primary)]' : 'text-[var(--color-text-muted)]')}>
+          <Calendar size={16} className={cn(isDarkGreen ? 'text-[#FFD21A]' : 'text-[var(--color-text-muted)]', 'shrink-0')} />
+          <span className={cn(displayValue ? (isDarkGreen ? 'text-[var(--color-primary-dark)]' : 'text-[var(--color-text-primary)]') : (isDarkGreen ? 'text-[var(--color-primary-dark)]/60' : 'text-[var(--color-text-muted)]'))}>
             {displayValue || placeholder}
           </span>
         </button>
 
         {isOpen && (
-          <div className="absolute top-full left-0 mt-2 z-50 bg-[var(--color-surface)] rounded-[var(--radius-lg)] shadow-xl border border-[var(--color-border)] p-4 w-72 animate-fade-in">
+          <div className="absolute bottom-full left-0 z-50 mb-2 w-72 rounded-[var(--radius-lg)] border border-[var(--color-border)] bg-[var(--color-surface)] p-4 shadow-xl animate-fade-in">
             {/* Header */}
-            <div className="flex items-center justify-between mb-4">
+            <div className="mb-4 flex items-center justify-between">
               <button
                 type="button"
                 onClick={handlePreviousMonth}

@@ -4,58 +4,70 @@
 
 /* ============================================================
    LEMONTRIP DESIGN TOKENS — Premium Travel
-   Approved palette: #FAD311 | #173E14 | #FDFEFE | #F4ECF7 | #E9DAC4 | #2C3E50
+   Brand palette based on the approved Lemon Trip colors.
    ============================================================ */
 
 :root {
-  /* ─── Brand Primary — Lemon Yellow (#FAD311) ─── */
-  --color-primary:        #FAD311;
-  --color-primary-hover:  #E4BF00;
-  --color-primary-active: #CCAA00;
-  --color-primary-dark:   #173E14;
-  --color-primary-soft:   rgba(250, 211, 17, 0.12);
+  /* ─── Brand Palette from Lemon Trip landing page ─── */
+  --green: #0b5d35;
+  --green-dark: #063b24;
+  --green-2: #118047;
+  --yellow: #ffd21a;
+  --yellow-soft: #fff6bd;
+  --ink: #10231a;
+  --muted: #64736b;
+  --white: #ffffff;
+  --bg: #f7faf8;
+  --line: #e2eae5;
 
-  /* ─── Forest Green — Supporting Primary Dark (#173E14) ─── */
-  --color-secondary:       #173E14;
-  --color-secondary-hover: #102C0F;
-  --color-secondary-soft:  rgba(23, 62, 20, 0.10);
+  /* ─── Brand Primary ─── */
+  --color-primary:        var(--yellow);
+  --color-primary-hover:  #e4bb00;
+  --color-primary-active: #caa000;
+  --color-primary-dark:   var(--green);
+  --color-primary-soft:   var(--yellow-soft);
 
-  /* ─── Teal — Supporting Accent (#16A085) ─── */
-  --color-accent:      #173E14;
-  --color-accent-hover:    #102C0F;
-  --color-accent-soft:     rgba(23, 62, 20, 0.10);
+  /* ─── Brand Secondary ─── */
+  --color-secondary:       var(--green-dark);
+  --color-secondary-hover: #042d1d;
+  --color-secondary-soft:  rgba(6, 59, 36, 0.10);
+
+  /* ─── Brand Accent ─── */
+  --color-accent:        var(--green-2);
+  --color-accent-hover:  #0d6e3d;
+  --color-accent-soft:   rgba(17, 128, 71, 0.10);
 
   /* ─── Neutral Surfaces ─── */
-  --color-background:        #FDFEFE;
-  --color-surface:           #FFFFFF;
-  --color-background-soft:   #F4ECF7;
-  --color-surface-secondary: #F4ECF7;
+  --color-background:        var(--bg);
+  --color-surface:           var(--white);
+  --color-background-soft:   #f2f7f3;
+  --color-surface-secondary: #f3f6f4;
 
-  /* ─── Typography (#2C3E50) ─── */
-  --color-text-primary:   #2C3E50;
-  --color-text-secondary: rgba(44, 62, 80, 0.72);
-  --color-text-muted:     rgba(44, 62, 80, 0.50);
+  /* ─── Typography ─── */
+  --color-text-primary:   var(--ink);
+  --color-text-secondary: rgba(16, 35, 26, 0.72);
+  --color-text-muted:     var(--muted);
 
   /* ─── Borders ─── */
-  --color-border:       rgba(44, 62, 80, 0.14);
-  --color-border-light: rgba(44, 62, 80, 0.07);
-  --color-border-strong: rgba(44, 62, 80, 0.22);
+  --color-border:       var(--line);
+  --color-border-light: rgba(16, 35, 26, 0.08);
+  --color-border-strong: rgba(16, 35, 26, 0.20);
 
   /* ─── Semantic: Success ─── */
-  --color-success:    #173E14;
-  --color-success-bg: rgba(23, 62, 20, 0.10);
+  --color-success:    var(--green);
+  --color-success-bg: rgba(11, 93, 53, 0.10);
 
   /* ─── Semantic: Warning ─── */
-  --color-warning:    #173E14;
-  --color-warning-bg: rgba(23, 62, 20, 0.10);
+  --color-warning:    var(--yellow);
+  --color-warning-bg: rgba(255, 210, 26, 0.14);
 
   /* ─── Semantic: Error ─── */
-  --color-error:    #C0392B;
+  --color-error:    #c0392b;
   --color-error-bg: rgba(192, 57, 43, 0.10);
 
   /* ─── Semantic: Info ─── */
-  --color-info:    #3498DB;
-  --color-info-bg: rgba(52, 152, 219, 0.10);
+  --color-info:    #2f80ed;
+  --color-info-bg: rgba(47, 128, 237, 0.10);
 
   /* ─── Layout ─── */
   --max-content-width: 1280px;

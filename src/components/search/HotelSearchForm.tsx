@@ -62,8 +62,8 @@ export function HotelSearchForm({ defaults, onSuccess }: HotelSearchFormProps) {
   const today = new Date().toISOString().split('T')[0]
 
   return (
-    <form onSubmit={handleSearch} className="flex flex-col gap-5">
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-4 items-end">
+    <form onSubmit={handleSearch} className="w-full min-h-[150px] rounded-lg bg-[#063b24] p-3 md:p-4 flex flex-col justify-between gap-3 md:gap-4">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-3 items-end md:gap-4">
         <div className="lg:col-span-3">
           <Input
             name="destination"
@@ -72,6 +72,7 @@ export function HotelSearchForm({ defaults, onSuccess }: HotelSearchFormProps) {
             leadingIcon={<MapPin size={16} />}
             defaultValue={defaults?.destination ?? ''}
             required
+            theme="dark-green"
           />
         </div>
 
@@ -83,6 +84,7 @@ export function HotelSearchForm({ defaults, onSuccess }: HotelSearchFormProps) {
             placeholder="Select date"
             minDate={today}
             required
+            theme="dark-green"
           />
           <DatePicker
             label="Check-Out"
@@ -91,25 +93,26 @@ export function HotelSearchForm({ defaults, onSuccess }: HotelSearchFormProps) {
             placeholder="Select date"
             minDate={checkIn || today}
             required
+            theme="dark-green"
           />
         </div>
 
         <div className="lg:col-span-5 grid grid-cols-3 gap-4">
-          <Select name="rooms" label="Rooms" defaultValue={String(defaults?.rooms ?? 1)}>
+          <Select name="rooms" label="Rooms" defaultValue={String(defaults?.rooms ?? 1)} theme="dark-green">
             {ROOM_OPTIONS.map((count) => (
               <option key={count} value={String(count)}>
                 {count}
               </option>
             ))}
           </Select>
-          <Select name="adults" label="Adults" defaultValue={String(defaults?.adults ?? 2)}>
+          <Select name="adults" label="Adults" defaultValue={String(defaults?.adults ?? 2)} theme="dark-green">
             {ADULT_OPTIONS.map((count) => (
               <option key={count} value={String(count)}>
                 {count}
               </option>
             ))}
           </Select>
-          <Select name="children" label="Children" defaultValue={String(defaults?.children ?? 0)}>
+          <Select name="children" label="Children" defaultValue={String(defaults?.children ?? 0)} theme="dark-green">
             {CHILD_OPTIONS.map((count) => (
               <option key={count} value={String(count)}>
                 {count}

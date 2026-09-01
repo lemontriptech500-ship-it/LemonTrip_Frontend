@@ -24,12 +24,12 @@ export function Header() {
     <header
       className={`sticky top-0 z-50 w-full transition-all duration-200 ${
         isScrolled
-          ? 'bg-white shadow-sm border-b border-[rgba(44,62,80,0.08)]'
-          : 'bg-white border-b border-transparent'
+          ? 'bg-[#063b24] text-[#FFD21A] shadow-sm border-b border-[#FFD21A]/20'
+          : 'bg-[#063b24] text-[#FFD21A] border-b border-transparent'
       }`}
       role="banner"
     >
-      <Container as="div" className="flex h-[70px] items-center justify-between">
+      <Container as="div" className="flex h-[76px] items-center justify-between">
         <Link
           href="/"
           className="inline-flex items-center shrink-0"
@@ -38,7 +38,7 @@ export function Header() {
           <img
             src="/lemonTripLogo.jpeg"
             alt={`${SITE_NAME} Logo`}
-            className="h-10 w-auto object-contain"
+            className="h-14 w-auto object-contain"
           />
         </Link>
 

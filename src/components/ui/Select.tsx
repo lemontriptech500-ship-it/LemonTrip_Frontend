@@ -18,6 +18,7 @@ export interface SelectProps
   size?: InputSize
   optional?: boolean
   wrapperClassName?: string
+  theme?: 'default' | 'dark-green'
 }
 
 const selectSizeStyles: Record<InputSize, string> = {
@@ -37,12 +38,14 @@ export function Select({
   wrapperClassName,
   id: idProp,
   children,
+  theme = 'default',
   ...props
 }: SelectProps) {
   const generatedId = useId()
   const id = idProp ?? generatedId
   const helperId = `${id}-helper`
   const hasError = Boolean(error)
+  const isDarkGreen = theme === 'dark-green'
 
   return (
     <div className={cn('flex flex-col gap-1.5', wrapperClassName)}>
@@ -50,7 +53,8 @@ export function Select({
         <label
           htmlFor={id}
           className={cn(
-            'text-label text-[var(--color-text-primary)]',
+            'text-label',
+            isDarkGreen ? 'text-[#FFD21A]' : 'text-[var(--color-text-primary)]',
             disabled && 'opacity-50',
           )}
         >
@@ -71,7 +75,7 @@ export function Select({
           aria-describedby={helperText || error ? helperId : undefined}
           className={cn(
             'w-full appearance-none rounded-[var(--radius-md)] border bg-[var(--color-surface)]',
-            'text-[var(--color-text-primary)]',
+            isDarkGreen ? 'text-[var(--color-primary-dark)]' : 'text-[var(--color-text-primary)]',
             'transition-colors duration-150',
             'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-0',
             selectSizeStyles[size],
@@ -97,7 +101,7 @@ export function Select({
           aria-hidden
           className={cn(
             'pointer-events-none absolute right-3 flex items-center justify-center',
-            'text-[var(--color-text-muted)]',
+            isDarkGreen ? 'text-[#FFD21A]' : 'text-[var(--color-text-muted)]',
             disabled && 'opacity-50'
           )}
         >
