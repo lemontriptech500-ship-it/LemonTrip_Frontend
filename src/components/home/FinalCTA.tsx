@@ -7,8 +7,8 @@ export function FinalCTA() {
   return (
     <section className="py-20 bg-[var(--color-secondary-soft)] relative overflow-hidden">
       <div className="absolute inset-0 opacity-40">
-        <div className="absolute top-0 right-0 w-[400px] h-[400px] bg-[var(--color-secondary)]/20 rounded-full blur-3xl -translate-y-1/2 translate-x-1/3" />
-        <div className="absolute bottom-0 left-0 w-[300px] h-[300px] bg-[var(--color-primary)]/10 rounded-full blur-3xl translate-y-1/2 -translate-x-1/3" />
+        <div className="absolute top-0 right-0 w-[400px] h-[400px] bg-[rgba(52, 152, 219, 0.20) rounded-full blur-3xl -translate-y-1/2 translate-x-1/3" />
+        <div className="absolute bottom-0 left-0 w-[300px] h-[300px] bg-[rgba(39, 174, 96, 0.10) rounded-full blur-3xl translate-y-1/2 -translate-x-1/3" />
       </div>
 
       <Container className="relative z-10 text-center">

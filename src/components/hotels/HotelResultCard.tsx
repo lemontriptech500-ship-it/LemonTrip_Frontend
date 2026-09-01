@@ -28,7 +28,7 @@ export function HotelResultCard({ hotel, nights, search }: HotelResultCardProps)
   const highlightAmenities = hotel.amenities.slice(0, 3)
 
   return (
-    <article className="bg-white rounded-[var(--radius-lg)] overflow-hidden shadow-sm border border-[var(--color-border)] hover:shadow-md hover:border-[var(--color-border-strong)] transition-all duration-200">
+    <article className="bg-[var(--color-surface)] rounded-[var(--radius-lg)] overflow-hidden shadow-sm border border-[var(--color-border)] hover:shadow-md hover:border-[var(--color-border-strong)] transition-all duration-200">
       <div className="flex flex-col md:flex-row min-w-0">
         <div className="relative w-full md:w-60 lg:w-68 shrink-0 aspect-[4/3] md:aspect-auto md:min-h-[200px] bg-[var(--color-surface-secondary)]">
           {image ? (

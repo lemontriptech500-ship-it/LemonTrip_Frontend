@@ -19,8 +19,8 @@ export function PopularPackages() {
             <Card key={pkg.id} hover className="overflow-hidden flex flex-col h-full">
               <div className={`relative h-48 w-full ${pkg.imageFallbackColor}`}>
                 {pkg.imageUrl && <img src={pkg.imageUrl} alt={`${pkg.destination} travel package`} className="h-full w-full object-cover" />}
-                <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent" />
-                <div className="absolute top-3 right-3 bg-white/95 backdrop-blur-sm px-2.5 py-1 rounded-[var(--radius-sm)] text-xs font-bold shadow-sm">
+                <div className="absolute inset-0 bg-gradient-to-t from-[rgba(44,62,80,0.40)] to-transparent" />
+                <div className="absolute top-3 right-3 bg-[var(--color-surface)]/95 backdrop-blur-sm px-2.5 py-1 rounded-[var(--radius-sm)] text-xs font-bold shadow-sm">
                   {pkg.startingPrice}
                 </div>
               </div>

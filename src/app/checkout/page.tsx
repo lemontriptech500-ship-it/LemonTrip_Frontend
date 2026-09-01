@@ -67,7 +67,7 @@ export default function CheckoutPage() {
               </Card>
 
               {/* Security Notice */}
-              <div className="flex items-center gap-3 p-4 rounded-[var(--radius-md)] bg-[var(--color-success-bg)] border border-[var(--color-success)]/20">
+              <div className="flex items-center gap-3 p-4 rounded-[var(--radius-md)] bg-[var(--color-success-bg)] border border-[rgba(39, 174, 96, 0.20)">
                 <ShieldCheck size={20} className="text-[var(--color-success)] shrink-0" />
                 <p className="text-sm text-[var(--color-success)]">
                   Your payment is secured with 256-bit SSL encryption. This is a demo checkout — no real payment will be processed.
@@ -120,7 +120,7 @@ function StepIndicator({ step, label, active = false }: { step: number; label: s
     <div className="flex items-center gap-2">
       <div className={`w-8 h-8 rounded-full flex items-center justify-center text-sm font-semibold ${
         active
-          ? 'bg-[var(--color-primary)] text-white'
+          ? 'bg-[var(--color-primary)] text-[var(--color-text-primary)]'
           : 'bg-[var(--color-surface-secondary)] text-[var(--color-text-muted)]'
       }`}>
         {step}

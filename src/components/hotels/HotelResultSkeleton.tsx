@@ -3,7 +3,7 @@ import { Skeleton } from '@/components/ui'
 
 export function HotelResultSkeleton() {
   return (
-    <div className="bg-white rounded-[var(--radius-lg)] overflow-hidden border border-[var(--color-border)]">
+    <div className="bg-[var(--color-surface)] rounded-[var(--radius-lg)] overflow-hidden border border-[var(--color-border)]">
       <div className="flex flex-col md:flex-row">
         <Skeleton className="w-full md:w-64 lg:w-72 h-48 md:h-auto md:min-h-[220px] rounded-none" />
         <div className="flex-1 p-5 flex flex-col gap-3">

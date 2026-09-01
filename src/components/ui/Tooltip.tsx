@@ -60,7 +60,7 @@ export function Tooltip({
           role="tooltip"
           className={cn(
             'absolute z-50 whitespace-nowrap rounded-[var(--radius-sm)] bg-[var(--color-text-primary)] px-2.5 py-1.5',
-            'text-caption text-white opacity-100 shadow-md transition-opacity',
+            'text-caption text-[var(--color-text-primary)] opacity-100 shadow-md transition-opacity',
             'animate-in fade-in duration-200',
             positionClasses[position],
             className

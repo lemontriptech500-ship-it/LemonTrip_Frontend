@@ -25,7 +25,7 @@ export function QuickCategories() {
                 href={cat.href}
                 className="group flex flex-col items-center gap-2.5 p-4 rounded-[var(--radius-lg)] border border-[var(--color-border-light)] hover:border-[var(--color-primary)] hover:shadow-sm hover:bg-[var(--color-primary-soft)] transition-all duration-200"
               >
-                <div className="p-3 rounded-[var(--radius-md)] bg-[var(--color-surface-secondary)] text-[var(--color-primary)] group-hover:bg-[var(--color-primary)] group-hover:text-white transition-colors duration-200">
+                <div className="p-3 rounded-[var(--radius-md)] bg-[var(--color-surface-secondary)] text-[var(--color-primary)] group-hover:bg-[var(--color-primary)] group-hover:text-[var(--color-text-primary)] transition-colors duration-200">
                   <Icon size={24} strokeWidth={1.5} />
                 </div>
                 <span className="text-body-sm font-medium text-[var(--color-text-primary)]">

@@ -100,11 +100,11 @@ export function Input({
             !hasError && [
               'border-[var(--color-border)]',
               'hover:border-[var(--color-border-strong)]',
-              'focus-visible:border-[var(--color-primary)] focus-visible:ring-[var(--color-primary)]/20',
+              'focus-visible:border-[var(--color-primary)] focus-visible:ring-[rgba(39, 174, 96, 0.20)',
             ],
             hasError && [
               'border-[var(--color-error)]',
-              'focus-visible:border-[var(--color-error)] focus-visible:ring-[var(--color-error)]/20',
+              'focus-visible:border-[var(--color-error)] focus-visible:ring-[rgba(192, 57, 43, 0.20)',
             ],
             disabled && 'cursor-not-allowed opacity-50 bg-[var(--color-surface-secondary)]',
             isDate && 'cursor-pointer',

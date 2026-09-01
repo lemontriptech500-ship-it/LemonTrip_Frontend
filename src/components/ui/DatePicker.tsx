@@ -122,10 +122,10 @@ export function DatePicker({
             'w-full h-11 px-3 rounded-[var(--radius-md)] border bg-[var(--color-surface)]',
             'text-left text-sm flex items-center gap-2',
             'transition-all duration-150',
-            'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-primary)]/20 focus-visible:border-[var(--color-primary)]',
+            'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[rgba(39,174,96,0.20)] focus-visible:border-[var(--color-primary)]',
             !disabled && 'hover:border-[var(--color-border-strong)] cursor-pointer',
             disabled && 'cursor-not-allowed opacity-50 bg-[var(--color-surface-secondary)]',
-            isOpen && 'border-[var(--color-primary)] ring-2 ring-[var(--color-primary)]/20',
+            isOpen && 'border-[var(--color-primary)] ring-2 ring-[rgba(39, 174, 96, 0.20)',
             !displayValue && 'text-[var(--color-text-muted)]'
           )}
         >
@@ -187,9 +187,9 @@ export function DatePicker({
                     className={cn(
                       'h-8 w-full rounded-[var(--radius-sm)] text-sm font-medium transition-all',
                       'flex items-center justify-center',
-                      disabled && 'text-[var(--color-text-muted)]/40 cursor-not-allowed',
+                      disabled && 'text-[rgba(44, 62, 80, 0.20) cursor-not-allowed',
                       !disabled && !selected && 'text-[var(--color-text-primary)] hover:bg-[var(--color-primary-soft)]',
-                      selected && 'bg-[var(--color-primary)] text-white',
+                      selected && 'bg-[var(--color-primary)] text-[var(--color-text-primary)]',
                       today && !selected && 'border border-[var(--color-primary)] text-[var(--color-primary)]'
                     )}
                   >

@@ -53,7 +53,7 @@ export function FlightJourneyDetails({ flight }: FlightJourneyDetailsProps) {
                   
                   <div className="my-4 p-4 rounded-lg bg-[var(--color-surface-secondary)] border border-[var(--color-border-light)] flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
                     <div className="flex items-center gap-3">
-                       <div className="w-8 h-8 rounded-full bg-white flex items-center justify-center font-bold text-xs text-[var(--color-primary)]">
+                       <div className="w-8 h-8 rounded-full bg-[var(--color-surface)] flex items-center justify-center font-bold text-xs text-[var(--color-primary)]">
                          {segment.airlineCode}
                        </div>
                        <div>
@@ -88,7 +88,7 @@ export function FlightJourneyDetails({ flight }: FlightJourneyDetailsProps) {
 
                   {/* Layover */}
                   {!isLastSegment && (
-                    <div className="mt-4 py-2 px-4 rounded-md bg-[var(--color-warning)]/10 text-[var(--color-warning)] text-sm font-medium inline-flex items-center gap-2">
+                    <div className="mt-4 py-2 px-4 rounded-md bg-[rgba(22, 160, 133, 0.10) text-[var(--color-warning)] text-sm font-medium inline-flex items-center gap-2">
                       <MapPin size={16} />
                       Layover in {segment.destination} - {formatDuration(layoverMinutes)}
                     </div>

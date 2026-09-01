@@ -167,7 +167,7 @@ function HotelPaymentContent({ hotelId }: { hotelId: string }) {
             <PaymentSecurityNotice />
 
             {methodError && (
-              <div className="mb-4 p-3 rounded-md bg-[var(--color-error)]/10 text-[var(--color-error)] text-sm font-medium" role="alert">
+              <div className="mb-4 p-3 rounded-md bg-[rgba(192, 57, 43, 0.10) text-[var(--color-error)] text-sm font-medium" role="alert">
                 {methodError}
               </div>
             )}

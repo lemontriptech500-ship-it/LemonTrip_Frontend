@@ -126,7 +126,7 @@ function HotelConfirmationContent({ hotelId }: { hotelId: string }) {
         <div className="flex flex-col lg:flex-row gap-8 items-start">
           <div className="flex-1 w-full min-w-0">
             <section className="rounded-[var(--radius-xl)] border border-[var(--color-border)] bg-[var(--color-surface)] p-6 text-center shadow-sm sm:p-8" role="status" aria-live="polite">
-              <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-[var(--color-success)]/10 text-[var(--color-success)]">
+              <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-[rgba(39, 174, 96, 0.10) text-[var(--color-success)]">
                 <CheckCircle2 size={32} aria-hidden="true" />
               </div>
               <h1 className="text-3xl font-bold text-[var(--color-text-primary)]">Hotel stay flow completed</h1>
@@ -161,7 +161,7 @@ function HotelConfirmationContent({ hotelId }: { hotelId: string }) {
           </div>
 
           <aside className="w-full shrink-0 space-y-4 lg:w-[350px] lg:sticky lg:top-24">
-            <div className="rounded-[var(--radius-lg)] border border-[var(--color-border)] bg-white p-5">
+            <div className="rounded-[var(--radius-lg)] border border-[var(--color-border)] bg-[var(--color-surface)] p-5">
               <h2 className="font-bold text-[var(--color-text-primary)]">Next actions</h2>
               <div className="mt-4 flex flex-col gap-3">
                 <Button fullWidth onClick={() => router.push('/hotels')}>Plan another stay</Button>

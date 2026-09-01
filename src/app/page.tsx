@@ -1,5 +1,7 @@
 import type { Metadata } from 'next'
 import { HeroSection } from '@/components/home/HeroSection'
+import { TravelBenefits } from '@/components/home/TravelBenefits'
+import { PopularDestinations } from '@/components/home/PopularDestinations'
 import { QuickCategories } from '@/components/home/QuickCategories'
 import { FeaturedOffers } from '@/components/home/FeaturedOffers'
 import { TrendingDestinations } from '@/components/home/TrendingDestinations'
@@ -19,6 +21,8 @@ export default function HomePage() {
   return (
     <div className="flex flex-col w-full">
       <HeroSection />
+      <TravelBenefits />
+      <PopularDestinations />
       <QuickCategories />
       <FeaturedOffers />
       <TrendingDestinations />

@@ -39,7 +39,7 @@ export function HotelFilters({
   hasActiveFilters,
 }: HotelFiltersProps) {
   return (
-    <div className="bg-white rounded-[var(--radius-lg)] border border-[var(--color-border)] overflow-hidden">
+    <div className="bg-[var(--color-surface)] rounded-[var(--radius-lg)] border border-[var(--color-border)] overflow-hidden">
       <div className="p-4 border-b border-[var(--color-border)] flex items-center justify-between bg-[var(--color-surface-secondary)]">
         <div className="flex items-center gap-2 font-semibold text-[var(--color-text-primary)]">
           <Filter size={18} aria-hidden />
@@ -182,7 +182,7 @@ export function HotelMobileFilters({ isOpen, onClose, ...filterProps }: HotelMob
   if (!isOpen) return null
 
   return (
-    <div className="fixed inset-0 z-[100] flex bg-black/50 backdrop-blur-sm lg:hidden">
+    <div className="fixed inset-0 z-[100] flex bg-[rgba(44,62,80,0.50)] backdrop-blur-sm lg:hidden">
       <button
         type="button"
         className="flex-1"

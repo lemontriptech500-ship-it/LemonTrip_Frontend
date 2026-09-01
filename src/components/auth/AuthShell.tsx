@@ -24,9 +24,9 @@ export function AuthShell({ mode, children }: AuthShellProps) {
               alt="Mountain lake viewed from a scenic travel overlook"
               className="absolute inset-0 h-full w-full object-cover opacity-75"
             />
-            <div className="absolute inset-0 bg-[var(--color-text-primary)]/65" />
+            <div className="absolute inset-0 bg-[rgba(44, 62, 80, 0.65)" />
             <div className="relative flex h-full flex-col justify-between p-10 text-white">
-              <Link href="/" className="inline-flex items-center rounded-lg bg-white px-2 py-1" aria-label={`${SITE_NAME} home`}>
+              <Link href="/" className="inline-flex items-center rounded-lg bg-[var(--color-surface)] px-2 py-1" aria-label={`${SITE_NAME} home`}>
                 <img src="/lemonTripLogo.jpeg" alt={`${SITE_NAME} Logo`} className="h-9 w-36 object-cover object-center" />
               </Link>
               <div>

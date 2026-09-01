@@ -19,8 +19,8 @@ export default function VisaPage() {
             <Card key={service.id} className="overflow-hidden" hover padding="none">
               <div className="relative h-44">
                 <img src={service.imageUrl} alt={`${service.country} travel visa destination`} className="h-full w-full object-cover" />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/55 to-transparent" />
-                <span className="absolute bottom-4 left-4 flex items-center gap-2 font-semibold text-white text-sm">
+                <div className="absolute inset-0 bg-gradient-to-t from-[rgba(44,62,80,0.55)] to-transparent" />
+                <span className="absolute bottom-4 left-4 flex items-center gap-2 font-semibold text-[var(--color-text-primary)] text-sm">
                   <FileText size={16} />
                   {service.country}
                 </span>

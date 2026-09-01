@@ -1,64 +1,57 @@
 'use client'
 
-import React from 'react'
+import React, { useState } from 'react'
 import { Plane, Bed, BusFront, TrainFront, Briefcase, FileText } from 'lucide-react'
-import { Tabs } from '@/components/ui'
 import { FlightSearchForm } from './FlightSearchForm'
 import { HotelSearchForm } from './HotelSearchForm'
 import { BusSearchForm } from './BusSearchForm'
 import { TrainSearchForm } from './TrainSearchForm'
 import { PackageSearchForm } from './PackageSearchForm'
 import { VisaSearchForm } from './VisaSearchForm'
+import { cn } from '@/lib/utils'
+
+const tabItems = [
+  { id: 'flights', label: 'Flights', icon: Plane, content: <FlightSearchForm /> },
+  { id: 'hotels', label: 'Hotels', icon: Bed, content: <HotelSearchForm /> },
+  { id: 'bus', label: 'Buses', icon: BusFront, content: <BusSearchForm /> },
+  { id: 'trains', label: 'Trains', icon: TrainFront, content: <TrainSearchForm /> },
+  { id: 'packages', label: 'Packages', icon: Briefcase, content: <PackageSearchForm /> },
+  { id: 'visa', label: 'Visa', icon: FileText, content: <VisaSearchForm /> },
+]
 
 export function TravelSearchWidget() {
-  const tabItems = [
-    {
-      id: 'flights',
-      label: 'Flights',
-      icon: <Plane size={16} />,
-      content: <FlightSearchForm />,
-    },
-    {
-      id: 'hotels',
-      label: 'Hotels',
-      icon: <Bed size={16} />,
-      content: <HotelSearchForm />,
-    },
-    {
-      id: 'bus',
-      label: 'Buses',
-      icon: <BusFront size={16} />,
-      content: <BusSearchForm />,
-    },
-    {
-      id: 'trains',
-      label: 'Trains',
-      icon: <TrainFront size={16} />,
-      content: <TrainSearchForm />,
-    },
-    {
-      id: 'packages',
-      label: 'Packages',
-      icon: <Briefcase size={16} />,
-      content: <PackageSearchForm />,
-    },
-    {
-      id: 'visa',
-      label: 'Visa',
-      icon: <FileText size={16} />,
-      content: <VisaSearchForm />,
-    },
-  ]
+  const [activeTab, setActiveTab] = useState('flights')
+  const activeItem = tabItems.find((item) => item.id === activeTab)
 
   return (
-    <div className="bg-white rounded-[var(--radius-xl)] shadow-2xl border border-[var(--color-border)] overflow-hidden w-full max-w-5xl mx-auto">
-      <Tabs
-        items={tabItems}
-        defaultTabId="flights"
-        className="w-full"
-        tabListClassName="px-3 sm:px-5 pt-1.5 bg-[var(--color-primary-soft)]/40"
-        tabContentClassName="p-4 sm:p-6 lg:p-8"
-      />
+    <div className="bg-white rounded-xl shadow-lg border border-[#DDE2E6] overflow-hidden max-w-[1100px] mx-auto">
+      <div className="flex items-center border-b border-[#DDE2E6]">
+        {tabItems.map((tab) => {
+          const Icon = tab.icon
+          const isActive = activeTab === tab.id
+          return (
+            <button
+              key={tab.id}
+              type="button"
+              onClick={() => setActiveTab(tab.id)}
+            className={cn(
+              'flex-1 flex items-center justify-center gap-1.5 py-3 text-sm font-medium transition-all relative',
+              isActive ? 'text-[#20A85A]' : 'text-[#7A8793] hover:text-[#263746]'
+            )}
+          >
+            <Icon size={16} />
+            <span>{tab.label}</span>
+            {isActive && (
+              <span className="absolute bottom-0 left-0 right-0 h-[2px] bg-[#20A85A]" />
+            )}
+            </button>
+          )
+        })}
+      </div>
+
+      <div className="p-5">
+        {activeItem?.content}
+      </div>
     </div>
   )
 }

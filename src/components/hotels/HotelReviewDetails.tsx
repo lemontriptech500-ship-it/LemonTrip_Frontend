@@ -35,7 +35,7 @@ export function HotelReviewDetails({ hotel, booking, query }: HotelReviewDetails
 
   return (
     <div className="space-y-6">
-      <section className="rounded-[var(--radius-lg)] border border-[var(--color-border)] bg-white p-5">
+      <section className="rounded-[var(--radius-lg)] border border-[var(--color-border)] bg-[var(--color-surface)] p-5">
         <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
           <div className="min-w-0">
             <h2 className="text-lg font-bold text-[var(--color-text-primary)]">Stay details</h2>
@@ -63,7 +63,7 @@ export function HotelReviewDetails({ hotel, booking, query }: HotelReviewDetails
         </div>
       </section>
 
-      <section className="rounded-[var(--radius-lg)] border border-[var(--color-border)] bg-white p-5">
+      <section className="rounded-[var(--radius-lg)] border border-[var(--color-border)] bg-[var(--color-surface)] p-5">
         <h2 className="text-lg font-bold text-[var(--color-text-primary)]">Selected rooms</h2>
         <div className="mt-4 space-y-4">
           {items.map((item) => {
@@ -106,7 +106,7 @@ export function HotelReviewDetails({ hotel, booking, query }: HotelReviewDetails
         </div>
       </section>
 
-      <section className="rounded-[var(--radius-lg)] border border-[var(--color-border)] bg-white p-5">
+      <section className="rounded-[var(--radius-lg)] border border-[var(--color-border)] bg-[var(--color-surface)] p-5">
         <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
           <div className="min-w-0">
             <h2 className="text-lg font-bold text-[var(--color-text-primary)]">Guest information</h2>
@@ -125,7 +125,7 @@ export function HotelReviewDetails({ hotel, booking, query }: HotelReviewDetails
         </div>
       </section>
 
-      <section className="rounded-[var(--radius-lg)] border border-[var(--color-border)] bg-white p-5">
+      <section className="rounded-[var(--radius-lg)] border border-[var(--color-border)] bg-[var(--color-surface)] p-5">
         <h2 className="text-lg font-bold text-[var(--color-text-primary)]">Contact information</h2>
         {contact && (
           <p className="mt-2 text-sm text-[var(--color-text-secondary)]">

@@ -70,7 +70,7 @@ export function Modal({
 
   return (
     <div
-      className="fixed inset-0 z-[100] flex items-center justify-center bg-black/50 backdrop-blur-sm transition-opacity"
+      className="fixed inset-0 z-[100] flex items-center justify-center bg-[rgba(44,62,80,0.50)] backdrop-blur-sm transition-opacity"
       role="dialog"
       aria-modal="true"
       aria-labelledby={title ? 'modal-title' : undefined}

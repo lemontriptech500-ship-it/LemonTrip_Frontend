@@ -38,7 +38,7 @@ export function BusSearchForm() {
         <div className="hidden md:flex absolute left-1/3 top-1/2 -translate-x-1/2 translate-y-1/4 z-10">
           <button
             type="button"
-            className="bg-[var(--color-primary)] text-white rounded-full p-2 shadow-md hover:bg-[var(--color-primary-hover)] transition-colors"
+            className="bg-[var(--color-primary)] text-[var(--color-text-primary)] rounded-full p-2 shadow-md hover:bg-[var(--color-primary-hover)] transition-colors"
             aria-label="Swap cities"
           >
             <ArrowRightLeft size={14} />

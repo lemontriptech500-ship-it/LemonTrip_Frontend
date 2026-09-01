@@ -14,8 +14,8 @@ export function CartDrawer() {
 
   return (
     <>
-      <div className="fixed inset-0 z-[60] bg-black/40 backdrop-blur-sm" onClick={closeCart} />
-      <div className="fixed right-0 top-0 z-[70] h-full w-full max-w-md bg-white shadow-2xl flex flex-col">
+      <div className="fixed inset-0 z-[60] bg-[rgba(44,62,80,0.40)] backdrop-blur-sm" onClick={closeCart} />
+      <div className="fixed right-0 top-0 z-[70] h-full w-full max-w-md bg-[var(--color-surface)] shadow-2xl flex flex-col">
         <div className="flex items-center justify-between p-5 border-b border-[var(--color-border)]">
           <div className="flex items-center gap-2">
             <ShoppingBag size={20} className="text-[var(--color-primary)]" />

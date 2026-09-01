@@ -1,16 +1,23 @@
 import type { Metadata } from 'next'
-import { Plus_Jakarta_Sans } from 'next/font/google'
+import { Plus_Jakarta_Sans, Montserrat } from 'next/font/google'
 import { AppShell } from '@/components/layout'
 import { SITE_NAME, SITE_TAGLINE, SITE_URL } from '@/constants'
 import './globals.css'
 
 // ============================================================
-// Font loaded via next/font for zero-layout-shift.
-// Variable exposed as --font-jakarta CSS custom property.
+// Fonts loaded via next/font for zero-layout-shift.
+//  - --font-jakarta  → main body text
+//  - --font-montserrat → headings & non-body text
 // ============================================================
 const jakarta = Plus_Jakarta_Sans({
   subsets: ['latin'],
   variable: '--font-jakarta',
+  display: 'swap',
+})
+
+const montserrat = Montserrat({
+  subsets: ['latin'],
+  variable: '--font-montserrat',
   display: 'swap',
 })
 
@@ -20,6 +27,10 @@ const jakarta = Plus_Jakarta_Sans({
 // ============================================================
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
+  icons: {
+    icon: '/lemonTripLogo.jpeg',
+    apple: '/lemonTripLogo.jpeg',
+  },
   title: {
     default: `${SITE_NAME} — ${SITE_TAGLINE}`,
     template: `%s | ${SITE_NAME}`,
@@ -67,7 +78,7 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="en" className={jakarta.variable} data-scroll-behavior="smooth">
+    <html lang="en" className={`${jakarta.variable} ${montserrat.variable}`} data-scroll-behavior="smooth">
       <body>
         <AppShell>{children}</AppShell>
       </body>

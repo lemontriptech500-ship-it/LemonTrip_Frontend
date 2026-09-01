@@ -22,34 +22,30 @@ export function Header() {
 
   return (
     <header
-      className={`sticky top-0 z-50 w-full flex flex-col transition-all duration-200 ${
+      className={`sticky top-0 z-50 w-full transition-all duration-200 ${
         isScrolled
-          ? 'bg-white shadow-md border-b border-[var(--color-border)]'
-          : 'bg-white/95 backdrop-blur-sm border-b border-[var(--color-border-light)]'
+          ? 'bg-white shadow-sm border-b border-[rgba(44,62,80,0.08)]'
+          : 'bg-white border-b border-transparent'
       }`}
       role="banner"
     >
-      <Container as="div" className="flex h-16 items-center justify-between">
+      <Container as="div" className="flex h-[70px] items-center justify-between">
         <Link
           href="/"
-          className="inline-flex items-center gap-2 shrink-0"
+          className="inline-flex items-center shrink-0"
           aria-label={`${SITE_NAME} — Go to homepage`}
         >
           <img
             src="/lemonTripLogo.jpeg"
             alt={`${SITE_NAME} Logo`}
-            className="h-10 w-[120px] rounded-md object-cover object-center sm:w-[140px]"
+            className="h-10 w-auto object-contain"
           />
         </Link>
 
-        <div className="flex-1 flex justify-center px-4">
-          <DesktopNavigation />
-        </div>
+        <DesktopNavigation />
 
-        <div className="flex items-center gap-2 shrink-0">
-          <AccountEntry />
-          <MobileNavigation />
-        </div>
+        <AccountEntry />
+        <MobileNavigation />
       </Container>
     </header>
   )

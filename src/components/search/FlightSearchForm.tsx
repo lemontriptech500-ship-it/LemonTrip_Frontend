@@ -3,7 +3,6 @@
 import React, { useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { Plane, MapPin, ArrowRightLeft } from 'lucide-react'
-import { Button, Select } from '@/components/ui'
 import { DatePicker } from '@/components/ui/DatePicker'
 import { buildSearchUrl } from '@/lib/searchParams'
 
@@ -41,17 +40,22 @@ export function FlightSearchForm() {
 
   const today = new Date().toISOString().split('T')[0]
 
+  const swapCities = () => {
+    setFromCity(toCity)
+    setToCity(fromCity)
+  }
+
   return (
-    <form onSubmit={handleSearch} className="flex flex-col gap-5">
-      {/* Trip Type Toggle */}
-      <div className="flex items-center gap-2">
+    <form onSubmit={handleSearch} className="bg-white rounded-lg p-3">
+      {/* Trip Type */}
+      <div className="flex items-center gap-2 mb-2">
         <button
           type="button"
           onClick={() => setTripType('oneway')}
-          className={`px-4 py-1.5 rounded-full text-sm font-medium transition-all ${
+          className={`px-3 py-1 rounded-full text-xs font-medium transition-all ${
             tripType === 'oneway'
-              ? 'bg-[var(--color-primary)] text-white shadow-sm'
-              : 'bg-[var(--color-surface-secondary)] text-[var(--color-text-secondary)] hover:bg-[var(--color-border-light)]'
+              ? 'bg-[#F3EAF7] text-[#263746]'
+              : 'bg-[#F5F7F8] text-[#7A8793] hover:bg-[#EEEEEE]'
           }`}
         >
           One Way
@@ -59,75 +63,84 @@ export function FlightSearchForm() {
         <button
           type="button"
           onClick={() => setTripType('roundtrip')}
-          className={`px-4 py-1.5 rounded-full text-sm font-medium transition-all ${
+          className={`px-3 py-1 rounded-full text-xs font-medium transition-all ${
             tripType === 'roundtrip'
-              ? 'bg-[var(--color-primary)] text-white shadow-sm'
-              : 'bg-[var(--color-surface-secondary)] text-[var(--color-text-secondary)] hover:bg-[var(--color-border-light)]'
+              ? 'bg-[#20A85A] text-white'
+              : 'bg-[#F5F7F8] text-[#7A8793] hover:bg-[#EEEEEE]'
           }`}
         >
           Round Trip
         </button>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4 items-end">
-        <div className="lg:col-span-2 grid grid-cols-1 md:grid-cols-2 gap-4 relative">
-          <div className="flex flex-col gap-1.5">
-            <label className="text-label text-[var(--color-text-primary)]">From</label>
-            <div className="relative">
-              <Plane size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-[var(--color-text-muted)]" />
-              <input
-                type="text"
-                value={fromCity}
-                onChange={(e) => setFromCity(e.target.value)}
-                placeholder="Departure City"
-                required
-                className="w-full h-11 pl-10 pr-3 rounded-[var(--radius-md)] border border-[var(--color-border)] bg-[var(--color-surface)] text-sm text-[var(--color-text-primary)] placeholder:text-[var(--color-text-muted)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-primary)]/20 focus-visible:border-[var(--color-primary)] hover:border-[var(--color-border-strong)] transition-all"
-              />
-            </div>
-          </div>
-
-          <div className="hidden md:flex absolute left-1/2 top-1/2 -translate-x-1/2 translate-y-1/4 z-10">
-            <button
-              type="button"
-              onClick={() => {
-                const temp = fromCity
-                setFromCity(toCity)
-                setToCity(temp)
-              }}
-              className="bg-[var(--color-primary)] text-white rounded-full p-2 shadow-md hover:bg-[var(--color-primary-hover)] transition-colors"
-              aria-label="Swap origins"
-            >
-              <ArrowRightLeft size={14} />
-            </button>
-          </div>
-
-          <div className="flex flex-col gap-1.5">
-            <label className="text-label text-[var(--color-text-primary)]">To</label>
-            <div className="relative">
-              <MapPin size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-[var(--color-text-muted)]" />
-              <input
-                type="text"
-                value={toCity}
-                onChange={(e) => setToCity(e.target.value)}
-                placeholder="Arrival City"
-                required
-                className="w-full h-11 pl-10 pr-3 rounded-[var(--radius-md)] border border-[var(--color-border)] bg-[var(--color-surface)] text-sm text-[var(--color-text-primary)] placeholder:text-[var(--color-text-muted)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-primary)]/20 focus-visible:border-[var(--color-primary)] hover:border-[var(--color-border-strong)] transition-all"
-              />
-            </div>
+      {/* All fields in one row on desktop, stacked on mobile */}
+      <div className="flex flex-col md:flex-row md:items-end gap-2">
+        {/* FROM */}
+        <div className="flex-1 min-w-0">
+          <div className="relative">
+            <Plane size={14} className="absolute left-2.5 top-1/2 -translate-y-1/2 text-[#7A8793] pointer-events-none" />
+            <input
+              type="text"
+              value={fromCity}
+              onChange={(e) => setFromCity(e.target.value)}
+              placeholder="Departure City"
+              required
+              className="w-full h-10 pl-8 pr-2 rounded-[10px] border border-[#DDE2E6] bg-white text-xs text-[#263746] placeholder:text-[#7A8793] focus:outline-none focus:border-[#20A85A] transition-colors"
+            />
           </div>
         </div>
 
-        <div className="grid grid-cols-2 gap-4 lg:col-span-2">
+        {/* Swap - hidden on mobile, visible on md+ */}
+        <button
+          type="button"
+          onClick={swapCities}
+          className="hidden md:flex w-7 h-7 rounded-full bg-[#20A85A] text-white items-center justify-center shadow-sm hover:bg-[#087A3E] transition-colors shrink-0 mb-[1px]"
+          aria-label="Swap cities"
+        >
+          <ArrowRightLeft size={12} />
+        </button>
+
+        {/* Mobile swap - inline between inputs on mobile */}
+        <div className="flex md:hidden items-center justify-center">
+          <button
+            type="button"
+            onClick={swapCities}
+            className="w-7 h-7 rounded-full bg-[#20A85A] text-white flex items-center justify-center shadow-sm hover:bg-[#087A3E] transition-colors"
+            aria-label="Swap cities"
+          >
+            <ArrowRightLeft size={12} />
+          </button>
+        </div>
+
+        {/* TO */}
+        <div className="flex-1 min-w-0">
+          <div className="relative">
+            <MapPin size={14} className="absolute left-2.5 top-1/2 -translate-y-1/2 text-[#7A8793] pointer-events-none" />
+            <input
+              type="text"
+              value={toCity}
+              onChange={(e) => setToCity(e.target.value)}
+              placeholder="Arrival City"
+              required
+              className="w-full h-10 pl-8 pr-2 rounded-[10px] border border-[#DDE2E6] bg-white text-xs text-[#263746] placeholder:text-[#7A8793] focus:outline-none focus:border-[#20A85A] transition-colors"
+            />
+          </div>
+        </div>
+
+        {/* DEPARTURE */}
+        <div className="flex-1 min-w-0">
           <DatePicker
-            label="Departure"
             value={departureDate}
             onChange={setDepartureDate}
             placeholder="Select date"
             minDate={today}
             required
           />
+        </div>
+
+        {/* RETURN */}
+        <div className="flex-1 min-w-0">
           <DatePicker
-            label="Return"
             value={returnDate}
             onChange={setReturnDate}
             placeholder="Select date"
@@ -137,23 +150,39 @@ export function FlightSearchForm() {
           />
         </div>
 
-        <Select
-          name="travelClass"
-          label="Travellers & Class"
-          defaultValue="1-economy"
-        >
-          <option value="1-economy">1 Adult, Economy</option>
-          <option value="2-economy">2 Adults, Economy</option>
-          <option value="1-business">1 Adult, Business</option>
-          <option value="2-business">2 Adults, Business</option>
-        </Select>
-      </div>
+        {/* TRAVELLERS & CLASS */}
+        <div className="flex-1 min-w-0">
+          <div className="relative">
+            <select
+              defaultValue="1-economy"
+              className="w-full h-10 pl-2 pr-7 rounded-[10px] border border-[#DDE2E6] bg-white text-xs text-[#263746] appearance-none focus:outline-none focus:border-[#20A85A] transition-colors cursor-pointer"
+            >
+              <option value="1-economy">1 Adult, Economy</option>
+              <option value="2-economy">2 Adults, Economy</option>
+              <option value="1-business">1 Adult, Business</option>
+              <option value="2-business">2 Adults, Business</option>
+            </select>
+            <ChevronDown size={12} className="absolute right-2 top-1/2 -translate-y-1/2 text-[#7A8793] pointer-events-none" />
+          </div>
+        </div>
 
-      <div className="flex justify-end">
-        <Button type="submit" size="lg" className="w-full md:w-auto px-10">
+        {/* Search */}
+        <button
+          type="submit"
+          className="w-full md:w-[130px] h-10 rounded-[10px] bg-[#20A85A] hover:bg-[#087A3E] text-white font-semibold text-xs transition-colors flex items-center justify-center gap-1.5 shrink-0"
+        >
+          <Plane size={14} />
           Search Flights
-        </Button>
+        </button>
       </div>
     </form>
+  )
+}
+
+function ChevronDown({ size, className }: { size: number; className?: string }) {
+  return (
+    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}>
+      <path d="m6 9 6 6 6-6" />
+    </svg>
   )
 }

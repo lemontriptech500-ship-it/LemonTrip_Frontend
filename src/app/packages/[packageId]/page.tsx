@@ -33,10 +33,10 @@ export default async function PackageDetailsPage({ params }: { params: Promise<{
         <Card className="mt-6 overflow-hidden" padding="none">
           <div className={`relative h-72 ${pkg.imageFallbackColor}`}>
             {pkg.imageUrl && <img src={pkg.imageUrl} alt={`${pkg.destination} travel package`} className="h-full w-full object-cover" />}
-            <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
+            <div className="absolute inset-0 bg-gradient-to-t from-[rgba(44,62,80,0.60)] to-transparent" />
             <div className="absolute bottom-6 left-6">
-              <Badge variant="neutral" className="mb-2 bg-white/90">{pkg.duration}</Badge>
-              <h1 className="text-3xl font-bold text-white">{pkg.destination}</h1>
+              <Badge variant="neutral" className="mb-2 bg-[var(--color-surface)]/90">{pkg.duration}</Badge>
+              <h1 className="text-3xl font-bold text-[var(--color-text-primary)]">{pkg.destination}</h1>
             </div>
           </div>
 
@@ -58,7 +58,7 @@ export default async function PackageDetailsPage({ params }: { params: Promise<{
                 <p className="text-caption text-[var(--color-text-secondary)]">Starting from</p>
                 <p className="text-2xl font-bold text-[var(--color-text-primary)]">{pkg.startingPrice}</p>
               </div>
-              <div className="flex items-center gap-2 px-4 py-2 rounded-[var(--radius-md)] bg-[var(--color-warning-bg)] border border-[var(--color-warning)]/20">
+              <div className="flex items-center gap-2 px-4 py-2 rounded-[var(--radius-md)] bg-[var(--color-warning-bg)] border border-[rgba(22, 160, 133, 0.20)">
                 <AlertCircle size={16} className="text-[var(--color-warning)]" />
                 <span className="text-sm font-medium text-[var(--color-warning)]">Booking coming soon</span>
               </div>

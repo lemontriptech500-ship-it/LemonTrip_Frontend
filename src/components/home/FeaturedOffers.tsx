@@ -27,7 +27,7 @@ export function FeaturedOffers() {
                 ) : (
                   <Tag className="absolute inset-0 m-auto text-[var(--color-text-muted)]" size={40} aria-hidden="true" />
                 )}
-                <div className="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent" />
+                <div className="absolute inset-0 bg-gradient-to-t from-[rgba(44,62,80,0.30)] to-transparent" />
               </div>
               
               <div className="p-4 flex flex-col flex-grow">

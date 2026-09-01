@@ -3,60 +3,59 @@
 @tailwind utilities;
 
 /* ============================================================
-   LEMONTRIP DESIGN TOKENS — Premium B2B
-   Single source of truth for all visual decisions.
-   Update here to retheme the entire application.
+   LEMONTRIP DESIGN TOKENS — Premium Travel
+   Approved palette: #27AE60 | #3498DB | #16A085 | #FDFEFE | #F4ECF7 | #E9DAC4 | #2C3E50
    ============================================================ */
 
 :root {
-  /* ─── Brand Primary — Deep Navy (trust, authority) ─── */
-  --color-primary:        #1B365D;
-  --color-primary-hover:  #152A4A;
-  --color-primary-active: #0F1F38;
-  --color-primary-dark:   #0F1F38;
-  --color-primary-soft:   #E8EEF5;
+  /* ─── Brand Primary — Nature Green (#27AE60) ─── */
+  --color-primary:        #27AE60;
+  --color-primary-hover:  #219A52;
+  --color-primary-active: #1E8C4A;
+  --color-primary-dark:   #1B7A43;
+  --color-primary-soft:   rgba(39, 174, 96, 0.10);
 
-  /* ─── Brand Secondary — Teal (growth, action) ─── */
-  --color-secondary:       #0D9394;
-  --color-secondary-hover: #0A7A7B;
-  --color-secondary-soft:  #E0F4F4;
+  /* ─── Sky / Water — Supporting Accent (#3498DB) ─── */
+  --color-secondary:       #3498DB;
+  --color-secondary-hover: #2980B9;
+  --color-secondary-soft:  rgba(52, 152, 219, 0.10);
 
-  /* ─── Brand Accent — Warm Gold (highlights, CTAs) ─── */
-  --color-accent:          #D4A843;
-  --color-accent-hover:    #B8922E;
-  --color-accent-soft:     #FBF6EB;
+  /* ─── Teal — Supporting Accent (#16A085) ─── */
+  --color-accent:      #16A085;
+  --color-accent-hover:    #0F8B73;
+  --color-accent-soft:     rgba(22, 160, 133, 0.10);
 
   /* ─── Neutral Surfaces ─── */
-  --color-background:        #FAFBFC;
+  --color-background:        #FDFEFE;
   --color-surface:           #FFFFFF;
-  --color-background-soft:   #F0F4F8;
-  --color-surface-secondary: #F0F4F8;
+  --color-background-soft:   #F4ECF7;
+  --color-surface-secondary: #F4ECF7;
 
-  /* ─── Text ─── */
-  --color-text-primary:   #1A2332;
-  --color-text-secondary: #5A6B7F;
-  --color-text-muted:     #8899AA;
+  /* ─── Typography (#2C3E50) ─── */
+  --color-text-primary:   #2C3E50;
+  --color-text-secondary: rgba(44, 62, 80, 0.72);
+  --color-text-muted:     rgba(44, 62, 80, 0.50);
 
   /* ─── Borders ─── */
-  --color-border:       #D9E2EC;
-  --color-border-light: #EDF2F7;
-  --color-border-strong: #B8C8D8;
+  --color-border:       rgba(44, 62, 80, 0.14);
+  --color-border-light: rgba(44, 62, 80, 0.07);
+  --color-border-strong: rgba(44, 62, 80, 0.22);
 
   /* ─── Semantic: Success ─── */
-  --color-success:    #057A55;
-  --color-success-bg: #ECFDF5;
+  --color-success:    #27AE60;
+  --color-success-bg: rgba(39, 174, 96, 0.10);
 
   /* ─── Semantic: Warning ─── */
-  --color-warning:    #B45309;
-  --color-warning-bg: #FFFBEB;
+  --color-warning:    #16A085;
+  --color-warning-bg: rgba(22, 160, 133, 0.10);
 
   /* ─── Semantic: Error ─── */
-  --color-error:    #DC2626;
-  --color-error-bg: #FEF2F2;
+  --color-error:    #C0392B;
+  --color-error-bg: rgba(192, 57, 43, 0.10);
 
   /* ─── Semantic: Info ─── */
-  --color-info:    #1B365D;
-  --color-info-bg: #E8EEF5;
+  --color-info:    #3498DB;
+  --color-info-bg: rgba(52, 152, 219, 0.10);
 
   /* ─── Layout ─── */
   --max-content-width: 1280px;
@@ -73,11 +72,11 @@
 
   /* ─── Shadow / Elevation Scale ─── */
   --shadow-none: none;
-  --shadow-xs:   0 1px 2px 0 rgb(26 35 50 / 0.04);
-  --shadow-sm:   0 1px 3px 0 rgb(26 35 50 / 0.06), 0 1px 2px -1px rgb(26 35 50 / 0.04);
-  --shadow-md:   0 4px 8px -2px rgb(26 35 50 / 0.08), 0 2px 4px -2px rgb(26 35 50 / 0.04);
-  --shadow-lg:   0 10px 20px -5px rgb(26 35 50 / 0.08), 0 4px 8px -4px rgb(26 35 50 / 0.04);
-  --shadow-xl:   0 20px 40px -10px rgb(26 35 50 / 0.10), 0 8px 16px -8px rgb(26 35 50 / 0.06);
+  --shadow-xs:   0 1px 2px 0 rgb(44 62 80 / 0.04);
+  --shadow-sm:   0 1px 3px 0 rgb(44 62 80 / 0.06), 0 1px 2px -1px rgb(44 62 80 / 0.04);
+  --shadow-md:   0 4px 8px -2px rgb(44 62 80 / 0.08), 0 2px 4px -2px rgb(44 62 80 / 0.04);
+  --shadow-lg:   0 10px 20px -5px rgb(44 62 80 / 0.08), 0 4px 8px -4px rgb(44 62 80 / 0.04);
+  --shadow-xl:   0 20px 40px -10px rgb(44 62 80 / 0.10), 0 8px 16px -8px rgb(44 62 80 / 0.06);
 
   /* ─── Transitions ─── */
   --transition-fast: 150ms cubic-bezier(0.4, 0, 0.2, 1);
@@ -170,6 +169,7 @@
 @layer components {
   .text-display {
     @apply text-4xl font-bold leading-[1.10] tracking-tight;
+    font-family: var(--font-montserrat), system-ui, sans-serif;
   }
   @media (min-width: 768px) {
     .text-display { font-size: 3.5rem; }
@@ -177,6 +177,7 @@
 
   .text-h1 {
     @apply text-2xl font-bold leading-[1.15] tracking-tight;
+    font-family: var(--font-montserrat), system-ui, sans-serif;
   }
   @media (min-width: 768px) {
     .text-h1 { font-size: 2.25rem; }
@@ -184,6 +185,7 @@
 
   .text-h2 {
     @apply text-xl font-semibold leading-[1.20] tracking-tight;
+    font-family: var(--font-montserrat), system-ui, sans-serif;
   }
   @media (min-width: 768px) {
     .text-h2 { font-size: 1.625rem; }
@@ -191,6 +193,7 @@
 
   .text-h3 {
     @apply text-lg font-semibold leading-[1.25];
+    font-family: var(--font-montserrat), system-ui, sans-serif;
   }
   @media (min-width: 768px) {
     .text-h3 { font-size: 1.25rem; }
@@ -198,6 +201,7 @@
 
   .text-h4 {
     @apply text-base font-semibold leading-snug;
+    font-family: var(--font-montserrat), system-ui, sans-serif;
   }
 
   .text-body-lg {
@@ -220,10 +224,12 @@
 
   .text-label {
     @apply text-xs font-semibold uppercase tracking-wider;
+    font-family: var(--font-montserrat), system-ui, sans-serif;
   }
 
   .text-caption {
     @apply text-xs font-normal leading-normal tracking-wide;
+    font-family: var(--font-montserrat), system-ui, sans-serif;
   }
 
   /* ============================================================
@@ -341,5 +347,21 @@
 
   ::-webkit-scrollbar-thumb:hover {
     background: var(--color-text-muted);
+  }
+
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
+  }
+  .scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+
+  .hide-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+  .hide-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
   }
 }

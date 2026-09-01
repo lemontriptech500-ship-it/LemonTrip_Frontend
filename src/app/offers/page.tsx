@@ -23,7 +23,7 @@ export default function OffersPage() {
                 ) : (
                   <Tag className="absolute inset-0 m-auto text-[var(--color-text-muted)]" size={40} aria-hidden="true" />
                 )}
-                <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent" />
+                <div className="absolute inset-0 bg-gradient-to-t from-[rgba(44,62,80,0.40)] to-transparent" />
               </div>
               <div className="p-5">
                 <p className="text-label text-[var(--color-primary)]">{offer.category}</p>

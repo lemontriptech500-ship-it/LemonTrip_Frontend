@@ -29,7 +29,7 @@ export function HotelConfirmationDetails({ hotel, booking }: HotelConfirmationDe
 
   return (
     <div className="space-y-6">
-      <section className="rounded-[var(--radius-lg)] border border-[var(--color-border)] bg-white p-5">
+      <section className="rounded-[var(--radius-lg)] border border-[var(--color-border)] bg-[var(--color-surface)] p-5">
         <h2 className="text-lg font-bold text-[var(--color-text-primary)]">Stay details</h2>
         <p className="mt-2 font-medium text-[var(--color-text-primary)]">{hotel.name}</p>
         <p className="text-sm text-[var(--color-text-secondary)]">
@@ -69,7 +69,7 @@ export function HotelConfirmationDetails({ hotel, booking }: HotelConfirmationDe
         </dl>
       </section>
 
-      <section className="rounded-[var(--radius-lg)] border border-[var(--color-border)] bg-white p-5">
+      <section className="rounded-[var(--radius-lg)] border border-[var(--color-border)] bg-[var(--color-surface)] p-5">
         <h2 className="text-lg font-bold text-[var(--color-text-primary)]">Selected rooms</h2>
         <div className="mt-4 space-y-5">
           {selections.map((item) => {
@@ -108,7 +108,7 @@ export function HotelConfirmationDetails({ hotel, booking }: HotelConfirmationDe
         </div>
       </section>
 
-      <section className="rounded-[var(--radius-lg)] border border-[var(--color-border)] bg-white p-5">
+      <section className="rounded-[var(--radius-lg)] border border-[var(--color-border)] bg-[var(--color-surface)] p-5">
         <h2 className="text-lg font-bold text-[var(--color-text-primary)]">Guest and contact details</h2>
         <div className="mt-4 grid grid-cols-1 gap-4 text-sm sm:grid-cols-2">
           <div>
@@ -140,7 +140,7 @@ export function HotelConfirmationDetails({ hotel, booking }: HotelConfirmationDe
         <p className="mt-2 text-xs text-[var(--color-text-secondary)]">No taxes, service fees, or discounts added.</p>
       </section>
 
-      <section className="rounded-[var(--radius-lg)] border border-[var(--color-border)] bg-white p-5">
+      <section className="rounded-[var(--radius-lg)] border border-[var(--color-border)] bg-[var(--color-surface)] p-5">
         <h2 className="text-lg font-bold text-[var(--color-text-primary)]">Important stay information</h2>
         <ul className="mt-3 list-disc space-y-2 pl-5 text-sm text-[var(--color-text-secondary)]">
           <li>Check-in from {hotel.checkInTime}. Check-out by {hotel.checkOutTime}.</li>

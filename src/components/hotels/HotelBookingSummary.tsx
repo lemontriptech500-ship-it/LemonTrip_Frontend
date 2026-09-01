@@ -30,7 +30,7 @@ export function HotelBookingSummary({ hotel, booking, query, continueAction }: H
   )
 
   return (
-    <aside className="rounded-[var(--radius-lg)] border border-[var(--color-border)] bg-white p-5 lg:sticky lg:top-24">
+    <aside className="rounded-[var(--radius-lg)] border border-[var(--color-border)] bg-[var(--color-surface)] p-5 lg:sticky lg:top-24">
       <h2 className="font-bold text-[var(--color-text-primary)]">Price summary</h2>
       <p className="mt-2 font-medium text-[var(--color-text-primary)]">{hotel.name}</p>
       <p className="text-sm text-[var(--color-text-secondary)]">

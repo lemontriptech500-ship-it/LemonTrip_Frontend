@@ -188,7 +188,7 @@ export default function PaymentPage({ params }: { params: Promise<{ flightId: st
             <PaymentSecurityNotice />
 
             {methodError && (
-              <div className="mb-4 p-3 rounded-md bg-[var(--color-error)]/10 text-[var(--color-error)] text-sm font-medium">
+              <div className="mb-4 p-3 rounded-md bg-[rgba(192, 57, 43, 0.10) text-[var(--color-error)] text-sm font-medium">
                 {methodError}
               </div>
             )}

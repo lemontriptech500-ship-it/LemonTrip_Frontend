@@ -11,7 +11,7 @@ export function DesktopNavigation() {
   const desktopItems = NAV_ITEMS.filter((item) => !('mobileOnly' in item && item.mobileOnly))
 
   return (
-    <nav aria-label="Desktop Main Navigation" className="hidden lg:flex items-center gap-0.5">
+    <nav aria-label="Desktop Main Navigation" className="hidden lg:flex items-center gap-1">
       {desktopItems.map((item) => {
         const isActive = pathname === item.href || (item.href !== '/' && pathname.startsWith(`${item.href}/`))
 
@@ -21,17 +21,13 @@ export function DesktopNavigation() {
             href={item.href}
             aria-current={isActive ? 'page' : undefined}
             className={cn(
-              'relative px-3 py-2 rounded-[var(--radius-md)] text-sm font-medium transition-all duration-200',
-              'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-primary)]',
+              'px-3 py-2 rounded-md text-sm font-medium transition-colors duration-200',
               isActive
                 ? 'text-[var(--color-primary)]'
-                : 'text-[var(--color-text-secondary)] hover:text-[var(--color-text-primary)] hover:bg-[var(--color-surface-secondary)]'
+                :             'text-[#263746] hover:text-[#FAD311] hover:bg-[rgba(44,62,80,0.04)]'
             )}
           >
             {item.label}
-            {isActive && (
-              <span className="absolute bottom-0 left-1/2 -translate-x-1/2 w-4 h-0.5 rounded-full bg-[var(--color-primary)]" />
-            )}
           </Link>
         )
       })}

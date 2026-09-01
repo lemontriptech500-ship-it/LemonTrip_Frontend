@@ -19,7 +19,7 @@ export function FlightResultCard({ flight }: FlightResultCardProps) {
   }
 
   return (
-    <div className="bg-white rounded-[var(--radius-lg)] p-5 flex flex-col md:flex-row items-center gap-5 shadow-sm border border-[var(--color-border)] hover:shadow-md hover:border-[var(--color-border-strong)] transition-all duration-200">
+    <div className="bg-[var(--color-surface)] rounded-[var(--radius-lg)] p-5 flex flex-col md:flex-row items-center gap-5 shadow-sm border border-[var(--color-border)] hover:shadow-md hover:border-[var(--color-border-strong)] transition-all duration-200">
 
       <div className="flex flex-row md:flex-col items-center gap-3 w-full md:w-28 shrink-0">
         <div className="w-11 h-11 rounded-[var(--radius-md)] bg-[var(--color-primary-soft)] flex items-center justify-center font-bold text-[var(--color-primary)] text-sm">

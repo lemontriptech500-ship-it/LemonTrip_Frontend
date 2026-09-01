@@ -50,7 +50,7 @@ export function FlightFilters({
     filters.priceRange[1] < 20000;
 
   return (
-    <div className="bg-white rounded-[var(--radius-lg)] border border-[var(--color-border)] overflow-hidden">
+    <div className="bg-[var(--color-surface)] rounded-[var(--radius-lg)] border border-[var(--color-border)] overflow-hidden">
       
       {/* Header */}
       <div className="p-4 border-b border-[var(--color-border)] flex items-center justify-between bg-[var(--color-surface-secondary)]">

@@ -327,7 +327,7 @@ export default function DesignSystemPage() {
   )
 }
 
-function ColorBox({ label, color, textColor = '#ffffff', hasBorder = false }: { label: string, color: string, textColor?: string, hasBorder?: boolean }) {
+function ColorBox({ label, color, textColor = 'var(--color-text-primary)', hasBorder = false }: { label: string, color: string, textColor?: string, hasBorder?: boolean }) {
   return (
     <div className="flex flex-col overflow-hidden rounded-[var(--radius-md)] border border-[var(--color-border)] shadow-sm">
       <div 

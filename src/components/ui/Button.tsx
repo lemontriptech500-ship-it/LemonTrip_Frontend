@@ -15,15 +15,15 @@ interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
 
 const variantStyles: Record<ButtonVariant, string> = {
   primary:
-    'bg-[var(--color-primary)] text-white hover:bg-[var(--color-primary-hover)] active:bg-[var(--color-primary-active)] focus-visible:ring-[var(--color-primary)] shadow-sm',
+    'bg-[var(--color-primary)] text-[var(--color-text-primary)] hover:bg-[var(--color-primary-hover)] active:bg-[var(--color-primary-active)] focus-visible:ring-[var(--color-primary)] shadow-sm',
   secondary:
-    'bg-[var(--color-secondary)] text-white hover:bg-[var(--color-secondary-hover)] active:bg-[var(--color-secondary-hover)] focus-visible:ring-[var(--color-secondary)] shadow-sm',
+    'bg-[var(--color-secondary)] text-[var(--color-text-primary)] hover:bg-[var(--color-secondary-hover)] active:bg-[var(--color-secondary-hover)] focus-visible:ring-[var(--color-secondary)] shadow-sm',
   outline:
-    'border border-[var(--color-border-strong)] bg-white text-[var(--color-text-primary)] hover:bg-[var(--color-surface-secondary)] hover:border-[var(--color-text-muted)] focus-visible:ring-[var(--color-primary)]',
+    'border border-[var(--color-border-strong)] bg-[var(--color-surface)] text-[var(--color-text-primary)] hover:bg-[var(--color-surface-secondary)] hover:border-[var(--color-text-muted)] focus-visible:ring-[var(--color-primary)]',
   ghost:
     'bg-transparent text-[var(--color-text-secondary)] hover:bg-[var(--color-surface-secondary)] hover:text-[var(--color-text-primary)] focus-visible:ring-[var(--color-primary)]',
   danger:
-    'bg-[var(--color-error)] text-white hover:bg-[var(--color-error)]/90 active:bg-[var(--color-error)]/80 focus-visible:ring-[var(--color-error)] shadow-sm',
+    'bg-[var(--color-error)] text-[var(--color-text-primary)] hover:bg-[rgba(192, 57, 43, 0.90) active:bg-[rgba(192, 57, 43, 0.80) focus-visible:ring-[var(--color-error)] shadow-sm',
 }
 
 const sizeStyles: Record<ButtonSize, string> = {

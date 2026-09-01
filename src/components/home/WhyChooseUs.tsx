@@ -43,8 +43,17 @@ const features = [
 
 export function WhyChooseUs() {
   return (
-    <section className="section-gap bg-[var(--color-surface)]">
-      <Container>
+    <section className="section-gap bg-[var(--color-surface)] relative overflow-hidden">
+      {/* Background Logo */}
+      <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
+        <img
+          src="/logo.svg"
+          alt=""
+          className="w-[500px] h-[500px] object-contain opacity-[0.04]"
+        />
+      </div>
+
+      <Container className="relative z-10">
         <SectionHeading 
           title="Why Choose LemonTrip" 
           description="We are committed to providing you with the best travel booking experience."
@@ -55,7 +64,7 @@ export function WhyChooseUs() {
           {features.map((feature) => {
             const Icon = feature.icon
             return (
-              <div key={feature.id} className="flex gap-4 p-5 rounded-[var(--radius-lg)] border border-[var(--color-border-light)] bg-white hover:shadow-sm transition-shadow">
+              <div key={feature.id} className="flex gap-4 p-5 rounded-[var(--radius-lg)] border border-[var(--color-border-light)] bg-[var(--color-surface)] hover:shadow-sm transition-shadow">
                 <div className="shrink-0">
                   <div className="w-10 h-10 rounded-[var(--radius-md)] bg-[var(--color-primary-soft)] text-[var(--color-primary)] flex items-center justify-center">
                     <Icon size={20} />
