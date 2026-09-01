@@ -18,14 +18,14 @@ export function Footer() {
               aria-label={`${SITE_NAME} — Go to homepage`}
             >
               <span>Lemon</span>
-              <span className="text-[#27AE60]">Trip</span>
+              <span className="text-[var(--color-primary)]">Trip</span>
             </Link>
             <p className="text-sm text-[rgba(253,254,255,0.85)] max-w-sm leading-relaxed">
               {SITE_TAGLINE} Book flights, hotels, and holiday packages with ease.
             </p>
 
             <div className="flex flex-col gap-3 mt-2">
-              <h4 className="text-xs font-semibold uppercase tracking-widest text-[#27AE60]">Connect With Us</h4>
+              <h4 className="text-xs font-semibold uppercase tracking-widest text-[var(--color-primary)]">Connect With Us</h4>
               <div className="flex flex-col gap-2.5">
                 <SocialLink
                   href="https://www.instagram.com/lemontripofficial?igsi=NWpxNjUwaWo4ODZp"
@@ -58,7 +58,7 @@ export function Footer() {
           <div className="grid grid-cols-2 gap-8 sm:grid-cols-3 lg:col-span-8 lg:gap-10">
             {FOOTER_NAV.map((group) => (
               <div key={group.heading} className="flex flex-col gap-4">
-                <h3 className="text-sm font-semibold uppercase tracking-widest text-[#27AE60]">
+                <h3 className="text-sm font-semibold uppercase tracking-widest text-[var(--color-primary)]">
                   {group.heading}
                 </h3>
                 <ul className="flex flex-col gap-3">
@@ -66,9 +66,9 @@ export function Footer() {
                     <li key={link.href}>
                       <Link
                         href={link.href}
-                        className="group inline-flex items-center gap-1 text-sm text-[rgba(253,254,255,0.85)] hover:text-[#27AE60] transition-colors"
+                        className="group inline-flex items-center gap-1 text-sm text-[rgba(253,254,255,0.85)] hover:text-[var(--color-primary)] transition-colors"
                       >
-                        <span className="border-b border-transparent group-hover:border-[#27AE60] transition-all">
+                        <span className="border-b border-transparent group-hover:border-[var(--color-primary)] transition-all">
                           {link.label}
                         </span>
                         <ArrowUpRight size={12} className="opacity-0 group-hover:opacity-100 transition-opacity" />
@@ -80,14 +80,14 @@ export function Footer() {
             ))}
 
             <div className="flex flex-col gap-4">
-              <h3 className="text-sm font-semibold uppercase tracking-widest text-[#27AE60]">Contact</h3>
+              <h3 className="text-sm font-semibold uppercase tracking-widest text-[var(--color-primary)]">Contact</h3>
               <ul className="flex flex-col gap-3">
                 <li>
                   <a
                     href="mailto:lemontripindia@gmail.com"
-                    className="group inline-flex items-center gap-1 text-sm text-[rgba(253,254,255,0.85)] hover:text-[#27AE60] transition-colors"
+                    className="group inline-flex items-center gap-1 text-sm text-[rgba(253,254,255,0.85)] hover:text-[var(--color-primary)] transition-colors"
                   >
-                    <span className="border-b border-transparent group-hover:border-[#27AE60] transition-all">
+                    <span className="border-b border-transparent group-hover:border-[var(--color-primary)] transition-all">
                       lemontripindia@gmail.com
                     </span>
                   </a>
@@ -95,9 +95,9 @@ export function Footer() {
                 <li>
                   <a
                     href="https://wa.me/919876543210"
-                    className="group inline-flex items-center gap-1 text-sm text-[rgba(253,254,255,0.85)] hover:text-[#27AE60] transition-colors"
+                    className="group inline-flex items-center gap-1 text-sm text-[rgba(253,254,255,0.85)] hover:text-[var(--color-primary)] transition-colors"
                   >
-                    <span className="border-b border-transparent group-hover:border-[#27AE60] transition-all">
+                    <span className="border-b border-transparent group-hover:border-[var(--color-primary)] transition-all">
                       WhatsApp Us
                     </span>
                   </a>
@@ -112,8 +112,8 @@ export function Footer() {
             &copy; {currentYear} {SITE_NAME}. All rights reserved.
           </p>
           <div className="flex gap-6 text-xs text-[rgba(253,254,255,0.65)]">
-            <Link href="/privacy" className="hover:text-[#27AE60] hover:underline transition-colors">Privacy Policy</Link>
-            <Link href="/terms" className="hover:text-[#27AE60] hover:underline transition-colors">Terms of Service</Link>
+            <Link href="/privacy" className="hover:text-[var(--color-primary)] hover:underline transition-colors">Privacy Policy</Link>
+            <Link href="/terms" className="hover:text-[var(--color-primary)] hover:underline transition-colors">Terms of Service</Link>
           </div>
         </div>
       </Container>
@@ -130,7 +130,7 @@ function SocialLink({ href, ariaLabel, icon, label }: { href: string; ariaLabel:
       rel="noopener noreferrer"
       className="group inline-flex items-center gap-3 text-sm text-[rgba(253,254,255,0.85)] hover:text-[#FDFEFE] transition-colors"
     >
-      <span className="flex h-8 w-8 items-center justify-center rounded-full bg-[rgba(253,254,255,0.10)] group-hover:bg-[#27AE60] transition-all duration-200">
+      <span className="flex h-8 w-8 items-center justify-center rounded-full bg-[rgba(253,254,255,0.10)] group-hover:bg-[var(--color-primary)] transition-all duration-200">
         {icon}
       </span>
       <span className="border-b border-transparent group-hover:border-[#FDFEFE] transition-all">{label}</span>

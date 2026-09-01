@@ -54,7 +54,7 @@ export function FlightSearchForm() {
           onClick={() => setTripType('oneway')}
           className={`px-3 py-1 rounded-full text-xs font-medium transition-all ${
             tripType === 'oneway'
-              ? 'bg-[#F3EAF7] text-[#263746]'
+              ? 'bg-[var(--color-primary-soft)] text-[var(--color-primary-dark)]'
               : 'bg-[#F5F7F8] text-[#7A8793] hover:bg-[#EEEEEE]'
           }`}
         >
@@ -65,7 +65,7 @@ export function FlightSearchForm() {
           onClick={() => setTripType('roundtrip')}
           className={`px-3 py-1 rounded-full text-xs font-medium transition-all ${
             tripType === 'roundtrip'
-              ? 'bg-[#20A85A] text-white'
+              ? 'bg-[var(--color-primary)] text-[var(--color-primary-dark)]'
               : 'bg-[#F5F7F8] text-[#7A8793] hover:bg-[#EEEEEE]'
           }`}
         >
@@ -85,7 +85,7 @@ export function FlightSearchForm() {
               onChange={(e) => setFromCity(e.target.value)}
               placeholder="Departure City"
               required
-              className="w-full h-10 pl-8 pr-2 rounded-[10px] border border-[#DDE2E6] bg-white text-xs text-[#263746] placeholder:text-[#7A8793] focus:outline-none focus:border-[#20A85A] transition-colors"
+              className="w-full h-10 pl-8 pr-2 rounded-[10px] border border-[#DDE2E6] bg-white text-xs text-[#263746] placeholder:text-[#7A8793] focus:outline-none focus:border-[var(--color-primary)] transition-colors"
             />
           </div>
         </div>
@@ -94,7 +94,7 @@ export function FlightSearchForm() {
         <button
           type="button"
           onClick={swapCities}
-          className="hidden md:flex w-7 h-7 rounded-full bg-[#20A85A] text-white items-center justify-center shadow-sm hover:bg-[#087A3E] transition-colors shrink-0 mb-[1px]"
+          className="hidden md:flex w-7 h-7 rounded-full bg-[var(--color-primary)] text-[var(--color-primary-dark)] items-center justify-center shadow-sm hover:bg-[var(--color-primary-hover)] transition-colors shrink-0 mb-[1px]"
           aria-label="Swap cities"
         >
           <ArrowRightLeft size={12} />
@@ -105,7 +105,7 @@ export function FlightSearchForm() {
           <button
             type="button"
             onClick={swapCities}
-            className="w-7 h-7 rounded-full bg-[#20A85A] text-white flex items-center justify-center shadow-sm hover:bg-[#087A3E] transition-colors"
+            className="w-7 h-7 rounded-full bg-[var(--color-primary)] text-[var(--color-primary-dark)] flex items-center justify-center shadow-sm hover:bg-[var(--color-primary-hover)] transition-colors"
             aria-label="Swap cities"
           >
             <ArrowRightLeft size={12} />
@@ -122,7 +122,7 @@ export function FlightSearchForm() {
               onChange={(e) => setToCity(e.target.value)}
               placeholder="Arrival City"
               required
-              className="w-full h-10 pl-8 pr-2 rounded-[10px] border border-[#DDE2E6] bg-white text-xs text-[#263746] placeholder:text-[#7A8793] focus:outline-none focus:border-[#20A85A] transition-colors"
+              className="w-full h-10 pl-8 pr-2 rounded-[10px] border border-[#DDE2E6] bg-white text-xs text-[#263746] placeholder:text-[#7A8793] focus:outline-none focus:border-[var(--color-primary)] transition-colors"
             />
           </div>
         </div>
@@ -155,7 +155,7 @@ export function FlightSearchForm() {
           <div className="relative">
             <select
               defaultValue="1-economy"
-              className="w-full h-10 pl-2 pr-7 rounded-[10px] border border-[#DDE2E6] bg-white text-xs text-[#263746] appearance-none focus:outline-none focus:border-[#20A85A] transition-colors cursor-pointer"
+              className="w-full h-10 pl-2 pr-7 rounded-[10px] border border-[#DDE2E6] bg-white text-xs text-[#263746] appearance-none focus:outline-none focus:border-[var(--color-primary)] transition-colors cursor-pointer"
             >
               <option value="1-economy">1 Adult, Economy</option>
               <option value="2-economy">2 Adults, Economy</option>
@@ -169,7 +169,7 @@ export function FlightSearchForm() {
         {/* Search */}
         <button
           type="submit"
-          className="w-full md:w-[130px] h-10 rounded-[10px] bg-[#20A85A] hover:bg-[#087A3E] text-white font-semibold text-xs transition-colors flex items-center justify-center gap-1.5 shrink-0"
+          className="w-full md:w-[130px] h-10 rounded-[10px] bg-[var(--color-primary)] hover:bg-[var(--color-primary-hover)] text-[var(--color-primary-dark)] font-semibold text-xs transition-colors flex items-center justify-center gap-1.5 shrink-0"
         >
           <Plane size={14} />
           Search Flights

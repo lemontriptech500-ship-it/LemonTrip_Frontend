@@ -4,26 +4,26 @@
 
 /* ============================================================
    LEMONTRIP DESIGN TOKENS — Premium Travel
-   Approved palette: #27AE60 | #3498DB | #16A085 | #FDFEFE | #F4ECF7 | #E9DAC4 | #2C3E50
+   Approved palette: #FAD311 | #173E14 | #FDFEFE | #F4ECF7 | #E9DAC4 | #2C3E50
    ============================================================ */
 
 :root {
-  /* ─── Brand Primary — Nature Green (#27AE60) ─── */
-  --color-primary:        #27AE60;
-  --color-primary-hover:  #219A52;
-  --color-primary-active: #1E8C4A;
-  --color-primary-dark:   #1B7A43;
-  --color-primary-soft:   rgba(39, 174, 96, 0.10);
+  /* ─── Brand Primary — Lemon Yellow (#FAD311) ─── */
+  --color-primary:        #FAD311;
+  --color-primary-hover:  #E4BF00;
+  --color-primary-active: #CCAA00;
+  --color-primary-dark:   #173E14;
+  --color-primary-soft:   rgba(250, 211, 17, 0.12);
 
-  /* ─── Sky / Water — Supporting Accent (#3498DB) ─── */
-  --color-secondary:       #3498DB;
-  --color-secondary-hover: #2980B9;
-  --color-secondary-soft:  rgba(52, 152, 219, 0.10);
+  /* ─── Forest Green — Supporting Primary Dark (#173E14) ─── */
+  --color-secondary:       #173E14;
+  --color-secondary-hover: #102C0F;
+  --color-secondary-soft:  rgba(23, 62, 20, 0.10);
 
   /* ─── Teal — Supporting Accent (#16A085) ─── */
-  --color-accent:      #16A085;
-  --color-accent-hover:    #0F8B73;
-  --color-accent-soft:     rgba(22, 160, 133, 0.10);
+  --color-accent:      #173E14;
+  --color-accent-hover:    #102C0F;
+  --color-accent-soft:     rgba(23, 62, 20, 0.10);
 
   /* ─── Neutral Surfaces ─── */
   --color-background:        #FDFEFE;
@@ -42,12 +42,12 @@
   --color-border-strong: rgba(44, 62, 80, 0.22);
 
   /* ─── Semantic: Success ─── */
-  --color-success:    #27AE60;
-  --color-success-bg: rgba(39, 174, 96, 0.10);
+  --color-success:    #173E14;
+  --color-success-bg: rgba(23, 62, 20, 0.10);
 
   /* ─── Semantic: Warning ─── */
-  --color-warning:    #16A085;
-  --color-warning-bg: rgba(22, 160, 133, 0.10);
+  --color-warning:    #173E14;
+  --color-warning-bg: rgba(23, 62, 20, 0.10);
 
   /* ─── Semantic: Error ─── */
   --color-error:    #C0392B;

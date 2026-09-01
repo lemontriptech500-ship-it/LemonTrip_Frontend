@@ -25,31 +25,32 @@ export function TravelSearchWidget() {
 
   return (
     <div className="bg-white rounded-xl shadow-lg border border-[#DDE2E6] overflow-hidden max-w-[1100px] mx-auto">
-      <div className="flex items-center border-b border-[#DDE2E6]">
+      <div className="flex items-center border-b border-[#DDE2E6] overflow-x-auto hide-scrollbar">
         {tabItems.map((tab) => {
           const Icon = tab.icon
           const isActive = activeTab === tab.id
+
           return (
             <button
               key={tab.id}
               type="button"
               onClick={() => setActiveTab(tab.id)}
-            className={cn(
-              'flex-1 flex items-center justify-center gap-1.5 py-3 text-sm font-medium transition-all relative',
-              isActive ? 'text-[#20A85A]' : 'text-[#7A8793] hover:text-[#263746]'
-            )}
-          >
-            <Icon size={16} />
-            <span>{tab.label}</span>
-            {isActive && (
-              <span className="absolute bottom-0 left-0 right-0 h-[2px] bg-[#20A85A]" />
-            )}
+              className={cn(
+                'flex-1 flex items-center justify-center gap-1.5 px-3 py-3 text-sm font-medium transition-all relative whitespace-nowrap',
+                isActive ? 'text-[var(--color-primary-dark)]' : 'text-[#7A8793] hover:text-[#263746]'
+              )}
+            >
+              <Icon size={16} />
+              <span>{tab.label}</span>
+              {isActive && (
+                <span className="absolute bottom-0 left-0 right-0 h-[2px] bg-[var(--color-primary)]" />
+              )}
             </button>
           )
         })}
       </div>
 
-      <div className="p-5">
+      <div className="p-3 sm:p-5">
         {activeItem?.content}
       </div>
     </div>

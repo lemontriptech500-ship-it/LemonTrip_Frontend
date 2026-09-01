@@ -30,7 +30,7 @@ export function AccountEntry() {
         Login
       </Link>
       <Link href="/signup">
-        <Button variant="primary" size="sm" className="rounded-full px-5 bg-[#FAD311] text-[#263746] hover:bg-[#E0C010]">
+        <Button variant="primary" size="sm" className="rounded-full px-5 bg-[var(--color-primary)] text-[var(--color-primary-dark)] hover:bg-[var(--color-primary-hover)]">
           Sign Up
         </Button>
       </Link>

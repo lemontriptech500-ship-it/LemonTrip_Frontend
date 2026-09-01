@@ -23,8 +23,8 @@ export function DesktopNavigation() {
             className={cn(
               'px-3 py-2 rounded-md text-sm font-medium transition-colors duration-200',
               isActive
-                ? 'text-[var(--color-primary)]'
-                :             'text-[#263746] hover:text-[#FAD311] hover:bg-[rgba(44,62,80,0.04)]'
+                ? 'text-[var(--color-primary-dark)]'
+                :             'text-[#263746] hover:text-[var(--color-primary)] hover:bg-[rgba(44,62,80,0.04)]'
             )}
           >
             {item.label}
