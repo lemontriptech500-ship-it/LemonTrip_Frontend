@@ -11,9 +11,12 @@ export function DesktopNavigation() {
   const desktopItems = NAV_ITEMS.filter((item) => !('mobileOnly' in item && item.mobileOnly))
 
   return (
-    <nav aria-label="Desktop Main Navigation" className="hidden lg:flex items-center gap-1">
+    <nav aria-label="Desktop Main Navigation" className="hidden lg:flex items-center gap-1 xl:gap-2">
       {desktopItems.map((item) => {
-        const isActive = pathname === item.href || (item.href !== '/' && pathname.startsWith(`${item.href}/`))
+        const isActive =
+          (item.href === '/' && pathname === '/') ||
+          (item.href !== '/' && item.href.startsWith('/#') ? pathname === '/' : pathname === item.href) ||
+          (item.href !== '/' && !item.href.includes('#') && pathname.startsWith(`${item.href}/`))
 
         return (
           <Link
@@ -21,10 +24,10 @@ export function DesktopNavigation() {
             href={item.href}
             aria-current={isActive ? 'page' : undefined}
             className={cn(
-              'px-3 py-2 rounded-md text-sm font-medium transition-colors duration-200',
+              'relative px-2 py-7 text-[11px] font-semibold transition-colors duration-200 xl:px-3 xl:text-[14px]',
               isActive
-                ? 'text-[#FFD21A] bg-[#0a4b2c]'
-                : 'text-white/85 hover:text-[#FFD21A] hover:bg-[#0a4b2c]'
+                ? 'text-[var(--green)] after:absolute after:bottom-[16px] after:left-2 after:right-2 after:h-[3px] after:rounded-full after:bg-[var(--yellow)] xl:after:left-3 xl:after:right-3'
+                : 'text-[#10231a] hover:text-[var(--green)]'
             )}
           >
             {item.label}

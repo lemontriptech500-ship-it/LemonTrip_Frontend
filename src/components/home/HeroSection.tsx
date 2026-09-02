@@ -4,7 +4,7 @@ import { TravelSearchWidget } from '@/components/search/TravelSearchWidget'
 
 export function HeroSection() {
   return (
-    <section className="relative h-[60vh]">
+    <section className="relative min-h-[500px] sm:h-[60vh]">
       <div className="absolute inset-0 overflow-hidden">
         <img
           src="/hero.png"
