@@ -48,38 +48,38 @@ export function MobileNavigation() {
 
       <div
         className={cn(
-          'fixed inset-y-0 left-0 z-50 w-4/5 max-w-sm bg-white shadow-xl transform transition-transform duration-300 ease-in-out flex flex-col',
+          'fixed left-0 top-0 z-[60] flex h-screen min-h-screen w-[min(86vw,360px)] transform flex-col bg-white shadow-2xl transition-transform duration-300 ease-in-out',
           isOpen ? 'translate-x-0' : '-translate-x-full'
         )}
         role="dialog"
         aria-modal="true"
         aria-label="Mobile Navigation Menu"
       >
-        <div className="flex items-center justify-between p-4 border-b border-[rgba(44,62,80,0.08)]">
-          <span className="font-bold text-lg text-[var(--color-primary)]">Menu</span>
+        <div className="flex items-center justify-between border-b border-[var(--green)]/20 bg-[var(--green-dark)] px-4 py-3">
+          <span className="text-lg font-bold text-[var(--yellow)]">Menu</span>
           <Button
             variant="ghost"
             size="sm"
             onClick={() => setIsOpen(false)}
             aria-label="Close mobile menu"
-            className="px-2"
+            className="px-2 text-white hover:bg-white/10"
           >
-            <X size={22} className="text-[#263746]" />
+            <X size={22} className="text-white" />
           </Button>
         </div>
 
-        <nav className="flex-1 overflow-y-auto py-3 px-3 flex flex-col gap-0.5">
-          {NAV_ITEMS.filter(item => !('mobileOnly' in item && item.mobileOnly)).map((item) => {
+        <nav className="flex-1 overflow-y-auto bg-white px-3 py-4">
+          {NAV_ITEMS.map((item) => {
             const isActive = pathname === item.href || (item.href !== '/' && pathname.startsWith(`${item.href}/`))
             return (
               <Link
                 key={item.label}
                 href={item.href}
                 className={cn(
-                  'px-4 py-2.5 rounded-[var(--radius-md)] text-sm font-medium transition-colors',
+                  'block rounded-[var(--radius-md)] px-4 py-3 text-sm font-semibold transition-colors',
                   isActive
-                    ? 'bg-[var(--color-primary-soft)] text-[var(--color-primary)]'
-                    : 'text-[#263746] hover:bg-[#F5F7F8]'
+                    ? 'bg-[var(--yellow)] text-[var(--green-dark)]'
+                    : 'text-[var(--green-dark)] hover:bg-[var(--yellow-soft)]'
                 )}
               >
                 {item.label}
@@ -88,7 +88,7 @@ export function MobileNavigation() {
           })}
         </nav>
 
-        <div className="p-4 border-t border-[rgba(44,62,80,0.08)] flex flex-col gap-2">
+        <div className="flex flex-col gap-2 border-t border-[var(--green)]/15 bg-white p-4">
           <Link href="/login" className="w-full">
             <Button variant="outline" fullWidth>Login</Button>
           </Link>
