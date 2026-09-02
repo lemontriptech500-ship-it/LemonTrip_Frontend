@@ -5,23 +5,23 @@ import { Globe2, FileText, CheckCircle, ArrowRight } from 'lucide-react'
 
 export function VisaHighlight() {
   return (
-    <section className="py-16 bg-[var(--color-surface)]">
+    <section className="py-16 bg-[var(--green-dark)]">
       <Container>
-        <div className="bg-[var(--color-primary-soft)] rounded-[var(--radius-xl)] p-8 md:p-12 lg:p-14 relative overflow-hidden flex flex-col lg:flex-row items-center gap-10 border border-[var(--color-border)]">
+        <div className="bg-[var(--green-dark)] rounded-[var(--radius-xl)] p-8 md:p-12 lg:p-14 relative overflow-hidden flex flex-col lg:flex-row items-center gap-10 border border-[var(--yellow)]/50 shadow-[0_18px_45px_rgba(6,59,36,0.18)]">
           
-          <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-gradient-to-br from-[rgba(39,174,96,0.08)] to-transparent rounded-full blur-3xl -translate-y-1/2 translate-x-1/3" />
+          <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-gradient-to-br from-[rgba(255,210,26,0.08)] to-transparent rounded-full blur-3xl -translate-y-1/2 translate-x-1/3" />
 
           <div className="flex-1 relative z-10">
-            <div className="inline-flex items-center gap-2 px-3 py-1 bg-[var(--color-surface)] rounded-[var(--radius-sm)] text-xs font-bold text-[var(--color-primary)] mb-5 shadow-sm border border-[var(--color-border-light)]">
+            <div className="inline-flex items-center gap-2 px-3 py-1 bg-[var(--yellow)] rounded-[var(--radius-sm)] text-xs font-bold text-[var(--green-dark)] mb-5 shadow-sm">
               <Globe2 size={14} />
               <span>LemonTrip Visa Services</span>
             </div>
             
-            <h2 className="text-h1 text-[var(--color-text-primary)] mb-5">
+            <h2 className="text-h1 text-[var(--yellow)] mb-5">
               Global Travel, Simplified Visas.
             </h2>
             
-            <p className="text-body text-[var(--color-text-secondary)] mb-6 max-w-lg">
+            <p className="text-body text-[var(--yellow)] mb-6 max-w-lg">
               Don&apos;t let visa complexities delay your travel plans. Explore requirements, check necessary documents, and track your application progress all in one place.
             </p>
             
@@ -33,14 +33,22 @@ export function VisaHighlight() {
                 'Expert Guidance'
               ].map((feature, i) => (
                 <div key={i} className="flex items-center gap-2">
-                  <CheckCircle size={18} className="text-[var(--color-success)]" />
-                  <span className="text-sm font-medium text-[var(--color-text-primary)]">{feature}</span>
+                  <CheckCircle size={18} className="text-[var(--yellow)]" />
+                  <span className="text-sm font-medium text-[var(--yellow)]">{feature}</span>
                 </div>
               ))}
             </div>
 
-            <Button size="lg" iconPosition="right" icon={<ArrowRight size={16} />} asChild>
-              <Link href="/visa">Explore Visa Services</Link>
+            <Button
+              size="lg"
+              iconPosition="right"
+              icon={<ArrowRight size={16} className="text-[var(--green-dark)]" />}
+              asChild
+              className="!bg-[var(--yellow)] !text-[var(--green-dark)] !border !border-[var(--yellow)] !shadow-none hover:!bg-[var(--yellow)] hover:!text-[var(--green-dark)]"
+            >
+              <Link href="/visa" className="bg-[var(--green-dark)] text-[var(--yellow)] border border-[var(--yellow)] rounded-[inherit] px-4 py-2 inline-flex items-center gap-2">
+                Explore Visa Services
+              </Link>
             </Button>
           </div>
 

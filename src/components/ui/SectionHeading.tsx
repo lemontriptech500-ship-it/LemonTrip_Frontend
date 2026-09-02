@@ -32,7 +32,7 @@ export function SectionHeading({
             className={cn(
               'inline-flex shrink-0 items-center gap-1',
               'text-body-sm font-semibold text-[var(--color-primary)]',
-              'hover:text-[var(--color-primary-dark)] transition-colors',
+              'hover:text-[var(--color-primary-hover)] transition-colors',
             )}
           >
             {action.label}

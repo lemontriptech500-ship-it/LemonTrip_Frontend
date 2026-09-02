@@ -24,8 +24,8 @@ export function Header() {
     <header
       className={`sticky top-0 z-50 w-full transition-all duration-200 ${
         isScrolled
-          ? 'bg-[#063b24] text-[#FFD21A] shadow-sm border-b border-[#FFD21A]/20'
-          : 'bg-[#063b24] text-[#FFD21A] border-b border-transparent'
+          ? 'bg-[var(--green-dark)] text-[var(--yellow)] shadow-sm border-b border-[var(--yellow)]/20'
+          : 'bg-[var(--green-dark)] text-[var(--yellow)] border-b border-transparent'
       }`}
       role="banner"
     >
@@ -36,9 +36,9 @@ export function Header() {
           aria-label={`${SITE_NAME} — Go to homepage`}
         >
           <img
-            src="/lemonTripLogo.jpeg"
+            src="/navbar.png"
             alt={`${SITE_NAME} Logo`}
-            className="h-14 w-auto object-contain"
+            className="h-[56px] w-[240px] object-contain sm:h-[60px] sm:w-[260px]"
           />
         </Link>
 

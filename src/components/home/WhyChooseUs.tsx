@@ -66,7 +66,7 @@ export function WhyChooseUs() {
             return (
               <div key={feature.id} className="flex gap-4 p-5 rounded-[var(--radius-lg)] border border-[var(--color-border-light)] bg-[var(--color-surface)] hover:shadow-sm transition-shadow">
                 <div className="shrink-0">
-                  <div className="w-10 h-10 rounded-[var(--radius-md)] bg-[var(--color-primary-soft)] text-[var(--color-primary)] flex items-center justify-center">
+                  <div className="w-10 h-10 rounded-[var(--radius-md)] bg-[var(--color-primary)] text-[var(--green-dark)] flex items-center justify-center shadow-sm">
                     <Icon size={20} />
                   </div>
                 </div>

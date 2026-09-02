@@ -66,13 +66,13 @@ export function PopularDestinations() {
             <h2 className="text-[#111111] text-[20px] font-bold leading-tight">
               Popular Destinations
             </h2>
-            <span className="block mt-1.5 h-[3px] w-[45px] rounded-full bg-[#0B7A43]" />
+            <span className="block mt-1.5 h-[3px] w-[45px] rounded-full bg-[var(--color-primary)]" />
           </div>
           <div className="flex items-center gap-2">
             <button
               type="button"
               onClick={() => scroll('left')}
-              className="w-[34px] h-[34px] rounded-full bg-white border border-[#E5E5E5] flex items-center justify-center text-[#6B7280] hover:border-[#0B7A43] hover:text-[#0B7A43] transition-colors"
+              className="w-[34px] h-[34px] rounded-full bg-[var(--color-primary)] border border-[var(--color-primary)] flex items-center justify-center text-[var(--green-dark)] hover:bg-[var(--color-primary-hover)] transition-colors"
               aria-label="Scroll destinations left"
             >
               <ChevronLeft size={16} />
@@ -80,7 +80,7 @@ export function PopularDestinations() {
             <button
               type="button"
               onClick={() => scroll('right')}
-              className="w-[34px] h-[34px] rounded-full bg-white border border-[#E5E5E5] flex items-center justify-center text-[#6B7280] hover:border-[#0B7A43] hover:text-[#0B7A43] transition-colors"
+              className="w-[34px] h-[34px] rounded-full bg-[var(--color-primary)] border border-[var(--color-primary)] flex items-center justify-center text-[var(--green-dark)] hover:bg-[var(--color-primary-hover)] transition-colors"
               aria-label="Scroll destinations right"
             >
               <ChevronRight size={16} />

@@ -33,9 +33,9 @@ export function MobileNavigation() {
         onClick={() => setIsOpen(true)}
         aria-label="Open mobile menu"
         aria-expanded={isOpen}
-        className="px-2"
+        className="px-2 text-[#FFD21A] hover:text-[#ffe36b] hover:bg-[#0a4b2c]"
       >
-        <Menu size={22} className="text-[#263746]" />
+        <Menu size={22} className="text-[#FFD21A]" />
       </Button>
 
       {isOpen && (

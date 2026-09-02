@@ -30,13 +30,13 @@ export function TrendingDestinations() {
 
               <div className="absolute inset-0 bg-gradient-to-t from-[rgba(44,62,80,0.75)] via-[rgba(44,62,80,0.20)] to-transparent" />
 
-              <div className="absolute bottom-0 left-0 p-5 w-full text-[var(--color-text-primary)]">
-                <h3 className="text-h3 font-bold mb-0.5">{dest.name}</h3>
-                <div className="flex items-center gap-1 text-[var(--color-text-primary)]/80 text-sm mb-2">
+              <div className="absolute bottom-0 left-0 p-5 w-full text-[var(--color-primary)]">
+                <h3 className="text-h3 font-bold mb-0.5 text-[var(--color-primary)]">{dest.name}</h3>
+                <div className="flex items-center gap-1 text-[var(--color-primary)]/90 text-sm mb-2">
                   <MapPin size={14} />
                   <span>{dest.country}</span>
                 </div>
-                <div className="flex items-center gap-2 text-sm text-[var(--color-text-primary)]/90 opacity-0 group-hover:opacity-100 transform translate-y-2 group-hover:translate-y-0 transition-all duration-300">
+                <div className="flex items-center gap-2 text-sm text-[var(--color-primary)]/90 opacity-0 group-hover:opacity-100 transform translate-y-2 group-hover:translate-y-0 transition-all duration-300">
                   <span>{dest.description}</span>
                   <ArrowRight size={14} />
                 </div>

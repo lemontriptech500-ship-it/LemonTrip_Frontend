@@ -17,7 +17,7 @@ const variantStyles: Record<ButtonVariant, string> = {
   primary:
     'bg-[var(--color-primary)] text-[var(--color-primary-dark)] hover:bg-[var(--color-primary-hover)] active:bg-[var(--color-primary-active)] focus-visible:ring-[var(--color-primary)] shadow-sm',
   secondary:
-    'bg-[var(--color-primary-dark)] text-[var(--color-surface)] hover:bg-[var(--color-secondary-hover)] active:bg-[var(--color-primary-dark)] focus-visible:ring-[var(--color-primary-dark)] shadow-sm',
+    'bg-[var(--color-primary)] text-[var(--color-primary-dark)] hover:bg-[var(--color-primary-hover)] active:bg-[var(--color-primary-active)] focus-visible:ring-[var(--color-primary)] shadow-sm',
   outline:
     'border border-[var(--color-border-strong)] bg-[var(--color-surface)] text-[var(--color-text-primary)] hover:bg-[var(--color-surface-secondary)] hover:border-[var(--color-text-muted)] focus-visible:ring-[var(--color-primary)]',
   ghost:
