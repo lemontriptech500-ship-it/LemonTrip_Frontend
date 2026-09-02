@@ -59,7 +59,7 @@ export function VisaHighlight() {
               className="h-full w-full object-cover"
             />
             <div className="absolute inset-0 bg-gradient-to-t from-[rgba(39, 174, 96, 0.60) to-transparent" />
-            <div className="absolute bottom-4 left-4 flex items-center gap-2 font-semibold text-[var(--color-text-primary)] text-sm">
+            <div className="absolute bottom-4 left-4 flex items-center gap-2 font-semibold text-[var(--color-primary)] text-sm">
               <FileText size={18} aria-hidden="true" />
               Travel documentation, simplified
             </div>

@@ -40,7 +40,7 @@ export function FareSelection({ fareOptions, selectedFareId, onSelectFare }: Far
               }}
             >
               {isSelected && (
-                <div className="absolute top-4 right-4 bg-[var(--color-primary)] text-[var(--color-text-primary)] rounded-full p-1 shadow-sm">
+                <div className="absolute top-4 right-4 bg-[var(--color-primary)] text-[var(--green-dark)] rounded-full p-1 shadow-sm">
                   <Check size={16} />
                 </div>
               )}

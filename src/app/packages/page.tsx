@@ -20,7 +20,7 @@ export default function PackagesPage() {
               <div className={`relative h-52 ${pkg.imageFallbackColor}`}>
                 {pkg.imageUrl && <img src={pkg.imageUrl} alt={`${pkg.destination} travel package`} className="h-full w-full object-cover" />}
                 <div className="absolute inset-0 bg-gradient-to-t from-[rgba(44,62,80,0.50)] to-transparent" />
-                <span className="absolute bottom-4 left-4 rounded-[var(--radius-sm)] bg-[var(--color-surface)]/95 px-3 py-1 text-sm font-bold shadow-sm">
+                <span className="absolute bottom-4 left-4 rounded-[var(--radius-sm)] bg-[var(--color-primary)] px-3 py-1 text-sm font-bold text-[var(--green-dark)] shadow-sm">
                   {pkg.startingPrice}
                 </span>
               </div>
