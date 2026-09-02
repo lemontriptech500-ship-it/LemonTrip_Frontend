@@ -1,7 +1,6 @@
 'use client'
 
-import React, { useRef } from 'react'
-import { ChevronLeft, ChevronRight } from 'lucide-react'
+import React from 'react'
 import { Container } from '@/components/ui'
 
 const destinations = [
@@ -44,59 +43,26 @@ const destinations = [
 ]
 
 export function PopularDestinations() {
-  const scrollRef = useRef<HTMLDivElement>(null)
-
-  const scroll = (direction: 'left' | 'right') => {
-    if (!scrollRef.current) return
-    const card = scrollRef.current.querySelector('[data-card]') as HTMLDivElement | null
-    if (!card) return
-    const gap = 16
-    const scrollAmount = card.offsetWidth + gap
-    scrollRef.current.scrollBy({
-      left: direction === 'left' ? -scrollAmount : scrollAmount,
-      behavior: 'smooth',
-    })
-  }
-
   return (
     <section className="w-full bg-white">
-      <div className="max-w-[1200px] mx-auto px-4 pt-8 pb-6">
-        <div className="flex items-end justify-between mb-5">
+      <div className="mx-auto max-w-[1200px] px-4 pb-3 pt-4 sm:pb-5 sm:pt-6 lg:pb-3 lg:pt-4">
+        <div className="mb-3 flex items-end justify-between">
           <div>
             <h2 className="text-[#111111] text-[20px] font-bold leading-tight">
               Popular Destinations
             </h2>
             <span className="block mt-1.5 h-[3px] w-[45px] rounded-full bg-[var(--color-primary)]" />
           </div>
-          <div className="flex items-center gap-2">
-            <button
-              type="button"
-              onClick={() => scroll('left')}
-              className="w-[34px] h-[34px] rounded-full bg-[var(--color-primary)] border border-[var(--color-primary)] flex items-center justify-center text-[var(--green-dark)] hover:bg-[var(--color-primary-hover)] transition-colors"
-              aria-label="Scroll destinations left"
-            >
-              <ChevronLeft size={16} />
-            </button>
-            <button
-              type="button"
-              onClick={() => scroll('right')}
-              className="w-[34px] h-[34px] rounded-full bg-[var(--color-primary)] border border-[var(--color-primary)] flex items-center justify-center text-[var(--green-dark)] hover:bg-[var(--color-primary-hover)] transition-colors"
-              aria-label="Scroll destinations right"
-            >
-              <ChevronRight size={16} />
-            </button>
-          </div>
         </div>
 
         <div
-          ref={scrollRef}
-          className="flex gap-4 overflow-x-auto scroll-smooth hide-scrollbar snap-x snap-mandatory"
+          className="grid grid-cols-2 gap-3 sm:grid-cols-3 sm:gap-4 lg:grid-cols-6"
         >
           {destinations.map((dest) => (
             <div
               key={dest.name}
               data-card
-              className="snap-start flex-0-auto w-[170px] h-[100px] relative rounded-[10px] overflow-hidden cursor-pointer group"
+              className="relative aspect-[17/10] w-full overflow-hidden rounded-[10px] group"
             >
               <img
                 src={dest.image}

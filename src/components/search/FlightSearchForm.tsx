@@ -46,7 +46,7 @@ export function FlightSearchForm() {
   }
 
   return (
-    <form onSubmit={handleSearch} className="w-full min-h-[150px] rounded-lg bg-[#063b24] p-3">
+    <form onSubmit={handleSearch} className="min-h-[415px] w-full rounded-lg bg-[#063b24] p-3 md:min-h-[253px] lg:min-h-[120px]">
       {/* Trip Type */}
       <div className="flex items-center gap-2 mb-2">
         <button

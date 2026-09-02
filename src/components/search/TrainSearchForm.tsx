@@ -25,8 +25,8 @@ export function TrainSearchForm() {
   }
 
   return (
-    <form onSubmit={handleSearch} className="w-full min-h-[150px] rounded-lg bg-[#063b24] p-3 md:p-4 flex flex-col justify-between gap-3 md:gap-4">
-      <div className="grid grid-cols-1 md:grid-cols-4 gap-3 items-end relative md:gap-4">
+    <form onSubmit={handleSearch} className="flex min-h-[415px] w-full flex-col justify-between gap-3 rounded-lg bg-[#063b24] p-3 md:min-h-[253px] md:gap-4 md:p-4 lg:grid lg:min-h-[120px] lg:grid-cols-[minmax(0,1fr)_auto] lg:items-end lg:gap-2 lg:p-3">
+      <div className="relative grid min-w-0 grid-cols-1 items-end gap-3 md:grid-cols-4 md:gap-4">
         <div className="md:col-span-2 grid grid-cols-1 md:grid-cols-2 gap-4 relative">
           <Input
             name="from"
@@ -79,8 +79,8 @@ export function TrainSearchForm() {
         </Select>
       </div>
 
-      <div className="flex justify-end">
-        <Button type="submit" size="lg" className="w-full md:w-auto px-10">
+      <div className="flex justify-end lg:pb-0.5">
+        <Button type="submit" size="lg" className="w-full px-5 md:w-auto lg:px-4">
           Search Trains
         </Button>
       </div>
