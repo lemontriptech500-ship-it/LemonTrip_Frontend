@@ -4,7 +4,7 @@ import { TravelSearchWidget } from '@/components/search/TravelSearchWidget'
 
 export function HeroSection() {
   return (
-    <section className="relative min-h-[500px] sm:h-[60vh]">
+    <section className="relative min-h-[420px] sm:min-h-[520px] lg:min-h-[620px]">
       <div className="absolute inset-0 overflow-hidden">
         <img
           src="/hero.png"
@@ -15,21 +15,21 @@ export function HeroSection() {
         <div className="absolute inset-0 bg-black/30" />
       </div>
 
-      <div className="relative z-10 flex h-full flex-col items-center justify-between py-6">
-        <div className="w-full max-w-[940px] mx-auto px-4 flex flex-1 flex-col items-center justify-center pt-6 text-center">
-          <p className="text-[#168CC8] text-[11px] md:text-xs font-bold uppercase tracking-[0.2em] mb-3 md:mb-4">
+      <div className="relative z-10 flex h-full flex-col items-center justify-between py-5 sm:py-6 lg:py-8">
+        <div className="mx-auto flex w-full max-w-[940px] flex-1 flex-col items-center justify-center px-4 pt-6 text-center sm:px-6 lg:px-8">
+          <p className="mb-3 text-[10px] font-bold uppercase tracking-[0.2em] text-[#168CC8] sm:text-[11px] md:text-xs md:mb-4">
             Enterprise Travel Solutions
           </p>
-          <h1 className="text-white text-[36px] md:text-[52px] font-extrabold leading-[1.1] mb-4 md:mb-5 max-w-3xl">
+          <h1 className="mb-4 max-w-3xl text-[clamp(2.2rem,6vw,5rem)] font-extrabold leading-[0.95] tracking-[-0.04em] text-white md:mb-5">
             Streamline Your Business<br />Travel
           </h1>
-          <p className="text-white/90 text-sm md:text-base leading-relaxed max-w-[750px] px-2">
+          <p className="max-w-[750px] px-2 text-sm leading-relaxed text-white/90 md:text-base">
             Book flights, hotels, trains, buses, and holiday packages all in one place. Need a visa? We&apos;ve got you covered with expert assistance.
           </p>
         </div>
 
-        <div className="w-full mt-6 md:mt-8">
-          <div className="max-w-[1100px] mx-auto px-2 md:px-4">
+        <div className="mt-6 w-full md:mt-8">
+          <div className="mx-auto max-w-[1100px] px-2 md:px-4">
             <TravelSearchWidget />
           </div>
         </div>

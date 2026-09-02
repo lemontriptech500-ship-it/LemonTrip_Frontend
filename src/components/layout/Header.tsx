@@ -30,7 +30,7 @@ export function Header() {
       role="banner"
     >
       <div className="bg-[var(--green-dark)] text-[#eaf7ef]">
-        <Container as="div" className="flex h-auto min-h-10 flex-col gap-1 py-2 text-[11px] sm:flex-row sm:items-center sm:justify-between sm:py-0 sm:text-[13px]">
+        <Container as="div" className="flex min-h-8 flex-col gap-1 py-1.5 text-[10px] sm:flex-row sm:items-center sm:justify-between sm:py-0 sm:text-[12px]">
           <div className="flex flex-wrap items-center gap-x-4 gap-y-1 sm:gap-5">
             <span className="flex items-center gap-2">
               <span aria-hidden="true">✉</span>
@@ -55,7 +55,7 @@ export function Header() {
       </div>
 
       <div className="border-b border-[#e7efe9] bg-[rgba(255,255,255,0.96)] text-[var(--ink)] backdrop-blur-sm">
-        <Container as="div" className="flex min-h-[64px] items-center justify-between gap-3 py-2 sm:min-h-[76px] sm:gap-6 sm:py-0 lg:min-h-[84px]">
+        <Container as="div" className="flex min-h-[56px] items-center justify-between gap-2 py-1.5 sm:min-h-[64px] sm:gap-4 sm:py-0 lg:min-h-[72px] lg:gap-5">
           <Link
             href="/"
             className="inline-flex shrink-0 items-center rounded-[12px] bg-white/90 p-0 shadow-none"
@@ -64,7 +64,7 @@ export function Header() {
             <img
               src="/lemonTripLogo.jpeg"
               alt={`${SITE_NAME} Logo`}
-              className="h-[46px] w-auto max-w-[220px] object-contain sm:h-[56px] lg:h-[68px]"
+              className="h-[40px] w-auto max-w-[190px] object-contain sm:h-[48px] lg:h-[58px]"
             />
           </Link>
 

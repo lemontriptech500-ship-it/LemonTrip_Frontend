@@ -32,24 +32,23 @@ const benefits = [
 export function TravelBenefits() {
   return (
     <section className="w-full bg-white py-[18px]">
-      <div className="max-w-[1200px] mx-auto px-4">
-        <div className="flex flex-nowrap lg:flex-nowrap md:flex-wrap gap-3 sm:gap-4 overflow-x-auto sm:overflow-visible snap-x snap-mandatory scrollbar-hide pb-2 sm:pb-0">
+      <div className="mx-auto max-w-[1200px] px-4">
+        <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-5">
           {benefits.map((item) => {
             const Icon = item.icon
             return (
               <div
                 key={item.title}
-                className="snap-start flex-1 min-w-[160px] sm:min-w-[200px] max-w-[250px] bg-white border border-[#EEEEEE] rounded-lg shadow-[0_2px_10px_rgba(0,0,0,0.06)] p-3 sm:p-4 flex items-center gap-3 sm:gap-4 transition-all duration-200 hover:-translate-y-0.5 hover:shadow-[0_4px_14px_rgba(0,0,0,0.10)]"
+                className="flex items-center gap-3 rounded-lg border border-[#EEEEEE] bg-white p-3 shadow-[0_2px_10px_rgba(0,0,0,0.06)] transition-all duration-200 hover:-translate-y-0.5 hover:shadow-[0_4px_14px_rgba(0,0,0,0.10)] sm:gap-4 sm:p-4"
               >
-                <div className="shrink-0 flex items-center justify-center w-[36px] h-[36px] sm:w-[44px] sm:h-[44px] rounded-full bg-[var(--color-primary-soft)]">
-                  <Icon size={18} className="text-[var(--green-dark)] sm:hidden" strokeWidth={2} />
-                  <Icon size={22} className="text-[var(--green-dark)] hidden sm:block" strokeWidth={2} />
+                <div className="flex h-[36px] w-[36px] shrink-0 items-center justify-center rounded-full bg-[var(--color-primary-soft)] sm:h-[44px] sm:w-[44px]">
+                  <Icon size={18} className="text-[var(--green-dark)] sm:text-[22px]" strokeWidth={2} />
                 </div>
                 <div className="min-w-0">
-                  <p className="text-[#172019] text-[13px] sm:text-[14px] font-semibold leading-tight truncate">
+                  <p className="truncate text-[13px] font-semibold leading-tight text-[#172019] sm:text-[14px]">
                     {item.title}
                   </p>
-                  <p className="text-[#69736D] text-[11px] sm:text-[12px] leading-snug mt-0.5 line-clamp-2">
+                  <p className="mt-0.5 line-clamp-2 text-[11px] leading-snug text-[#69736D] sm:text-[12px]">
                     {item.description}
                   </p>
                 </div>
