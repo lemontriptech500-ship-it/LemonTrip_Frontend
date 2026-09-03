@@ -23,12 +23,12 @@ export function QuickCategories() {
               <Link 
                 key={cat.id} 
                 href={cat.href}
-                className="group flex flex-col items-center gap-2.5 p-4 rounded-[var(--radius-lg)] border border-[var(--color-border-light)] hover:border-[var(--color-primary)] hover:shadow-sm hover:bg-[var(--color-primary-soft)] transition-all duration-200"
+                className="group flex flex-col items-center gap-2.5 rounded-[var(--radius-lg)] border border-[var(--green)] bg-[var(--green)] p-4 text-[var(--yellow)] shadow-sm transition-all duration-200 hover:-translate-y-0.5 hover:bg-[var(--green-2)] hover:shadow-md"
               >
-                <div className="p-3 rounded-[var(--radius-md)] bg-[var(--color-surface-secondary)] text-[var(--color-primary)] group-hover:bg-[var(--color-primary)] group-hover:text-[var(--color-text-primary)] transition-colors duration-200">
+                <div className="rounded-[var(--radius-md)] bg-white/15 p-3 text-[var(--yellow)] transition-colors duration-200 group-hover:bg-white/25">
                   <Icon size={24} strokeWidth={1.5} />
                 </div>
-                <span className="text-body-sm font-medium text-[var(--color-text-primary)]">
+                <span className="text-body-sm font-medium text-current">
                   {cat.label}
                 </span>
               </Link>
