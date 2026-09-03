@@ -13,14 +13,13 @@ export const MAX_CONTENT_WIDTH = '1280px'
 // Icons are intentionally not imported here to keep this file
 // framework-agnostic. Header component maps these with icon imports.
 export const NAV_ITEMS = [
-  { label: 'Home', href: '/', mobileOnly: true },
+  { label: 'Home', href: '/' },
   { label: 'Flights', href: '/flights' },
   { label: 'Hotels', href: '/hotels' },
+  { label: 'Buses', href: '/buses' },
+  { label: 'Trains', href: '/trains' },
   { label: 'Tours & Packages', href: '/packages' },
-  { label: 'Destinations', href: '/#destinations' },
-  { label: 'Services', href: '/#services' },
-  { label: 'About Us', href: '/#about' },
-  { label: 'Contact', href: '/#contact' },
+  { label: 'Services', href: '/services' },
   { label: 'Visa Services', href: '/visa' },
   { label: 'Offers', href: '/offers' },
   { label: 'Blog', href: '/blog' },

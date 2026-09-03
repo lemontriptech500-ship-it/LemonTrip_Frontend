@@ -2,14 +2,17 @@
 
 import React, { useEffect, useState } from 'react'
 import Link from 'next/link'
+import { ShoppingBag } from 'lucide-react'
 import { Container } from '@/components/ui'
 import { SITE_NAME } from '@/constants'
+import { useCartStore } from '@/store/cartStore'
 import { DesktopNavigation } from './DesktopNavigation'
 import { MobileNavigation } from './MobileNavigation'
 import { AccountEntry } from './AccountEntry'
 
 export function Header() {
   const [isScrolled, setIsScrolled] = useState(false)
+  const { toggleCart, totalItems } = useCartStore()
 
   useEffect(() => {
     const handleScroll = () => {
@@ -70,6 +73,19 @@ export function Header() {
 
           <DesktopNavigation />
           <AccountEntry />
+          <button
+            type="button"
+            onClick={toggleCart}
+            aria-label={`Open cart${totalItems() > 0 ? `, ${totalItems()} item${totalItems() === 1 ? '' : 's'}` : ''}`}
+            className="relative inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-[10px] border border-[var(--green)] bg-white text-[var(--green)] transition hover:bg-[var(--green)] hover:text-[var(--yellow)] xl:h-10 xl:w-10"
+          >
+            <ShoppingBag size={18} aria-hidden="true" />
+            {totalItems() > 0 && (
+              <span className="absolute -right-1 -top-1 flex h-4 min-w-4 items-center justify-center rounded-full bg-[var(--yellow)] px-1 text-[10px] font-bold leading-none text-[var(--green-dark)]">
+                {totalItems() > 99 ? '99+' : totalItems()}
+              </span>
+            )}
+          </button>
           <MobileNavigation />
         </Container>
       </div>
