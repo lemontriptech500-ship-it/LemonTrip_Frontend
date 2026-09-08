@@ -17,7 +17,7 @@ export function BlogPreview() {
         <div className="mt-8 grid grid-cols-1 md:grid-cols-3 gap-5">
           {blogPosts.map((post) => (
             <Card key={post.id} hover className="overflow-hidden flex flex-col h-full">
-              <div className={`h-44 w-full ${post.imageFallbackColor}`}>
+              <div className={`relative h-44 w-full ${post.imageFallbackColor}`}>
                 {post.imageUrl && <Image src={post.imageUrl} alt="" fill sizes="(max-width: 768px) 100vw, 33vw" className="object-cover" />}
               </div>
               

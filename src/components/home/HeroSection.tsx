@@ -1,26 +1,20 @@
 import React from 'react'
-import Image from 'next/image'
-import { Container } from '@/components/ui'
 import { TravelSearchWidget } from '@/components/search/TravelSearchWidget'
 
 export function HeroSection() {
   return (
-    <section className="relative min-h-[420px] sm:min-h-[500px] lg:min-h-[540px]">
-      <div className="absolute inset-0 overflow-hidden">
-        <Image
-          src="/hero.png"
-          alt="Mountain valley landscape with traveler"
-          fill
-          priority
-          sizes="100vw"
-          className="h-full w-full object-cover"
-          style={{ objectPosition: '70% center' }}
-        />
-        <div className="absolute inset-0 bg-black/30" />
+    <section className="relative h-[560px] overflow-hidden bg-[#063b24] sm:h-[540px] lg:h-[440px] xl:h-[458px]">
+      <div
+        className="pointer-events-none absolute inset-0 z-0 bg-cover bg-center bg-no-repeat"
+        style={{ backgroundImage: "url('/hero.png?hero-v=20260908')" }}
+        role="img"
+        aria-label="Traveller overlooking a green mountain valley"
+      >
+        <div className="absolute inset-0 bg-black/25" />
       </div>
 
-      <div className="relative z-10 flex h-full flex-col items-center justify-between py-4 sm:py-5 lg:py-6">
-        <div className="mx-auto flex w-full max-w-[940px] flex-1 flex-col items-center justify-center px-4 pt-6 text-center sm:px-6 lg:px-8">
+      <div className="relative z-10 flex h-full flex-col items-center px-4 py-8 sm:px-6 sm:py-10 lg:px-8 lg:py-5">
+        <div className="flex w-full max-w-[940px] flex-1 flex-col items-center justify-center text-center">
           <p className="mb-3 text-[10px] font-bold uppercase tracking-[0.2em] text-[#168CC8] sm:text-[11px] md:text-xs md:mb-4">
             Enterprise Travel Solutions
           </p>
@@ -32,10 +26,8 @@ export function HeroSection() {
           </p>
         </div>
 
-        <div className="mt-4 w-full md:mt-5">
-          <div className="mx-auto max-w-[1100px] px-2 md:px-4">
-            <TravelSearchWidget />
-          </div>
+        <div className="w-full max-w-[1100px]">
+          <TravelSearchWidget />
         </div>
       </div>
     </section>

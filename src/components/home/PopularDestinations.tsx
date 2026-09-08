@@ -21,7 +21,7 @@ const destinations = [
     name: 'Thailand',
     label: 'Packages From',
     price: '₹19,999',
-    image: 'https://images.unsplash.com/photo-1528183421442-e18d2a8ae5a3?w=600&q=80',
+    image: 'https://images.unsplash.com/photo-1552465011-b4e21bf6e79a?w=600&q=80',
   },
   {
     name: 'Singapore',

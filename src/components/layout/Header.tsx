@@ -62,15 +62,15 @@ export function Header() {
         <Container as="div" className="flex min-h-[56px] items-center justify-between gap-2 py-1.5 sm:min-h-[64px] sm:gap-4 sm:py-0 lg:min-h-[72px] lg:gap-5">
           <Link
             href="/"
-            className="inline-flex shrink-0 items-center rounded-[12px] bg-white/90 p-0 shadow-none"
+            className="relative inline-flex h-[40px] w-[132px] shrink-0 items-center rounded-[12px] bg-white/90 p-0 shadow-none sm:h-[48px] sm:w-[158px] lg:h-[58px] lg:w-[190px]"
             aria-label={`${SITE_NAME} — Go to homepage`}
           >
             <Image
               src="/lemonTripLogo.jpeg"
               alt={`${SITE_NAME} Logo`}
-              width={190}
-              height={58}
-              className="h-[40px] w-auto max-w-[190px] object-contain sm:h-[48px] lg:h-[58px]"
+              fill
+              sizes="(max-width: 640px) 132px, (max-width: 1024px) 158px, 190px"
+              className="object-contain"
             />
           </Link>
 

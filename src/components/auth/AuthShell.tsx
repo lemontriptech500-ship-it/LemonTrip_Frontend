@@ -29,8 +29,8 @@ export function AuthShell({ mode, children }: AuthShellProps) {
             />
             <div className="absolute inset-0 bg-[rgba(44, 62, 80, 0.65)" />
             <div className="relative flex h-full flex-col justify-between p-10 text-white">
-              <Link href="/" className="inline-flex items-center rounded-lg bg-[var(--color-surface)] px-2 py-1" aria-label={`${SITE_NAME} home`}>
-                <Image src="/lemonTripLogo.jpeg" alt={`${SITE_NAME} Logo`} width={144} height={36} className="h-9 w-36 object-cover object-center" />
+              <Link href="/" className="relative inline-flex h-9 w-36 items-center rounded-lg bg-[var(--color-surface)] px-2 py-1" aria-label={`${SITE_NAME} home`}>
+                <Image src="/lemonTripLogo.jpeg" alt={`${SITE_NAME} Logo`} fill sizes="144px" className="object-cover object-center" />
               </Link>
               <div>
                 <p className="mb-4 text-sm font-bold uppercase tracking-[0.18em] text-[var(--color-secondary)]">Travel starts with a plan</p>
