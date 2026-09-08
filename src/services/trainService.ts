@@ -1,4 +1,5 @@
 import { mockTrains } from '@/data/trains'
+import { apiRequest, isApiConfigured } from '@/lib/apiClient'
 
 export interface TrainSearchResult {
   trains: typeof mockTrains
@@ -12,6 +13,7 @@ export async function searchTrains(params: {
   trainClass?: string
   quota?: string
 }): Promise<TrainSearchResult> {
+  if (isApiConfigured) return apiRequest<TrainSearchResult>(`/trains/search?${new URLSearchParams(params as Record<string, string>).toString()}`)
   await new Promise((resolve) => setTimeout(resolve, 800))
 
   let results = [...mockTrains]
@@ -31,6 +33,7 @@ export async function searchTrains(params: {
 }
 
 export async function getTrainById(id: string) {
+  if (isApiConfigured) return apiRequest<(typeof mockTrains)[number] | null>(`/trains/${encodeURIComponent(id)}`)
   await new Promise((resolve) => setTimeout(resolve, 300))
   return mockTrains.find((t) => t.id === id) || null
 }
@@ -41,6 +44,7 @@ export async function createTrainBooking(data: {
   passengers: unknown[]
   contact: { email: string; phone: string }
 }): Promise<{ bookingId: string; status: string }> {
+  if (isApiConfigured) return apiRequest('/bookings/trains', { method: 'POST', body: JSON.stringify(data) })
   await new Promise((resolve) => setTimeout(resolve, 1500))
   return {
     bookingId: `LT-TR-${Date.now().toString(36).toUpperCase()}`,

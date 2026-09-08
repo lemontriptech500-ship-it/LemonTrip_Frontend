@@ -1,5 +1,6 @@
 import { MOCK_HOTELS, getHotelById } from '@/data/hotels'
 import type { Hotel, HotelFiltersState, HotelSearchParams, HotelSortOption } from '@/types/hotels'
+import { apiRequest, isApiConfigured } from '@/lib/apiClient'
 
 export interface HotelSearchResult {
   hotels: Hotel[]
@@ -13,6 +14,7 @@ export interface HotelSearchResult {
 }
 
 export async function searchHotels(params: HotelSearchParams): Promise<HotelSearchResult> {
+  if (isApiConfigured) return apiRequest<HotelSearchResult>(`/hotels/search?${new URLSearchParams(params as unknown as Record<string, string>).toString()}`)
   await new Promise((resolve) => setTimeout(resolve, 800))
 
   let results = [...MOCK_HOTELS]
@@ -45,6 +47,7 @@ export async function searchHotels(params: HotelSearchParams): Promise<HotelSear
 }
 
 export async function getHotel(id: string): Promise<Hotel | null> {
+  if (isApiConfigured) return apiRequest<Hotel | null>(`/hotels/${encodeURIComponent(id)}`)
   await new Promise((resolve) => setTimeout(resolve, 300))
   return getHotelById(id) ?? null
 }
@@ -120,6 +123,7 @@ export async function createHotelBooking(data: {
   guests: unknown[]
   contact: { email: string; phone: string }
 }): Promise<{ bookingId: string; status: string }> {
+  if (isApiConfigured) return apiRequest('/bookings/hotels', { method: 'POST', body: JSON.stringify(data) })
   await new Promise((resolve) => setTimeout(resolve, 1500))
   return {
     bookingId: `LT-HT-${Date.now().toString(36).toUpperCase()}`,

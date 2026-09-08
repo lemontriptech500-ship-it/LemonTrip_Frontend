@@ -35,8 +35,8 @@ export default function LoginPage() {
     setLoading(false)
 
     if (result.success && result.user) {
-      login(result.user)
-      router.push('/profile')
+      login(result.user, result.token)
+      router.push(new URLSearchParams(window.location.search).get('callbackUrl') || '/profile')
     } else {
       setError(result.error || 'Login failed')
     }

@@ -1,6 +1,7 @@
 'use client'
 
 import React from 'react'
+import Image from 'next/image'
 import Link from 'next/link'
 import { ArrowLeft, CheckCircle2, ShieldCheck } from 'lucide-react'
 import { Button, Container } from '@/components/ui'
@@ -19,15 +20,17 @@ export function AuthShell({ mode, children }: AuthShellProps) {
       <Container className="flex h-full items-center justify-center">
         <div className="mx-auto grid h-full max-h-[720px] w-full max-w-5xl min-h-0 overflow-hidden rounded-[var(--radius-xl)] border border-[var(--color-border)] bg-[var(--color-surface)] shadow-xl lg:grid-cols-[0.9fr_1.1fr]">
           <aside className="relative hidden min-h-0 overflow-hidden bg-[var(--color-text-primary)] lg:block">
-            <img
+            <Image
               src="https://images.unsplash.com/photo-1476514525535-07fb3b4ae5f1?w=1200&q=85"
               alt="Mountain lake viewed from a scenic travel overlook"
+              fill
+              sizes="50vw"
               className="absolute inset-0 h-full w-full object-cover opacity-75"
             />
             <div className="absolute inset-0 bg-[rgba(44, 62, 80, 0.65)" />
             <div className="relative flex h-full flex-col justify-between p-10 text-white">
               <Link href="/" className="inline-flex items-center rounded-lg bg-[var(--color-surface)] px-2 py-1" aria-label={`${SITE_NAME} home`}>
-                <img src="/lemonTripLogo.jpeg" alt={`${SITE_NAME} Logo`} className="h-9 w-36 object-cover object-center" />
+                <Image src="/lemonTripLogo.jpeg" alt={`${SITE_NAME} Logo`} width={144} height={36} className="h-9 w-36 object-cover object-center" />
               </Link>
               <div>
                 <p className="mb-4 text-sm font-bold uppercase tracking-[0.18em] text-[var(--color-secondary)]">Travel starts with a plan</p>

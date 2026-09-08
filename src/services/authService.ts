@@ -1,3 +1,5 @@
+import { apiRequest, isApiConfigured } from '@/lib/apiClient'
+
 export interface User {
   id: string
   name: string
@@ -21,11 +23,18 @@ const MOCK_USER: User = {
 export async function login(credentials: {
   email: string
   password: string
-}): Promise<{ success: boolean; user?: User; error?: string }> {
+}): Promise<{ success: boolean; user?: User; token?: string; error?: string }> {
+  if (isApiConfigured) {
+    try {
+      return { success: true, ...(await apiRequest<{ user: User; token: string }>('/auth/login', { method: 'POST', body: JSON.stringify(credentials) })) }
+    } catch (error) {
+      return { success: false, error: error instanceof Error ? error.message : 'Login failed' }
+    }
+  }
   await new Promise((resolve) => setTimeout(resolve, 800))
 
   if (credentials.email && credentials.password.length >= 6) {
-    return { success: true, user: MOCK_USER }
+    return { success: true, user: MOCK_USER, token: 'demo-token' }
   }
   return { success: false, error: 'Invalid email or password' }
 }
@@ -35,11 +44,18 @@ export async function register(data: {
   email: string
   phone: string
   password: string
-}): Promise<{ success: boolean; user?: User; error?: string }> {
+}): Promise<{ success: boolean; user?: User; token?: string; error?: string }> {
+  if (isApiConfigured) {
+    try {
+      return { success: true, ...(await apiRequest<{ user: User; token: string }>('/auth/register', { method: 'POST', body: JSON.stringify(data) })) }
+    } catch (error) {
+      return { success: false, error: error instanceof Error ? error.message : 'Registration failed' }
+    }
+  }
   await new Promise((resolve) => setTimeout(resolve, 1000))
 
   if (data.name && data.email && data.phone && data.password.length >= 6) {
-    return { success: true, user: { ...MOCK_USER, name: data.name, email: data.email, phone: data.phone } }
+    return { success: true, user: { ...MOCK_USER, name: data.name, email: data.email, phone: data.phone }, token: 'demo-token' }
   }
   return { success: false, error: 'Please fill all required fields' }
 }

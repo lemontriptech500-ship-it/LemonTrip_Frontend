@@ -1,5 +1,6 @@
 import { MOCK_FLIGHTS } from '@/data/flights'
 import type { Flight, FlightFiltersState, SortOption } from '@/types/flights'
+import { apiRequest, isApiConfigured } from '@/lib/apiClient'
 
 export interface FlightSearchResult {
   flights: Flight[]
@@ -19,6 +20,7 @@ export async function searchFlights(params: {
   passengers?: string
   class?: string
 }): Promise<FlightSearchResult> {
+  if (isApiConfigured) return apiRequest<FlightSearchResult>(`/flights/search?${new URLSearchParams(params as Record<string, string>).toString()}`)
   await new Promise((resolve) => setTimeout(resolve, 800))
 
   let results = [...MOCK_FLIGHTS]
@@ -49,6 +51,7 @@ export async function searchFlights(params: {
 }
 
 export async function getFlightById(id: string): Promise<Flight | null> {
+  if (isApiConfigured) return apiRequest<Flight | null>(`/flights/${encodeURIComponent(id)}`)
   await new Promise((resolve) => setTimeout(resolve, 300))
   return MOCK_FLIGHTS.find((f) => f.id === id) || null
 }
@@ -115,6 +118,7 @@ export async function createFlightBooking(data: {
   travellers: unknown[]
   contact: { email: string; phone: string }
 }): Promise<{ bookingId: string; status: string }> {
+  if (isApiConfigured) return apiRequest('/bookings/flights', { method: 'POST', body: JSON.stringify(data) })
   await new Promise((resolve) => setTimeout(resolve, 1500))
   return {
     bookingId: `LT-FL-${Date.now().toString(36).toUpperCase()}`,

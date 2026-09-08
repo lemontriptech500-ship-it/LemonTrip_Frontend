@@ -1,5 +1,6 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
+import Image from 'next/image'
 import {
   ArrowRight,
   BusFront,
@@ -85,7 +86,7 @@ export default function ServicesPage() {
               return (
                 <Card key={service.href} padding="none" hover className="group flex h-full flex-col overflow-hidden">
                   <div className="relative h-44 overflow-hidden bg-[var(--green)]">
-                    <img src={service.image} alt="" className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105" />
+                    <Image src={service.image} alt="" fill sizes="(max-width: 768px) 100vw, 33vw" className="object-cover transition-transform duration-500 group-hover:scale-105" />
                     <div className="absolute inset-0 bg-gradient-to-t from-[rgba(6,59,36,0.82)] to-transparent" />
                     <div className="absolute bottom-4 left-4 flex items-center gap-2 text-[var(--yellow)]">
                       <Icon size={18} aria-hidden="true" />

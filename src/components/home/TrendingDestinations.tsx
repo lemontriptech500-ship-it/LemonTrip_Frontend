@@ -1,4 +1,5 @@
 import React from 'react'
+import Image from 'next/image'
 import { Container, SectionHeading } from '@/components/ui'
 import { trendingDestinations } from '@/data/destinations'
 import { MapPin, ArrowRight } from 'lucide-react'
@@ -19,9 +20,11 @@ export function TrendingDestinations() {
               className="group relative rounded-[var(--radius-lg)] overflow-hidden aspect-[4/3] cursor-pointer shadow-sm hover:shadow-lg transition-shadow duration-300"
             >
               {dest.imageUrl ? (
-                <img
+                <Image
                   src={dest.imageUrl}
                   alt={`${dest.name}, ${dest.country}`}
+                  fill
+                  sizes="(max-width: 768px) 100vw, 33vw"
                   className="absolute inset-0 h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
                 />
               ) : (

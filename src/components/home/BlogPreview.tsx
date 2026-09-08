@@ -1,4 +1,5 @@
 import React from 'react'
+import Image from 'next/image'
 import Link from 'next/link'
 import { Container, SectionHeading, Card } from '@/components/ui'
 import { blogPosts } from '@/data/blogPosts'
@@ -17,7 +18,7 @@ export function BlogPreview() {
           {blogPosts.map((post) => (
             <Card key={post.id} hover className="overflow-hidden flex flex-col h-full">
               <div className={`h-44 w-full ${post.imageFallbackColor}`}>
-                {post.imageUrl && <img src={post.imageUrl} alt="" className="h-full w-full object-cover" />}
+                {post.imageUrl && <Image src={post.imageUrl} alt="" fill sizes="(max-width: 768px) 100vw, 33vw" className="object-cover" />}
               </div>
               
               <div className="p-5 flex flex-col flex-grow">

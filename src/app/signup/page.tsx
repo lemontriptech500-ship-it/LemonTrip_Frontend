@@ -41,7 +41,7 @@ export default function SignupPage() {
     setLoading(false)
 
     if (result.success && result.user) {
-      login(result.user)
+      login(result.user, result.token)
       router.push('/profile')
     } else {
       setError(result.error || 'Registration failed')

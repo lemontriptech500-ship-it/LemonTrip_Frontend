@@ -8,6 +8,8 @@ import { Filter } from 'lucide-react'
 
 import { parseFlightSearchParams } from '@/lib/searchParams'
 import { MOCK_FLIGHTS } from '@/data/flights'
+import { searchFlights } from '@/services/flightService'
+import { isApiConfigured } from '@/lib/apiClient'
 import { useFlightFilters } from '@/hooks/useFlightFilters'
 
 import { FlightSearchSummary } from '@/components/flights/FlightSearchSummary'
@@ -24,6 +26,7 @@ function FlightResultsContent() {
   const [isModifyOpen, setIsModifyOpen] = useState(false)
   const [isMobileFiltersOpen, setIsMobileFiltersOpen] = useState(false)
   const [isLoading, setIsLoading] = useState(true)
+  const [flights, setFlights] = useState(MOCK_FLIGHTS)
 
   const {
     filters,
@@ -34,16 +37,32 @@ function FlightResultsContent() {
     results,
     totalResults,
     filteredCount,
-  } = useFlightFilters(MOCK_FLIGHTS)
+  } = useFlightFilters(flights)
 
-  const availableAirlines = Array.from(new Set(MOCK_FLIGHTS.map(f => f.airline)))
+  const availableAirlines = Array.from(new Set(flights.map(f => f.airline)))
 
   useEffect(() => {
-    const timer = setTimeout(() => {
-      setIsLoading(false)
-    }, 800)
-    return () => clearTimeout(timer)
-  }, [])
+    let active = true
+    setIsLoading(true)
+    if (!isApiConfigured) {
+      const timer = setTimeout(() => active && setIsLoading(false), 800)
+      return () => { active = false; clearTimeout(timer) }
+    }
+    searchFlights({
+      from: parsedParams.from,
+      to: parsedParams.to,
+      departureDate: parsedParams.departureDate,
+      returnDate: parsedParams.returnDate,
+      class: parsedParams.travelClass,
+    }).then((result) => {
+      if (active) setFlights(result.flights)
+    }).catch(() => {
+      if (active) setFlights([])
+    }).finally(() => {
+      if (active) setIsLoading(false)
+    })
+    return () => { active = false }
+  }, [parsedParams.from, parsedParams.to, parsedParams.departureDate, parsedParams.returnDate, parsedParams.travelClass])
 
   return (
     <div className="section-gap pb-20">

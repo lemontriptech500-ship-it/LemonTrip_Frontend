@@ -1,4 +1,5 @@
 import React from 'react'
+import Image from 'next/image'
 import { Container } from '@/components/ui'
 import { TravelSearchWidget } from '@/components/search/TravelSearchWidget'
 
@@ -6,9 +7,12 @@ export function HeroSection() {
   return (
     <section className="relative min-h-[420px] sm:min-h-[500px] lg:min-h-[540px]">
       <div className="absolute inset-0 overflow-hidden">
-        <img
+        <Image
           src="/hero.png"
           alt="Mountain valley landscape with traveler"
+          fill
+          priority
+          sizes="100vw"
           className="h-full w-full object-cover"
           style={{ objectPosition: '70% center' }}
         />

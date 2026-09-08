@@ -35,7 +35,6 @@ export const Radio = forwardRef<HTMLInputElement, RadioProps>(
             type="radio"
             ref={ref}
             disabled={disabled}
-            aria-invalid={hasError}
             aria-describedby={cn(description && descriptionId, error && errorId)}
             className={cn(
               'peer h-4 w-4 shrink-0 rounded-full border bg-[var(--color-surface)]',

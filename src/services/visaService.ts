@@ -1,4 +1,5 @@
 import { mockVisaServices } from '@/data/visaServices'
+import { apiRequest, isApiConfigured } from '@/lib/apiClient'
 
 export interface VisaApplication {
   id: string
@@ -14,6 +15,7 @@ export async function searchVisaServices(params: {
   country?: string
   visaType?: string
 }) {
+  if (isApiConfigured) return apiRequest(`/visa/services?${new URLSearchParams(params).toString()}`)
   await new Promise((resolve) => setTimeout(resolve, 600))
 
   let results = [...mockVisaServices]
@@ -29,6 +31,7 @@ export async function searchVisaServices(params: {
 }
 
 export async function getVisaServiceById(id: string) {
+  if (isApiConfigured) return apiRequest(`/visa/services/${encodeURIComponent(id)}`)
   await new Promise((resolve) => setTimeout(resolve, 300))
   return mockVisaServices.find((v) => v.id === id) || null
 }
@@ -39,6 +42,7 @@ export async function createVisaApplication(data: {
   passportDetails: Record<string, string>
   travelDetails: Record<string, string>
 }): Promise<{ applicationId: string; status: string }> {
+  if (isApiConfigured) return apiRequest('/visa/applications', { method: 'POST', body: JSON.stringify(data) })
   await new Promise((resolve) => setTimeout(resolve, 1500))
   return {
     applicationId: `LT-VISA-${Date.now().toString(36).toUpperCase()}`,
@@ -46,7 +50,32 @@ export async function createVisaApplication(data: {
   }
 }
 
+export interface VisaApplicationFormData {
+  serviceId: string
+  personalDetails: Record<string, string>
+  passportDetails: Record<string, string>
+  travelDetails: Record<string, string>
+  passportFront: File
+  passportBack: File
+  photograph: File
+}
+
+export async function submitVisaApplication(data: VisaApplicationFormData): Promise<{ applicationId: string; status: string }> {
+  if (!isApiConfigured) return createVisaApplication(data)
+
+  const formData = new FormData()
+  formData.append('serviceId', data.serviceId)
+  formData.append('personalDetails', JSON.stringify(data.personalDetails))
+  formData.append('passportDetails', JSON.stringify(data.passportDetails))
+  formData.append('travelDetails', JSON.stringify(data.travelDetails))
+  formData.append('passportFront', data.passportFront)
+  formData.append('passportBack', data.passportBack)
+  formData.append('photograph', data.photograph)
+  return apiRequest('/visa/applications', { method: 'POST', body: formData })
+}
+
 export async function trackVisaApplication(applicationId: string): Promise<VisaApplication | null> {
+  if (isApiConfigured) return apiRequest<VisaApplication | null>(`/visa/applications/${encodeURIComponent(applicationId)}`)
   await new Promise((resolve) => setTimeout(resolve, 500))
 
   const statuses: VisaApplication['status'][] = ['submitted', 'under_process', 'appointment', 'approved']

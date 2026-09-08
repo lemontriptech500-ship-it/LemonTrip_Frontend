@@ -18,8 +18,8 @@ export function buildSearchUrl(pathname: string, formData: FormData): string {
 export function parseFlightSearchParams(searchParams: URLSearchParams) {
   return {
     tripType: searchParams.get('tripType') || 'roundtrip',
-    from: searchParams.get('from') || '',
-    to: searchParams.get('to') || '',
+    from: searchParams.get('from') || searchParams.get('origin') || '',
+    to: searchParams.get('to') || searchParams.get('destination') || '',
     departureDate: searchParams.get('departureDate') || '',
     returnDate: searchParams.get('returnDate') || '',
     travelClass: searchParams.get('travelClass') || '',

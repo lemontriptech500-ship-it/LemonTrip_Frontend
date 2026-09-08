@@ -1,4 +1,5 @@
 import React from 'react'
+import Image from 'next/image'
 import { Container, SectionHeading, Card } from '@/components/ui'
 import { featuredOffers } from '@/data/offers'
 import { Tag } from 'lucide-react'
@@ -23,7 +24,7 @@ export function FeaturedOffers() {
             >
               <div className={`relative h-36 w-full overflow-hidden ${offer.imageColor}`}>
                 {offer.imageUrl ? (
-                  <img src={offer.imageUrl} alt="" className="h-full w-full object-cover" />
+                  <Image src={offer.imageUrl} alt="" fill sizes="(max-width: 768px) 100vw, 25vw" className="object-cover" />
                 ) : (
                   <Tag className="absolute inset-0 m-auto text-[var(--color-text-muted)]" size={40} aria-hidden="true" />
                 )}

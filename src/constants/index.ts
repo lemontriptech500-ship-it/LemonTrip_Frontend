@@ -4,7 +4,7 @@
 
 export const SITE_NAME = 'LemonTrip'
 export const SITE_TAGLINE = 'Travel smarter. Travel better.'
-export const SITE_URL = 'https://lemontrip.com' // update for production
+export const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000'
 
 // --- Layout ---
 export const MAX_CONTENT_WIDTH = '1280px'

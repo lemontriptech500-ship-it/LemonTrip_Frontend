@@ -1,3 +1,5 @@
+import { apiRequest, isApiConfigured } from '@/lib/apiClient'
+
 export interface Booking {
   id: string
   type: 'flight' | 'hotel' | 'bus' | 'train' | 'package' | 'visa'
@@ -70,11 +72,13 @@ const MOCK_BOOKINGS: Booking[] = [
 ]
 
 export async function getUserBookings(): Promise<Booking[]> {
+  if (isApiConfigured) return apiRequest<Booking[]>('/bookings')
   await new Promise((resolve) => setTimeout(resolve, 600))
   return MOCK_BOOKINGS
 }
 
 export async function getBookingById(id: string): Promise<Booking | null> {
+  if (isApiConfigured) return apiRequest<Booking | null>(`/bookings/${encodeURIComponent(id)}`)
   await new Promise((resolve) => setTimeout(resolve, 300))
   return MOCK_BOOKINGS.find((b) => b.id === id) || null
 }
@@ -84,6 +88,7 @@ export async function cancelBooking(id: string, reason: string): Promise<{
   refundAmount: number
   cancellationFee: number
 }> {
+  if (isApiConfigured) return apiRequest(`/bookings/${encodeURIComponent(id)}/cancel`, { method: 'POST', body: JSON.stringify({ reason }) })
   await new Promise((resolve) => setTimeout(resolve, 1000))
 
   const booking = MOCK_BOOKINGS.find((b) => b.id === id)
@@ -104,6 +109,7 @@ export async function getUserStats(): Promise<{
   cancelledTrips: number
   totalSpent: number
 }> {
+  if (isApiConfigured) return apiRequest('/bookings/stats')
   await new Promise((resolve) => setTimeout(resolve, 400))
 
   return {
@@ -112,4 +118,9 @@ export async function getUserStats(): Promise<{
     cancelledTrips: MOCK_BOOKINGS.filter((b) => b.status === 'cancelled').length,
     totalSpent: MOCK_BOOKINGS.reduce((sum, b) => sum + b.amount, 0),
   }
+}
+
+export async function confirmBooking(data: Record<string, unknown>): Promise<{ bookingId: string; status: string }> {
+  if (isApiConfigured) return apiRequest('/bookings/confirm', { method: 'POST', body: JSON.stringify(data) })
+  return { bookingId: `LT-DEMO-${Date.now().toString(36).toUpperCase()}`, status: 'confirmed' }
 }

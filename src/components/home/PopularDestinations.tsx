@@ -1,6 +1,7 @@
 'use client'
 
 import React from 'react'
+import Image from 'next/image'
 import { Container } from '@/components/ui'
 
 const destinations = [
@@ -64,9 +65,11 @@ export function PopularDestinations() {
               data-card
               className="relative aspect-[17/10] w-full overflow-hidden rounded-[10px] group"
             >
-              <img
+              <Image
                 src={dest.image}
                 alt={dest.name}
+                fill
+                sizes="(max-width: 768px) 50vw, 16vw"
                 className="absolute inset-0 h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-black/65 via-black/5 to-transparent" />

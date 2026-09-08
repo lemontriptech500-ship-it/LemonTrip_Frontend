@@ -1,4 +1,5 @@
 import React from 'react'
+import Image from 'next/image'
 import Link from 'next/link'
 import { Container, SectionHeading, Card, Button } from '@/components/ui'
 import { popularPackages } from '@/data/packages'
@@ -18,7 +19,7 @@ export function PopularPackages() {
           {popularPackages.map((pkg) => (
             <Card key={pkg.id} hover className="overflow-hidden flex flex-col h-full">
               <div className={`relative h-48 w-full ${pkg.imageFallbackColor}`}>
-                {pkg.imageUrl && <img src={pkg.imageUrl} alt={`${pkg.destination} travel package`} className="h-full w-full object-cover" />}
+                {pkg.imageUrl && <Image src={pkg.imageUrl} alt={`${pkg.destination} travel package`} fill sizes="(max-width: 768px) 100vw, 33vw" className="object-cover" />}
                 <div className="absolute inset-0 bg-gradient-to-t from-[rgba(44,62,80,0.40)] to-transparent" />
                 <div className="absolute top-3 right-3 bg-[var(--color-surface)]/95 backdrop-blur-sm px-2.5 py-1 rounded-[var(--radius-sm)] text-xs font-bold shadow-sm">
                   {pkg.startingPrice}

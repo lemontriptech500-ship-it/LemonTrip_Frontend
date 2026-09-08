@@ -1,4 +1,5 @@
 import React from 'react'
+import Image from 'next/image'
 import Link from 'next/link'
 import { MapPin, Star } from 'lucide-react'
 import { Badge, Button } from '@/components/ui'
@@ -32,10 +33,11 @@ export function HotelResultCard({ hotel, nights, search }: HotelResultCardProps)
       <div className="flex flex-col md:flex-row min-w-0">
         <div className="relative w-full md:w-60 lg:w-68 shrink-0 aspect-[4/3] md:aspect-auto md:min-h-[200px] bg-[var(--color-surface-secondary)]">
           {image ? (
-            // eslint-disable-next-line @next/next/no-img-element
-            <img
+            <Image
               src={image.url}
               alt={image.alt}
+              fill
+              sizes="(max-width: 768px) 100vw, 272px"
               className="absolute inset-0 w-full h-full object-cover"
             />
           ) : (

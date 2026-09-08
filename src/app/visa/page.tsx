@@ -2,6 +2,7 @@
 
 import React from 'react'
 import Link from 'next/link'
+import Image from 'next/image'
 import { ArrowRight, Clock, FileText } from 'lucide-react'
 import { Button, Card, Container, SectionHeading } from '@/components/ui'
 import { mockVisaServices } from '@/data/visaServices'
@@ -18,7 +19,7 @@ export default function VisaPage() {
           {mockVisaServices.map((service) => (
             <Card key={service.id} className="overflow-hidden" hover padding="none">
               <div className="relative h-44">
-                <img src={service.imageUrl} alt={`${service.country} travel visa destination`} className="h-full w-full object-cover" />
+                <Image src={service.imageUrl} alt={`${service.country} travel visa destination`} fill sizes="(max-width: 768px) 100vw, 33vw" className="object-cover" />
                 <div className="absolute inset-0 bg-gradient-to-t from-[rgba(44,62,80,0.55)] to-transparent" />
                 <span className="absolute bottom-4 left-4 flex items-center gap-2 font-semibold text-[var(--color-primary)] text-sm">
                   <FileText size={16} />

@@ -1,6 +1,7 @@
 'use client'
 
 import React from 'react'
+import Image from 'next/image'
 import Link from 'next/link'
 import { Plus, Minus, Trash2, ShoppingBag, ArrowRight } from 'lucide-react'
 import { Button, Container, SectionHeading } from '@/components/ui'
@@ -48,7 +49,7 @@ export default function CartPage() {
             >
               {item.imageUrl && (
                 <div className="w-full sm:w-28 h-28 rounded-[var(--radius-md)] overflow-hidden shrink-0 bg-[var(--color-surface-secondary)]">
-                  <img src={item.imageUrl} alt={item.name} className="h-full w-full object-cover" />
+                  <Image src={item.imageUrl} alt={item.name} fill sizes="112px" className="object-cover" />
                 </div>
               )}
 

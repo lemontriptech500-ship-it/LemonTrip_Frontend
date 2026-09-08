@@ -1,4 +1,5 @@
 import React from 'react'
+import Image from 'next/image'
 import Link from 'next/link'
 import { Container, Button } from '@/components/ui'
 import { Globe2, FileText, CheckCircle, ArrowRight } from 'lucide-react'
@@ -53,9 +54,11 @@ export function VisaHighlight() {
           </div>
 
           <div className="relative z-10 hidden aspect-square w-full overflow-hidden rounded-[var(--radius-lg)] border-4 border-[var(--color-border)] bg-[var(--color-surface)] shadow-lg lg:flex lg:w-[360px]">
-            <img
+            <Image
               src="https://images.unsplash.com/photo-1526772662000-3f88f10405ff?w=1000&q=85"
               alt="Traveller preparing documents for an international journey"
+              fill
+              sizes="360px"
               className="h-full w-full object-cover"
             />
             <div className="absolute inset-0 bg-gradient-to-t from-[rgba(39, 174, 96, 0.60) to-transparent" />

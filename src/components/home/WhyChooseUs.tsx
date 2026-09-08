@@ -1,4 +1,5 @@
 import React from 'react'
+import Image from 'next/image'
 import { Container, SectionHeading } from '@/components/ui'
 import { Layers, Zap, ShieldCheck, Headphones, PlaneTakeoff, CreditCard } from 'lucide-react'
 
@@ -46,9 +47,11 @@ export function WhyChooseUs() {
     <section className="section-gap bg-[var(--color-surface)] relative overflow-hidden">
       {/* Background Logo */}
       <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-        <img
+        <Image
           src="/logo.svg"
           alt=""
+          width={500}
+          height={500}
           className="w-[500px] h-[500px] object-contain opacity-[0.04]"
         />
       </div>

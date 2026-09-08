@@ -1,6 +1,7 @@
 'use client'
 
 import React, { useEffect, useState } from 'react'
+import Image from 'next/image'
 import Link from 'next/link'
 import { ShoppingBag } from 'lucide-react'
 import { Container } from '@/components/ui'
@@ -64,9 +65,11 @@ export function Header() {
             className="inline-flex shrink-0 items-center rounded-[12px] bg-white/90 p-0 shadow-none"
             aria-label={`${SITE_NAME} — Go to homepage`}
           >
-            <img
+            <Image
               src="/lemonTripLogo.jpeg"
               alt={`${SITE_NAME} Logo`}
+              width={190}
+              height={58}
               className="h-[40px] w-auto max-w-[190px] object-contain sm:h-[48px] lg:h-[58px]"
             />
           </Link>
