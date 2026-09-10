@@ -36,6 +36,7 @@ interface GoogleSignInButtonProps {
 }
 
 const GOOGLE_SCRIPT_ID = 'google-identity-services'
+let initializedClientId: string | null = null
 
 function loadGoogleScript() {
   if (window.google) return Promise.resolve()
@@ -62,9 +63,12 @@ function loadGoogleScript() {
 
 export function GoogleSignInButton({ mode, onCredential }: GoogleSignInButtonProps) {
   const buttonRef = useRef<HTMLDivElement>(null)
+  const onCredentialRef = useRef(onCredential)
   const [error, setError] = useState('')
   const clientId = process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID
   const isConfigured = Boolean(clientId && !clientId.startsWith('replace-with-'))
+
+  onCredentialRef.current = onCredential
 
   useEffect(() => {
     if (!isConfigured || !clientId || !buttonRef.current) return
@@ -74,14 +78,17 @@ export function GoogleSignInButton({ mode, onCredential }: GoogleSignInButtonPro
       .then(() => {
         if (cancelled || !buttonRef.current || !window.google) return
         buttonRef.current.replaceChildren()
-        window.google.accounts.id.initialize({
-          client_id: clientId,
-          callback: (response) => {
-            void onCredential(response.credential).catch((reason: unknown) => {
-              setError(reason instanceof Error ? reason.message : 'Google Sign-In failed.')
-            })
-          },
-        })
+        if (initializedClientId !== clientId) {
+          window.google.accounts.id.initialize({
+            client_id: clientId,
+            callback: (response) => {
+              void onCredentialRef.current(response.credential).catch((reason: unknown) => {
+                setError(reason instanceof Error ? reason.message : 'Google Sign-In failed.')
+              })
+            },
+          })
+          initializedClientId = clientId
+        }
         window.google.accounts.id.renderButton(buttonRef.current, {
           theme: 'outline',
           size: 'large',
@@ -96,7 +103,7 @@ export function GoogleSignInButton({ mode, onCredential }: GoogleSignInButtonPro
     return () => {
       cancelled = true
     }
-  }, [clientId, isConfigured, mode, onCredential])
+  }, [clientId, isConfigured, mode])
 
   if (!isConfigured) {
     return (
