@@ -99,7 +99,19 @@ export function GoogleSignInButton({ mode, onCredential }: GoogleSignInButtonPro
   }, [clientId, isConfigured, mode, onCredential])
 
   if (!isConfigured) {
-    return <p className="text-center text-xs text-[var(--color-text-secondary)]">Google Sign-In will be available after its client ID is added.</p>
+    return (
+      <div className="space-y-2">
+        <button
+          type="button"
+          disabled
+          className="flex h-11 w-full items-center justify-center gap-3 rounded-[var(--radius-md)] border border-[var(--color-border)] bg-[var(--color-surface)] text-sm font-medium text-[var(--color-text-secondary)] opacity-70"
+        >
+          <span className="font-semibold">G</span>
+          Continue with Google
+        </button>
+        <p className="text-center text-xs text-[var(--color-text-secondary)]">Google Sign-In will be available after its client ID is added.</p>
+      </div>
+    )
   }
 
   return (
