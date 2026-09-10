@@ -59,7 +59,12 @@ export async function apiRequest<T>(path: string, options: RequestInit = {}): Pr
       : typeof payload === 'object' && payload && 'message' in payload
         ? String(payload.message)
         : `Request failed with status ${response.status}.`
-    console.error('[api] Request failed', { path, status: response.status, payload })
+    const logDetails = { path, status: response.status, message, payload }
+    if (response.status >= 500) {
+      console.error('[api] Server request failed', logDetails)
+    } else {
+      console.warn('[api] Request rejected', logDetails)
+    }
     throw new ApiError(message, response.status, payload)
   }
 
