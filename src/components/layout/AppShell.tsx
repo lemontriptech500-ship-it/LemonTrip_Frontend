@@ -1,7 +1,9 @@
 'use client'
 
-import React from 'react'
+import React, { useEffect } from 'react'
 import { usePathname } from 'next/navigation'
+import { getCurrentUser } from '@/services/authService'
+import { useAuthStore } from '@/store/authStore'
 import { Header } from './Header'
 import { Footer } from './Footer'
 import { CartDrawer } from './CartDrawer'
@@ -12,6 +14,16 @@ interface AppShellProps {
 
 export function AppShell({ children }: AppShellProps) {
   const pathname = usePathname()
+  const token = useAuthStore((state) => state.token)
+  const setUser = useAuthStore((state) => state.login)
+
+  useEffect(() => {
+    if (!token) return
+    getCurrentUser()
+      .then((user) => setUser(user, token))
+      .catch(() => undefined)
+  }, [setUser, token])
+
   const isAuthRoute = pathname === '/login' || pathname === '/signup'
 
   if (isAuthRoute) {

@@ -40,7 +40,7 @@ export function AuthShell({ mode, children }: AuthShellProps) {
                 </p>
                 <div className="mt-8 space-y-3 text-sm text-white/90">
                   <p className="flex items-center gap-3"><CheckCircle2 size={18} className="text-[var(--color-secondary)]" /> One place for every itinerary</p>
-                  <p className="flex items-center gap-3"><ShieldCheck size={18} className="text-[var(--color-secondary)]" /> Clear, secure demo experience</p>
+                  <p className="flex items-center gap-3"><ShieldCheck size={18} className="text-[var(--color-secondary)]" /> Secure account access</p>
                 </div>
               </div>
             </div>
@@ -60,7 +60,7 @@ export function AuthShell({ mode, children }: AuthShellProps) {
             </div>
             <div className="mx-auto w-full max-w-md">{children}</div>
             <p className="mt-5 border-t border-[var(--color-border-light)] pt-3 text-center text-xs leading-relaxed text-[var(--color-text-secondary)]">
-              This frontend account experience is a demo. No credentials are sent to a server.
+              Your account details are securely handled by LemonTrip.
             </p>
           </main>
         </div>

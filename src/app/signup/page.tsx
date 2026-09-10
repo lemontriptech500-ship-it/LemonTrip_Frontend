@@ -5,6 +5,7 @@ import { useRouter } from 'next/navigation'
 import { Eye, EyeOff, LockKeyhole, Mail, UserRound } from 'lucide-react'
 import { Alert, Button, Input } from '@/components/ui'
 import { AuthShell, AuthSwitch } from '@/components/auth/AuthShell'
+import { GoogleSignInButton } from '@/components/auth/GoogleSignInButton'
 import { useAuthStore } from '@/store/authStore'
 import * as authService from '@/services/authService'
 
@@ -33,18 +34,32 @@ export default function SignupPage() {
 
     setLoading(true)
     const result = await authService.register({
-      name: form.name,
-      email: form.email,
-      phone: form.phone,
+      name: form.name.trim(),
+      email: form.email.trim().toLowerCase(),
+      phone: form.phone.trim(),
       password: form.password,
     })
     setLoading(false)
 
     if (result.success && result.user) {
       login(result.user, result.token)
-      router.push('/profile')
+      const callbackUrl = new URLSearchParams(window.location.search).get('callbackUrl')
+      router.push(callbackUrl?.startsWith('/') && !callbackUrl.startsWith('//') ? callbackUrl : '/profile')
     } else {
       setError(result.error || 'Registration failed')
+    }
+  }
+
+  const handleGoogleCredential = async (idToken: string) => {
+    setError('')
+    setLoading(true)
+    try {
+      const result = await authService.loginWithGoogle(idToken)
+      login(result.user, result.token)
+      const callbackUrl = new URLSearchParams(window.location.search).get('callbackUrl')
+      router.push(callbackUrl?.startsWith('/') && !callbackUrl.startsWith('//') ? callbackUrl : '/profile')
+    } finally {
+      setLoading(false)
     }
   }
 
@@ -116,6 +131,10 @@ export default function SignupPage() {
         <Button type="submit" fullWidth size="lg" loading={loading}>
           Create account
         </Button>
+        <div className="relative py-1 text-center text-xs text-[var(--color-text-secondary)] before:absolute before:left-0 before:right-0 before:top-1/2 before:border-t before:border-[var(--color-border)]">
+          <span className="relative bg-[var(--color-surface)] px-3">or continue with</span>
+        </div>
+        <GoogleSignInButton mode="signup" onCredential={handleGoogleCredential} />
       </form>
       <AuthSwitch mode="signup" />
     </AuthShell>

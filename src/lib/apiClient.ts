@@ -1,7 +1,7 @@
 import { useAuthStore } from '@/store/authStore'
 
 export const API_BASE_URL = (process.env.NEXT_PUBLIC_API_BASE_URL || 'http://localhost:5000/api/v1').replace(/\/$/, '')
-export const isApiConfigured = Boolean(process.env.NEXT_PUBLIC_API_BASE_URL)
+export const isApiConfigured = Boolean(API_BASE_URL)
 
 export class ApiError extends Error {
   status: number
@@ -50,9 +50,15 @@ export async function apiRequest<T>(path: string, options: RequestInit = {}): Pr
   }
 
   if (!response.ok) {
-    const message = typeof payload === 'object' && payload && 'message' in payload
-      ? String(payload.message)
-      : `Request failed with status ${response.status}.`
+    const message = typeof payload === 'object' && payload && 'error' in payload
+      ? typeof payload.error === 'string'
+        ? payload.error
+        : typeof payload.error === 'object' && payload.error && 'message' in payload.error
+          ? String(payload.error.message)
+          : `Request failed with status ${response.status}.`
+      : typeof payload === 'object' && payload && 'message' in payload
+        ? String(payload.message)
+        : `Request failed with status ${response.status}.`
     console.error('[api] Request failed', { path, status: response.status, payload })
     throw new ApiError(message, response.status, payload)
   }
