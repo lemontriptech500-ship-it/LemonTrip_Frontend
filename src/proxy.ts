@@ -3,7 +3,7 @@ import type { NextRequest } from 'next/server'
 
 const protectedPaths = ['/profile', '/checkout', '/bookings']
 
-export function middleware(request: NextRequest) {
+export function proxy(request: NextRequest) {
   const isProtected = protectedPaths.some((path) =>
     request.nextUrl.pathname === path || request.nextUrl.pathname.startsWith(`${path}/`),
   )

@@ -36,8 +36,10 @@ export async function apiRequest<T>(path: string, options: RequestInit = {}): Pr
       headers,
     })
   } catch (error) {
-    console.error('[api] Network request failed', { path, error })
-    throw new ApiError('Unable to reach the server.', 0, error)
+    const url = `${API_BASE_URL}${path.startsWith('/') ? path : `/${path}`}`
+    const message = error instanceof Error ? error.message : String(error)
+    console.error('[api] Network request failed', { path, url, message })
+    throw new ApiError('Unable to reach the server. Please try again.', 0, { path, url, message })
   }
 
   const contentType = response.headers.get('content-type') || ''
@@ -59,7 +61,12 @@ export async function apiRequest<T>(path: string, options: RequestInit = {}): Pr
       : typeof payload === 'object' && payload && 'message' in payload
         ? String(payload.message)
         : `Request failed with status ${response.status}.`
-    console.error('[api] Request failed', { path, status: response.status, payload })
+    const logDetails = { path, status: response.status, message, payload }
+    if (response.status >= 500) {
+      console.error('[api] Server request failed', logDetails)
+    } else {
+      console.warn('[api] Request rejected', logDetails)
+    }
     throw new ApiError(message, response.status, payload)
   }
 
