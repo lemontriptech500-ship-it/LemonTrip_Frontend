@@ -25,6 +25,8 @@ export function AuthShell({ mode, children }: AuthShellProps) {
               alt="Mountain lake viewed from a scenic travel overlook"
               fill
               sizes="50vw"
+              priority
+              loading="eager"
               className="absolute inset-0 h-full w-full object-cover opacity-75"
             />
             <div className="absolute inset-0 bg-[rgba(44, 62, 80, 0.65)" />
