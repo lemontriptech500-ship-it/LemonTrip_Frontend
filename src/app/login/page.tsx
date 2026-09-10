@@ -5,6 +5,7 @@ import { useRouter } from 'next/navigation'
 import { Eye, EyeOff, LockKeyhole, Mail } from 'lucide-react'
 import { Alert, Button, Input } from '@/components/ui'
 import { AuthShell, AuthSwitch } from '@/components/auth/AuthShell'
+import { GoogleSignInButton } from '@/components/auth/GoogleSignInButton'
 import { useAuthStore } from '@/store/authStore'
 import * as authService from '@/services/authService'
 
@@ -31,14 +32,28 @@ export default function LoginPage() {
     }
 
     setLoading(true)
-    const result = await authService.login({ email, password })
+    const result = await authService.login({ email: email.trim().toLowerCase(), password })
     setLoading(false)
 
     if (result.success && result.user) {
       login(result.user, result.token)
-      router.push(new URLSearchParams(window.location.search).get('callbackUrl') || '/profile')
+      const callbackUrl = new URLSearchParams(window.location.search).get('callbackUrl')
+      router.push(callbackUrl?.startsWith('/') && !callbackUrl.startsWith('//') ? callbackUrl : '/profile')
     } else {
       setError(result.error || 'Login failed')
+    }
+  }
+
+  const handleGoogleCredential = async (idToken: string) => {
+    setError('')
+    setLoading(true)
+    try {
+      const result = await authService.loginWithGoogle(idToken)
+      login(result.user, result.token)
+      const callbackUrl = new URLSearchParams(window.location.search).get('callbackUrl')
+      router.push(callbackUrl?.startsWith('/') && !callbackUrl.startsWith('//') ? callbackUrl : '/profile')
+    } finally {
+      setLoading(false)
     }
   }
 
@@ -84,6 +99,10 @@ export default function LoginPage() {
         <Button type="submit" fullWidth size="lg" loading={loading}>
           Sign in
         </Button>
+        <div className="relative py-1 text-center text-xs text-[var(--color-text-secondary)] before:absolute before:left-0 before:right-0 before:top-1/2 before:border-t before:border-[var(--color-border)]">
+          <span className="relative bg-[var(--color-surface)] px-3">or continue with</span>
+        </div>
+        <GoogleSignInButton mode="signin" onCredential={handleGoogleCredential} />
       </form>
       <AuthSwitch mode="signin" />
     </AuthShell>

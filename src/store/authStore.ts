@@ -6,12 +6,16 @@ interface User {
   name: string
   email: string
   phone: string
+  avatar?: string
+  provider?: 'local' | 'google'
 }
 
 interface AuthState {
   user: User | null
   token: string | null
   isAuthenticated: boolean
+  hasHydrated: boolean
+  setHydrated: () => void
   login: (user: User, token?: string | null) => void
   logout: () => void
 }
@@ -29,6 +33,8 @@ export const useAuthStore = create<AuthState>()(
       user: null,
       token: null,
       isAuthenticated: false,
+      hasHydrated: false,
+      setHydrated: () => set({ hasHydrated: true }),
       login: (user, token = null) => {
         setSessionCookie(token)
         set({ user, token, isAuthenticated: true })
@@ -40,6 +46,9 @@ export const useAuthStore = create<AuthState>()(
     }),
     {
       name: 'lemontrip-auth',
+      onRehydrateStorage: () => (state) => {
+        state?.setHydrated?.()
+      },
     }
   )
 )

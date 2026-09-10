@@ -1,4 +1,4 @@
-import { apiRequest, isApiConfigured } from '@/lib/apiClient'
+import { apiRequest } from '@/lib/apiClient'
 
 export interface User {
   id: string
@@ -6,6 +6,7 @@ export interface User {
   email: string
   phone: string
   avatar?: string
+  provider?: 'local' | 'google'
 }
 
 export interface AuthState {
@@ -13,30 +14,20 @@ export interface AuthState {
   isAuthenticated: boolean
 }
 
-const MOCK_USER: User = {
-  id: 'u1',
-  name: 'Demo User',
-  email: 'demo@lemontrip.com',
-  phone: '+91 98765 43210',
+function normalizeUser(user: User): User {
+  return { ...user, phone: user.phone || '' }
 }
 
 export async function login(credentials: {
   email: string
   password: string
 }): Promise<{ success: boolean; user?: User; token?: string; error?: string }> {
-  if (isApiConfigured) {
-    try {
-      return { success: true, ...(await apiRequest<{ user: User; token: string }>('/auth/login', { method: 'POST', body: JSON.stringify(credentials) })) }
-    } catch (error) {
-      return { success: false, error: error instanceof Error ? error.message : 'Login failed' }
-    }
+  try {
+    const result = await apiRequest<{ user: User; token: string }>('/auth/login', { method: 'POST', body: JSON.stringify(credentials) })
+    return { success: true, ...result, user: normalizeUser(result.user) }
+  } catch (error) {
+    return { success: false, error: error instanceof Error ? error.message : 'Login failed' }
   }
-  await new Promise((resolve) => setTimeout(resolve, 800))
-
-  if (credentials.email && credentials.password.length >= 6) {
-    return { success: true, user: MOCK_USER, token: 'demo-token' }
-  }
-  return { success: false, error: 'Invalid email or password' }
 }
 
 export async function register(data: {
@@ -45,19 +36,25 @@ export async function register(data: {
   phone: string
   password: string
 }): Promise<{ success: boolean; user?: User; token?: string; error?: string }> {
-  if (isApiConfigured) {
-    try {
-      return { success: true, ...(await apiRequest<{ user: User; token: string }>('/auth/register', { method: 'POST', body: JSON.stringify(data) })) }
-    } catch (error) {
-      return { success: false, error: error instanceof Error ? error.message : 'Registration failed' }
-    }
+  try {
+    const result = await apiRequest<{ user: User; token: string }>('/auth/register', { method: 'POST', body: JSON.stringify(data) })
+    return { success: true, ...result, user: normalizeUser(result.user) }
+  } catch (error) {
+    return { success: false, error: error instanceof Error ? error.message : 'Registration failed' }
   }
-  await new Promise((resolve) => setTimeout(resolve, 1000))
+}
 
-  if (data.name && data.email && data.phone && data.password.length >= 6) {
-    return { success: true, user: { ...MOCK_USER, name: data.name, email: data.email, phone: data.phone }, token: 'demo-token' }
-  }
-  return { success: false, error: 'Please fill all required fields' }
+export async function loginWithGoogle(idToken: string): Promise<{ user: User; token: string }> {
+  const result = await apiRequest<{ user: User; token: string }>('/auth/google', {
+    method: 'POST',
+    body: JSON.stringify({ idToken }),
+  })
+  return { ...result, user: normalizeUser(result.user) }
+}
+
+export async function getCurrentUser(): Promise<User> {
+  const result = await apiRequest<{ user: User }>('/auth/me')
+  return normalizeUser(result.user)
 }
 
 export async function forgotPassword(email: string): Promise<{ success: boolean; message: string }> {
