@@ -1,4 +1,3 @@
-import { MOCK_HOTELS, getHotelById } from '@/data/hotels'
 import type { Hotel, HotelFiltersState, HotelSearchParams, HotelSortOption } from '@/types/hotels'
 import { apiRequest, isApiConfigured } from '@/lib/apiClient'
 
@@ -14,42 +13,16 @@ export interface HotelSearchResult {
 }
 
 export async function searchHotels(params: HotelSearchParams): Promise<HotelSearchResult> {
-  if (isApiConfigured) return apiRequest<HotelSearchResult>(`/hotels/search?${new URLSearchParams(params as unknown as Record<string, string>).toString()}`)
-  await new Promise((resolve) => setTimeout(resolve, 800))
-
-  let results = [...MOCK_HOTELS]
-
-  if (params.destination) {
-    const dest = params.destination.toLowerCase()
-    results = results.filter(
-      (h) =>
-        h.name.toLowerCase().includes(dest) ||
-        h.location.city.toLowerCase().includes(dest) ||
-        h.location.area.toLowerCase().includes(dest)
-    )
-  }
-
-  const propertyTypes = [...new Set(results.map((h) => h.propertyType))]
-  const allAmenities = results.flatMap((h) => h.amenities)
-  const amenities = [...new Set(allAmenities)]
-  const prices = results.map((h) => h.startingPrice || 0)
-
-  return {
-    hotels: results,
-    total: results.length,
-    filters: {
-      propertyTypes,
-      amenities,
-      minPrice: Math.min(...prices),
-      maxPrice: Math.max(...prices),
-    },
-  }
+  const query = new URLSearchParams({ destination: params.destination })
+  return apiRequest<HotelSearchResult>(`/hotels/search?${query.toString()}`)
 }
 
 export async function getHotel(id: string): Promise<Hotel | null> {
-  if (isApiConfigured) return apiRequest<Hotel | null>(`/hotels/${encodeURIComponent(id)}`)
-  await new Promise((resolve) => setTimeout(resolve, 300))
-  return getHotelById(id) ?? null
+  try {
+    return await apiRequest<Hotel>(`/hotels/${encodeURIComponent(id)}`)
+  } catch {
+    return null
+  }
 }
 
 export async function filterHotels(

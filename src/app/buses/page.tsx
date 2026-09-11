@@ -1,18 +1,18 @@
-'use client'
-
-import React from 'react'
 import Link from 'next/link'
 import { ArrowRight, BusFront, Clock, MapPin } from 'lucide-react'
 import { Button, Card, Container, SectionHeading } from '@/components/ui'
-import { mockBuses } from '@/data/buses'
+import { searchBuses } from '@/services/busService'
 
-export default function BusesPage() {
+export const dynamic = 'force-dynamic'
+
+export default async function BusesPage() {
+  const { buses } = await searchBuses({})
   return (
     <div className="section-gap bg-[var(--color-background)]">
       <Container>
         <SectionHeading title="Buses" description="Compare comfortable intercity rides from trusted operators." />
         <div className="mt-10 grid gap-5 lg:grid-cols-3">
-          {mockBuses.map((bus) => (
+          {buses.map((bus) => (
             <Card key={bus.id} className="flex h-full flex-col" hover>
               <div className="flex items-start justify-between gap-4 border-b border-[var(--color-border-light)] pb-5">
                 <div className="flex items-center gap-3">
@@ -30,7 +30,6 @@ export default function BusesPage() {
             </Card>
           ))}
         </div>
-        <p className="mt-8 flex items-center gap-2 text-sm text-[var(--color-text-secondary)]"><MapPin size={16} className="text-[var(--color-primary)]" />Mock schedules shown for interface preview. Live availability will connect later.</p>
       </Container>
     </div>
   )
