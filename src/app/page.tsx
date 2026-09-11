@@ -17,7 +17,9 @@ export const metadata: Metadata = {
   description: 'LemonTrip — Your smart travel companion for flights, hotels, trains, buses, packages and visa services.',
 }
 
-export default function HomePage() {
+export const dynamic = 'force-dynamic'
+
+export default async function HomePage() {
   return (
     <div className="flex flex-col w-full">
       <HeroSection />
