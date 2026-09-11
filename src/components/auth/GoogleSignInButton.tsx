@@ -39,6 +39,7 @@ const GOOGLE_SCRIPT_ID = 'google-identity-services'
 let initializedClientId: string | null = null
 let initializationClientId: string | null = null
 let initializationPromise: Promise<void> | null = null
+let activeCredentialCallback: ((idToken: string) => void) | null = null
 
 function loadGoogleScript() {
   if (window.google) return Promise.resolve()
@@ -64,6 +65,7 @@ function loadGoogleScript() {
 }
 
 function initializeGoogle(clientId: string, onCredential: (idToken: string) => void) {
+  activeCredentialCallback = onCredential
   if (initializedClientId === clientId) return Promise.resolve()
   if (initializationPromise && initializationClientId === clientId) return initializationPromise
 
@@ -72,7 +74,7 @@ function initializeGoogle(clientId: string, onCredential: (idToken: string) => v
     if (!window.google) throw new Error('Google Sign-In could not load.')
     window.google.accounts.id.initialize({
       client_id: clientId,
-      callback: (response) => onCredential(response.credential),
+      callback: (response) => activeCredentialCallback?.(response.credential),
     })
     initializedClientId = clientId
   })
