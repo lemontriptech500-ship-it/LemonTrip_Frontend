@@ -1,17 +1,17 @@
 'use client'
 
-import React, { Suspense, useMemo, useState } from 'react'
+import React, { Suspense, useEffect, useMemo, useState } from 'react'
 import { useRouter, useSearchParams } from 'next/navigation'
 import { Building, Filter } from 'lucide-react'
 import { Button, Container } from '@/components/ui'
 import { EmptyState } from '@/components/common'
-import { MOCK_HOTELS } from '@/data/hotels'
+import type { Hotel } from '@/types/hotels'
+import { searchHotels } from '@/services/hotelService'
 import { useHotelFilters } from '@/hooks/useHotelFilters'
 import {
   getHotelSearchFromUrl,
   getNightCount,
   isHotelSearchComplete,
-  matchHotelsByDestination,
 } from '@/lib/hotelUtils'
 import { HotelSearchSummary } from '@/components/hotels/HotelSearchSummary'
 import { HotelModifySearch } from '@/components/hotels/HotelModifySearch'
@@ -23,17 +23,40 @@ import { HotelResultSkeleton } from '@/components/hotels/HotelResultSkeleton'
 function HotelResultsContent() {
   const router = useRouter()
   const searchParams = useSearchParams()
-  const search = getHotelSearchFromUrl(searchParams)
+  const searchQuery = searchParams.toString()
+  const search = useMemo(() => getHotelSearchFromUrl(new URLSearchParams(searchQuery)), [searchQuery])
   const searchIsComplete = isHotelSearchComplete(search)
   const nights = getNightCount(search.checkIn, search.checkOut)
 
   const [isModifyOpen, setIsModifyOpen] = useState(false)
   const [isMobileFiltersOpen, setIsMobileFiltersOpen] = useState(false)
 
-  const matchedHotels = useMemo(() => {
-    if (!searchIsComplete) return []
-    return matchHotelsByDestination(MOCK_HOTELS, search.destination)
-  }, [searchIsComplete, search.destination])
+  const [matchedHotels, setMatchedHotels] = useState<Hotel[]>([])
+  const [isLoading, setIsLoading] = useState(false)
+
+  useEffect(() => {
+    if (!searchIsComplete) {
+      setMatchedHotels([])
+      return
+    }
+
+    let active = true
+    setIsLoading(true)
+    searchHotels(search)
+      .then((result) => {
+        if (active) setMatchedHotels(result.hotels)
+      })
+      .catch(() => {
+        if (active) setMatchedHotels([])
+      })
+      .finally(() => {
+        if (active) setIsLoading(false)
+      })
+
+    return () => {
+      active = false
+    }
+  }, [search, searchIsComplete])
 
   const {
     filters,
@@ -77,6 +100,11 @@ function HotelResultsContent() {
               </Button>
             </div>
           </>
+        ) : isLoading ? (
+          <div className="flex flex-col gap-4" aria-busy="true" aria-label="Loading hotel search results">
+            <HotelResultSkeleton />
+            <HotelResultSkeleton />
+          </div>
         ) : totalResults === 0 ? (
           <EmptyState
             title="No stays for this destination"

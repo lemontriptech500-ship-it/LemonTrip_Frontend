@@ -1,6 +1,6 @@
 'use client'
 
-import React, { Suspense, useState } from 'react'
+import React, { Suspense, useEffect, useState } from 'react'
 import Link from 'next/link'
 import { useRouter, useSearchParams } from 'next/navigation'
 import { ArrowLeft, Building, Calendar, Check, Clock3, MapPin, Star, Users } from 'lucide-react'
@@ -10,7 +10,8 @@ import { HOTEL_BOOKING_STEPS, BookingProgress } from '@/components/booking/Booki
 import { HotelModifySearch } from '@/components/hotels/HotelModifySearch'
 import { RoomCard } from '@/components/hotels/RoomCard'
 import { RoomSelectionSummary } from '@/components/hotels/RoomSelectionSummary'
-import { getHotelById } from '@/data/hotels'
+import type { Hotel } from '@/types/hotels'
+import { getHotel } from '@/services/hotelService'
 import { AMENITY_LABELS, PROPERTY_TYPE_LABELS, type HotelSearchParams } from '@/types/hotels'
 import { getHotelSearchFromUrl, getNightCount, hotelBookingStorageKey, isHotelSearchComplete, serializeHotelSearchParams } from '@/lib/hotelUtils'
 import { useRoomSelection } from '@/hooks/useRoomSelection'
@@ -19,16 +20,25 @@ function HotelDetailsContent({ hotelId }: { hotelId: string }) {
   const router = useRouter()
   const searchParams = useSearchParams()
   const search = getHotelSearchFromUrl(searchParams)
-  const hotel = getHotelById(hotelId)
+  const [hotel, setHotel] = useState<Hotel | null | undefined>(undefined)
   const [isModifyOpen, setIsModifyOpen] = useState(false)
-  if (!hotel) return <div className="section-gap"><Container><EmptyState title="Hotel not found" description="This hotel is unavailable or the link is no longer valid." icon={<Building />} action={{ label: 'Back to hotel results', onClick: () => router.push(searchParams.toString() ? `/hotels?${searchParams}` : '/hotels') }} /></Container></div>
+  useEffect(() => {
+    let active = true
+    getHotel(hotelId).then((result) => {
+      if (active) setHotel(result)
+    })
+    return () => {
+      active = false
+    }
+  }, [hotelId])
+  if (hotel === undefined) return <div className="section-gap min-h-[40vh]" />
+  if (hotel === null) return <div className="section-gap"><Container><EmptyState title="Hotel not found" description="This hotel is unavailable or the link is no longer valid." icon={<Building />} action={{ label: 'Back to hotel results', onClick: () => router.push(searchParams.toString() ? `/hotels?${searchParams}` : '/hotels') }} /></Container></div>
   if (!isHotelSearchComplete(search)) return <div className="section-gap"><Container><EmptyState title="Complete your stay details" description="Choose a destination, valid check-in and check-out dates, and guest details before selecting rooms." icon={<Calendar />} action={{ label: 'Modify search', onClick: () => setIsModifyOpen(true) }} /><HotelModifySearch isOpen={isModifyOpen} onClose={() => setIsModifyOpen(false)} currentSearch={search} /></Container></div>
-  return <HotelDetails hotelId={hotelId} search={search} nights={getNightCount(search.checkIn, search.checkOut)} />
+  return <HotelDetails hotel={hotel} search={search} nights={getNightCount(search.checkIn, search.checkOut)} />
 }
 
-function HotelDetails({ hotelId, search, nights }: { hotelId: string; search: HotelSearchParams; nights: number }) {
+function HotelDetails({ hotel, search, nights }: { hotel: Hotel; search: HotelSearchParams; nights: number }) {
   const router = useRouter()
-  const hotel = getHotelById(hotelId)!
   const [isModifyOpen, setIsModifyOpen] = useState(false)
   const selection = useRoomSelection(hotel, nights, search)
   const query = serializeHotelSearchParams(search).toString()
