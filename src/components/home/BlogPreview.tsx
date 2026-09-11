@@ -2,9 +2,15 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { Container, SectionHeading, Card } from '@/components/ui'
 import { getBlogPosts } from '@/services/blogService'
+import { blogPosts as fallbackPosts } from '@/data/blogPosts'
 
 export async function BlogPreview() {
-  const blogPosts = (await getBlogPosts()).slice(0, 3)
+  let blogPosts = fallbackPosts.slice(0, 3)
+  try {
+    blogPosts = (await getBlogPosts()).slice(0, 3)
+  } catch {
+    // Keep the homepage renderable while the blog API recovers.
+  }
   return (
     <section className="section-gap bg-[var(--color-background)]">
       <Container>

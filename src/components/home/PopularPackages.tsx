@@ -2,10 +2,16 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { Container, SectionHeading, Card, Button } from '@/components/ui'
 import { searchPackages } from '@/services/packageService'
+import { popularPackages as fallbackPackages } from '@/data/packages'
 import { Clock, CheckCircle2 } from 'lucide-react'
 
 export async function PopularPackages() {
-  const { packages } = await searchPackages({})
+  let packages = fallbackPackages
+  try {
+    packages = (await searchPackages({})).packages
+  } catch {
+    // Keep the homepage renderable while the catalog API recovers.
+  }
   return (
     <section className="section-gap bg-[var(--color-background)]">
       <Container>
