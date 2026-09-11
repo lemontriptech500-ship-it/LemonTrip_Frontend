@@ -16,7 +16,7 @@ export function AuthShell({ mode, children }: AuthShellProps) {
   const isSignIn = mode === 'signin'
 
   return (
-    <div className="h-[100dvh] overflow-hidden bg-[var(--color-background-soft)] p-3 sm:p-6">
+    <div className="min-h-[100dvh] overflow-y-auto bg-[var(--color-background-soft)] p-3 sm:p-6">
       <Container className="flex h-full items-center justify-center">
         <div className="mx-auto grid h-full max-h-[720px] w-full max-w-5xl min-h-0 overflow-hidden rounded-[var(--radius-xl)] border border-[var(--color-border)] bg-[var(--color-surface)] shadow-xl lg:grid-cols-[0.9fr_1.1fr]">
           <aside className="relative hidden min-h-0 overflow-hidden bg-[var(--color-text-primary)] lg:block">
@@ -48,7 +48,7 @@ export function AuthShell({ mode, children }: AuthShellProps) {
             </div>
           </aside>
 
-          <main className="min-h-0 overflow-hidden p-4 sm:p-7 lg:p-9">
+          <main className="min-h-0 overflow-y-auto p-4 sm:p-7 lg:p-9">
             <Link href="/" className="mb-4 inline-flex items-center gap-2 text-sm font-semibold text-[var(--color-accent)] hover:text-[var(--color-accent-hover)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-primary)]" >
               <ArrowLeft size={16} aria-hidden="true" />
               Back to home
