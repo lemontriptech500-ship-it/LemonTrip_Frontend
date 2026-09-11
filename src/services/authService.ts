@@ -44,10 +44,10 @@ export async function register(data: {
   }
 }
 
-export async function loginWithGoogle(idToken: string): Promise<{ user: User; token: string }> {
+export async function loginWithGoogle(idToken: string, mode: 'signin' | 'signup' = 'signin'): Promise<{ user: User; token: string }> {
   const result = await apiRequest<{ user: User; token: string }>('/auth/google', {
     method: 'POST',
-    body: JSON.stringify({ idToken }),
+    body: JSON.stringify({ idToken, mode }),
   })
   return { ...result, user: normalizeUser(result.user) }
 }

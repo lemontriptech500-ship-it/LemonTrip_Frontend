@@ -48,7 +48,7 @@ export default function LoginPage() {
     setError('')
     setLoading(true)
     try {
-      const result = await authService.loginWithGoogle(idToken)
+      const result = await authService.loginWithGoogle(idToken, 'signin')
       login(result.user, result.token)
       const callbackUrl = new URLSearchParams(window.location.search).get('callbackUrl')
       router.push(callbackUrl?.startsWith('/') && !callbackUrl.startsWith('//') ? callbackUrl : '/profile')

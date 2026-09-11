@@ -17,8 +17,8 @@ export function AuthShell({ mode, children }: AuthShellProps) {
 
   return (
     <div className="min-h-[100dvh] overflow-y-auto bg-[var(--color-background-soft)] p-3 sm:p-6">
-      <Container className="flex h-full items-center justify-center">
-        <div className="mx-auto grid h-full max-h-[720px] w-full max-w-5xl min-h-0 overflow-hidden rounded-[var(--radius-xl)] border border-[var(--color-border)] bg-[var(--color-surface)] shadow-xl lg:grid-cols-[0.9fr_1.1fr]">
+      <Container className="flex min-h-[calc(100dvh-1.5rem)] items-center justify-center sm:min-h-[calc(100dvh-3rem)]">
+        <div className="mx-auto grid h-[min(720px,calc(100dvh-1.5rem))] w-full max-w-5xl min-h-0 overflow-hidden rounded-[var(--radius-xl)] border border-[var(--color-border)] bg-[var(--color-surface)] shadow-xl sm:h-[min(720px,calc(100dvh-3rem))] lg:grid-cols-[0.9fr_1.1fr]">
           <aside className="relative hidden min-h-0 overflow-hidden bg-[var(--color-text-primary)] lg:block">
             <Image
               src="https://images.unsplash.com/photo-1476514525535-07fb3b4ae5f1?w=1200&q=85"
