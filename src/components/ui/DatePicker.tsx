@@ -30,6 +30,23 @@ export function DatePicker({
   const [isOpen, setIsOpen] = useState(false)
   const [currentMonth, setCurrentMonth] = useState(new Date())
   const containerRef = useRef<HTMLDivElement>(null)
+  const triggerRef = useRef<HTMLButtonElement>(null)
+  const [popupPosition, setPopupPosition] = useState({ top: 0, left: 0 })
+
+  const updatePopupPosition = () => {
+    const trigger = triggerRef.current
+    if (!trigger) return
+
+    const rect = trigger.getBoundingClientRect()
+    const popupWidth = Math.min(288, window.innerWidth - 24)
+    const popupHeight = 360
+    const gap = 8
+    const top = rect.bottom + gap + popupHeight <= window.innerHeight
+      ? rect.bottom + gap
+      : Math.max(12, rect.top - popupHeight - gap)
+    const left = Math.min(Math.max(12, rect.left), window.innerWidth - popupWidth - 12)
+    setPopupPosition({ top, left })
+  }
 
   useEffect(() => {
     function handleClickOutside(event: MouseEvent) {
@@ -40,6 +57,18 @@ export function DatePicker({
     document.addEventListener('mousedown', handleClickOutside)
     return () => document.removeEventListener('mousedown', handleClickOutside)
   }, [])
+
+  useEffect(() => {
+    if (!isOpen) return
+    updatePopupPosition()
+    const handleViewportChange = () => updatePopupPosition()
+    window.addEventListener('resize', handleViewportChange)
+    window.addEventListener('scroll', handleViewportChange, true)
+    return () => {
+      window.removeEventListener('resize', handleViewportChange)
+      window.removeEventListener('scroll', handleViewportChange, true)
+    }
+  }, [isOpen])
 
   const formatDate = (date: Date) => {
     return date.toISOString().split('T')[0]
@@ -118,6 +147,7 @@ export function DatePicker({
 
       <div className="relative">
         <button
+          ref={triggerRef}
           type="button"
           onClick={() => !disabled && setIsOpen(!isOpen)}
           disabled={disabled}
@@ -139,7 +169,10 @@ export function DatePicker({
         </button>
 
         {isOpen && (
-          <div className="absolute bottom-full left-0 z-50 mb-2 w-72 rounded-[var(--radius-lg)] border border-[var(--color-border)] bg-[var(--color-surface)] p-4 shadow-xl animate-fade-in">
+          <div
+            className="fixed z-[120] w-[min(18rem,calc(100vw-1.5rem))] rounded-[var(--radius-lg)] border border-[var(--color-border)] bg-[var(--color-surface)] p-4 shadow-xl animate-fade-in"
+            style={{ top: popupPosition.top, left: popupPosition.left }}
+          >
             {/* Header */}
             <div className="mb-4 flex items-center justify-between">
               <button

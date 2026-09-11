@@ -29,13 +29,28 @@ interface TravelRazorpayCheckoutProps {
   itemId: string
   label: string
   quantityLabel: string
+  initialEmail?: string
+  initialPhone?: string
+  initialQuantity?: number
+  extraDetails?: Record<string, unknown>
+  showQuantity?: boolean
 }
 
-export function TravelRazorpayCheckout({ itemType, itemId, label, quantityLabel }: TravelRazorpayCheckoutProps) {
+export function TravelRazorpayCheckout({
+  itemType,
+  itemId,
+  label,
+  quantityLabel,
+  initialEmail = '',
+  initialPhone = '',
+  initialQuantity = 1,
+  extraDetails = {},
+  showQuantity = true,
+}: TravelRazorpayCheckoutProps) {
   const router = useRouter()
-  const [email, setEmail] = useState('')
-  const [phone, setPhone] = useState('')
-  const [quantity, setQuantity] = useState('1')
+  const [email, setEmail] = useState(initialEmail)
+  const [phone, setPhone] = useState(initialPhone)
+  const [quantity, setQuantity] = useState(String(initialQuantity))
   const [error, setError] = useState<string | null>(null)
   const [processing, setProcessing] = useState(false)
 
@@ -50,7 +65,7 @@ export function TravelRazorpayCheckout({ itemType, itemId, label, quantityLabel 
     setProcessing(true)
     try {
       await loadRazorpayScript()
-      const order = await createRazorpayTravelOrder({ itemType, itemId, quantity: numericQuantity, details: { email, phone } })
+      const order = await createRazorpayTravelOrder({ itemType, itemId, quantity: numericQuantity, details: { ...extraDetails, email, phone } })
       if (!window.Razorpay) throw new Error('Razorpay Checkout is unavailable.')
 
       const checkout = new window.Razorpay({
@@ -94,10 +109,12 @@ export function TravelRazorpayCheckout({ itemType, itemId, label, quantityLabel 
           Email
           <input value={email} onChange={(event) => setEmail(event.target.value)} type="email" placeholder="you@example.com" className="mt-1 h-10 w-full rounded-[var(--radius-md)] border border-[var(--color-border)] bg-[var(--color-surface)] px-3 text-[var(--color-text-primary)]" />
         </label>
-        <label className="text-sm font-medium text-[var(--color-text-secondary)]">
-          {quantityLabel}
-          <input value={quantity} onChange={(event) => setQuantity(event.target.value)} type="number" min="1" className="mt-1 h-10 w-full rounded-[var(--radius-md)] border border-[var(--color-border)] bg-[var(--color-surface)] px-3 text-[var(--color-text-primary)]" />
-        </label>
+        {showQuantity && (
+          <label className="text-sm font-medium text-[var(--color-text-secondary)]">
+            {quantityLabel}
+            <input value={quantity} onChange={(event) => setQuantity(event.target.value)} type="number" min="1" className="mt-1 h-10 w-full rounded-[var(--radius-md)] border border-[var(--color-border)] bg-[var(--color-surface)] px-3 text-[var(--color-text-primary)]" />
+          </label>
+        )}
         <label className="text-sm font-medium text-[var(--color-text-secondary)] sm:col-span-2">
           Phone (optional)
           <input value={phone} onChange={(event) => setPhone(event.target.value)} type="tel" placeholder="+91 98765 43210" className="mt-1 h-10 w-full rounded-[var(--radius-md)] border border-[var(--color-border)] bg-[var(--color-surface)] px-3 text-[var(--color-text-primary)]" />

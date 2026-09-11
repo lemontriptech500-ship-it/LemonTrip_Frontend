@@ -61,7 +61,7 @@ export async function apiRequest<T>(path: string, options: RequestInit = {}): Pr
       : typeof payload === 'object' && payload && 'message' in payload
         ? String(payload.message)
         : `Request failed with status ${response.status}.`
-    const logDetails = { path, status: response.status, message, payload }
+    const logDetails = { url: `${API_BASE_URL}${path.startsWith('/') ? path : `/${path}`}`, path, status: response.status, message, payload }
     if (response.status >= 500) {
       console.error('[api] Server request failed', logDetails)
     } else {

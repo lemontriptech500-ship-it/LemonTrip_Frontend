@@ -1,6 +1,6 @@
 import { apiRequest } from '@/lib/apiClient'
 
-export type TravelItemType = 'bus' | 'train' | 'package'
+export type TravelItemType = 'hotel' | 'bus' | 'train' | 'package'
 
 export interface RazorpayTravelOrder {
   orderId: string
@@ -15,7 +15,7 @@ export function createRazorpayTravelOrder(data: {
   itemType: TravelItemType
   itemId: string
   quantity: number
-  details: { email: string; phone?: string }
+  details: { email: string; phone?: string; [key: string]: unknown }
 }): Promise<RazorpayTravelOrder> {
   return apiRequest<RazorpayTravelOrder>('/payments/razorpay/travel/order', {
     method: 'POST',
