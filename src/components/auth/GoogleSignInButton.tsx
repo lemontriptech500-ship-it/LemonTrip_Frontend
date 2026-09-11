@@ -39,6 +39,7 @@ const GOOGLE_SCRIPT_ID = 'google-identity-services'
 let initializedClientId: string | null = null
 let initializationClientId: string | null = null
 let initializationPromise: Promise<void> | null = null
+let activeCredentialCallback: ((idToken: string) => void) | null = null
 
 function loadGoogleScript() {
   if (window.google) return Promise.resolve()
@@ -64,6 +65,7 @@ function loadGoogleScript() {
 }
 
 function initializeGoogle(clientId: string, onCredential: (idToken: string) => void) {
+  activeCredentialCallback = onCredential
   if (initializedClientId === clientId) return Promise.resolve()
   if (initializationPromise && initializationClientId === clientId) return initializationPromise
 
@@ -72,7 +74,7 @@ function initializeGoogle(clientId: string, onCredential: (idToken: string) => v
     if (!window.google) throw new Error('Google Sign-In could not load.')
     window.google.accounts.id.initialize({
       client_id: clientId,
-      callback: (response) => onCredential(response.credential),
+      callback: (response) => activeCredentialCallback?.(response.credential),
     })
     initializedClientId = clientId
   })
@@ -84,6 +86,7 @@ export function GoogleSignInButton({ mode, onCredential }: GoogleSignInButtonPro
   const buttonRef = useRef<HTMLDivElement>(null)
   const onCredentialRef = useRef(onCredential)
   const [error, setError] = useState('')
+  const [ready, setReady] = useState(false)
   const clientId = process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID
   const isConfigured = Boolean(clientId && !clientId.startsWith('replace-with-'))
 
@@ -107,6 +110,7 @@ export function GoogleSignInButton({ mode, onCredential }: GoogleSignInButtonPro
           width: Math.min(buttonRef.current.clientWidth, 400),
           text: mode === 'signup' ? 'signup_with' : 'signin_with',
         })
+        setReady(true)
       })
       .catch((reason: unknown) => {
         if (!cancelled) setError(reason instanceof Error ? reason.message : 'Google Sign-In could not load.')
@@ -135,7 +139,12 @@ export function GoogleSignInButton({ mode, onCredential }: GoogleSignInButtonPro
 
   return (
     <div className="space-y-2">
-      <div ref={buttonRef} className="flex min-h-10 justify-center" />
+      {!ready && (
+        <div className="flex h-11 w-full items-center justify-center rounded-[var(--radius-md)] border border-[var(--color-border)] bg-[var(--color-surface)] text-sm font-medium text-[var(--color-text-secondary)]">
+          Loading Google Sign-In...
+        </div>
+      )}
+      <div ref={buttonRef} className={ready ? 'flex min-h-10 justify-center' : 'hidden'} />
       {error && <Alert variant="error" title="Google Sign-In error">{error}</Alert>}
     </div>
   )

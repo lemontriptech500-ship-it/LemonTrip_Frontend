@@ -54,7 +54,7 @@ export default function SignupPage() {
     setError('')
     setLoading(true)
     try {
-      const result = await authService.loginWithGoogle(idToken)
+      const result = await authService.loginWithGoogle(idToken, 'signup')
       login(result.user, result.token)
       const callbackUrl = new URLSearchParams(window.location.search).get('callbackUrl')
       router.push(callbackUrl?.startsWith('/') && !callbackUrl.startsWith('//') ? callbackUrl : '/profile')
@@ -67,6 +67,10 @@ export default function SignupPage() {
     <AuthShell mode="signup">
       <form onSubmit={handleSubmit} noValidate className="space-y-3">
         {error && <Alert variant="error" title="Registration error">{error}</Alert>}
+        <GoogleSignInButton mode="signup" onCredential={handleGoogleCredential} />
+        <div className="relative py-1 text-center text-xs text-[var(--color-text-secondary)] before:absolute before:left-0 before:right-0 before:top-1/2 before:border-t before:border-[var(--color-border)]">
+          <span className="relative bg-[var(--color-surface)] px-3">or create with email</span>
+        </div>
         <Input
           label="Full name"
           autoComplete="name"
@@ -131,10 +135,6 @@ export default function SignupPage() {
         <Button type="submit" fullWidth size="lg" loading={loading}>
           Create account
         </Button>
-        <div className="relative py-1 text-center text-xs text-[var(--color-text-secondary)] before:absolute before:left-0 before:right-0 before:top-1/2 before:border-t before:border-[var(--color-border)]">
-          <span className="relative bg-[var(--color-surface)] px-3">or continue with</span>
-        </div>
-        <GoogleSignInButton mode="signup" onCredential={handleGoogleCredential} />
       </form>
       <AuthSwitch mode="signup" />
     </AuthShell>
