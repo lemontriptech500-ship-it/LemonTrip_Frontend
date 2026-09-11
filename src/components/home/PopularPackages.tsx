@@ -1,11 +1,11 @@
-import React from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
 import { Container, SectionHeading, Card, Button } from '@/components/ui'
-import { popularPackages } from '@/data/packages'
+import { searchPackages } from '@/services/packageService'
 import { Clock, CheckCircle2 } from 'lucide-react'
 
-export function PopularPackages() {
+export async function PopularPackages() {
+  const { packages } = await searchPackages({})
   return (
     <section className="section-gap bg-[var(--color-background)]">
       <Container>
@@ -16,7 +16,7 @@ export function PopularPackages() {
         />
 
         <div className="mt-8 grid grid-cols-1 lg:grid-cols-3 gap-6">
-          {popularPackages.map((pkg) => (
+          {packages.slice(0, 3).map((pkg) => (
             <Card key={pkg.id} hover className="overflow-hidden flex flex-col h-full">
               <div className={`relative h-48 w-full ${pkg.imageFallbackColor}`}>
                 {pkg.imageUrl && <Image src={pkg.imageUrl} alt={`${pkg.destination} travel package`} fill sizes="(max-width: 768px) 100vw, 33vw" className="object-cover" />}

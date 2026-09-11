@@ -1,30 +1,20 @@
-import { popularPackages } from '@/data/packages'
 import { apiRequest, isApiConfigured } from '@/lib/apiClient'
+import type { HolidayPackage } from '@/data/packages'
 
 export async function searchPackages(params: {
   destination?: string
   month?: string
   travellers?: string
 }) {
-  if (isApiConfigured) return apiRequest(`/packages/search?${new URLSearchParams(params).toString()}`)
-  await new Promise((resolve) => setTimeout(resolve, 800))
-
-  let results = [...popularPackages]
-
-  if (params.destination) {
-    const dest = params.destination.toLowerCase()
-    results = results.filter((p) =>
-      p.destination.toLowerCase().includes(dest)
-    )
-  }
-
-  return { packages: results, total: results.length }
+  return apiRequest<{ packages: HolidayPackage[]; total: number }>(`/packages/search?${new URLSearchParams(params).toString()}`)
 }
 
-export async function getPackageById(id: string) {
-  if (isApiConfigured) return apiRequest(`/packages/${encodeURIComponent(id)}`)
-  await new Promise((resolve) => setTimeout(resolve, 300))
-  return popularPackages.find((p) => p.id === id) || null
+export async function getPackageById(id: string): Promise<HolidayPackage | null> {
+  try {
+    return await apiRequest<HolidayPackage>(`/packages/${encodeURIComponent(id)}`)
+  } catch {
+    return null
+  }
 }
 
 export async function createPackageBooking(data: {

@@ -1,11 +1,13 @@
 import Link from 'next/link'
 import { ArrowLeft, CheckCircle2, Clock, AlertCircle } from 'lucide-react'
 import { Button, Card, Container, Badge } from '@/components/ui'
-import { popularPackages } from '@/data/packages'
+import { getPackageById } from '@/services/packageService'
+
+export const dynamic = 'force-dynamic'
 
 export default async function PackageDetailsPage({ params }: { params: Promise<{ packageId: string }> }) {
   const { packageId } = await params
-  const pkg = popularPackages.find((item) => item.id === packageId)
+  const pkg = await getPackageById(packageId)
 
   if (!pkg) {
     return (
