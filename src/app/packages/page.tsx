@@ -1,12 +1,12 @@
-'use client'
-
-import React from 'react'
 import Link from 'next/link'
 import { Clock, MapPin, CheckCircle2 } from 'lucide-react'
 import { Button, Card, Container, SectionHeading } from '@/components/ui'
-import { popularPackages } from '@/data/packages'
+import { searchPackages } from '@/services/packageService'
 
-export default function PackagesPage() {
+export const dynamic = 'force-dynamic'
+
+export default async function PackagesPage() {
+  const { packages: popularPackages } = await searchPackages({})
   return (
     <div className="section-gap bg-[var(--color-background)]">
       <Container>
@@ -46,10 +46,6 @@ export default function PackagesPage() {
             </Card>
           ))}
         </div>
-        <p className="mt-6 flex items-center gap-2 text-sm text-[var(--color-text-muted)]">
-          <MapPin size={14} />
-          Sample package content for interface preview.
-        </p>
       </Container>
     </div>
   )
