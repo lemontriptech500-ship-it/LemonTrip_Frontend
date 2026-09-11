@@ -1,10 +1,10 @@
-import React from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
 import { Container, SectionHeading, Card } from '@/components/ui'
-import { blogPosts } from '@/data/blogPosts'
+import { getBlogPosts } from '@/services/blogService'
 
-export function BlogPreview() {
+export async function BlogPreview() {
+  const blogPosts = (await getBlogPosts()).slice(0, 3)
   return (
     <section className="section-gap bg-[var(--color-background)]">
       <Container>

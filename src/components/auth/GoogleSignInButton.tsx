@@ -37,6 +37,8 @@ interface GoogleSignInButtonProps {
 
 const GOOGLE_SCRIPT_ID = 'google-identity-services'
 let initializedClientId: string | null = null
+let initializationClientId: string | null = null
+let initializationPromise: Promise<void> | null = null
 
 function loadGoogleScript() {
   if (window.google) return Promise.resolve()
@@ -61,6 +63,23 @@ function loadGoogleScript() {
   })
 }
 
+function initializeGoogle(clientId: string, onCredential: (idToken: string) => void) {
+  if (initializedClientId === clientId) return Promise.resolve()
+  if (initializationPromise && initializationClientId === clientId) return initializationPromise
+
+  initializationClientId = clientId
+  initializationPromise = loadGoogleScript().then(() => {
+    if (!window.google) throw new Error('Google Sign-In could not load.')
+    window.google.accounts.id.initialize({
+      client_id: clientId,
+      callback: (response) => onCredential(response.credential),
+    })
+    initializedClientId = clientId
+  })
+
+  return initializationPromise
+}
+
 export function GoogleSignInButton({ mode, onCredential }: GoogleSignInButtonProps) {
   const buttonRef = useRef<HTMLDivElement>(null)
   const onCredentialRef = useRef(onCredential)
@@ -74,21 +93,14 @@ export function GoogleSignInButton({ mode, onCredential }: GoogleSignInButtonPro
     if (!isConfigured || !clientId || !buttonRef.current) return
 
     let cancelled = false
-    loadGoogleScript()
+    initializeGoogle(clientId, (idToken) => {
+      void onCredentialRef.current(idToken).catch((reason: unknown) => {
+        setError(reason instanceof Error ? reason.message : 'Google Sign-In failed.')
+      })
+    })
       .then(() => {
         if (cancelled || !buttonRef.current || !window.google) return
         buttonRef.current.replaceChildren()
-        if (initializedClientId !== clientId) {
-          window.google.accounts.id.initialize({
-            client_id: clientId,
-            callback: (response) => {
-              void onCredentialRef.current(response.credential).catch((reason: unknown) => {
-                setError(reason instanceof Error ? reason.message : 'Google Sign-In failed.')
-              })
-            },
-          })
-          initializedClientId = clientId
-        }
         window.google.accounts.id.renderButton(buttonRef.current, {
           theme: 'outline',
           size: 'large',

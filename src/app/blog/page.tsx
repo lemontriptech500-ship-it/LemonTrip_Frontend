@@ -1,12 +1,12 @@
-'use client'
-
-import React from 'react'
 import Link from 'next/link'
-import { BookOpen, Calendar, ArrowRight } from 'lucide-react'
+import { Calendar, ArrowRight } from 'lucide-react'
 import { Button, Card, Container, SectionHeading } from '@/components/ui'
-import { blogPosts } from '@/data/blogPosts'
+import { getBlogPosts } from '@/services/blogService'
 
-export default function BlogPage() {
+export const dynamic = 'force-dynamic'
+
+export default async function BlogPage() {
+  const blogPosts = await getBlogPosts()
   return (
     <div className="section-gap bg-[var(--color-background)]">
       <Container>
@@ -37,7 +37,6 @@ export default function BlogPage() {
             </Card>
           ))}
         </div>
-        <p className="mt-6 text-sm text-[var(--color-text-muted)]">Articles shown are mock content for frontend development.</p>
       </Container>
     </div>
   )
