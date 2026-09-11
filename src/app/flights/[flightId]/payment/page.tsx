@@ -38,7 +38,8 @@ export default function PaymentPage({ params }: { params: Promise<{ flightId: st
   
   const [flight, setFlight] = useState<Flight | null>(null);
   const [bookingData, setBookingData] = useState<BookingTravellerData | null>(null);
-  const [isLoaded, setIsLoaded] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
+  const [pageError, setPageError] = useState<string | null>(null);
   
   const fareId = searchParams.get('fareId');
 
@@ -48,31 +49,74 @@ export default function PaymentPage({ params }: { params: Promise<{ flightId: st
   const [isProcessing, setIsProcessing] = useState(false);
 
   useEffect(() => {
-    // 1. Fetch Flight
-    getFlightById(flightId).then(setFlight);
+    let cancelled = false;
 
-    // 2. Hydrate from session storage
-    const saved = sessionStorage.getItem(`bookingData_${flightId}`);
-    if (saved) {
+    async function loadBooking() {
+      setIsLoading(true);
+      setPageError(null);
       try {
-        const parsed = JSON.parse(saved);
-        if (parsed.travellers && parsed.travellers.length > 0 && parsed.contact && parsed.contact.email) {
-          setBookingData({
-            flightId,
-            fareId: fareId || '',
-            travellers: parsed.travellers,
-            contact: parsed.contact,
-          });
+        const [loadedFlight, savedBooking] = await Promise.all([
+          getFlightById(flightId),
+          Promise.resolve(sessionStorage.getItem(`bookingData_${flightId}`)),
+        ]);
+
+        if (cancelled) return;
+        setFlight(loadedFlight);
+
+        if (savedBooking) {
+          const parsed = JSON.parse(savedBooking);
+          if (parsed.travellers?.length > 0 && parsed.contact?.email) {
+            setBookingData({
+              flightId,
+              fareId: fareId || '',
+              travellers: parsed.travellers,
+              contact: parsed.contact,
+            });
+          } else {
+            setBookingData(null);
+          }
+        } else {
+          setBookingData(null);
         }
-      } catch (e) {
-        console.error("Failed to parse saved booking data", e);
+      } catch (error) {
+        if (!cancelled) setPageError(error instanceof Error ? error.message : 'Unable to load your payment details.')
+      } finally {
+        if (!cancelled) setIsLoading(false)
       }
     }
 
-    setIsLoaded(true);
+    loadBooking();
+    return () => {
+      cancelled = true;
+    };
   }, [flightId, fareId]);
 
-  if (!isLoaded) return null;
+  if (isLoading) {
+    return (
+      <div className="section-gap min-h-[60vh] flex items-center">
+        <Container>
+          <div className="mx-auto max-w-xl rounded-[var(--radius-lg)] border border-[var(--color-border)] bg-[var(--color-surface)] p-8 text-center">
+            <Loader2 size={28} className="mx-auto animate-spin text-[var(--color-primary)]" />
+            <p className="mt-4 font-medium text-[var(--color-text-primary)]">Loading your payment details...</p>
+          </div>
+        </Container>
+      </div>
+    );
+  }
+
+  if (pageError) {
+    return (
+      <div className="section-gap min-h-[60vh] flex items-center">
+        <Container>
+          <EmptyState
+            title="Payment details unavailable"
+            description={pageError}
+            action={{ label: 'Return to Flight Details', onClick: () => router.push(`/flights/${flightId}?${searchParams.toString()}`) }}
+          />
+        </Container>
+      </div>
+    );
+  }
 
   // Handling Incomplete States
   if (!flight || !fareId || !bookingData) {
@@ -112,6 +156,7 @@ export default function PaymentPage({ params }: { params: Promise<{ flightId: st
   const handleCompleteBooking = async () => {
     setMethodError(undefined);
 
+    if (isProcessing) return;
     setIsProcessing(true);
     try {
       await loadRazorpayScript();
@@ -185,7 +230,7 @@ export default function PaymentPage({ params }: { params: Promise<{ flightId: st
             <PaymentSecurityNotice />
 
             {methodError && (
-              <div className="mb-4 p-3 rounded-md bg-[rgba(192, 57, 43, 0.10) text-[var(--color-error)] text-sm font-medium">
+              <div className="mb-4 rounded-md bg-[rgba(192,57,43,0.10)] p-3 text-sm font-medium text-[var(--color-error)]">
                 {methodError}
               </div>
             )}

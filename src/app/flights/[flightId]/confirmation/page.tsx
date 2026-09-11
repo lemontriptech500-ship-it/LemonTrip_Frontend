@@ -124,20 +124,20 @@ export default function ConfirmationPage({ params }: { params: Promise<{ flightI
           <div className="flex-1 w-full min-w-0">
             {/* Success Header */}
             <div className="bg-[var(--color-surface)] border border-[var(--color-border)] rounded-[var(--radius-xl)] p-8 mb-8 text-center flex flex-col items-center shadow-sm">
-              <div className="w-16 h-16 bg-[rgba(39, 174, 96, 0.10) text-[var(--color-success)] rounded-full flex items-center justify-center mb-4">
+              <div className="flex h-16 w-16 items-center justify-center rounded-full bg-[rgba(39,174,96,0.10)] text-[var(--color-success)] mb-4">
                 <CheckCircle2 size={32} />
               </div>
               <h1 className="text-3xl font-bold text-[var(--color-text-primary)] mb-2">
-                Booking Flow Completed
+                Booking Confirmed
               </h1>
               <p className="text-[var(--color-text-secondary)] mb-6 max-w-lg">
-                Thank you for trying out the LemonTrip frontend demo!
+                Your payment was verified and your flight booking is confirmed.
               </p>
               
               <div className="bg-[var(--color-surface-secondary)] px-6 py-4 rounded-lg flex items-center gap-4">
                 <div className="text-left">
                   <p className="text-xs text-[var(--color-text-secondary)] uppercase font-semibold tracking-wider mb-1">
-                    Demo Booking Reference
+                    Booking Reference
                   </p>
                   <p className="text-2xl font-mono font-bold text-[var(--color-text-primary)]">
                     {bookingReference}

@@ -1,7 +1,8 @@
 import Link from 'next/link'
-import { ArrowLeft, CheckCircle2, Clock, AlertCircle } from 'lucide-react'
+import { ArrowLeft, CheckCircle2 } from 'lucide-react'
 import { Button, Card, Container, Badge } from '@/components/ui'
 import { getPackageById } from '@/services/packageService'
+import { TravelRazorpayCheckout } from '@/components/booking/TravelRazorpayCheckout'
 
 export const dynamic = 'force-dynamic'
 
@@ -60,11 +61,9 @@ export default async function PackageDetailsPage({ params }: { params: Promise<{
                 <p className="text-caption text-[var(--color-text-secondary)]">Starting from</p>
                 <p className="text-2xl font-bold text-[var(--color-text-primary)]">{pkg.startingPrice}</p>
               </div>
-              <div className="flex items-center gap-2 px-4 py-2 rounded-[var(--radius-md)] bg-[var(--color-warning-bg)] border border-[rgba(22, 160, 133, 0.20)">
-                <AlertCircle size={16} className="text-[var(--color-warning)]" />
-                <span className="text-sm font-medium text-[var(--color-warning)]">Booking coming soon</span>
-              </div>
+              <span className="text-sm font-medium text-[var(--color-text-secondary)]">Pay per traveller</span>
             </div>
+            <TravelRazorpayCheckout itemType="package" itemId={pkg.id} quantityLabel="Travellers" label={`${pkg.destination} package`} />
           </div>
         </Card>
       </Container>

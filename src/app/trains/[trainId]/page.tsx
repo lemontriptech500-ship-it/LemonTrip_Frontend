@@ -1,11 +1,12 @@
 import Link from 'next/link'
-import { ArrowLeft, Clock, TrainFront, AlertCircle } from 'lucide-react'
-import { Button, Card, Container, Badge } from '@/components/ui'
-import { mockTrains } from '@/data/trains'
+import { ArrowLeft, Clock, TrainFront } from 'lucide-react'
+import { Button, Card, Container } from '@/components/ui'
+import { getTrainById } from '@/services/trainService'
+import { TravelRazorpayCheckout } from '@/components/booking/TravelRazorpayCheckout'
 
 export default async function TrainDetailsPage({ params }: { params: Promise<{ trainId: string }> }) {
   const { trainId } = await params
-  const train = mockTrains.find((item) => item.id === trainId)
+  const train = await getTrainById(trainId)
 
   if (!train) {
     return (
@@ -36,7 +37,6 @@ export default async function TrainDetailsPage({ params }: { params: Promise<{ t
               <TrainFront size={28} />
             </div>
             <div>
-              <Badge variant="info" className="mb-2">Mock Detail</Badge>
               <h1 className="text-h1">{train.name}</h1>
               <p className="mt-1 text-[var(--color-text-secondary)]">Train {train.number}</p>
             </div>
@@ -73,16 +73,13 @@ export default async function TrainDetailsPage({ params }: { params: Promise<{ t
             </div>
           </div>
 
-          <div className="mt-8 flex items-center justify-between gap-4 p-4 rounded-[var(--radius-md)] bg-[var(--color-surface-secondary)]">
+          <div className="mt-8 flex items-center justify-between gap-4 rounded-[var(--radius-md)] bg-[var(--color-surface-secondary)] p-4">
             <div>
               <p className="text-caption text-[var(--color-text-secondary)]">Preview fare</p>
               <p className="text-2xl font-bold text-[var(--color-text-primary)]">{train.price}</p>
             </div>
-            <div className="flex items-center gap-2">
-              <AlertCircle size={16} className="text-[var(--color-warning)]" />
-              <span className="text-sm text-[var(--color-text-secondary)]">Booking coming soon</span>
-            </div>
           </div>
+          <TravelRazorpayCheckout itemType="train" itemId={train.id} quantityLabel="Passengers" label={`${train.name} train booking`} />
         </Card>
       </Container>
     </div>
