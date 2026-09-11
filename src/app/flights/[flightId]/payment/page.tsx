@@ -3,20 +3,33 @@
 import React, { useEffect, useState } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { Container, Button } from '@/components/ui';
-import { MOCK_FLIGHTS } from '@/data/flights';
 import { Flight } from '@/types/flights';
 import { EmptyState } from '@/components/common';
 import { BookingTravellerData } from '@/types/booking';
 
 import { BookingProgress } from '@/components/booking/BookingProgress';
-import { PaymentMethodSelector, PaymentMethod } from '@/components/booking/PaymentMethodSelector';
-import { UpiPaymentForm } from '@/components/booking/UpiPaymentForm';
-import { CardPaymentForm } from '@/components/booking/CardPaymentForm';
-import { NetBankingForm } from '@/components/booking/NetBankingForm';
-import { WalletPaymentForm } from '@/components/booking/WalletPaymentForm';
 import { PaymentSecurityNotice } from '@/components/booking/PaymentSecurityNotice';
 import { FlightBookingSummary } from '@/components/flights/FlightBookingSummary';
 import { ArrowLeft, Loader2 } from 'lucide-react';
+import { createRazorpayFlightOrder, getFlightById, verifyRazorpayFlightPayment } from '@/services/flightService';
+
+declare global {
+  interface Window {
+    Razorpay?: new (options: Record<string, unknown>) => { open: () => void };
+  }
+}
+
+function loadRazorpayScript(): Promise<void> {
+  if (window.Razorpay) return Promise.resolve();
+  return new Promise((resolve, reject) => {
+    const script = document.createElement('script');
+    script.src = 'https://checkout.razorpay.com/v1/checkout.js';
+    script.async = true;
+    script.onload = () => resolve();
+    script.onerror = () => reject(new Error('Razorpay Checkout could not load.'));
+    document.body.appendChild(script);
+  });
+}
 
 export default function PaymentPage({ params }: { params: Promise<{ flightId: string }> }) {
   const { flightId } = React.use(params);
@@ -30,27 +43,13 @@ export default function PaymentPage({ params }: { params: Promise<{ flightId: st
   const fareId = searchParams.get('fareId');
 
   // Local, non-persisted payment state
-  const [selectedMethod, setSelectedMethod] = useState<PaymentMethod | null>(null);
   const [methodError, setMethodError] = useState<string | undefined>(undefined);
-  
-  const [upiId, setUpiId] = useState('');
-  const [upiError, setUpiError] = useState<string | undefined>(undefined);
-  
-  const [cardData, setCardData] = useState({ cardName: '', cardNumber: '', expiry: '', cvv: '' });
-  const [cardErrors, setCardErrors] = useState<Record<string, string>>({});
-  
-  const [bank, setBank] = useState('');
-  const [bankError, setBankError] = useState<string | undefined>(undefined);
-  
-  const [wallet, setWallet] = useState('');
-  const [walletError, setWalletError] = useState<string | undefined>(undefined);
 
   const [isProcessing, setIsProcessing] = useState(false);
 
   useEffect(() => {
     // 1. Fetch Flight
-    const found = MOCK_FLIGHTS.find(f => f.id === flightId);
-    if (found) setFlight(found);
+    getFlightById(flightId).then(setFlight);
 
     // 2. Hydrate from session storage
     const saved = sessionStorage.getItem(`bookingData_${flightId}`);
@@ -110,54 +109,52 @@ export default function PaymentPage({ params }: { params: Promise<{ flightId: st
     router.back();
   };
 
-  const handleCompleteBooking = () => {
-    let isValid = true;
-
-    // Reset errors
+  const handleCompleteBooking = async () => {
     setMethodError(undefined);
-    setUpiError(undefined);
-    setCardErrors({});
-    setBankError(undefined);
-    setWalletError(undefined);
-
-    if (!selectedMethod) {
-      setMethodError('Please select a payment method.');
-      isValid = false;
-    } else {
-      if (selectedMethod === 'upi') {
-        if (!upiId.trim()) { setUpiError('UPI ID is required'); isValid = false; }
-      } else if (selectedMethod === 'card') {
-        const cErrors: Record<string, string> = {};
-        if (!cardData.cardName.trim()) cErrors.cardName = 'Required';
-        if (cardData.cardNumber.replace(/\s/g, '').length < 15) cErrors.cardNumber = 'Invalid card number';
-        if (cardData.expiry.length < 5) cErrors.expiry = 'Invalid expiry';
-        if (cardData.cvv.length < 3) cErrors.cvv = 'Invalid CVV';
-        if (Object.keys(cErrors).length > 0) {
-          setCardErrors(cErrors);
-          isValid = false;
-        }
-      } else if (selectedMethod === 'netbanking') {
-        if (!bank) { setBankError('Please select a bank'); isValid = false; }
-      } else if (selectedMethod === 'wallet') {
-        if (!wallet) { setWalletError('Please select a wallet'); isValid = false; }
-      }
-    }
-
-    if (!isValid) {
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-      return;
-    }
 
     setIsProcessing(true);
-    // Simulate API call and redirect
-    setTimeout(() => {
-      // Clear sensitive temporary data (already in local state and not persisted, but to be safe)
-      setSelectedMethod(null);
-      setCardData({ cardName: '', cardNumber: '', expiry: '', cvv: '' });
-      setUpiId('');
-      
-      router.push(`/flights/${flight.id}/confirmation?${searchParams.toString()}`);
-    }, 1500);
+    try {
+      await loadRazorpayScript();
+      const order = await createRazorpayFlightOrder({
+        flightId: flight.id,
+        fareId,
+        travellers: bookingData.travellers,
+        contact: bookingData.contact,
+      });
+      if (!window.Razorpay) throw new Error('Razorpay Checkout is unavailable.');
+
+      const checkout = new window.Razorpay({
+        key: order.keyId,
+        amount: order.amount,
+        currency: order.currency,
+        name: 'LemonTrip',
+        description: `${flight.airline} flight booking`,
+        order_id: order.orderId,
+        prefill: { email: bookingData.contact.email, contact: `${bookingData.contact.phoneCode}${bookingData.contact.phoneNumber}` },
+        theme: { color: '#ffd21a' },
+        handler: async (payment: { razorpay_payment_id: string; razorpay_order_id: string; razorpay_signature: string }) => {
+          try {
+            const verified = await verifyRazorpayFlightPayment({
+              bookingId: order.bookingId,
+              razorpayOrderId: payment.razorpay_order_id,
+              razorpayPaymentId: payment.razorpay_payment_id,
+              razorpaySignature: payment.razorpay_signature,
+            });
+            const query = new URLSearchParams(searchParams.toString());
+            if (verified.bookingReference) query.set('bookingReference', verified.bookingReference);
+            router.push(`/flights/${flight.id}/confirmation?${query.toString()}`);
+          } catch (error) {
+            setMethodError(error instanceof Error ? error.message : 'Payment verification failed.');
+            setIsProcessing(false);
+          }
+        },
+        modal: { ondismiss: () => setIsProcessing(false) },
+      });
+      checkout.open();
+    } catch (error) {
+      setMethodError(error instanceof Error ? error.message : 'Unable to start Razorpay Checkout.');
+      setIsProcessing(false);
+    }
   };
 
   return (
@@ -193,45 +190,11 @@ export default function PaymentPage({ params }: { params: Promise<{ flightId: st
               </div>
             )}
 
-            <div className="grid grid-cols-1 md:grid-cols-12 gap-6 mb-8">
-              {/* Payment Methods */}
-              <div className="md:col-span-5">
-                <PaymentMethodSelector 
-                  selected={selectedMethod as PaymentMethod} 
-                  onSelect={(m) => {
-                    setSelectedMethod(m);
-                    setMethodError(undefined);
-                  }} 
-                />
-              </div>
-
-              {/* Payment Details Area */}
-              <div className="md:col-span-7">
-                {!selectedMethod && (
-                  <div className="h-full flex items-center justify-center p-8 border border-dashed border-[var(--color-border)] rounded-[var(--radius-lg)] text-[var(--color-text-muted)] text-sm">
-                    Select a payment method to continue
-                  </div>
-                )}
-                {selectedMethod === 'upi' && (
-                  <UpiPaymentForm upiId={upiId} onChange={setUpiId} error={upiError} />
-                )}
-                {selectedMethod === 'card' && (
-                  <CardPaymentForm 
-                    cardName={cardData.cardName}
-                    cardNumber={cardData.cardNumber}
-                    expiry={cardData.expiry}
-                    cvv={cardData.cvv}
-                    onChange={(f, v) => setCardData(prev => ({ ...prev, [f]: v }))}
-                    errors={cardErrors} 
-                  />
-                )}
-                {selectedMethod === 'netbanking' && (
-                  <NetBankingForm bank={bank} onChange={setBank} error={bankError} />
-                )}
-                {selectedMethod === 'wallet' && (
-                  <WalletPaymentForm wallet={wallet} onChange={setWallet} error={walletError} />
-                )}
-              </div>
+            <div className="mb-8 rounded-[var(--radius-lg)] border border-[var(--color-border)] bg-[var(--color-surface)] p-6">
+              <h2 className="text-lg font-bold text-[var(--color-text-primary)]">Pay securely with Razorpay</h2>
+              <p className="mt-2 text-sm leading-relaxed text-[var(--color-text-secondary)]">
+                Razorpay securely supports UPI, cards, net banking, and wallets. Your payment details are entered directly in Razorpay Checkout and are never stored by LemonTrip.
+              </p>
             </div>
 
           </div>
@@ -260,7 +223,7 @@ export default function PaymentPage({ params }: { params: Promise<{ flightId: st
                     Processing...
                   </>
                 ) : (
-                  "Complete Booking"
+                  "Pay securely with Razorpay"
                 )}
               </Button>
             </div>

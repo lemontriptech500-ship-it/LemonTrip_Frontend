@@ -3,8 +3,8 @@
 import React, { useEffect, useState, useMemo } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { Container, Button } from '@/components/ui';
-import { MOCK_FLIGHTS } from '@/data/flights';
 import { Flight } from '@/types/flights';
+import { getFlightById } from '@/services/flightService';
 import { EmptyState } from '@/components/common';
 import { BookingTravellerData } from '@/types/booking';
 
@@ -27,11 +27,11 @@ export default function ConfirmationPage({ params }: { params: Promise<{ flightI
   const [copied, setCopied] = useState(false);
   
   const fareId = searchParams.get('fareId');
+  const verifiedReference = searchParams.get('bookingReference');
 
   useEffect(() => {
     // 1. Fetch Flight
-    const found = MOCK_FLIGHTS.find(f => f.id === flightId);
-    if (found) setFlight(found);
+    getFlightById(flightId).then(setFlight);
 
     // 2. Hydrate from session storage
     // If the data exists, we consider the frontend flow completed.
@@ -57,9 +57,10 @@ export default function ConfirmationPage({ params }: { params: Promise<{ flightI
 
   // Deterministic Demo Reference Generation
   const bookingReference = useMemo(() => {
+    if (verifiedReference) return verifiedReference;
     if (!flightId || !fareId) return 'LT-DEMO-XXXXX';
     return `LT-DEMO-${flightId.slice(0, 4).toUpperCase()}-${fareId.slice(0, 4).toUpperCase()}`;
-  }, [flightId, fareId]);
+  }, [flightId, fareId, verifiedReference]);
 
   if (!isLoaded) return null;
 

@@ -62,9 +62,9 @@ export function HotelSearchForm({ defaults, onSuccess }: HotelSearchFormProps) {
   const today = new Date().toISOString().split('T')[0]
 
   return (
-    <form onSubmit={handleSearch} className="flex min-h-[415px] w-full flex-col justify-between gap-3 rounded-lg bg-[#063b24] p-3 md:min-h-[253px] md:gap-4 md:p-4 lg:grid lg:min-h-[120px] lg:grid-cols-[minmax(0,1fr)_auto] lg:items-end lg:gap-2 lg:p-3">
-      <div className="grid min-w-0 grid-cols-1 items-end gap-3 md:grid-cols-2 md:gap-4 lg:grid-cols-12">
-        <div className="lg:col-span-3">
+    <form onSubmit={handleSearch} className="w-full space-y-5 rounded-lg bg-[#063b24] p-4 sm:p-5">
+      <div className="grid gap-4">
+        <div>
           <Input
             name="destination"
             label="Destination"
@@ -76,7 +76,7 @@ export function HotelSearchForm({ defaults, onSuccess }: HotelSearchFormProps) {
           />
         </div>
 
-        <div className="lg:col-span-4 grid grid-cols-2 gap-4">
+        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
           <DatePicker
             label="Check-In"
             value={checkIn}
@@ -97,7 +97,7 @@ export function HotelSearchForm({ defaults, onSuccess }: HotelSearchFormProps) {
           />
         </div>
 
-        <div className="lg:col-span-5 grid grid-cols-3 gap-4">
+        <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
           <Select name="rooms" label="Rooms" defaultValue={String(defaults?.rooms ?? 1)} theme="dark-green">
             {ROOM_OPTIONS.map((count) => (
               <option key={count} value={String(count)}>
@@ -122,8 +122,8 @@ export function HotelSearchForm({ defaults, onSuccess }: HotelSearchFormProps) {
         </div>
       </div>
 
-      <div className="flex justify-end lg:pb-0.5">
-        <Button type="submit" size="lg" className="w-full px-5 md:w-auto lg:px-4">
+      <div className="flex justify-end border-t border-white/15 pt-4">
+        <Button type="submit" size="lg" className="w-full px-5 sm:w-auto">
           Search Hotels
         </Button>
       </div>
