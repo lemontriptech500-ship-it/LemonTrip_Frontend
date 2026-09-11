@@ -4,8 +4,8 @@ import React, { useEffect, useState } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { Container, Button } from '@/components/ui';
 import { ArrowLeft } from 'lucide-react';
-import { MOCK_FLIGHTS } from '@/data/flights';
 import { Flight } from '@/types/flights';
+import { getFlightById } from '@/services/flightService';
 import { EmptyState } from '@/components/common';
 
 import { BookingProgress } from '@/components/booking/BookingProgress';
@@ -64,8 +64,7 @@ export default function TravellersPage({ params }: { params: Promise<{ flightId:
   });
 
   useEffect(() => {
-    const found = MOCK_FLIGHTS.find(f => f.id === flightId);
-    if (found) setFlight(found);
+    getFlightById(flightId).then(setFlight);
     setIsLoaded(true);
   }, [flightId]);
 

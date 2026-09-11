@@ -4,8 +4,8 @@ import React, { useEffect, useState } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { Container, Button } from '@/components/ui';
 import { Checkbox } from '@/components/ui/Checkbox';
-import { MOCK_FLIGHTS } from '@/data/flights';
 import { Flight } from '@/types/flights';
+import { getFlightById } from '@/services/flightService';
 import { EmptyState } from '@/components/common';
 import { BookingTravellerData } from '@/types/booking';
 
@@ -33,8 +33,7 @@ export default function BookingReviewPage({ params }: { params: Promise<{ flight
 
   useEffect(() => {
     // 1. Fetch Flight
-    const found = MOCK_FLIGHTS.find(f => f.id === flightId);
-    if (found) setFlight(found);
+    getFlightById(flightId).then(setFlight);
 
     // 2. Hydrate from session storage
     const saved = sessionStorage.getItem(`bookingData_${flightId}`);

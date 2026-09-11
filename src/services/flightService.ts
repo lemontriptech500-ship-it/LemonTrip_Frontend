@@ -125,3 +125,36 @@ export async function createFlightBooking(data: {
     status: 'confirmed',
   }
 }
+
+export interface RazorpayFlightOrder {
+  orderId: string
+  amount: number
+  currency: string
+  keyId: string
+  bookingId: string
+  bookingReference: string
+}
+
+export function createRazorpayFlightOrder(data: {
+  flightId: string
+  fareId: string
+  travellers: unknown[]
+  contact: unknown
+}): Promise<RazorpayFlightOrder> {
+  return apiRequest<RazorpayFlightOrder>('/payments/razorpay/flights/order', {
+    method: 'POST',
+    body: JSON.stringify(data),
+  })
+}
+
+export function verifyRazorpayFlightPayment(data: {
+  bookingId: string
+  razorpayOrderId: string
+  razorpayPaymentId: string
+  razorpaySignature: string
+}): Promise<{ bookingReference: string | null; status: string }> {
+  return apiRequest<{ bookingReference: string | null; status: string }>('/payments/razorpay/flights/verify', {
+    method: 'POST',
+    body: JSON.stringify(data),
+  })
+}
