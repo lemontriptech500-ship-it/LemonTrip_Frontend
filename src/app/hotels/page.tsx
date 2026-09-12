@@ -8,11 +8,7 @@ import { EmptyState } from '@/components/common'
 import type { Hotel } from '@/types/hotels'
 import { searchHotels } from '@/services/hotelService'
 import { useHotelFilters } from '@/hooks/useHotelFilters'
-import {
-  getHotelSearchFromUrl,
-  getNightCount,
-  isHotelSearchComplete,
-} from '@/lib/hotelUtils'
+import { getHotelSearchFromUrl, getNightCount } from '@/lib/hotelUtils'
 import { HotelSearchSummary } from '@/components/hotels/HotelSearchSummary'
 import { HotelModifySearch } from '@/components/hotels/HotelModifySearch'
 import { HotelFilters, HotelMobileFilters } from '@/components/hotels/HotelFilters'
@@ -21,25 +17,18 @@ import { HotelResultCard } from '@/components/hotels/HotelResultCard'
 import { HotelResultSkeleton } from '@/components/hotels/HotelResultSkeleton'
 
 function HotelResultsContent() {
-  const router = useRouter()
   const searchParams = useSearchParams()
   const searchQuery = searchParams.toString()
   const search = useMemo(() => getHotelSearchFromUrl(new URLSearchParams(searchQuery)), [searchQuery])
-  const searchIsComplete = isHotelSearchComplete(search)
   const nights = getNightCount(search.checkIn, search.checkOut)
 
   const [isModifyOpen, setIsModifyOpen] = useState(false)
   const [isMobileFiltersOpen, setIsMobileFiltersOpen] = useState(false)
 
   const [matchedHotels, setMatchedHotels] = useState<Hotel[]>([])
-  const [isLoading, setIsLoading] = useState(false)
+  const [isLoading, setIsLoading] = useState(true)
 
   useEffect(() => {
-    if (!searchIsComplete) {
-      setMatchedHotels([])
-      return
-    }
-
     let active = true
     setIsLoading(true)
     searchHotels(search)
@@ -56,7 +45,7 @@ function HotelResultsContent() {
     return () => {
       active = false
     }
-  }, [search, searchIsComplete])
+  }, [search])
 
   const {
     filters,
@@ -86,29 +75,15 @@ function HotelResultsContent() {
           <HotelSearchSummary search={search} onModifySearch={openModifySearch} />
         </div>
 
-        {!searchIsComplete ? (
-          <>
-            <EmptyState
-              title="Complete your hotel search"
-              description="Add a destination, check-in, and check-out date to see available stays. Check-out must be after check-in."
-              icon={<Building />}
-              action={{ label: 'Modify search', onClick: openModifySearch }}
-            />
-            <div className="mt-4 flex justify-center">
-              <Button variant="ghost" onClick={() => router.push('/')}>
-                Return to home
-              </Button>
-            </div>
-          </>
-        ) : isLoading ? (
+        {isLoading ? (
           <div className="flex flex-col gap-4" aria-busy="true" aria-label="Loading hotel search results">
             <HotelResultSkeleton />
             <HotelResultSkeleton />
           </div>
         ) : totalResults === 0 ? (
           <EmptyState
-            title="No stays for this destination"
-            description="We couldn't find stays matching your destination. Try another city, hotel name, or landmark."
+            title="No stays found"
+            description="We couldn't find any hotels right now. Try a destination, or adjust your search."
             icon={<Building />}
             action={{ label: 'Modify search', onClick: openModifySearch }}
           />
