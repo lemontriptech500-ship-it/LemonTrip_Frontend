@@ -79,7 +79,7 @@ export default async function TrainDetailsPage({ params }: { params: Promise<{ t
               <p className="text-2xl font-bold text-[var(--color-text-primary)]">{train.price}</p>
             </div>
           </div>
-          <TravelRazorpayCheckout itemType="train" itemId={train.id} quantityLabel="Passengers" label={`${train.name} train booking`} />
+          <TravelRazorpayCheckout itemType="train" itemId={train.id} amount={Number(train.price.replace(/[^0-9.]/g, ''))} quantityLabel="Passengers" label={`${train.name} train booking`} />
         </Card>
       </Container>
     </div>
