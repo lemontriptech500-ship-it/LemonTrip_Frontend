@@ -1,109 +1,60 @@
+import { apiRequest } from '@/lib/apiClient'
+
 export interface WalletTransaction {
   id: string
-  type: 'credit' | 'debit'
+  transactionReference: string
+  type: 'CREDIT' | 'DEBIT'
+  source: 'TOPUP' | 'BOOKING' | 'REFUND' | 'ADJUSTMENT'
   amount: number
+  status: 'PENDING' | 'SUCCESS' | 'FAILED' | 'REVERSED'
   description: string
+  bookingReference?: string
+  paymentReference?: string
   date: string
-  bookingId?: string
 }
 
 export interface WalletData {
+  id: string
   balance: number
-  cashback: number
-  refundCredits: number
-  transactions: WalletTransaction[]
+  currency: string
+  status: 'active' | 'suspended' | 'closed'
 }
 
-const MOCK_WALLET: WalletData = {
-  balance: 2500,
-  cashback: 350,
-  refundCredits: 0,
-  transactions: [
-    {
-      id: 't1',
-      type: 'credit',
-      amount: 500,
-      description: 'Cashback on flight booking LT-FL-ABC123',
-      date: '2026-08-20',
-      bookingId: 'LT-FL-ABC123',
-    },
-    {
-      id: 't2',
-      type: 'debit',
-      amount: 4500,
-      description: 'Flight booking payment',
-      date: '2026-08-18',
-      bookingId: 'LT-FL-ABC123',
-    },
-    {
-      id: 't3',
-      type: 'credit',
-      amount: 2000,
-      description: 'Refund for cancelled booking LT-FL-XYZ789',
-      date: '2026-08-15',
-      bookingId: 'LT-FL-XYZ789',
-    },
-    {
-      id: 't4',
-      type: 'debit',
-      amount: 8200,
-      description: 'Hotel booking payment',
-      date: '2026-08-10',
-      bookingId: 'LT-HT-DEF456',
-    },
-    {
-      id: 't5',
-      type: 'credit',
-      amount: 150,
-      description: 'Cashback on hotel booking',
-      date: '2026-08-10',
-      bookingId: 'LT-HT-DEF456',
-    },
-  ],
-}
-
-export async function getWalletData(): Promise<WalletData> {
-  await new Promise((resolve) => setTimeout(resolve, 500))
-  return MOCK_WALLET
-}
-
-export async function useWalletBalance(
+export interface WalletTopupOrder {
+  orderId: string
   amount: number
-): Promise<{ success: boolean; usedAmount: number; remainingBalance: number }> {
-  await new Promise((resolve) => setTimeout(resolve, 300))
-
-  const available = MOCK_WALLET.balance + MOCK_WALLET.cashback
-  const usedAmount = Math.min(amount, available)
-  const remainingBalance = available - usedAmount
-
-  return { success: true, usedAmount, remainingBalance }
+  currency: string
+  keyId: string
+  topupId: string
+  topupReference: string
 }
 
-export async function addToWallet(data: {
-  amount: number
-  type: 'cashback' | 'refund'
-  description: string
-  bookingId?: string
-}): Promise<{ success: boolean }> {
-  await new Promise((resolve) => setTimeout(resolve, 300))
+export function getWalletData(): Promise<WalletData> {
+  return apiRequest<WalletData>('/wallet')
+}
 
-  const transaction: WalletTransaction = {
-    id: `t${Date.now()}`,
-    type: 'credit',
-    amount: data.amount,
-    description: data.description,
-    date: new Date().toISOString().split('T')[0],
-    bookingId: data.bookingId,
-  }
+export function createWalletTopupOrder(amount: number): Promise<WalletTopupOrder> {
+  return apiRequest<WalletTopupOrder>('/wallet/topup/order', {
+    method: 'POST',
+    body: JSON.stringify({ amount }),
+  })
+}
 
-  MOCK_WALLET.transactions.unshift(transaction)
+export function verifyWalletTopup(data: {
+  razorpayOrderId: string
+  razorpayPaymentId: string
+  razorpaySignature: string
+}): Promise<{ status: string; balance: number; currency: string }> {
+  return apiRequest('/wallet/topup/verify', {
+    method: 'POST',
+    body: JSON.stringify(data),
+  })
+}
 
-  if (data.type === 'cashback') {
-    MOCK_WALLET.cashback += data.amount
-  } else {
-    MOCK_WALLET.refundCredits += data.amount
-  }
-  MOCK_WALLET.balance += data.amount
-
-  return { success: true }
+export function getWalletTransactions(params: { page?: number; limit?: number } = {}) {
+  const query = new URLSearchParams({
+    page: String(params.page || 1),
+    limit: String(params.limit || 20),
+  })
+  return apiRequest<{ transactions: WalletTransaction[]; page: number; limit: number; total: number }>(`/wallet/transactions?${query}`)
 }
