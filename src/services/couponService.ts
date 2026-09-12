@@ -69,37 +69,18 @@ export async function validateCoupon(
   orderAmount: number,
   serviceType: string
 ): Promise<CouponValidationResult> {
-  await new Promise((resolve) => setTimeout(resolve, 500))
-
-  const coupon = MOCK_COUPONS.find((c) => c.code.toLowerCase() === code.toLowerCase())
-
-  if (!coupon) {
-    return { valid: false, error: 'Invalid coupon code' }
+  try {
+    const result = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL || 'http://localhost:5000/api/v1'}/coupons/validate`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ code, serviceType, orderAmount }),
+    })
+    const payload = await result.json()
+    if (!result.ok) return { valid: false, error: payload?.error?.message || 'Unable to validate coupon' }
+    return payload.data
+  } catch {
+    return { valid: false, error: 'Unable to validate coupon' }
   }
-
-  if (new Date(coupon.validTill) < new Date()) {
-    return { valid: false, error: 'Coupon has expired' }
-  }
-
-  if (orderAmount < coupon.minOrder) {
-    return { valid: false, error: `Minimum order amount is ₹${coupon.minOrder}` }
-  }
-
-  if (!coupon.applicableOn.includes(serviceType)) {
-    return { valid: false, error: 'Coupon not applicable on this service' }
-  }
-
-  let discountAmount = 0
-  if (coupon.discountType === 'percentage') {
-    discountAmount = Math.round((orderAmount * coupon.discount) / 100)
-    if (discountAmount > coupon.maxDiscount) {
-      discountAmount = coupon.maxDiscount
-    }
-  } else {
-    discountAmount = coupon.discount
-  }
-
-  return { valid: true, coupon, discountAmount }
 }
 
 export async function getAvailableCoupons(serviceType?: string): Promise<Coupon[]> {

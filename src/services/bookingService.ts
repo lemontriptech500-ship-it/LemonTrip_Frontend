@@ -2,6 +2,7 @@ import { apiRequest, isApiConfigured } from '@/lib/apiClient'
 
 export interface Booking {
   id: string
+  bookingReference?: string
   type: 'flight' | 'hotel' | 'bus' | 'train' | 'package' | 'visa'
   status: 'confirmed' | 'cancelled' | 'pending' | 'completed'
   title: string
@@ -72,7 +73,7 @@ const MOCK_BOOKINGS: Booking[] = [
 ]
 
 export async function getUserBookings(): Promise<Booking[]> {
-  if (isApiConfigured) return apiRequest<Booking[]>('/bookings')
+  if (isApiConfigured) return apiRequest<Booking[]>('/bookings/recent')
   await new Promise((resolve) => setTimeout(resolve, 600))
   return MOCK_BOOKINGS
 }
