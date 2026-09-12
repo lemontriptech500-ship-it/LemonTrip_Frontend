@@ -10,11 +10,16 @@ export interface RazorpayTravelOrder {
   keyId: string
   bookingId: string
   bookingReference: string
+  subtotal: number
+  discount: number
 }
 
 export interface WalletPaymentResult {
   bookingReference: string | null
   status: string
+  amount?: number
+  discount?: number
+  balance?: number
 }
 
 export function createRazorpayTravelOrder(data: {
@@ -22,6 +27,7 @@ export function createRazorpayTravelOrder(data: {
   itemId: string
   quantity: number
   details: { email: string; phone?: string; [key: string]: unknown }
+  couponCode?: string
 }): Promise<RazorpayTravelOrder> {
   return apiRequest<RazorpayTravelOrder>('/payments/razorpay/travel/order', {
     method: 'POST',
@@ -43,16 +49,33 @@ export function verifyRazorpayTravelPayment(data: {
 }
 
 export function payWithWallet(data: {
-  bookingReference: string
-  amount: number
   itemType: TravelItemType
+  itemId: string
+  quantity: number
+  details: { email: string; phone?: string; [key: string]: unknown }
+  couponCode?: string
 }): Promise<WalletPaymentResult> {
-  return apiRequest<WalletPaymentResult>('/wallet/debit', {
+  return apiRequest<WalletPaymentResult>('/wallet/travel-booking', {
     method: 'POST',
     body: JSON.stringify({
-      amount: data.amount,
-      bookingReference: data.bookingReference,
-      description: `Booking payment for ${data.itemType}`
+      itemType: data.itemType,
+      itemId: data.itemId,
+      quantity: data.quantity,
+      details: data.details,
+      couponCode: data.couponCode || '',
     })
+  })
+}
+
+export function payWithWalletFlight(data: {
+  flightId: string
+  fareId: string
+  travellers: unknown[]
+  contact: unknown
+  couponCode?: string
+}): Promise<WalletPaymentResult> {
+  return apiRequest<WalletPaymentResult>('/wallet/flight-booking', {
+    method: 'POST',
+    body: JSON.stringify(data),
   })
 }

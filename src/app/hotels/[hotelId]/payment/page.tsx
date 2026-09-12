@@ -16,6 +16,8 @@ import {
   hotelBookingStorageKey,
   parseHotelBookingFromStorage,
   serializeHotelSearchParams,
+  calculateSelectionsTotal,
+  resolveSelection,
   validateHotelBooking,
   type HotelBookingRecovery,
 } from '@/lib/hotelUtils'
@@ -75,6 +77,16 @@ function HotelPaymentContent({ hotelId }: { hotelId: string }) {
     )
   }
 
+  const selected = booking.selections.flatMap((selection) => {
+    const resolved = resolveSelection(hotel, selection)
+    return resolved ? [{ ...resolved, quantity: selection.quantity }] : []
+  })
+  const accommodationTotal = calculateSelectionsTotal(
+    selected.map((item) => ({ pricePerNight: item.rate.pricePerNight, quantity: item.quantity })),
+    booking.nightCount,
+    hotel.currency,
+  ).accommodationTotal
+
   return (
     <div className="section-gap pb-20 bg-[var(--color-background)] min-h-screen">
       <Container>
@@ -115,6 +127,7 @@ function HotelPaymentContent({ hotelId }: { hotelId: string }) {
               initialQuantity={booking.nightCount}
               initialEmail={booking.contact?.email}
               initialPhone={`${booking.contact?.phoneCode || ''}${booking.contact?.phoneNumber || ''}`}
+              amount={accommodationTotal}
               showQuantity={false}
               label={`${hotel.name} hotel booking`}
               extraDetails={{
