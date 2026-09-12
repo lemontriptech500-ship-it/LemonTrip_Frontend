@@ -6,12 +6,15 @@ import { Container, Button } from '@/components/ui';
 import { Flight } from '@/types/flights';
 import { EmptyState } from '@/components/common';
 import { BookingTravellerData } from '@/types/booking';
+import { validateCoupon } from '@/services/couponService';
 
 import { BookingProgress } from '@/components/booking/BookingProgress';
 import { PaymentSecurityNotice } from '@/components/booking/PaymentSecurityNotice';
 import { FlightBookingSummary } from '@/components/flights/FlightBookingSummary';
 import { ArrowLeft, Loader2 } from 'lucide-react';
 import { createRazorpayFlightOrder, getFlightById, verifyRazorpayFlightPayment } from '@/services/flightService';
+import { payWithWalletFlight } from '@/services/travelPaymentService';
+import { WalletPaymentForm } from '@/components/booking/WalletPaymentForm';
 
 declare global {
   interface Window {
@@ -47,6 +50,10 @@ export default function PaymentPage({ params }: { params: Promise<{ flightId: st
   const [methodError, setMethodError] = useState<string | undefined>(undefined);
 
   const [isProcessing, setIsProcessing] = useState(false);
+  const [couponCode, setCouponCode] = useState('');
+  const [couponMessage, setCouponMessage] = useState<string | null>(null);
+  const [paymentMethod, setPaymentMethod] = useState<'razorpay' | 'wallet'>('razorpay');
+  const [couponDiscount, setCouponDiscount] = useState(0);
 
   useEffect(() => {
     let cancelled = false;
@@ -165,6 +172,7 @@ export default function PaymentPage({ params }: { params: Promise<{ flightId: st
         fareId,
         travellers: bookingData.travellers,
         contact: bookingData.contact,
+        couponCode: couponCode.trim(),
       });
       if (!window.Razorpay) throw new Error('Razorpay Checkout is unavailable.');
 
@@ -198,6 +206,21 @@ export default function PaymentPage({ params }: { params: Promise<{ flightId: st
       checkout.open();
     } catch (error) {
       setMethodError(error instanceof Error ? error.message : 'Unable to start Razorpay Checkout.');
+      setIsProcessing(false);
+    }
+  };
+
+  const handleWalletBooking = async () => {
+    setMethodError(undefined);
+    if (isProcessing) return;
+    setIsProcessing(true);
+    try {
+      const result = await payWithWalletFlight({ flightId: flight.id, fareId, travellers: bookingData.travellers, contact: bookingData.contact, couponCode: couponCode.trim() });
+      const query = new URLSearchParams(searchParams.toString());
+      if (result.bookingReference) query.set('bookingReference', result.bookingReference);
+      router.push(`/flights/${flight.id}/confirmation?${query.toString()}`);
+    } catch (error) {
+      setMethodError(error instanceof Error ? error.message : 'Unable to process wallet payment.');
       setIsProcessing(false);
     }
   };
@@ -236,10 +259,12 @@ export default function PaymentPage({ params }: { params: Promise<{ flightId: st
             )}
 
             <div className="mb-8 rounded-[var(--radius-lg)] border border-[var(--color-border)] bg-[var(--color-surface)] p-6">
-              <h2 className="text-lg font-bold text-[var(--color-text-primary)]">Pay securely with Razorpay</h2>
-              <p className="mt-2 text-sm leading-relaxed text-[var(--color-text-secondary)]">
-                Razorpay securely supports UPI, cards, net banking, and wallets. Your payment details are entered directly in Razorpay Checkout and are never stored by LemonTrip.
-              </p>
+              <h2 className="text-lg font-bold text-[var(--color-text-primary)]">Choose payment method</h2>
+              <div className="mt-4 flex gap-3">
+                <button type="button" onClick={() => setPaymentMethod('razorpay')} className={paymentMethod === 'razorpay' ? 'flex-1 rounded-md border-2 border-[var(--color-primary)] p-3 font-medium text-[var(--color-primary)]' : 'flex-1 rounded-md border-2 border-[var(--color-border)] p-3 font-medium text-[var(--color-text-secondary)]'}>Card / Razorpay</button>
+                <button type="button" onClick={() => setPaymentMethod('wallet')} className={paymentMethod === 'wallet' ? 'flex-1 rounded-md border-2 border-[var(--color-primary)] p-3 font-medium text-[var(--color-primary)]' : 'flex-1 rounded-md border-2 border-[var(--color-border)] p-3 font-medium text-[var(--color-text-secondary)]'}>Pay with Wallet</button>
+              </div>
+              {paymentMethod === 'wallet' ? <div className="mt-4"><WalletPaymentForm amount={Math.max(0, selectedFare.price * bookingData.travellers.length - couponDiscount)} currency={flight.currency} isLoading={isProcessing} error={methodError} /></div> : <p className="mt-2 text-sm leading-relaxed text-[var(--color-text-secondary)]">Razorpay securely supports UPI, cards, net banking, and wallets.</p>}
             </div>
 
           </div>
@@ -253,12 +278,22 @@ export default function PaymentPage({ params }: { params: Promise<{ flightId: st
               onContinue={() => {}}
               hideButton
             />
+
+            <div className="mt-4 flex flex-col gap-2 sm:flex-row">
+              <input value={couponCode} onChange={(event) => { setCouponCode(event.target.value.toUpperCase()); setCouponMessage(null) }} placeholder="Coupon code" className="h-10 flex-1 rounded-md border border-[var(--color-border)] bg-[var(--color-surface)] px-3 text-sm" />
+              <Button variant="outline" onClick={async () => {
+                const result = await validateCoupon(couponCode, selectedFare.price * bookingData.travellers.length, 'flight')
+                setCouponDiscount(result.valid ? result.discountAmount ?? 0 : 0)
+                setCouponMessage(result.valid ? `Coupon applied. Discount: ${result.discountAmount ?? 0}` : result.error || 'Coupon could not be applied.')
+              }}>Apply coupon</Button>
+            </div>
+            {couponMessage && <p className="mt-2 text-sm text-[var(--color-text-secondary)]">{couponMessage}</p>}
             
             <div className="mt-4">
               <Button 
                 fullWidth 
                 size="lg" 
-                onClick={handleCompleteBooking}
+                onClick={paymentMethod === 'wallet' ? handleWalletBooking : handleCompleteBooking}
                 disabled={isProcessing}
                 className="flex items-center justify-center gap-2"
               >
@@ -268,7 +303,7 @@ export default function PaymentPage({ params }: { params: Promise<{ flightId: st
                     Processing...
                   </>
                 ) : (
-                  "Pay securely with Razorpay"
+                  paymentMethod === 'wallet' ? 'Pay with Wallet' : 'Pay securely with Razorpay'
                 )}
               </Button>
             </div>

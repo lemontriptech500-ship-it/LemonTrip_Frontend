@@ -140,6 +140,7 @@ export function createRazorpayFlightOrder(data: {
   fareId: string
   travellers: unknown[]
   contact: unknown
+  couponCode?: string
 }): Promise<RazorpayFlightOrder> {
   return apiRequest<RazorpayFlightOrder>('/payments/razorpay/flights/order', {
     method: 'POST',

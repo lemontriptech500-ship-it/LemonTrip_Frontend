@@ -63,7 +63,7 @@ export default async function PackageDetailsPage({ params }: { params: Promise<{
               </div>
               <span className="text-sm font-medium text-[var(--color-text-secondary)]">Pay per traveller</span>
             </div>
-            <TravelRazorpayCheckout itemType="package" itemId={pkg.id} quantityLabel="Travellers" label={`${pkg.destination} package`} />
+            <TravelRazorpayCheckout itemType="package" itemId={pkg.id} amount={Number(pkg.startingPrice.replace(/[^0-9.]/g, ''))} quantityLabel="Travellers" label={`${pkg.destination} package`} />
           </div>
         </Card>
       </Container>

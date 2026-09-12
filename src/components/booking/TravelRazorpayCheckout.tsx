@@ -6,6 +6,7 @@ import { useRouter } from 'next/navigation'
 import { Button, Alert } from '@/components/ui'
 import { createRazorpayTravelOrder, verifyRazorpayTravelPayment, payWithWallet, type TravelItemType, type PaymentMethod } from '@/services/travelPaymentService'
 import { WalletPaymentForm } from './WalletPaymentForm'
+import { validateCoupon } from '@/services/couponService'
 
 declare global {
   interface Window {
@@ -63,6 +64,28 @@ export function TravelRazorpayCheckout({
   const [quantity, setQuantity] = useState(String(initialQuantity))
   const [error, setError] = useState<string | null>(null)
   const [processing, setProcessing] = useState(false)
+  const [couponCode, setCouponCode] = useState('')
+  const [couponMessage, setCouponMessage] = useState<string | null>(null)
+  const [couponApplied, setCouponApplied] = useState(false)
+
+  async function handleApplyCoupon() {
+    setCouponMessage(null)
+    setCouponApplied(false)
+    const code = couponCode.trim()
+    if (!code) {
+      setCouponMessage('Enter a coupon code.')
+      return
+    }
+    const numericQuantity = Number(quantity)
+    const previewAmount = showQuantity ? amount * numericQuantity : amount
+    const result = await validateCoupon(code, previewAmount, itemType)
+    if (!result.valid) {
+      setCouponMessage(result.error || 'Coupon could not be applied.')
+      return
+    }
+    setCouponApplied(true)
+    setCouponMessage(`Coupon applied. Discount: ${result.discountAmount ?? 0}`)
+  }
 
   async function handleRazorpayCheckout() {
     setError(null)
@@ -75,7 +98,7 @@ export function TravelRazorpayCheckout({
     setProcessing(true)
     try {
       await loadRazorpayScript()
-      const order = await createRazorpayTravelOrder({ itemType, itemId, quantity: numericQuantity, details: { ...extraDetails, email, phone } })
+      const order = await createRazorpayTravelOrder({ itemType, itemId, quantity: numericQuantity, couponCode: couponCode.trim(), details: { ...extraDetails, email, phone } })
       if (!window.Razorpay) throw new Error('Razorpay Checkout is unavailable.')
 
       const checkout = new window.Razorpay({
@@ -121,17 +144,14 @@ export function TravelRazorpayCheckout({
       return
     }
 
-    if (!bookingReference) {
-      setError('Booking reference is required for wallet payment.')
-      return
-    }
-
     setProcessing(true)
     try {
       const result = await payWithWallet({
-        bookingReference,
-        amount,
-        itemType
+        itemType,
+        itemId,
+        quantity: numericQuantity,
+        couponCode: couponCode.trim(),
+        details: { ...extraDetails, email, phone },
       })
       
       if (result.status === 'SUCCESS') {
@@ -180,7 +200,7 @@ export function TravelRazorpayCheckout({
 
       {paymentMethod === 'wallet' && (
         <div className="mb-6">
-          <WalletPaymentForm amount={amount} currency={currency} isLoading={processing} error={error} />
+          <WalletPaymentForm amount={showQuantity ? amount * Number(quantity) : amount} currency={currency} isLoading={processing} error={error} />
         </div>
       )}
 
@@ -200,6 +220,11 @@ export function TravelRazorpayCheckout({
           <input value={phone} onChange={(event) => setPhone(event.target.value)} type="tel" placeholder="+91 98765 43210" className="mt-1 h-10 w-full rounded-[var(--radius-md)] border border-[var(--color-border)] bg-[var(--color-surface)] px-3 text-[var(--color-text-primary)]" />
         </label>
       </div>
+      <div className="mt-4 flex flex-col gap-2 sm:flex-row">
+        <input value={couponCode} onChange={(event) => { setCouponCode(event.target.value.toUpperCase()); setCouponApplied(false); setCouponMessage(null) }} placeholder="Coupon code" className="h-10 flex-1 rounded-[var(--radius-md)] border border-[var(--color-border)] bg-[var(--color-surface)] px-3 text-sm text-[var(--color-text-primary)]" />
+        <Button type="button" variant="outline" onClick={handleApplyCoupon}>Apply coupon</Button>
+      </div>
+      {couponMessage && <p className={`mt-2 text-sm ${couponApplied ? 'text-[var(--color-success)]' : 'text-[var(--color-error)]'}`}>{couponMessage}</p>}
       {error && <p className="mt-3 text-sm font-medium text-[var(--color-error)]">{error}</p>}
       <Button 
         className="mt-4" 
