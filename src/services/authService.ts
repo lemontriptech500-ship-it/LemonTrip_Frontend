@@ -57,6 +57,14 @@ export async function getCurrentUser(): Promise<User> {
   return normalizeUser(result.user)
 }
 
+export async function updateProfile(data: { name: string; phone: string }): Promise<User> {
+  const result = await apiRequest<{ user: User }>('/auth/me', {
+    method: 'PATCH',
+    body: JSON.stringify(data),
+  })
+  return normalizeUser(result.user)
+}
+
 export async function forgotPassword(email: string): Promise<{ success: boolean; message: string }> {
   await new Promise((resolve) => setTimeout(resolve, 800))
 

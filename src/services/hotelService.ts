@@ -1,5 +1,6 @@
 import type { Hotel, HotelFiltersState, HotelSearchParams, HotelSortOption } from '@/types/hotels'
 import { apiRequest, isApiConfigured } from '@/lib/apiClient'
+import { MOCK_HOTELS } from '@/data/hotels'
 
 export interface HotelSearchResult {
   hotels: Hotel[]
@@ -14,14 +15,31 @@ export interface HotelSearchResult {
 
 export async function searchHotels(params: HotelSearchParams): Promise<HotelSearchResult> {
   const query = new URLSearchParams({ destination: params.destination })
-  return apiRequest<HotelSearchResult>(`/hotels/search?${query.toString()}`)
+  try {
+    return await apiRequest<HotelSearchResult>(`/hotels/search?${query.toString()}`, { suppressErrorLog: true })
+  } catch {
+    const destination = params.destination.toLowerCase()
+    const hotels = MOCK_HOTELS.filter((hotel) =>
+      `${hotel.name} ${hotel.location.city} ${hotel.location.area}`.toLowerCase().includes(destination)
+    )
+    return {
+      hotels,
+      total: hotels.length,
+      filters: {
+        propertyTypes: [...new Set(hotels.map((hotel) => hotel.propertyType))],
+        amenities: [...new Set(hotels.flatMap((hotel) => hotel.amenities))],
+        minPrice: Math.min(...hotels.map((hotel) => hotel.startingPrice), 0),
+        maxPrice: Math.max(...hotels.map((hotel) => hotel.startingPrice), 0),
+      },
+    }
+  }
 }
 
 export async function getHotel(id: string): Promise<Hotel | null> {
   try {
     return await apiRequest<Hotel>(`/hotels/${encodeURIComponent(id)}`)
   } catch {
-    return null
+    return MOCK_HOTELS.find((hotel) => hotel.id === id) || null
   }
 }
 

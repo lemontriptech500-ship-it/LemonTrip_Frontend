@@ -19,12 +19,15 @@ function clearSession() {
   useAuthStore.getState().logout()
 }
 
-export async function apiRequest<T>(path: string, options: RequestInit = {}): Promise<T> {
-  const headers = new Headers(options.headers)
+type ApiRequestOptions = RequestInit & { suppressErrorLog?: boolean }
+
+export async function apiRequest<T>(path: string, options: ApiRequestOptions = {}): Promise<T> {
+  const { suppressErrorLog = false, ...requestOptions } = options
+  const headers = new Headers(requestOptions.headers)
   const token = useAuthStore.getState().token
 
   if (!headers.has('Accept')) headers.set('Accept', 'application/json')
-  if (!(options.body instanceof FormData) && options.body && !headers.has('Content-Type')) {
+  if (!(requestOptions.body instanceof FormData) && requestOptions.body && !headers.has('Content-Type')) {
     headers.set('Content-Type', 'application/json')
   }
   if (token) headers.set('Authorization', `Bearer ${token}`)
@@ -32,13 +35,13 @@ export async function apiRequest<T>(path: string, options: RequestInit = {}): Pr
   let response: Response
   try {
     response = await fetch(`${API_BASE_URL}${path.startsWith('/') ? path : `/${path}`}`, {
-      ...options,
+      ...requestOptions,
       headers,
     })
   } catch (error) {
     const url = `${API_BASE_URL}${path.startsWith('/') ? path : `/${path}`}`
     const message = error instanceof Error ? error.message : String(error)
-    console.error('[api] Network request failed', { path, url, message })
+    if (!suppressErrorLog) console.error('[api] Network request failed', { path, url, message })
     throw new ApiError('Unable to reach the server. Please try again.', 0, { path, url, message })
   }
 
@@ -62,10 +65,12 @@ export async function apiRequest<T>(path: string, options: RequestInit = {}): Pr
         ? String(payload.message)
         : `Request failed with status ${response.status}.`
     const logDetails = { url: `${API_BASE_URL}${path.startsWith('/') ? path : `/${path}`}`, path, status: response.status, message, payload }
-    if (response.status >= 500) {
-      console.error('[api] Server request failed', logDetails)
-    } else {
-      console.warn('[api] Request rejected', logDetails)
+    if (!suppressErrorLog) {
+      if (response.status >= 500) {
+        console.error('[api] Server request failed', logDetails)
+      } else {
+        console.warn('[api] Request rejected', logDetails)
+      }
     }
     throw new ApiError(message, response.status, payload)
   }

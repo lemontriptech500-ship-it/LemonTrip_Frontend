@@ -1,7 +1,7 @@
 import { create } from 'zustand'
 import { persist } from 'zustand/middleware'
 
-interface User {
+export interface User {
   id: string
   name: string
   email: string
@@ -18,6 +18,7 @@ interface AuthState {
   setHydrated: () => void
   login: (user: User, token?: string | null) => void
   logout: () => void
+  updateUser: (user: User) => void
 }
 
 function setSessionCookie(token: string | null) {
@@ -43,6 +44,7 @@ export const useAuthStore = create<AuthState>()(
         setSessionCookie(null)
         set({ user: null, token: null, isAuthenticated: false })
       },
+      updateUser: (user) => set({ user, isAuthenticated: true }),
     }),
     {
       name: 'lemontrip-auth',
