@@ -1,6 +1,7 @@
 import { apiRequest } from '@/lib/apiClient'
 
 export type TravelItemType = 'hotel' | 'bus' | 'train' | 'package'
+export type PaymentMethod = 'razorpay' | 'wallet'
 
 export interface RazorpayTravelOrder {
   orderId: string
@@ -9,6 +10,11 @@ export interface RazorpayTravelOrder {
   keyId: string
   bookingId: string
   bookingReference: string
+}
+
+export interface WalletPaymentResult {
+  bookingReference: string | null
+  status: string
 }
 
 export function createRazorpayTravelOrder(data: {
@@ -33,5 +39,20 @@ export function verifyRazorpayTravelPayment(data: {
   return apiRequest('/payments/razorpay/travel/verify', {
     method: 'POST',
     body: JSON.stringify(data),
+  })
+}
+
+export function payWithWallet(data: {
+  bookingReference: string
+  amount: number
+  itemType: TravelItemType
+}): Promise<WalletPaymentResult> {
+  return apiRequest<WalletPaymentResult>('/wallet/debit', {
+    method: 'POST',
+    body: JSON.stringify({
+      amount: data.amount,
+      bookingReference: data.bookingReference,
+      description: `Booking payment for ${data.itemType}`
+    })
   })
 }
