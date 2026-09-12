@@ -81,6 +81,7 @@ export function TravelRazorpayCheckout({
           try {
             const verified = await verifyRazorpayTravelPayment({
               bookingId: order.bookingId,
+              itemType: itemType === 'bus' ? 'bus' : 'travel',
               razorpayOrderId: payment.razorpay_order_id,
               razorpayPaymentId: payment.razorpay_payment_id,
               razorpaySignature: payment.razorpay_signature,

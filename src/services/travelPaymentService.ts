@@ -25,6 +25,7 @@ export function createRazorpayTravelOrder(data: {
 
 export function verifyRazorpayTravelPayment(data: {
   bookingId: string
+  itemType: 'bus' | 'travel'
   razorpayOrderId: string
   razorpayPaymentId: string
   razorpaySignature: string
