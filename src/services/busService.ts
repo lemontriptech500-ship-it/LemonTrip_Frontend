@@ -1,5 +1,5 @@
 import { apiRequest, isApiConfigured } from '@/lib/apiClient'
-import type { BusOption } from '@/data/buses'
+import { mockBuses, type BusOption } from '@/data/buses'
 
 export interface BusSearchResult {
   buses: BusOption[]
@@ -11,14 +11,21 @@ export async function searchBuses(params: {
   to?: string
   date?: string
 }): Promise<BusSearchResult> {
-  return apiRequest<BusSearchResult>(`/buses/search?${new URLSearchParams(params as Record<string, string>).toString()}`)
+  try {
+    return await apiRequest<BusSearchResult>(`/buses/search?${new URLSearchParams(params as Record<string, string>).toString()}`, { suppressErrorLog: true })
+  } catch {
+    let buses = [...mockBuses]
+    if (params.from) buses = buses.filter((bus) => bus.from.toLowerCase().includes(params.from!.toLowerCase()))
+    if (params.to) buses = buses.filter((bus) => bus.to.toLowerCase().includes(params.to!.toLowerCase()))
+    return { buses, total: buses.length }
+  }
 }
 
 export async function getBusById(id: string): Promise<BusOption | null> {
   try {
     return await apiRequest<BusOption>(`/buses/${encodeURIComponent(id)}`)
   } catch {
-    return null
+    return mockBuses.find((bus) => bus.id === id) || null
   }
 }
 

@@ -6,7 +6,7 @@ export async function searchPackages(params: {
   month?: string
   travellers?: string
 }) {
-  return apiRequest<{ packages: HolidayPackage[]; total: number }>(`/packages/search?${new URLSearchParams(params).toString()}`)
+  return apiRequest<{ packages: HolidayPackage[]; total: number }>(`/packages/search?${new URLSearchParams(params).toString()}`, { suppressErrorLog: true })
 }
 
 export async function getPackageById(id: string): Promise<HolidayPackage | null> {
