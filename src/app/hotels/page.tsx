@@ -151,6 +151,8 @@ function HotelResultsContent() {
   )
 }
 
+
+
 export default function HotelsPage() {
   return (
     <Suspense
