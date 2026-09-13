@@ -47,11 +47,11 @@ export default function CartPage() {
               key={item.id}
               className="p-5 rounded-[var(--radius-lg)] border border-[var(--color-border)] bg-[var(--color-surface)] flex flex-col sm:flex-row gap-4"
             >
-              {item.imageUrl && (
-                <div className="w-full sm:w-28 h-28 rounded-[var(--radius-md)] overflow-hidden shrink-0 bg-[var(--color-surface-secondary)]">
-                  <Image src={item.imageUrl} alt={item.name} fill sizes="112px" className="object-cover" />
-                </div>
-              )}
+           {item.imageUrl && (
+  <div className="relative w-full sm:w-28 h-28 rounded-[var(--radius-md)] overflow-hidden shrink-0 bg-[var(--color-surface-secondary)]">
+    <Image src={item.imageUrl} alt={item.name} fill sizes="112px" className="object-cover" />
+  </div>
+)}
 
               <div className="flex-1 min-w-0">
                 <div className="flex justify-between items-start">
