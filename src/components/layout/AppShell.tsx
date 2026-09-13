@@ -7,6 +7,7 @@ import { useAuthStore } from '@/store/authStore'
 import { Header } from './Header'
 import { Footer } from './Footer'
 import { CartDrawer } from './CartDrawer'
+import { GlobalChatbot } from '@/components/chat/GlobalChatbot'
 
 interface AppShellProps {
   children: React.ReactNode
@@ -27,7 +28,7 @@ export function AppShell({ children }: AppShellProps) {
   const isAuthRoute = pathname === '/login' || pathname === '/signup'
 
   if (isAuthRoute) {
-    return <main id="main-content" className="min-h-screen" tabIndex={-1}>{children}</main>
+    return <><main id="main-content" className="min-h-screen" tabIndex={-1}>{children}</main><GlobalChatbot /></>
   }
 
   return (
@@ -38,6 +39,7 @@ export function AppShell({ children }: AppShellProps) {
         {children}
       </main>
       <Footer />
+      <GlobalChatbot />
     </div>
   )
 }
