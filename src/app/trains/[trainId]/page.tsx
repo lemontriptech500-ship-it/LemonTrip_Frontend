@@ -2,10 +2,12 @@ import Link from 'next/link'
 import { ArrowLeft, Clock, TrainFront } from 'lucide-react'
 import { Button, Card, Container } from '@/components/ui'
 import { getTrainById } from '@/services/trainService'
-import { TravelRazorpayCheckout } from '@/components/booking/TravelRazorpayCheckout'
+import { TrainBookingPanel } from '@/components/trains/TrainBookingPanel'
 
-export default async function TrainDetailsPage({ params }: { params: Promise<{ trainId: string }> }) {
+export default async function TrainDetailsPage({ params, searchParams }: { params: Promise<{ trainId: string }>; searchParams?: Promise<Record<string, string | string[] | undefined>> }) {
   const { trainId } = await params
+  const query = searchParams ? await searchParams : {}
+  const journeyDate = typeof query.journeyDate === 'string' ? query.journeyDate : undefined
   const train = await getTrainById(trainId)
 
   if (!train) {
@@ -79,7 +81,7 @@ export default async function TrainDetailsPage({ params }: { params: Promise<{ t
               <p className="text-2xl font-bold text-[var(--color-text-primary)]">{train.price}</p>
             </div>
           </div>
-          <TravelRazorpayCheckout itemType="train" itemId={train.id} amount={Number(train.price.replace(/[^0-9.]/g, ''))} quantityLabel="Passengers" label={`${train.name} train booking`} />
+          <TrainBookingPanel train={train} journeyDate={journeyDate} />
         </Card>
       </Container>
     </div>

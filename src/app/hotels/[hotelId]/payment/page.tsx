@@ -9,7 +9,8 @@ import { BookingProgress, HOTEL_BOOKING_STEPS } from '@/components/booking/Booki
 import { PaymentSecurityNotice } from '@/components/booking/PaymentSecurityNotice'
 import { TravelRazorpayCheckout } from '@/components/booking/TravelRazorpayCheckout'
 import { HotelBookingSummary } from '@/components/hotels/HotelBookingSummary'
-import { getHotelById } from '@/data/hotels'
+import { getHotel } from '@/services/hotelService'
+import type { Hotel } from '@/types/hotels'
 import type { HotelBookingData } from '@/types/hotels'
 import {
   getHotelSearchFromUrl,
@@ -39,11 +40,13 @@ function HotelPaymentContent({ hotelId }: { hotelId: string }) {
   const searchParams = useSearchParams()
   const search = getHotelSearchFromUrl(searchParams)
   const query = serializeHotelSearchParams(search).toString()
-  const hotel = getHotelById(hotelId)
+  const [hotel, setHotel] = useState<Hotel | null | undefined>(undefined)
   const [booking, setBooking] = useState<HotelBookingData | null>(null)
   const [isLoaded, setIsLoaded] = useState(false)
 
   useEffect(() => {
+    let active = true
+    getHotel(hotelId).then((result) => { if (active) setHotel(result) })
     try {
       const raw = sessionStorage.getItem(hotelBookingStorageKey(hotelId))
       setBooking(parseHotelBookingFromStorage(raw))
@@ -52,11 +55,12 @@ function HotelPaymentContent({ hotelId }: { hotelId: string }) {
     } finally {
       setIsLoaded(true)
     }
+    return () => { active = false }
   }, [hotelId])
 
-  if (!isLoaded) return <div className="section-gap min-h-[40vh]" aria-busy="true" />
+  if (!isLoaded || hotel === undefined) return <div className="section-gap min-h-[40vh]" aria-busy="true" />
 
-  const issue = validateHotelBooking(hotel, booking)
+  const issue = hotel ? validateHotelBooking(hotel, booking) : null
 
   if (issue || !hotel || !booking) {
     const recovery = issue?.recovery ?? (hotel ? 'rooms' : 'results')

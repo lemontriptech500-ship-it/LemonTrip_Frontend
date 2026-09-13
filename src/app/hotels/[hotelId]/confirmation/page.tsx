@@ -8,8 +8,8 @@ import { EmptyState } from '@/components/common'
 import { BookingProgress, HOTEL_BOOKING_STEPS } from '@/components/booking/BookingProgress'
 import { BookingStatusNotice } from '@/components/booking/BookingStatusNotice'
 import { HotelConfirmationDetails } from '@/components/hotels/HotelConfirmationDetails'
-import { getHotelById } from '@/data/hotels'
-import type { HotelBookingData } from '@/types/hotels'
+import { getHotel } from '@/services/hotelService'
+import type { Hotel, HotelBookingData } from '@/types/hotels'
 import {
   getHotelSearchFromUrl,
   hotelBookingStorageKey,
@@ -45,16 +45,18 @@ function HotelConfirmationContent({ hotelId }: { hotelId: string }) {
   const searchParams = useSearchParams()
   const search = getHotelSearchFromUrl(searchParams)
   const query = serializeHotelSearchParams(search).toString()
-  const hotel = getHotelById(hotelId)
+  const [hotel, setHotel] = useState<Hotel | null | undefined>(undefined)
   const [booking, setBooking] = useState<HotelBookingData | null>(null)
   const [isLoaded, setIsLoaded] = useState(false)
   const [copied, setCopied] = useState(false)
 
   useEffect(() => {
+    let active = true
+    getHotel(hotelId).then((result) => { if (active) setHotel(result) })
     try {
       const raw = sessionStorage.getItem(hotelBookingStorageKey(hotelId))
       const parsed = parseHotelBookingFromStorage(raw)
-      if (validateHotelBooking(hotel, parsed) === null && parsed) {
+      if (hotel && validateHotelBooking(hotel, parsed) === null && parsed) {
         if (!parsed.confirmationReference) {
           const confirmed = { ...parsed, confirmationReference: createReference() }
           sessionStorage.setItem(hotelBookingStorageKey(hotelId), JSON.stringify(confirmed))
@@ -70,11 +72,12 @@ function HotelConfirmationContent({ hotelId }: { hotelId: string }) {
     } finally {
       setIsLoaded(true)
     }
-  }, [hotel, hotelId])
+    return () => { active = false }
+  }, [hotelId])
 
-  if (!isLoaded) return <div className="section-gap min-h-[40vh]" aria-busy="true" />
+  if (!isLoaded || hotel === undefined) return <div className="section-gap min-h-[40vh]" aria-busy="true" />
 
-  const issue = validateHotelBooking(hotel, booking)
+  const issue = hotel ? validateHotelBooking(hotel, booking) : null
   if (issue || !hotel || !booking) {
     const recovery = issue?.recovery ?? (hotel ? 'rooms' : 'results')
     return (

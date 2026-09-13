@@ -1,10 +1,12 @@
 'use client'
 
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import Link from 'next/link'
+import { useSearchParams } from 'next/navigation'
 import { ArrowRight, Clock, Heart, TrainFront } from 'lucide-react'
 import { Button, Card, Container, SectionHeading } from '@/components/ui'
 import { mockTrains } from '@/data/trains'
+import { searchTrains } from '@/services/trainService'
 import { useWishlistStore } from '@/store/wishlistStore'
 
 /**
@@ -19,15 +21,34 @@ function parseTrainPrice(price: string): number {
   return Number(match[0].replace(/,/g, '')) || 0
 }
 
-export default function TrainsPage() {
+function TrainResultsContent() {
+  const searchParams = useSearchParams()
+  const [trains, setTrains] = useState<typeof mockTrains>(mockTrains)
+  const [isLoading, setIsLoading] = useState(true)
   const { toggleItem, isWishlisted, hasHydrated } = useWishlistStore()
+
+  useEffect(() => {
+    let active = true
+    setIsLoading(true)
+    searchTrains({
+      from: searchParams.get('from') || undefined,
+      to: searchParams.get('to') || undefined,
+      date: searchParams.get('journeyDate') || undefined,
+      trainClass: searchParams.get('travelClass') || undefined,
+    }).then((result) => {
+      if (active) setTrains(result.trains)
+    }).finally(() => {
+      if (active) setIsLoading(false)
+    })
+    return () => { active = false }
+  }, [searchParams])
 
   return (
     <div className="section-gap bg-[var(--color-background)]">
       <Container>
         <SectionHeading title="Trains" description="Browse sample routes, classes, and departure times." />
-        <div className="mt-10 grid gap-5 lg:grid-cols-3">
-          {mockTrains.map((train) => {
+        {isLoading ? <p className="mt-10 text-center text-[var(--color-text-secondary)]">Loading trains...</p> : <div className="mt-10 grid gap-5 lg:grid-cols-3">
+          {trains.map((train) => {
             const wishlistId = `train-${train.id}`
             const wishlisted = hasHydrated && isWishlisted(wishlistId)
 
@@ -103,9 +124,17 @@ export default function TrainsPage() {
               </Card>
             )
           })}
-        </div>
-        <p className="mt-8 text-sm text-[var(--color-text-secondary)]">Mock schedules shown for interface preview. Booking actions will be connected in a future module.</p>
+        </div>}
+        <p className="mt-8 text-sm text-[var(--color-text-secondary)]">Train schedules and availability are supplied by the configured IRCTC adapter.</p>
       </Container>
     </div>
+  )
+}
+
+export default function TrainsPage() {
+  return (
+    <React.Suspense fallback={<div className="section-gap min-h-[40vh]" aria-busy="true" />}>
+      <TrainResultsContent />
+    </React.Suspense>
   )
 }

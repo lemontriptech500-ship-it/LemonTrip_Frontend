@@ -14,7 +14,14 @@ export interface HotelSearchResult {
 }
 
 export async function searchHotels(params: HotelSearchParams): Promise<HotelSearchResult> {
-  const query = new URLSearchParams({ destination: params.destination })
+  const query = new URLSearchParams({
+    destination: params.destination,
+    checkIn: params.checkIn,
+    checkOut: params.checkOut,
+    rooms: String(params.rooms),
+    adults: String(params.adults),
+    children: String(params.children),
+  })
   try {
     return await apiRequest<HotelSearchResult>(`/hotels/search?${query.toString()}`, { suppressErrorLog: true })
   } catch {

@@ -63,3 +63,15 @@ export async function createTrainBooking(data: {
     status: 'confirmed',
   }
 }
+
+export function checkTrainAvailability(data: { trainId: string; journeyDate?: string; trainClass: string; passengers: number }) {
+  return apiRequest<{ available: number; fare: number; currency: string }>('/trains/availability', { method: 'POST', body: JSON.stringify(data) })
+}
+
+export function getTrainPnrStatus(pnr: string) {
+  return apiRequest<{ pnr: string; status: string; passengers: unknown[] }>(`/trains/pnr/${encodeURIComponent(pnr)}`)
+}
+
+export function cancelTrainBooking(providerReference: string) {
+  return apiRequest<{ status: string; refundAmount?: number }>(`/trains/bookings/${encodeURIComponent(providerReference)}/cancel`, { method: 'POST' })
+}
