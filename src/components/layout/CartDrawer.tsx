@@ -37,8 +37,8 @@ export function CartDrawer() {
               <ShoppingBag size={48} className="text-[var(--color-border)]" />
               <p className="text-body text-[var(--color-text-secondary)]">Your cart is empty</p>
               <Button variant="outline" size="sm" onClick={closeCart} asChild>
-                <Link href="/flights">Browse Flights</Link>
-              </Button>
+  <Link href="/packages">Browse Packages</Link>
+</Button>
             </div>
           ) : (
             <div className="space-y-4">
