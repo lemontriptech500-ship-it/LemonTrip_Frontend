@@ -1,13 +1,20 @@
+'use client'
+
 import Link from 'next/link'
 import { Flight } from '@/types/flights'
 import { Button, Badge } from '@/components/ui'
-import { Plane, Briefcase } from 'lucide-react'
+import { Plane, Briefcase, Heart } from 'lucide-react'
+import { useWishlistStore } from '@/store/wishlistStore'
 
 interface FlightResultCardProps {
   flight: Flight
 }
 
 export function FlightResultCard({ flight }: FlightResultCardProps) {
+  const { toggleItem, isWishlisted, hasHydrated } = useWishlistStore()
+  const wishlistId = `flight-${flight.id}`
+  const wishlisted = hasHydrated && isWishlisted(wishlistId)
+
   const formatTime = (isoString: string) => {
     return new Date(isoString).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
   }
@@ -18,8 +25,37 @@ export function FlightResultCard({ flight }: FlightResultCardProps) {
     return `${h}h ${m}m`
   }
 
+  const stopsLabel = flight.stops === 0 ? 'Non-stop' : `${flight.stops} Stop${flight.stops > 1 ? 's' : ''}`
+
+  const handleToggleWishlist = () => {
+    toggleItem({
+      id: wishlistId,
+      type: 'flight',
+      name: `${flight.airline} ${flight.flightNumber}`,
+      description: `${flight.origin} → ${flight.destination} · ${formatTime(flight.departureTime)}–${formatTime(flight.arrivalTime)} · ${stopsLabel}`,
+      price: flight.price,
+      details: {
+        flightId: flight.id,
+        origin: flight.origin,
+        destination: flight.destination,
+        departureTime: flight.departureTime,
+        arrivalTime: flight.arrivalTime,
+      },
+    })
+  }
+
   return (
-    <div className="bg-[var(--color-surface)] rounded-[var(--radius-lg)] p-5 flex flex-col md:flex-row items-center gap-5 shadow-sm border border-[var(--color-border)] hover:shadow-md hover:border-[var(--color-border-strong)] transition-all duration-200">
+    <div className="relative bg-[var(--color-surface)] rounded-[var(--radius-lg)] p-5 flex flex-col md:flex-row items-center gap-5 shadow-sm border border-[var(--color-border)] hover:shadow-md hover:border-[var(--color-border-strong)] transition-all duration-200">
+
+      <button
+        type="button"
+        onClick={handleToggleWishlist}
+        aria-label={wishlisted ? 'Remove from wishlist' : 'Add to wishlist'}
+        aria-pressed={wishlisted}
+        className="absolute right-4 top-4 z-10 flex h-8 w-8 items-center justify-center rounded-full border border-[var(--color-border)] bg-[var(--color-surface)] text-[var(--color-text-muted)] transition hover:border-[var(--color-error)] hover:text-[var(--color-error)]"
+      >
+        <Heart size={16} fill={wishlisted ? 'currentColor' : 'none'} className={wishlisted ? 'text-[var(--color-error)]' : ''} />
+      </button>
 
       <div className="flex flex-row md:flex-col items-center gap-3 w-full md:w-28 shrink-0">
         <div className="w-11 h-11 rounded-[var(--radius-md)] bg-[var(--color-primary-soft)] flex items-center justify-center font-bold text-[var(--color-primary)] text-sm">
@@ -45,7 +81,7 @@ export function FlightResultCard({ flight }: FlightResultCardProps) {
             <div className="h-px bg-[var(--color-border)] flex-1" />
           </div>
           <span className="text-xs font-semibold text-[var(--color-primary)] mt-1">
-            {flight.stops === 0 ? 'Non-stop' : `${flight.stops} Stop${flight.stops > 1 ? 's' : ''}`}
+            {stopsLabel}
           </span>
           {flight.stopLocations && flight.stopLocations.length > 0 && (
             <span className="text-[10px] text-[var(--color-text-muted)] mt-0.5">
