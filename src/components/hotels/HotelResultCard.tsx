@@ -1,7 +1,9 @@
+'use client'
+
 import React from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
-import { MapPin, Star } from 'lucide-react'
+import { MapPin, Star, Heart } from 'lucide-react'
 import { Badge, Button } from '@/components/ui'
 import type { Hotel, HotelSearchParams } from '@/types/hotels'
 import { AMENITY_LABELS, PROPERTY_TYPE_LABELS } from '@/types/hotels'
@@ -11,6 +13,7 @@ import {
   serializeHotelSearchParams,
 } from '@/lib/hotelUtils'
 import { formatCurrency, truncate } from '@/lib/utils'
+import { useWishlistStore } from '@/store/wishlistStore'
 
 interface HotelResultCardProps {
   hotel: Hotel
@@ -19,6 +22,10 @@ interface HotelResultCardProps {
 }
 
 export function HotelResultCard({ hotel, nights, search }: HotelResultCardProps) {
+  const { toggleItem, isWishlisted, hasHydrated } = useWishlistStore()
+  const wishlistId = `hotel-${hotel.id}`
+  const wishlisted = hasHydrated && isWishlisted(wishlistId)
+
   const image = hotel.images[0]
   const startingPrice = getHotelStartingPrice(hotel)
   const stayTotal =
@@ -27,6 +34,22 @@ export function HotelResultCard({ hotel, nights, search }: HotelResultCardProps)
       : null
   const detailsHref = `/hotels/${hotel.id}?${serializeHotelSearchParams(search).toString()}`
   const highlightAmenities = hotel.amenities.slice(0, 3)
+
+  const handleToggleWishlist = () => {
+    toggleItem({
+      id: wishlistId,
+      type: 'hotel',
+      name: hotel.name,
+      description: `${hotel.location.area}, ${hotel.location.city}`,
+      price: startingPrice,
+      imageUrl: image?.url,
+      details: {
+        hotelId: hotel.id,
+        city: hotel.location.city,
+        propertyType: hotel.propertyType,
+      },
+    })
+  }
 
   return (
     <article className="bg-[var(--color-surface)] rounded-[var(--radius-lg)] overflow-hidden shadow-sm border border-[var(--color-border)] hover:shadow-md hover:border-[var(--color-border-strong)] transition-all duration-200">
@@ -45,6 +68,16 @@ export function HotelResultCard({ hotel, nights, search }: HotelResultCardProps)
               No photo
             </div>
           )}
+
+          <button
+            type="button"
+            onClick={handleToggleWishlist}
+            aria-label={wishlisted ? 'Remove from wishlist' : 'Add to wishlist'}
+            aria-pressed={wishlisted}
+            className="absolute right-3 top-3 z-10 flex h-8 w-8 items-center justify-center rounded-full bg-white/90 text-[var(--color-text-muted)] shadow-sm backdrop-blur-sm transition hover:text-[var(--color-error)]"
+          >
+            <Heart size={16} fill={wishlisted ? 'currentColor' : 'none'} className={wishlisted ? 'text-[var(--color-error)]' : ''} />
+          </button>
         </div>
 
         <div className="flex-1 min-w-0 p-5 flex flex-col gap-3">
