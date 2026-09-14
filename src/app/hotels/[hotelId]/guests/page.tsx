@@ -50,7 +50,6 @@ function Guests({ hotelId }: { hotelId: string }) {
   const r = useRouter(),
     p = useSearchParams(),
     s = getHotelSearchFromUrl(p),
-    h = undefined as Hotel | null | undefined,
     q = serializeHotelSearchParams(s).toString();
   const [hotel, setHotel] = useState<Hotel | null | undefined>(undefined),
     [b, setB] = useState<HotelBookingData | null>(null),
@@ -61,6 +60,11 @@ function Guests({ hotelId }: { hotelId: string }) {
   useEffect(() => {
     let active = true;
     getHotel(hotelId).then((result) => { if (active) setHotel(result); });
+    return () => { active = false; };
+  }, [hotelId]);
+
+  useEffect(() => {
+    if (hotel === undefined) return;
     try {
       const x = sessionStorage.getItem(hotelBookingStorageKey(hotelId)),
         j = x ? JSON.parse(x) : null;
@@ -73,7 +77,6 @@ function Guests({ hotelId }: { hotelId: string }) {
     } finally {
       setReady(true);
     }
-    return () => { active = false; };
   }, [hotelId, hotel]);
   if (hotel === undefined)
     return <div className="section-gap min-h-[40vh]" aria-busy="true" />;
