@@ -117,7 +117,7 @@ export function TravelRazorpayCheckout({
           try {
             const verified = itemType === 'hotel'
               ? await verifyRazorpayHotelPayment({ bookingId: order.bookingId, razorpayOrderId: payment.razorpay_order_id, razorpayPaymentId: payment.razorpay_payment_id, razorpaySignature: payment.razorpay_signature })
-              : await verifyRazorpayTravelPayment({ bookingId: order.bookingId, itemType: itemType === 'bus' ? 'bus' : 'travel', razorpayOrderId: payment.razorpay_order_id, razorpayPaymentId: payment.razorpay_payment_id, razorpaySignature: payment.razorpay_signature })
+              : await verifyRazorpayTravelPayment({ bookingId: order.bookingId, itemType: itemType === 'bus' ? 'bus' : itemType === 'train' ? 'train' : 'travel', razorpayOrderId: payment.razorpay_order_id, razorpayPaymentId: payment.razorpay_payment_id, razorpaySignature: payment.razorpay_signature })
             const query = new URLSearchParams({ itemType })
             if (verified.bookingReference) query.set('bookingReference', verified.bookingReference)
             router.push(itemType === 'hotel' ? `/hotels/${itemId}/confirmation?${query.toString()}` : `/payment-success?${query.toString()}`)
