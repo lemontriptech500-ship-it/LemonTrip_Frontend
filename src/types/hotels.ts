@@ -99,6 +99,9 @@ export interface RoomOccupancy {
 
 export interface RoomRate {
   id: string;
+  rateKey?: string;
+  rateType?: string;
+  totalPrice?: number;
   name: string;                    // e.g. "Room Only", "With Breakfast"
   pricePerNight: number;
   currency: string;
@@ -145,6 +148,7 @@ export interface Hotel {
   rooms: Room[];
   currency: string;
   startingPrice: number;           // lowest room rate per night — used on search result cards
+  supplier?: string;
 }
 
 // --- Search (URL / deep-link). Filters stay client-side. ---

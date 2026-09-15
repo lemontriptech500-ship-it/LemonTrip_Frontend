@@ -31,18 +31,10 @@ function recoveryLabel(recovery: HotelBookingRecovery): string {
   return 'Select rooms again'
 }
 
-function createReference(): string {
-  const value = Math.floor(Math.random() * 0xffffff)
-    .toString(36)
-    .toUpperCase()
-    .padStart(6, '0')
-    .slice(-6)
-  return `LT-HOTEL-${value}`
-}
-
 function HotelConfirmationContent({ hotelId }: { hotelId: string }) {
   const router = useRouter()
   const searchParams = useSearchParams()
+  const verifiedReference = searchParams.get('bookingReference')
   const search = getHotelSearchFromUrl(searchParams)
   const query = serializeHotelSearchParams(search).toString()
   const [hotel, setHotel] = useState<Hotel | null | undefined>(undefined)
@@ -52,21 +44,11 @@ function HotelConfirmationContent({ hotelId }: { hotelId: string }) {
 
   useEffect(() => {
     let active = true
-    getHotel(hotelId).then((result) => { if (active) setHotel(result) })
+    getHotel(hotelId, search).then((result) => { if (active) setHotel(result) })
     try {
       const raw = sessionStorage.getItem(hotelBookingStorageKey(hotelId))
       const parsed = parseHotelBookingFromStorage(raw)
-      if (hotel && validateHotelBooking(hotel, parsed) === null && parsed) {
-        if (!parsed.confirmationReference) {
-          const confirmed = { ...parsed, confirmationReference: createReference() }
-          sessionStorage.setItem(hotelBookingStorageKey(hotelId), JSON.stringify(confirmed))
-          setBooking(confirmed)
-        } else {
-          setBooking(parsed)
-        }
-      } else {
-        setBooking(parsed)
-      }
+      setBooking(parsed ? { ...parsed, confirmationReference: verifiedReference || undefined } : parsed)
     } catch {
       setBooking(null)
     } finally {
@@ -78,6 +60,9 @@ function HotelConfirmationContent({ hotelId }: { hotelId: string }) {
   if (!isLoaded || hotel === undefined) return <div className="section-gap min-h-[40vh]" aria-busy="true" />
 
   const issue = hotel ? validateHotelBooking(hotel, booking) : null
+  if (!verifiedReference) {
+    return <div className="section-gap min-h-[60vh] flex items-center"><Container><EmptyState title="Hotel booking is not confirmed" description="Complete payment verification and supplier confirmation before viewing this page." icon={<CheckCircle2 />} action={{ label: 'Return to hotel results', onClick: () => router.push('/hotels') }} /></Container></div>
+  }
   if (issue || !hotel || !booking) {
     const recovery = issue?.recovery ?? (hotel ? 'rooms' : 'results')
     return (
