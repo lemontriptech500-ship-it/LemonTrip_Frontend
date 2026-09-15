@@ -43,6 +43,7 @@ export const FOOTER_NAV = [
       { label: 'Visa Services', href: '/visa' },
       { label: 'Offers', href: '/offers' },
       { label: 'Blog', href: '/blog' },
+      { label: 'Contact Us', href: '/contact' },
     ],
   },
   {
@@ -72,4 +73,5 @@ export const ROUTE_LABELS: Record<string, string> = {
   '/login': 'Login',
   '/signup': 'Sign Up',
   '/profile': 'My Profile',
+  '/contact': 'Contact Us',
 }

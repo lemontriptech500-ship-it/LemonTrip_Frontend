@@ -3,6 +3,7 @@ import Link from 'next/link'
 import { Facebook, Instagram, Linkedin, Mail, MessageCircle, ArrowUpRight } from 'lucide-react'
 import { Container } from '@/components/ui'
 import { SITE_NAME, SITE_TAGLINE, FOOTER_NAV } from '@/constants'
+import { NewsletterSignup } from './NewsletterSignup'
 
 export function Footer() {
   const currentYear = new Date().getFullYear()
@@ -53,6 +54,8 @@ export function Footer() {
                 />
               </div>
             </div>
+
+            <NewsletterSignup />
           </div>
 
           <div className="grid grid-cols-2 gap-8 sm:grid-cols-3 lg:col-span-8 lg:gap-10">
@@ -82,6 +85,16 @@ export function Footer() {
             <div className="flex flex-col gap-4">
               <h3 className="text-sm font-semibold uppercase tracking-widest text-[var(--color-primary)]">Contact</h3>
               <ul className="flex flex-col gap-3">
+                <li>
+                  <Link
+                    href="/contact"
+                    className="group inline-flex items-center gap-1 text-sm text-[rgba(253,254,255,0.85)] hover:text-[var(--color-primary)] transition-colors"
+                  >
+                    <span className="border-b border-transparent group-hover:border-[var(--color-primary)] transition-all">
+                      Contact Us
+                    </span>
+                  </Link>
+                </li>
                 <li>
                   <a
                     href="mailto:lemontripindia@gmail.com"

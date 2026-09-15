@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useEffect } from 'react'
+import React, { Suspense, useEffect } from 'react'
 import { usePathname } from 'next/navigation'
 import { getCurrentUser } from '@/services/authService'
 import { useAuthStore } from '@/store/authStore'
@@ -28,7 +28,7 @@ export function AppShell({ children }: AppShellProps) {
   const isAuthRoute = pathname === '/login' || pathname === '/signup'
 
   if (isAuthRoute) {
-    return <><main id="main-content" className="min-h-screen" tabIndex={-1}>{children}</main><GlobalChatbot /></>
+    return <><main id="main-content" className="min-h-screen" tabIndex={-1}>{children}</main><Suspense fallback={null}><GlobalChatbot /></Suspense></>
   }
 
   return (
@@ -39,7 +39,7 @@ export function AppShell({ children }: AppShellProps) {
         {children}
       </main>
       <Footer />
-      <GlobalChatbot />
+      <Suspense fallback={null}><GlobalChatbot /></Suspense>
     </div>
   )
 }
