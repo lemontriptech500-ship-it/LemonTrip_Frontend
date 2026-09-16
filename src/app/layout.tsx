@@ -48,6 +48,9 @@ export const metadata: Metadata = {
     'LemonTrip',
   ],
   authors: [{ name: 'LemonTrip' }],
+  alternates: {
+    canonical: '/',
+  },
   openGraph: {
     type: 'website',
     locale: 'en_IN',
