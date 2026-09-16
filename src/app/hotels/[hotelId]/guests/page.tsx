@@ -59,7 +59,7 @@ function Guests({ hotelId }: { hotelId: string }) {
     [ready, setReady] = useState(false);
   useEffect(() => {
     let active = true;
-    getHotel(hotelId).then((result) => { if (active) setHotel(result); });
+    getHotel(hotelId, s).then((result) => { if (active) setHotel(result); });
     return () => { active = false; };
   }, [hotelId]);
 

@@ -23,13 +23,15 @@ function parseTrainPrice(price: string): number {
 
 function TrainResultsContent() {
   const searchParams = useSearchParams()
-  const [trains, setTrains] = useState<typeof mockTrains>(mockTrains)
+  const [trains, setTrains] = useState<typeof mockTrains>(process.env.NODE_ENV === 'development' ? mockTrains : [])
   const [isLoading, setIsLoading] = useState(true)
+  const [error, setError] = useState<string | null>(null)
   const { toggleItem, isWishlisted, hasHydrated } = useWishlistStore()
 
   useEffect(() => {
     let active = true
     setIsLoading(true)
+    setError(null)
     searchTrains({
       from: searchParams.get('from') || undefined,
       to: searchParams.get('to') || undefined,
@@ -37,6 +39,8 @@ function TrainResultsContent() {
       trainClass: searchParams.get('travelClass') || undefined,
     }).then((result) => {
       if (active) setTrains(result.trains)
+    }).catch((requestError) => {
+      if (active) setError(requestError instanceof Error ? requestError.message : 'Train catalog is unavailable.')
     }).finally(() => {
       if (active) setIsLoading(false)
     })
@@ -46,8 +50,8 @@ function TrainResultsContent() {
   return (
     <div className="section-gap bg-[var(--color-background)]">
       <Container>
-        <SectionHeading title="Trains" description="Browse sample routes, classes, and departure times." />
-        {isLoading ? <p className="mt-10 text-center text-[var(--color-text-secondary)]">Loading trains...</p> : <div className="mt-10 grid gap-5 lg:grid-cols-3">
+        <SectionHeading title="Trains" description="Browse catalog routes. Live availability requires an authorized rail provider." />
+        {isLoading ? <p className="mt-10 text-center text-[var(--color-text-secondary)]">Loading trains...</p> : error ? <p className="mt-10 text-center text-[var(--color-error)]">{error}</p> : <div className="mt-10 grid gap-5 lg:grid-cols-3">
           {trains.map((train) => {
             const wishlistId = `train-${train.id}`
             const wishlisted = hasHydrated && isWishlisted(wishlistId)
@@ -125,7 +129,7 @@ function TrainResultsContent() {
             )
           })}
         </div>}
-        <p className="mt-8 text-sm text-[var(--color-text-secondary)]">Train schedules and availability are supplied by the configured IRCTC adapter.</p>
+        <p className="mt-8 text-sm text-[var(--color-text-secondary)]">Catalog schedules are for discovery only. No railway ticket or PNR is created until an authorized rail provider confirms the booking.</p>
       </Container>
     </div>
   )

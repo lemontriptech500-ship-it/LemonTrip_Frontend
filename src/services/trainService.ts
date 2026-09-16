@@ -1,6 +1,15 @@
 import { mockTrains } from '@/data/trains'
 import { apiRequest, isApiConfigured } from '@/lib/apiClient'
 
+export interface TrainPassenger {
+  name: string
+  age: number
+  gender: string
+  berthPreference?: string
+  nationality?: string
+  identity?: { type?: string; number?: string }
+}
+
 export interface TrainSearchResult {
   trains: typeof mockTrains
   total: number
@@ -16,8 +25,8 @@ export async function searchTrains(params: {
   if (isApiConfigured) {
     try {
       return await apiRequest<TrainSearchResult>(`/trains/search?${new URLSearchParams(params as Record<string, string>).toString()}`, { suppressErrorLog: true })
-    } catch {
-      // Fall through to the local catalog while the API is unavailable.
+    } catch (error) {
+      if (process.env.NODE_ENV === 'production') throw error
     }
   }
   await new Promise((resolve) => setTimeout(resolve, 800))
@@ -42,8 +51,8 @@ export async function getTrainById(id: string) {
   if (isApiConfigured) {
     try {
       return await apiRequest<(typeof mockTrains)[number] | null>(`/trains/${encodeURIComponent(id)}`, { suppressErrorLog: true })
-    } catch {
-      // Fall through to the local catalog while the API is unavailable.
+    } catch (error) {
+      if (process.env.NODE_ENV === 'production') throw error
     }
   }
   await new Promise((resolve) => setTimeout(resolve, 300))
@@ -53,19 +62,18 @@ export async function getTrainById(id: string) {
 export async function createTrainBooking(data: {
   trainId: string
   trainClass: string
-  passengers: unknown[]
+  passengers: TrainPassenger[]
   contact: { email: string; phone: string }
 }): Promise<{ bookingId: string; status: string }> {
-  if (isApiConfigured) return apiRequest('/bookings/trains', { method: 'POST', body: JSON.stringify(data) })
-  await new Promise((resolve) => setTimeout(resolve, 1500))
-  return {
-    bookingId: `LT-TR-${Date.now().toString(36).toUpperCase()}`,
-    status: 'confirmed',
-  }
+  return apiRequest('/bookings/trains', { method: 'POST', body: JSON.stringify(data) })
 }
 
 export function checkTrainAvailability(data: { trainId: string; journeyDate?: string; trainClass: string; passengers: number }) {
   return apiRequest<{ available: number; fare: number; currency: string }>('/trains/availability', { method: 'POST', body: JSON.stringify(data) })
+}
+
+export function getTrainBookingStatus(id: string) {
+  return apiRequest<{ status: string; pnr?: string | null; supplierStatus?: string | null }>(`/trains/bookings/${encodeURIComponent(id)}/status`)
 }
 
 export function getTrainPnrStatus(pnr: string) {
