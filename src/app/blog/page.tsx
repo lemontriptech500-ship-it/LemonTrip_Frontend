@@ -1,7 +1,13 @@
+import type { Metadata } from 'next'
 import Link from 'next/link'
 import { Calendar, ArrowRight } from 'lucide-react'
 import { Button, Card, Container, SectionHeading } from '@/components/ui'
 import { getBlogPosts } from '@/services/blogService'
+
+export const metadata: Metadata = {
+  title: 'Travel Blog & Guides',
+  description: 'Read travel guides, practical tips, and destination inspiration from LemonTrip.',
+}
 
 export const dynamic = 'force-dynamic'
 
