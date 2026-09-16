@@ -16,7 +16,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
     '/blog',
     '/contact',
   ]
-
   return publicRoutes.map((route) => ({
     url: `${siteUrl}${route}`,
     changeFrequency: route === '/' ? 'daily' : 'weekly',
