@@ -24,7 +24,7 @@ function HotelDetailsContent({ hotelId }: { hotelId: string }) {
   const [isModifyOpen, setIsModifyOpen] = useState(false)
   useEffect(() => {
     let active = true
-    getHotel(hotelId).then((result) => {
+    getHotel(hotelId, search).then((result) => {
       if (active) setHotel(result)
     })
     return () => {

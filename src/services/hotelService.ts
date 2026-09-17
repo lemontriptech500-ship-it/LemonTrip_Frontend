@@ -1,6 +1,5 @@
 import type { Hotel, HotelFiltersState, HotelSearchParams, HotelSortOption } from '@/types/hotels'
-import { apiRequest, isApiConfigured } from '@/lib/apiClient'
-import { MOCK_HOTELS } from '@/data/hotels'
+import { apiRequest } from '@/lib/apiClient'
 
 export interface HotelSearchResult {
   hotels: Hotel[]
@@ -13,6 +12,21 @@ export interface HotelSearchResult {
   }
 }
 
+export interface HotelPaymentOrder {
+  orderId: string
+  amount: number
+  currency: string
+  keyId: string
+  bookingId: string
+  bookingReference: string
+}
+
+export interface HotelPaymentVerification {
+  bookingReference: string | null
+  supplierReference?: string
+  status: string
+}
+
 export async function searchHotels(params: HotelSearchParams): Promise<HotelSearchResult> {
   const query = new URLSearchParams({
     destination: params.destination,
@@ -22,32 +36,12 @@ export async function searchHotels(params: HotelSearchParams): Promise<HotelSear
     adults: String(params.adults),
     children: String(params.children),
   })
-  try {
-    return await apiRequest<HotelSearchResult>(`/hotels/search?${query.toString()}`, { suppressErrorLog: true })
-  } catch {
-    const destination = params.destination.toLowerCase()
-    const hotels = MOCK_HOTELS.filter((hotel) =>
-      `${hotel.name} ${hotel.location.city} ${hotel.location.area}`.toLowerCase().includes(destination)
-    )
-    return {
-      hotels,
-      total: hotels.length,
-      filters: {
-        propertyTypes: [...new Set(hotels.map((hotel) => hotel.propertyType))],
-        amenities: [...new Set(hotels.flatMap((hotel) => hotel.amenities))],
-        minPrice: Math.min(...hotels.map((hotel) => hotel.startingPrice), 0),
-        maxPrice: Math.max(...hotels.map((hotel) => hotel.startingPrice), 0),
-      },
-    }
-  }
+  return apiRequest<HotelSearchResult>(`/hotels/search?${query.toString()}`)
 }
 
-export async function getHotel(id: string): Promise<Hotel | null> {
-  try {
-    return await apiRequest<Hotel>(`/hotels/${encodeURIComponent(id)}`)
-  } catch {
-    return MOCK_HOTELS.find((hotel) => hotel.id === id) || null
-  }
+export async function getHotel(id: string, params?: HotelSearchParams): Promise<Hotel | null> {
+  const query = params ? `?${new URLSearchParams({ destination: params.destination, checkIn: params.checkIn, checkOut: params.checkOut, rooms: String(params.rooms), adults: String(params.adults), children: String(params.children) }).toString()}` : ''
+  return apiRequest<Hotel>(`/hotels/${encodeURIComponent(id)}${query}`)
 }
 
 export async function filterHotels(
@@ -115,16 +109,22 @@ export async function filterHotels(
   return results
 }
 
-export async function createHotelBooking(data: {
+export function createRazorpayHotelOrder(data: {
   hotelId: string
-  rooms: unknown[]
-  guests: unknown[]
-  contact: { email: string; phone: string }
-}): Promise<{ bookingId: string; status: string }> {
-  if (isApiConfigured) return apiRequest('/bookings/hotels', { method: 'POST', body: JSON.stringify(data) })
-  await new Promise((resolve) => setTimeout(resolve, 1500))
-  return {
-    bookingId: `LT-HT-${Date.now().toString(36).toUpperCase()}`,
-    status: 'confirmed',
-  }
+  checkIn: string
+  checkOut: string
+  selections: unknown[]
+  details: Record<string, unknown>
+  couponCode?: string
+}) {
+  return apiRequest<HotelPaymentOrder>('/payments/razorpay/hotels/order', { method: 'POST', body: JSON.stringify(data) })
+}
+
+export function verifyRazorpayHotelPayment(data: {
+  bookingId: string
+  razorpayOrderId: string
+  razorpayPaymentId: string
+  razorpaySignature: string
+}) {
+  return apiRequest<HotelPaymentVerification>('/payments/razorpay/hotels/verify', { method: 'POST', body: JSON.stringify(data) })
 }

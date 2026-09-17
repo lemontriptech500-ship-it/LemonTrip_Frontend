@@ -5,6 +5,7 @@ import { Loader2, Wallet as WalletIcon } from 'lucide-react'
 import { useRouter } from 'next/navigation'
 import { Button, Alert } from '@/components/ui'
 import { createRazorpayTravelOrder, verifyRazorpayTravelPayment, payWithWallet, type TravelItemType, type PaymentMethod } from '@/services/travelPaymentService'
+import { createRazorpayHotelOrder, verifyRazorpayHotelPayment } from '@/services/hotelService'
 import { WalletPaymentForm } from './WalletPaymentForm'
 import { validateCoupon } from '@/services/couponService'
 
@@ -98,7 +99,9 @@ export function TravelRazorpayCheckout({
     setProcessing(true)
     try {
       await loadRazorpayScript()
-      const order = await createRazorpayTravelOrder({ itemType, itemId, quantity: numericQuantity, couponCode: couponCode.trim(), details: { ...extraDetails, email, phone } })
+      const order = itemType === 'hotel'
+        ? await createRazorpayHotelOrder({ hotelId: itemId, checkIn: String(extraDetails.checkIn || ''), checkOut: String(extraDetails.checkOut || ''), selections: Array.isArray(extraDetails.selections) ? extraDetails.selections : [], details: { ...extraDetails, email, phone }, couponCode: couponCode.trim() })
+        : await createRazorpayTravelOrder({ itemType, itemId, quantity: numericQuantity, couponCode: couponCode.trim(), details: { ...extraDetails, email, phone } })
       if (!window.Razorpay) throw new Error('Razorpay Checkout is unavailable.')
 
       const checkout = new window.Razorpay({
@@ -112,16 +115,12 @@ export function TravelRazorpayCheckout({
         theme: { color: '#ffd21a' },
         handler: async (payment: { razorpay_payment_id: string; razorpay_order_id: string; razorpay_signature: string }) => {
           try {
-            const verified = await verifyRazorpayTravelPayment({
-              bookingId: order.bookingId,
-              itemType: itemType === 'bus' ? 'bus' : 'travel',
-              razorpayOrderId: payment.razorpay_order_id,
-              razorpayPaymentId: payment.razorpay_payment_id,
-              razorpaySignature: payment.razorpay_signature,
-            })
+            const verified = itemType === 'hotel'
+              ? await verifyRazorpayHotelPayment({ bookingId: order.bookingId, razorpayOrderId: payment.razorpay_order_id, razorpayPaymentId: payment.razorpay_payment_id, razorpaySignature: payment.razorpay_signature })
+              : await verifyRazorpayTravelPayment({ bookingId: order.bookingId, itemType: itemType === 'bus' ? 'bus' : itemType === 'train' ? 'train' : 'travel', razorpayOrderId: payment.razorpay_order_id, razorpayPaymentId: payment.razorpay_payment_id, razorpaySignature: payment.razorpay_signature })
             const query = new URLSearchParams({ itemType })
             if (verified.bookingReference) query.set('bookingReference', verified.bookingReference)
-            router.push(`/payment-success?${query.toString()}`)
+            router.push(itemType === 'hotel' ? `/hotels/${itemId}/confirmation?${query.toString()}` : `/payment-success?${query.toString()}`)
           } catch (verificationError) {
             setError(verificationError instanceof Error ? verificationError.message : 'Payment verification failed.')
             setProcessing(false)

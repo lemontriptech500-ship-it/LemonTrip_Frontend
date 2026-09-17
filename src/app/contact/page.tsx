@@ -4,8 +4,8 @@ import { Card, Container } from '@/components/ui'
 import { ContactForm } from '@/components/contact/ContactForm'
 
 export const metadata: Metadata = {
-  title: 'Contact Us',
-  description: 'Get in touch with the LemonTrip travel support team.',
+  title: 'Contact LemonTrip | Travel & Booking Support',
+  description: 'Contact LemonTrip for travel, booking, and customer support.',
 }
 
 export default function ContactPage() {

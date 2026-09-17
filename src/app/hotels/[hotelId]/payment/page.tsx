@@ -46,7 +46,7 @@ function HotelPaymentContent({ hotelId }: { hotelId: string }) {
 
   useEffect(() => {
     let active = true
-    getHotel(hotelId).then((result) => { if (active) setHotel(result) })
+    getHotel(hotelId, search).then((result) => { if (active) setHotel(result) })
     try {
       const raw = sessionStorage.getItem(hotelBookingStorageKey(hotelId))
       setBooking(parseHotelBookingFromStorage(raw))
