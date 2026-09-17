@@ -12,6 +12,17 @@ import { DesktopNavigation } from './DesktopNavigation'
 import { MobileNavigation } from './MobileNavigation'
 import { AccountEntry } from './AccountEntry'
 
+/**
+ * Header
+ * ------------------------------------------------------------
+ * FIX: the main bar had both a min-h and vertical padding (py-2),
+ * which stacked on top of each other — items-center already
+ * centers content within min-h, so the extra py padded the bar
+ * out taller than the reference. Switched min-h → a fixed h and
+ * dropped the py so the bar height matches the reference exactly
+ * at each breakpoint (72px → 80px → 88px).
+ */
+
 export function Header() {
   const [isScrolled, setIsScrolled] = useState(false)
   const { toggleCart, totalItems, hasHydrated } = useCartStore()
@@ -63,19 +74,26 @@ export function Header() {
         </Container>
       </div>
 
-      <div className="border-b border-[#e7efe9] bg-[rgba(255,255,255,0.96)] text-[var(--ink)] backdrop-blur-sm">
-        <Container as="div" className="flex min-h-[56px] items-center justify-between gap-2 py-1.5 sm:min-h-[64px] sm:gap-4 sm:py-0 lg:min-h-[72px] lg:gap-5">
+      <div className="border-b border-[#e7efe9] bg-white/[.98] text-[var(--ink)] backdrop-blur-sm">
+        <Container
+          as="div"
+          className="flex h-[60px] items-center justify-between gap-3 sm:h-[80px] sm:gap-5 lg:h-[75px] lg:gap-6"
+        >
+          {/* Logo — no more boxed background, just the mark on white,
+              sized up slightly so it carries the same visual weight
+              as the reference's wordmark + tagline lockup. */}
           <Link
             href="/"
-            className="relative inline-flex h-[40px] w-[132px] shrink-0 items-center rounded-[12px] bg-white/90 p-0 shadow-none sm:h-[48px] sm:w-[158px] lg:h-[58px] lg:w-[190px]"
+            className="relative inline-flex h-[42px] w-[140px] shrink-0 items-center sm:h-[52px] sm:w-[168px] lg:h-[62px] lg:w-[196px]"
             aria-label={`${SITE_NAME} — Go to homepage`}
           >
             <Image
               src="/lemonTripLogo.jpeg"
               alt={`${SITE_NAME} Logo`}
               fill
-              sizes="(max-width: 640px) 132px, (max-width: 1024px) 158px, 190px"
-              className="object-contain"
+              sizes="(max-width: 640px) 140px, (max-width: 1024px) 168px, 196px"
+              className="object-contain object-left"
+              priority
             />
           </Link>
 
@@ -85,7 +103,7 @@ export function Header() {
           <Link
             href="/wishlist"
             aria-label={`Open wishlist${wishlistCount > 0 ? `, ${wishlistCount} item${wishlistCount === 1 ? '' : 's'}` : ''}`}
-            className="relative inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-[10px] border border-[var(--green)] bg-white text-[var(--green)] transition hover:bg-[var(--green)] hover:text-[var(--yellow)] xl:h-10 xl:w-10"
+            className="relative inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-[var(--color-border)] bg-white text-[var(--green)] transition hover:border-[var(--green)] hover:bg-[var(--green)] hover:text-[var(--yellow)]"
           >
             <Heart size={18} aria-hidden="true" />
             {wishlistCount > 0 && (
@@ -99,7 +117,7 @@ export function Header() {
             type="button"
             onClick={toggleCart}
             aria-label={`Open cart${cartCount > 0 ? `, ${cartCount} item${cartCount === 1 ? '' : 's'}` : ''}`}
-            className="relative inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-[10px] border border-[var(--green)] bg-white text-[var(--green)] transition hover:bg-[var(--green)] hover:text-[var(--yellow)] xl:h-10 xl:w-10"
+            className="relative inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-[var(--color-border)] bg-white text-[var(--green)] transition hover:border-[var(--green)] hover:bg-[var(--green)] hover:text-[var(--yellow)]"
           >
             <ShoppingBag size={18} aria-hidden="true" />
             {cartCount > 0 && (
