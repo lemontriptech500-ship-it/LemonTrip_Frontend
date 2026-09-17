@@ -47,7 +47,7 @@ const benefits = [
 
 export function TravelBenefits() {
   return (
-    <section className="w-full bg-white py-3 sm:py-4 lg:py-20">
+    <section className="w-full bg-white py-3 sm:py-4 lg:pb-4 lg:pt-16">
       <div className="mx-auto max-w-[1200px] px-4">
         <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-5">
           {benefits.map((item) => {

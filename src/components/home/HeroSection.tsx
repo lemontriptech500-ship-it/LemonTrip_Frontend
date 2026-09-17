@@ -29,7 +29,9 @@ const TRUST_BADGES = ['Best Price Guarantee', '24/7 Customer Support', 'Safe & S
 
 export function HeroSection() {
   return (
-    <section className="relative min-h-[620px] bg-[#063b24] pb-16 sm:min-h-[640px] lg:min-h-[680px] lg:pb-20">
+    <section
+      className="relative min-h-[620px] bg-[#063b24] pb-16 sm:min-h-[640px] lg:h-[calc(100svh-260px)] lg:min-h-[620px] lg:pb-0"
+    >
       {/* Background layer — clipped to the hero's box */}
       <div className="pointer-events-none absolute inset-0 z-0 overflow-hidden">
         <div
@@ -47,7 +49,7 @@ export function HeroSection() {
         <div className="absolute inset-x-0 bottom-0 h-32 bg-gradient-to-b from-transparent via-white/70 to-white sm:h-40 lg:h-48" />
       </div>
 
-      <div className="relative z-10 flex h-full flex-col px-4 pt-16 sm:px-6 sm:pt-20 lg:pl-16 lg:pr-8 lg:pt-28 xl:pl-24">
+      <div className="relative z-10 flex h-full flex-col px-4 pt-16 sm:px-6 sm:pt-20 lg:pl-16 lg:pr-8 lg:pt-20 xl:pl-24">
         <div className="mx-auto w-full max-w-[760px] text-left text-white lg:mx-0">
           <span className="mb-5 inline-flex items-center gap-2 rounded-full border border-white/30 bg-white/10 px-4 py-2 text-[11px] font-semibold uppercase tracking-wide backdrop-blur-sm sm:text-xs">
             ✦ Premium Travel Experience
