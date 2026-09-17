@@ -7,6 +7,7 @@ export interface HolidayPackage {
   highlights: string[];
   imageFallbackColor: string;
   imageUrl?: string;
+  badge?: string; // e.g., "Best Seller" | "Popular" | "Luxury" — optional pill shown on the package card
 }
 
 export const popularPackages: HolidayPackage[] = [
@@ -19,6 +20,7 @@ export const popularPackages: HolidayPackage[] = [
     highlights: ['Scenic Train Rides', 'Mountain Tours', 'Breakfast Included'],
     imageFallbackColor: 'bg-[var(--color-secondary-soft)]',
     imageUrl: 'https://images.unsplash.com/photo-1530789253388-582c481c54b0?w=1200&q=85',
+    badge: 'Best Seller',
   },
   {
     id: 'pkg-2',
@@ -29,6 +31,7 @@ export const popularPackages: HolidayPackage[] = [
     highlights: ['Overwater Villa', 'Snorkeling', 'All-Inclusive'],
     imageFallbackColor: 'bg-[var(--color-accent-soft)]',
     imageUrl: 'https://images.unsplash.com/photo-1514282401047-d79a71a590e8?w=1200&q=85',
+    badge: 'Popular',
   },
   {
     id: 'pkg-3',
@@ -39,5 +42,6 @@ export const popularPackages: HolidayPackage[] = [
     highlights: ['Tokyo City Tour', 'Kyoto Temples', 'Bullet Train Pass'],
     imageFallbackColor: 'bg-[var(--color-primary-soft)]',
     imageUrl: 'https://images.unsplash.com/photo-1493976040374-85c8e12f0c0e?w=1200&q=85',
+    badge: 'Luxury',
   },
 ];
