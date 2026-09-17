@@ -122,10 +122,6 @@ export function HotelSearchForm({ defaults, onSuccess }: HotelSearchFormProps) {
           </Select>
         </div>
 
-
-
-
-
         <div className="min-w-0 w-[calc(33.333%-0.5rem)] shrink-0 md:w-[92px]">
           <Select name="adults" label="Adults" defaultValue={String(defaults?.adults ?? 2)}>
             {ADULT_OPTIONS.map((count) => (
@@ -155,47 +151,6 @@ export function HotelSearchForm({ defaults, onSuccess }: HotelSearchFormProps) {
             className="w-full px-5 md:w-auto"
           >
             Search Hotels
-    <form onSubmit={handleSearch} className="min-h-[415px] w-full rounded-lg bg-[#063b24] p-3 md:min-h-[253px] lg:min-h-[120px]">
-      <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-[1.35fr_1fr_1fr_.7fr_.7fr_.7fr_auto] lg:items-end lg:gap-2">
-        <Input
-          name="destination"
-          label="Destination"
-          placeholder="City, Hotel, or Landmark"
-          leadingIcon={<MapPin size={16} />}
-          defaultValue={defaults?.destination ?? ''}
-          required
-          theme="dark-green"
-        />
-        <DatePicker
-          label="Check-In"
-          value={checkIn}
-          onChange={setCheckIn}
-          placeholder="Select date"
-          minDate={today}
-          required
-          theme="dark-green"
-        />
-        <DatePicker
-          label="Check-Out"
-          value={checkOut}
-          onChange={setCheckOut}
-          placeholder="Select date"
-          minDate={checkIn || today}
-          required
-          theme="dark-green"
-        />
-        <Select name="rooms" label="Rooms" defaultValue={String(defaults?.rooms ?? 1)} theme="dark-green">
-          {ROOM_OPTIONS.map((count) => <option key={count} value={String(count)}>{count}</option>)}
-        </Select>
-        <Select name="adults" label="Adults" defaultValue={String(defaults?.adults ?? 2)} theme="dark-green">
-          {ADULT_OPTIONS.map((count) => <option key={count} value={String(count)}>{count}</option>)}
-        </Select>
-        <Select name="children" label="Children" defaultValue={String(defaults?.children ?? 0)} theme="dark-green">
-          {CHILD_OPTIONS.map((count) => <option key={count} value={String(count)}>{count}</option>)}
-        </Select>
-        <div className="flex justify-end border-t border-white/15 pt-4 md:col-span-2 lg:col-span-1 lg:border-t-0 lg:pt-0">
-          <Button type="submit" size="lg" className="w-full px-5 lg:w-auto">
-          Search Hotels
           </Button>
         </div>
       </div>
