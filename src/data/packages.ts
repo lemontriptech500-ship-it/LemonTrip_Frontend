@@ -1,5 +1,6 @@
 export interface HolidayPackage {
   id: string;
+  category: 'national' | 'international';
   destination: string;
   duration: string;
   description: string;
@@ -12,6 +13,7 @@ export interface HolidayPackage {
 export const popularPackages: HolidayPackage[] = [
   {
     id: 'pkg-1',
+    category: 'international',
     destination: 'Swiss Alps Explorer',
     duration: '7 Days, 6 Nights',
     description: 'Experience the breathtaking beauty of the Swiss Alps with scenic train rides and cozy stays.',
@@ -22,6 +24,7 @@ export const popularPackages: HolidayPackage[] = [
   },
   {
     id: 'pkg-2',
+    category: 'international',
     destination: 'Tropical Maldives',
     duration: '5 Days, 4 Nights',
     description: 'Relax in overwater villas and enjoy the crystal-clear waters of the Indian Ocean.',
@@ -32,6 +35,7 @@ export const popularPackages: HolidayPackage[] = [
   },
   {
     id: 'pkg-3',
+    category: 'international',
     destination: 'Cultural Japan',
     duration: '10 Days, 9 Nights',
     description: 'Discover the perfect blend of ancient traditions and modern technology in Japan.',

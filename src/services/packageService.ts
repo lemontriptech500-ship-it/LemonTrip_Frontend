@@ -3,6 +3,7 @@ import type { HolidayPackage } from '@/data/packages'
 
 export async function searchPackages(params: {
   destination?: string
+  category?: 'national' | 'international'
   month?: string
   travellers?: string
 }) {
