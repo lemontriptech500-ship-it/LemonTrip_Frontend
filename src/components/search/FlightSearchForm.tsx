@@ -2,9 +2,32 @@
 
 import React, { useState } from 'react'
 import { useRouter } from 'next/navigation'
-import { Plane, MapPin, ArrowRightLeft } from 'lucide-react'
+import { Plane, MapPin, ArrowRightLeft, ArrowRight } from 'lucide-react'
 import { DatePicker } from '@/components/ui/DatePicker'
 import { buildSearchUrl } from '@/lib/searchParams'
+
+/**
+ * FlightSearchForm
+ * ------------------------------------------------------------
+ * Fixes + restyle:
+ *  - BUG FIX: the One Way / Round Trip toggle's active and
+ *    inactive branches used the exact same classes
+ *    (`bg-[#063b24] text-[#FFD21A]` in both), so the selected
+ *    state was never visible. Active is now a solid yellow pill
+ *    with dark-green text; inactive is muted text with a subtle
+ *    hover, on the new white background.
+ *  - BUG FIX: field icons were yellow (`#FFD21A`) inside white
+ *    inputs — very low contrast. Switched to brand green.
+ *  - Removed the dark green box wrapper entirely — this form now
+ *    renders on plain white (the shell's tab strip carries the
+ *    green), matching the reference's white field row.
+ *  - Added a small muted label above each field ("From", "To",
+ *    "Departure", "Return", "Travellers & Class"), since the
+ *    reference labels fields explicitly rather than relying on
+ *    placeholder text alone.
+ *  - Search button switched to solid yellow with a trailing
+ *    arrow, matching "Search Flights →" in the reference.
+ */
 
 export function FlightSearchForm() {
   const router = useRouter()
@@ -45,17 +68,21 @@ export function FlightSearchForm() {
     setToCity(fromCity)
   }
 
+  const fieldLabelClass = 'mb-1 block text-[11px] font-medium uppercase tracking-wide text-[var(--color-text-muted)]'
+  const fieldInputClass =
+    'w-full h-11 pl-8 pr-2 rounded-[10px] border border-[var(--color-border)] bg-white text-sm text-[var(--color-text-primary)] placeholder:text-[var(--color-text-muted)] focus:outline-none focus:border-[var(--green)] transition-colors'
+
   return (
-    <form onSubmit={handleSearch} className="min-h-[415px] w-full rounded-lg bg-[#063b24] p-3 md:min-h-[253px] lg:min-h-[120px]">
+    <form onSubmit={handleSearch} className="w-full">
       {/* Trip Type */}
-      <div className="flex items-center gap-2 mb-2">
+      <div className="mb-3 flex items-center gap-2">
         <button
           type="button"
           onClick={() => setTripType('oneway')}
-          className={`px-3 py-1 rounded-full text-xs font-medium transition-all ${
+          className={`rounded-full px-3 py-1 text-xs font-semibold transition-all ${
             tripType === 'oneway'
-              ? 'bg-[#063b24] text-[#FFD21A]'
-              : 'bg-[#063b24] text-[#FFD21A] hover:bg-[#0a4b2c]'
+              ? 'bg-[var(--color-primary)] text-[var(--green-dark)]'
+              : 'text-[var(--color-text-muted)] hover:text-[var(--green-dark)]'
           }`}
         >
           One Way
@@ -63,10 +90,10 @@ export function FlightSearchForm() {
         <button
           type="button"
           onClick={() => setTripType('roundtrip')}
-          className={`px-3 py-1 rounded-full text-xs font-medium transition-all ${
+          className={`rounded-full px-3 py-1 text-xs font-semibold transition-all ${
             tripType === 'roundtrip'
-              ? 'bg-[#063b24] text-[#FFD21A]'
-              : 'bg-[#063b24] text-[#FFD21A] hover:bg-[#0a4b2c]'
+              ? 'bg-[var(--color-primary)] text-[var(--green-dark)]'
+              : 'text-[var(--color-text-muted)] hover:text-[var(--green-dark)]'
           }`}
         >
           Round Trip
@@ -74,18 +101,19 @@ export function FlightSearchForm() {
       </div>
 
       {/* All fields in one row on desktop, stacked on mobile */}
-      <div className="flex flex-col md:flex-row md:items-end gap-2">
+      <div className="flex flex-col gap-3 md:flex-row md:items-end">
         {/* FROM */}
-        <div className="flex-1 min-w-0">
+        <div className="min-w-0 flex-1">
+          <label className={fieldLabelClass}>From</label>
           <div className="relative">
-            <Plane size={14} className="absolute left-2.5 top-1/2 -translate-y-1/2 text-[#FFD21A] pointer-events-none" />
+            <Plane size={14} className="pointer-events-none absolute left-2.5 top-1/2 -translate-y-1/2 text-[var(--green)]" />
             <input
               type="text"
               value={fromCity}
               onChange={(e) => setFromCity(e.target.value)}
               placeholder="Departure City"
               required
-              className="w-full h-10 pl-8 pr-2 rounded-[10px] border border-[#063b24]/20 bg-white text-xs text-[#063b24] placeholder:text-[#063b24]/60 focus:outline-none focus:border-[#063b24] transition-colors"
+              className={fieldInputClass}
             />
           </div>
         </div>
@@ -94,53 +122,55 @@ export function FlightSearchForm() {
         <button
           type="button"
           onClick={swapCities}
-          className="hidden md:flex w-7 h-7 rounded-full bg-[#063b24] text-white items-center justify-center shadow-sm hover:bg-[#0d4a2b] transition-colors shrink-0 mb-[1px]"
+          className="mb-[1px] hidden h-8 w-8 shrink-0 items-center justify-center rounded-full bg-[var(--green)] text-white shadow-sm transition-colors hover:bg-[var(--green-2)] md:flex"
           aria-label="Swap cities"
         >
-          <ArrowRightLeft size={12} />
+          <ArrowRightLeft size={14} />
         </button>
 
         {/* Mobile swap - inline between inputs on mobile */}
-        <div className="flex md:hidden items-center justify-center">
+        <div className="flex items-center justify-center md:hidden">
           <button
             type="button"
             onClick={swapCities}
-            className="w-7 h-7 rounded-full bg-[#063b24] text-white flex items-center justify-center shadow-sm hover:bg-[#0d4a2b] transition-colors"
+            className="flex h-8 w-8 items-center justify-center rounded-full bg-[var(--green)] text-white shadow-sm transition-colors hover:bg-[var(--green-2)]"
             aria-label="Swap cities"
           >
-            <ArrowRightLeft size={12} />
+            <ArrowRightLeft size={14} />
           </button>
         </div>
 
         {/* TO */}
-        <div className="flex-1 min-w-0">
+        <div className="min-w-0 flex-1">
+          <label className={fieldLabelClass}>To</label>
           <div className="relative">
-            <MapPin size={14} className="absolute left-2.5 top-1/2 -translate-y-1/2 text-[#FFD21A] pointer-events-none" />
+            <MapPin size={14} className="pointer-events-none absolute left-2.5 top-1/2 -translate-y-1/2 text-[var(--green)]" />
             <input
               type="text"
               value={toCity}
               onChange={(e) => setToCity(e.target.value)}
               placeholder="Arrival City"
               required
-              className="w-full h-10 pl-8 pr-2 rounded-[10px] border border-[#063b24]/20 bg-white text-xs text-[#063b24] placeholder:text-[#063b24]/60 focus:outline-none focus:border-[#063b24] transition-colors"
+              className={fieldInputClass}
             />
           </div>
         </div>
 
         {/* DEPARTURE */}
-        <div className="flex-1 min-w-0">
+        <div className="min-w-0 flex-1">
+          <label className={fieldLabelClass}>Departure</label>
           <DatePicker
             value={departureDate}
             onChange={setDepartureDate}
             placeholder="Select date"
             minDate={today}
             required
-            theme="dark-green"
           />
         </div>
 
         {/* RETURN */}
-        <div className="flex-1 min-w-0">
+        <div className="min-w-0 flex-1">
+          <label className={fieldLabelClass}>Return</label>
           <DatePicker
             value={returnDate}
             onChange={setReturnDate}
@@ -148,33 +178,33 @@ export function FlightSearchForm() {
             minDate={departureDate || today}
             disabled={tripType === 'oneway'}
             required={tripType === 'roundtrip'}
-            theme="dark-green"
           />
         </div>
 
         {/* TRAVELLERS & CLASS */}
-        <div className="flex-1 min-w-0">
+        <div className="min-w-0 flex-1">
+          <label className={fieldLabelClass}>Travellers &amp; Class</label>
           <div className="relative">
             <select
               defaultValue="1-economy"
-              className="w-full h-10 pl-2 pr-7 rounded-[10px] border border-[#063b24]/20 bg-white text-xs text-[#063b24] appearance-none focus:outline-none focus:border-[#063b24] transition-colors cursor-pointer"
+              className="h-11 w-full cursor-pointer appearance-none rounded-[10px] border border-[var(--color-border)] bg-white pl-2 pr-7 text-sm text-[var(--color-text-primary)] transition-colors focus:outline-none focus:border-[var(--green)]"
             >
               <option value="1-economy">1 Adult, Economy</option>
               <option value="2-economy">2 Adults, Economy</option>
               <option value="1-business">1 Adult, Business</option>
               <option value="2-business">2 Adults, Business</option>
             </select>
-            <ChevronDown size={12} className="absolute right-2 top-1/2 -translate-y-1/2 text-[#063b24] pointer-events-none" />
+            <ChevronDown size={12} className="pointer-events-none absolute right-2 top-1/2 -translate-y-1/2 text-[var(--color-text-muted)]" />
           </div>
         </div>
 
         {/* Search */}
         <button
           type="submit"
-          className="w-full md:w-[130px] h-10 rounded-[10px] bg-[#063b24] hover:bg-[#0d4a2b] text-white font-semibold text-xs transition-colors flex items-center justify-center gap-1.5 shrink-0"
+          className="flex h-11 w-full shrink-0 items-center justify-center gap-1.5 rounded-[10px] bg-[var(--color-primary)] px-5 text-sm font-bold text-[var(--green-dark)] transition-colors hover:bg-[var(--color-primary-hover)] md:w-auto"
         >
-          <Plane size={14} />
           Search Flights
+          <ArrowRight size={15} />
         </button>
       </div>
     </form>

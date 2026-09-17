@@ -82,13 +82,17 @@
   --radius-2xl:  1rem;
   --radius-pill: 9999px;
 
-  /* ─── Shadow / Elevation Scale ─── */
+  /* ─── Shadow / Elevation Scale ───
+     NOTE: --shadow-lg / --shadow-xl deepened slightly to match the
+     softer, more "premium" card shadow used in the reference design
+     (rgba(4,53,31,.12) with a large spread), instead of a tight
+     generic drop shadow. */
   --shadow-none: none;
   --shadow-xs:   0 1px 2px 0 rgb(44 62 80 / 0.04);
   --shadow-sm:   0 1px 3px 0 rgb(44 62 80 / 0.06), 0 1px 2px -1px rgb(44 62 80 / 0.04);
   --shadow-md:   0 4px 8px -2px rgb(44 62 80 / 0.08), 0 2px 4px -2px rgb(44 62 80 / 0.04);
-  --shadow-lg:   0 10px 20px -5px rgb(44 62 80 / 0.08), 0 4px 8px -4px rgb(44 62 80 / 0.04);
-  --shadow-xl:   0 20px 40px -10px rgb(44 62 80 / 0.10), 0 8px 16px -8px rgb(44 62 80 / 0.06);
+  --shadow-lg:   0 18px 40px -8px rgba(4, 53, 31, 0.14), 0 4px 10px -4px rgba(4, 53, 31, 0.08);
+  --shadow-xl:   0 24px 60px -10px rgba(4, 53, 31, 0.16), 0 8px 20px -8px rgba(4, 53, 31, 0.10);
 
   /* ─── Transitions ─── */
   --transition-fast: 150ms cubic-bezier(0.4, 0, 0.2, 1);
@@ -176,31 +180,38 @@
 
 /* ============================================================
    TYPOGRAPHY SYSTEM
+   ------------------------------------------------------------
+   UPDATED: .text-display, .text-h1 and .text-h2 now use
+   --font-playfair (Playfair Display, serif) instead of
+   Montserrat. This mirrors the reference index.html, where only
+   the hero <h1> and section-head <h2> titles are serif — h3/h4
+   and everything else (labels, captions, nav) stay on the sans
+   stack for contrast and legibility.
    ============================================================ */
 
 @layer components {
   .text-display {
-    @apply text-4xl font-bold leading-[1.10] tracking-tight;
-    font-family: var(--font-montserrat), system-ui, sans-serif;
+    font-family: var(--font-playfair), Georgia, serif;
+    @apply text-4xl font-bold leading-[1.05] tracking-tight;
   }
   @media (min-width: 768px) {
-    .text-display { font-size: 3.5rem; }
+    .text-display { font-size: clamp(3rem, 6vw, 5.4rem); letter-spacing: -0.02em; }
   }
 
   .text-h1 {
-    @apply text-2xl font-bold leading-[1.15] tracking-tight;
-    font-family: var(--font-montserrat), system-ui, sans-serif;
+    font-family: var(--font-playfair), Georgia, serif;
+    @apply text-3xl font-bold leading-[1.08] tracking-tight;
   }
   @media (min-width: 768px) {
-    .text-h1 { font-size: 2.25rem; }
+    .text-h1 { font-size: 2.625rem; }
   }
 
   .text-h2 {
-    @apply text-xl font-semibold leading-[1.20] tracking-tight;
-    font-family: var(--font-montserrat), system-ui, sans-serif;
+    font-family: var(--font-playfair), Georgia, serif;
+    @apply text-2xl font-bold leading-[1.12] tracking-tight;
   }
   @media (min-width: 768px) {
-    .text-h2 { font-size: 1.625rem; }
+    .text-h2 { font-size: 2.25rem; }
   }
 
   .text-h3 {

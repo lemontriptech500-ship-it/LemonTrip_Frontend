@@ -2,7 +2,7 @@
 
 import React, { useState } from 'react'
 import { useRouter } from 'next/navigation'
-import { MapPin } from 'lucide-react'
+import { MapPin, ArrowRight } from 'lucide-react'
 import { Input, Button, Select } from '@/components/ui'
 import { DatePicker } from '@/components/ui/DatePicker'
 import type { HotelSearchParams } from '@/types/hotels'
@@ -12,6 +12,21 @@ import {
   normalizeHotelSearchParams,
   validateHotelSearch,
 } from '@/lib/hotelUtils'
+
+/**
+ * HotelSearchForm
+ * ------------------------------------------------------------
+ * BUG FIX: this form previously laid its six fields out as three
+ * stacked rows (Destination full-width, then Check-In/Check-Out,
+ * then Rooms/Adults/Children) instead of one single line like
+ * FlightSearchForm. That made it far taller than the ~40px the
+ * hero reserves for the floating search widget to overlap into,
+ * so the hero's `overflow-hidden` was clipping the bottom of the
+ * form (the "Search Hotels" button) — not a style issue, a real
+ * layout bug. Restructured to a single flex row (wrapping only on
+ * small screens), matching the compact single-line layout used by
+ * Flights/Buses/Trains/Packages/Visa, and matching the reference.
+ */
 
 const ROOM_OPTIONS = Array.from(
   { length: HOTEL_SEARCH_LIMITS.maxRooms - HOTEL_SEARCH_LIMITS.minRooms + 1 },
@@ -62,9 +77,9 @@ export function HotelSearchForm({ defaults, onSuccess }: HotelSearchFormProps) {
   const today = new Date().toISOString().split('T')[0]
 
   return (
-    <form onSubmit={handleSearch} className="w-full space-y-5 rounded-lg bg-[#063b24] p-4 sm:p-5">
-      <div className="grid gap-4">
-        <div>
+    <form onSubmit={handleSearch} className="w-full">
+      <div className="flex flex-col gap-3 md:flex-row md:flex-wrap md:items-end lg:flex-nowrap">
+        <div className="min-w-0 flex-[2] basis-full md:basis-0">
           <Input
             name="destination"
             label="Destination"
@@ -72,11 +87,10 @@ export function HotelSearchForm({ defaults, onSuccess }: HotelSearchFormProps) {
             leadingIcon={<MapPin size={16} />}
             defaultValue={defaults?.destination ?? ''}
             required
-            theme="dark-green"
           />
         </div>
 
-        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+        <div className="min-w-0 flex-1 basis-[calc(50%-0.375rem)] md:basis-0">
           <DatePicker
             label="Check-In"
             value={checkIn}
@@ -84,8 +98,10 @@ export function HotelSearchForm({ defaults, onSuccess }: HotelSearchFormProps) {
             placeholder="Select date"
             minDate={today}
             required
-            theme="dark-green"
           />
+        </div>
+
+        <div className="min-w-0 flex-1 basis-[calc(50%-0.375rem)] md:basis-0">
           <DatePicker
             label="Check-Out"
             value={checkOut}
@@ -93,26 +109,31 @@ export function HotelSearchForm({ defaults, onSuccess }: HotelSearchFormProps) {
             placeholder="Select date"
             minDate={checkIn || today}
             required
-            theme="dark-green"
           />
         </div>
 
-        <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
-          <Select name="rooms" label="Rooms" defaultValue={String(defaults?.rooms ?? 1)} theme="dark-green">
+        <div className="min-w-0 w-[calc(33.333%-0.5rem)] shrink-0 md:w-[92px]">
+          <Select name="rooms" label="Rooms" defaultValue={String(defaults?.rooms ?? 1)}>
             {ROOM_OPTIONS.map((count) => (
               <option key={count} value={String(count)}>
                 {count}
               </option>
             ))}
           </Select>
-          <Select name="adults" label="Adults" defaultValue={String(defaults?.adults ?? 2)} theme="dark-green">
+        </div>
+
+        <div className="min-w-0 w-[calc(33.333%-0.5rem)] shrink-0 md:w-[92px]">
+          <Select name="adults" label="Adults" defaultValue={String(defaults?.adults ?? 2)}>
             {ADULT_OPTIONS.map((count) => (
               <option key={count} value={String(count)}>
                 {count}
               </option>
             ))}
           </Select>
-          <Select name="children" label="Children" defaultValue={String(defaults?.children ?? 0)} theme="dark-green">
+        </div>
+
+        <div className="min-w-0 w-[calc(33.333%-0.5rem)] shrink-0 md:w-[92px]">
+          <Select name="children" label="Children" defaultValue={String(defaults?.children ?? 0)}>
             {CHILD_OPTIONS.map((count) => (
               <option key={count} value={String(count)}>
                 {count}
@@ -120,12 +141,18 @@ export function HotelSearchForm({ defaults, onSuccess }: HotelSearchFormProps) {
             ))}
           </Select>
         </div>
-      </div>
 
-      <div className="flex justify-end border-t border-white/15 pt-4">
-        <Button type="submit" size="lg" className="w-full px-5 sm:w-auto">
-          Search Hotels
-        </Button>
+        <div className="w-full shrink-0 md:w-auto">
+          <Button
+            type="submit"
+            size="lg"
+            icon={<ArrowRight size={16} />}
+            iconPosition="right"
+            className="w-full px-5 md:w-auto"
+          >
+            Search Hotels
+          </Button>
+        </div>
       </div>
     </form>
   )
