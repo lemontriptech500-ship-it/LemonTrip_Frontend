@@ -41,10 +41,10 @@ export function Footer() {
                   label="LemonTrip"
                 />
                 <SocialLink
-                  href="https://wa.me/919876543210"
+                  href="https://whatsapp.com/channel/0029Vb8Tc6EAu3aMISxTov06"
                   ariaLabel="Join our WhatsApp Community"
                   icon={<MessageCircle size={18} />}
-                  label="WhatsApp Community"
+                  label="Join our WhatsApp Community"
                 />
                 <SocialLink
                   href="mailto:lemontripindia@gmail.com"
@@ -107,7 +107,7 @@ export function Footer() {
                 </li>
                 <li>
                   <a
-                    href="https://wa.me/919876543210"
+                    href="https://wa.me/919812042030"
                     className="group inline-flex items-center gap-1 text-sm text-[rgba(253,254,255,0.85)] hover:text-[var(--color-primary)] transition-colors"
                   >
                     <span className="border-b border-transparent group-hover:border-[var(--color-primary)] transition-all">

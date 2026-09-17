@@ -15,7 +15,7 @@ import { Button, Card, Container } from '@/components/ui'
 
 export const metadata: Metadata = {
   title: 'Travel Services',
-  description: 'Explore every travel service available through LemonTrip.',
+  description: 'Explore flights, hotels, buses, trains, packages, and visa services from LemonTrip.',
 }
 
 const services = [

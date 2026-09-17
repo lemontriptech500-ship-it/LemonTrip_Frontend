@@ -1,7 +1,7 @@
 import type { Metadata } from 'next'
 import { Plus_Jakarta_Sans, Montserrat, Playfair_Display } from 'next/font/google'
 import { AppShell } from '@/components/layout'
-import { SITE_NAME, SITE_TAGLINE, SITE_URL } from '@/constants'
+import { SITE_NAME } from '@/constants'
 import './globals.css'
 
 // ============================================================
@@ -36,17 +36,17 @@ const playfair = Playfair_Display({
 // Individual pages override title/description via generateMetadata.
 // ============================================================
 export const metadata: Metadata = {
-  metadataBase: new URL(SITE_URL),
+  metadataBase: new URL('https://lemontrip.in/'),
   icons: {
     icon: '/lemonTripLogo.jpeg',
     apple: '/lemonTripLogo.jpeg',
   },
   title: {
-    default: `${SITE_NAME} — ${SITE_TAGLINE}`,
+    default: 'LemonTrip – Flights, Hotels, Tours & Visa',
     template: `%s | ${SITE_NAME}`,
   },
   description:
-    'Book flights, hotels, buses, trains, holiday packages and visa services on LemonTrip — your all-in-one smart travel companion.',
+    'Book flights, hotels, tours, buses and travel packages with LemonTrip. Explore easy travel booking and visa services.',
   keywords: [
     'travel booking',
     'flights',
@@ -58,20 +58,25 @@ export const metadata: Metadata = {
     'LemonTrip',
   ],
   authors: [{ name: 'LemonTrip' }],
+  alternates: {
+    canonical: '/',
+  },
   openGraph: {
     type: 'website',
     locale: 'en_IN',
-    url: SITE_URL,
+    url: 'https://lemontrip.in/',
     siteName: SITE_NAME,
-    title: `${SITE_NAME} — ${SITE_TAGLINE}`,
+    title: 'LemonTrip – Flights, Hotels, Tours & Visa',
     description:
-      'Book flights, hotels, buses, trains, holiday packages and visa services on LemonTrip.',
+      'Book flights, hotels, tours and travel packages with LemonTrip. Explore easy travel booking and visa services.',
+    images: [{ url: '/lemonTripLogo.jpeg', alt: 'LemonTrip' }],
   },
   twitter: {
     card: 'summary_large_image',
-    title: `${SITE_NAME} — ${SITE_TAGLINE}`,
+    title: 'LemonTrip – Flights, Hotels, Tours & Visa',
     description:
-      'Book flights, hotels, buses, trains, holiday packages and visa services on LemonTrip.',
+      'Book flights, hotels, tours and travel packages with LemonTrip. Explore easy travel booking and visa services.',
+    images: ['/lemonTripLogo.jpeg'],
   },
   robots: {
     index: true,

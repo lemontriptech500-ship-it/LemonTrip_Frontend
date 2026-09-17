@@ -16,7 +16,7 @@ export default async function TrainDetailsPage({ params, searchParams }: { param
         <Container>
           <Card className="text-center py-12">
             <h1 className="text-h2 text-[var(--color-text-primary)] mb-2">Train route not found</h1>
-            <p className="text-[var(--color-text-secondary)] mb-6">This mock route is no longer available.</p>
+            <p className="text-[var(--color-text-secondary)] mb-6">This catalog route is no longer available.</p>
             <Button asChild>
               <Link href="/trains">Back to trains</Link>
             </Button>
@@ -77,7 +77,7 @@ export default async function TrainDetailsPage({ params, searchParams }: { param
 
           <div className="mt-8 flex items-center justify-between gap-4 rounded-[var(--radius-md)] bg-[var(--color-surface-secondary)] p-4">
             <div>
-              <p className="text-caption text-[var(--color-text-secondary)]">Preview fare</p>
+              <p className="text-caption text-[var(--color-text-secondary)]">Catalog fare</p>
               <p className="text-2xl font-bold text-[var(--color-text-primary)]">{train.price}</p>
             </div>
           </div>

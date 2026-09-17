@@ -1,6 +1,12 @@
+import type { Metadata } from 'next'
 import { Container, SectionHeading } from '@/components/ui'
 import { searchBuses } from '@/services/busService'
 import { BusResultCard } from '@/components/buses/BusResultCard'
+
+export const metadata: Metadata = {
+  title: 'Bus Booking – Book Bus Tickets',
+  description: 'Compare and book bus tickets with LemonTrip for convenient intercity travel.',
+}
 
 export const dynamic = 'force-dynamic'
 
