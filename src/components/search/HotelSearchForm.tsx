@@ -124,6 +124,8 @@ export function HotelSearchForm({ defaults, onSuccess }: HotelSearchFormProps) {
 
 
 
+
+
         <div className="min-w-0 w-[calc(33.333%-0.5rem)] shrink-0 md:w-[92px]">
           <Select name="adults" label="Adults" defaultValue={String(defaults?.adults ?? 2)}>
             {ADULT_OPTIONS.map((count) => (
