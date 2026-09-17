@@ -1,13 +1,16 @@
 import type { Metadata } from 'next'
-import { Plus_Jakarta_Sans, Montserrat } from 'next/font/google'
+import { Plus_Jakarta_Sans, Montserrat, Playfair_Display } from 'next/font/google'
 import { AppShell } from '@/components/layout'
 import { SITE_NAME } from '@/constants'
 import './globals.css'
 
 // ============================================================
 // Fonts loaded via next/font for zero-layout-shift.
-//  - --font-jakarta  → main body text
-//  - --font-montserrat → headings & non-body text
+//  - --font-jakarta    → main body text
+//  - --font-montserrat → labels, captions, nav, buttons
+//  - --font-playfair   → NEW: serif display font for h1 / section titles,
+//                         this is what gives the "professional / editorial"
+//                         look from the reference index.html
 // ============================================================
 const jakarta = Plus_Jakarta_Sans({
   subsets: ['latin'],
@@ -18,6 +21,13 @@ const jakarta = Plus_Jakarta_Sans({
 const montserrat = Montserrat({
   subsets: ['latin'],
   variable: '--font-montserrat',
+  display: 'swap',
+})
+
+const playfair = Playfair_Display({
+  subsets: ['latin'],
+  weight: ['600', '700'],
+  variable: '--font-playfair',
   display: 'swap',
 })
 
@@ -83,7 +93,11 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="en" className={`${jakarta.variable} ${montserrat.variable}`} data-scroll-behavior="smooth">
+    <html
+      lang="en"
+      className={`${jakarta.variable} ${montserrat.variable} ${playfair.variable}`}
+      data-scroll-behavior="smooth"
+    >
       <body suppressHydrationWarning>
         <AppShell>{children}</AppShell>
       </body>
