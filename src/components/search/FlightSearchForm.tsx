@@ -101,7 +101,7 @@ export function FlightSearchForm() {
       </div>
 
       {/* All fields in one row on desktop, stacked on mobile */}
-      <div className="flex flex-col gap-3 md:flex-row md:items-end">
+      <div className="flex flex-col gap-3 lg:flex-row lg:items-end">
         {/* FROM */}
         <div className="min-w-0 flex-1">
           <label className={fieldLabelClass}>From</label>
@@ -118,18 +118,18 @@ export function FlightSearchForm() {
           </div>
         </div>
 
-        {/* Swap - hidden on mobile, visible on md+ */}
+        {/* Swap - visible alongside the desktop row */}
         <button
           type="button"
           onClick={swapCities}
-          className="mb-[1px] hidden h-8 w-8 shrink-0 items-center justify-center rounded-full bg-[var(--green)] text-white shadow-sm transition-colors hover:bg-[var(--green-2)] md:flex"
+          className="mb-[1px] hidden h-8 w-8 shrink-0 items-center justify-center rounded-full bg-[var(--green)] text-white shadow-sm transition-colors hover:bg-[var(--green-2)] lg:flex"
           aria-label="Swap cities"
         >
           <ArrowRightLeft size={14} />
         </button>
 
-        {/* Mobile swap - inline between inputs on mobile */}
-        <div className="flex items-center justify-center md:hidden">
+        {/* Stacked-layout swap, used on phones and tablets */}
+        <div className="flex items-center justify-center lg:hidden">
           <button
             type="button"
             onClick={swapCities}
@@ -201,7 +201,7 @@ export function FlightSearchForm() {
         {/* Search */}
         <button
           type="submit"
-          className="flex h-11 w-full shrink-0 items-center justify-center gap-1.5 rounded-[10px] bg-[var(--color-primary)] px-5 text-sm font-bold text-[var(--green-dark)] transition-colors hover:bg-[var(--color-primary-hover)] md:w-auto"
+          className="flex h-11 w-full shrink-0 items-center justify-center gap-1.5 rounded-[10px] bg-[var(--color-primary)] px-5 text-sm font-bold text-[var(--green-dark)] transition-colors hover:bg-[var(--color-primary-hover)] lg:w-auto"
         >
           Search Flights
           <ArrowRight size={15} />
