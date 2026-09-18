@@ -9,24 +9,25 @@ import { buildSearchUrl } from '@/lib/searchParams'
 /**
  * FlightSearchForm
  * ------------------------------------------------------------
- * Fixes + restyle:
- *  - BUG FIX: the One Way / Round Trip toggle's active and
- *    inactive branches used the exact same classes
- *    (`bg-[#063b24] text-[#FFD21A]` in both), so the selected
- *    state was never visible. Active is now a solid yellow pill
- *    with dark-green text; inactive is muted text with a subtle
- *    hover, on the new white background.
- *  - BUG FIX: field icons were yellow (`#FFD21A`) inside white
- *    inputs — very low contrast. Switched to brand green.
- *  - Removed the dark green box wrapper entirely — this form now
- *    renders on plain white (the shell's tab strip carries the
- *    green), matching the reference's white field row.
- *  - Added a small muted label above each field ("From", "To",
- *    "Departure", "Return", "Travellers & Class"), since the
- *    reference labels fields explicitly rather than relying on
- *    placeholder text alone.
- *  - Search button switched to solid yellow with a trailing
- *    arrow, matching "Search Flights →" in the reference.
+ * BUG FIX: the field row used `md:flex-row`, which switches to a
+ * single row based on VIEWPORT width, not the width of whatever
+ * container the form actually renders inside. That's fine in the
+ * hero (a ~1100px-wide widget on a desktop viewport), but inside
+ * <FlightModifySearch>'s Modal the available width is much
+ * narrower while the viewport is still "desktop" — so all six
+ * fields still tried to force themselves into one row and got
+ * crushed: labels ran into each other ("DEPARTURERETURN"),
+ * placeholders truncated ("Sele date"), and the two swap buttons
+ * (one hidden/shown per viewport breakpoint) both existed in the
+ * DOM and could visually collide.
+ *
+ * Fixed by switching to `flex-wrap` with a `min-w` per field
+ * instead of a viewport breakpoint: this responds to the actual
+ * rendered width of the immediate container, so it stays one row
+ * in the wide hero widget and wraps cleanly to two rows inside
+ * the narrower modal — no crushing, no breakpoint mismatch.
+ * Also collapsed the two duplicate (mobile/desktop) swap buttons
+ * into a single one that's just a normal item in the flex flow.
  */
 
 export function FlightSearchForm() {
@@ -68,7 +69,7 @@ export function FlightSearchForm() {
     setToCity(fromCity)
   }
 
-  const fieldLabelClass = 'mb-1 block text-[11px] font-medium uppercase tracking-wide text-[var(--color-text-muted)]'
+  const fieldLabelClass = 'mb-1 block text-[11px] font-medium uppercase tracking-wide text-[var(--color-text-muted)] whitespace-nowrap'
   const fieldInputClass =
     'w-full h-11 pl-8 pr-2 rounded-[10px] border border-[var(--color-border)] bg-white text-sm text-[var(--color-text-primary)] placeholder:text-[var(--color-text-muted)] focus:outline-none focus:border-[var(--green)] transition-colors'
 
@@ -100,10 +101,12 @@ export function FlightSearchForm() {
         </button>
       </div>
 
-      {/* All fields in one row on desktop, stacked on mobile */}
-      <div className="flex flex-col gap-3 md:flex-row md:items-end">
+      {/* Fields wrap based on the container's actual width, not the
+          viewport — one row when there's room (hero widget), two
+          rows when there isn't (inside the Modify Search modal) */}
+      <div className="flex flex-wrap items-end gap-3">
         {/* FROM */}
-        <div className="min-w-0 flex-1">
+        <div className="min-w-[150px] flex-1 basis-[150px]">
           <label className={fieldLabelClass}>From</label>
           <div className="relative">
             <Plane size={14} className="pointer-events-none absolute left-2.5 top-1/2 -translate-y-1/2 text-[var(--green)]" />
@@ -118,30 +121,18 @@ export function FlightSearchForm() {
           </div>
         </div>
 
-        {/* Swap - hidden on mobile, visible on md+ */}
+        {/* Swap — one button, always in flow (no viewport-conditional duplicate) */}
         <button
           type="button"
           onClick={swapCities}
-          className="mb-[1px] hidden h-8 w-8 shrink-0 items-center justify-center rounded-full bg-[var(--green)] text-white shadow-sm transition-colors hover:bg-[var(--green-2)] md:flex"
+          className="mb-[1px] flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-[var(--green)] text-white shadow-sm transition-colors hover:bg-[var(--green-2)]"
           aria-label="Swap cities"
         >
           <ArrowRightLeft size={14} />
         </button>
 
-        {/* Mobile swap - inline between inputs on mobile */}
-        <div className="flex items-center justify-center md:hidden">
-          <button
-            type="button"
-            onClick={swapCities}
-            className="flex h-8 w-8 items-center justify-center rounded-full bg-[var(--green)] text-white shadow-sm transition-colors hover:bg-[var(--green-2)]"
-            aria-label="Swap cities"
-          >
-            <ArrowRightLeft size={14} />
-          </button>
-        </div>
-
         {/* TO */}
-        <div className="min-w-0 flex-1">
+        <div className="min-w-[150px] flex-1 basis-[150px]">
           <label className={fieldLabelClass}>To</label>
           <div className="relative">
             <MapPin size={14} className="pointer-events-none absolute left-2.5 top-1/2 -translate-y-1/2 text-[var(--green)]" />
@@ -157,7 +148,7 @@ export function FlightSearchForm() {
         </div>
 
         {/* DEPARTURE */}
-        <div className="min-w-0 flex-1">
+        <div className="min-w-[140px] flex-1 basis-[140px]">
           <label className={fieldLabelClass}>Departure</label>
           <DatePicker
             value={departureDate}
@@ -169,7 +160,7 @@ export function FlightSearchForm() {
         </div>
 
         {/* RETURN */}
-        <div className="min-w-0 flex-1">
+        <div className="min-w-[140px] flex-1 basis-[140px]">
           <label className={fieldLabelClass}>Return</label>
           <DatePicker
             value={returnDate}
@@ -182,7 +173,7 @@ export function FlightSearchForm() {
         </div>
 
         {/* TRAVELLERS & CLASS */}
-        <div className="min-w-0 flex-1">
+        <div className="min-w-[150px] flex-1 basis-[150px]">
           <label className={fieldLabelClass}>Travellers &amp; Class</label>
           <div className="relative">
             <select
@@ -201,7 +192,7 @@ export function FlightSearchForm() {
         {/* Search */}
         <button
           type="submit"
-          className="flex h-11 w-full shrink-0 items-center justify-center gap-1.5 rounded-[10px] bg-[var(--color-primary)] px-5 text-sm font-bold text-[var(--green-dark)] transition-colors hover:bg-[var(--color-primary-hover)] md:w-auto"
+          className="flex h-11 shrink-0 items-center justify-center gap-1.5 rounded-[10px] bg-[var(--color-primary)] px-5 text-sm font-bold text-[var(--green-dark)] transition-colors hover:bg-[var(--color-primary-hover)] sm:w-auto"
         >
           Search Flights
           <ArrowRight size={15} />
