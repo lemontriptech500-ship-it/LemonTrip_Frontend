@@ -16,16 +16,19 @@ import {
 /**
  * HotelSearchForm
  * ------------------------------------------------------------
- * BUG FIX: this form previously laid its six fields out as three
- * stacked rows (Destination full-width, then Check-In/Check-Out,
- * then Rooms/Adults/Children) instead of one single line like
- * FlightSearchForm. That made it far taller than the ~40px the
- * hero reserves for the floating search widget to overlap into,
- * so the hero's `overflow-hidden` was clipping the bottom of the
- * form (the "Search Hotels" button) — not a style issue, a real
- * layout bug. Restructured to a single flex row (wrapping only on
- * small screens), matching the compact single-line layout used by
- * Flights/Buses/Trains/Packages/Visa, and matching the reference.
+ * BUG FIX (same root cause as FlightSearchForm): the field row
+ * used `md:flex-row` / `md:basis-0`, which switches to a single
+ * row based on VIEWPORT width. Inside <Modal> (Modify Hotel
+ * Search) the container is much narrower than the viewport, so
+ * Destination/Check-In/Check-Out/Rooms/Adults/Children all tried
+ * to squeeze into one row and overlapped ("Check-InCheck-Out
+ * Destination" rendering on top of itself).
+ *
+ * Switched to `flex-wrap` with a `min-w` per field instead of a
+ * viewport breakpoint, matching the fix already applied to
+ * FlightSearchForm — this responds to the actual rendered width
+ * of the immediate container (hero widget vs. modal), not the
+ * viewport, so it wraps cleanly instead of overlapping.
  */
 
 const ROOM_OPTIONS = Array.from(
@@ -78,8 +81,8 @@ export function HotelSearchForm({ defaults, onSuccess }: HotelSearchFormProps) {
 
   return (
     <form onSubmit={handleSearch} className="w-full">
-      <div className="flex flex-col gap-3 md:flex-row md:flex-wrap md:items-end lg:flex-nowrap">
-        <div className="min-w-0 flex-[2] basis-full md:basis-0">
+      <div className="flex flex-wrap items-end gap-3">
+        <div className="min-w-[180px] flex-[2] basis-[220px]">
           <Input
             name="destination"
             label="Destination"
@@ -90,7 +93,7 @@ export function HotelSearchForm({ defaults, onSuccess }: HotelSearchFormProps) {
           />
         </div>
 
-        <div className="min-w-0 flex-1 basis-[calc(50%-0.375rem)] md:basis-0">
+        <div className="min-w-[140px] flex-1 basis-[140px]">
           <DatePicker
             label="Check-In"
             value={checkIn}
@@ -101,7 +104,7 @@ export function HotelSearchForm({ defaults, onSuccess }: HotelSearchFormProps) {
           />
         </div>
 
-        <div className="min-w-0 flex-1 basis-[calc(50%-0.375rem)] md:basis-0">
+        <div className="min-w-[140px] flex-1 basis-[140px]">
           <DatePicker
             label="Check-Out"
             value={checkOut}
@@ -112,7 +115,7 @@ export function HotelSearchForm({ defaults, onSuccess }: HotelSearchFormProps) {
           />
         </div>
 
-        <div className="min-w-0 w-[calc(33.333%-0.5rem)] shrink-0 md:w-[92px]">
+        <div className="w-[92px] shrink-0">
           <Select name="rooms" label="Rooms" defaultValue={String(defaults?.rooms ?? 1)}>
             {ROOM_OPTIONS.map((count) => (
               <option key={count} value={String(count)}>
@@ -122,7 +125,7 @@ export function HotelSearchForm({ defaults, onSuccess }: HotelSearchFormProps) {
           </Select>
         </div>
 
-        <div className="min-w-0 w-[calc(33.333%-0.5rem)] shrink-0 md:w-[92px]">
+        <div className="w-[92px] shrink-0">
           <Select name="adults" label="Adults" defaultValue={String(defaults?.adults ?? 2)}>
             {ADULT_OPTIONS.map((count) => (
               <option key={count} value={String(count)}>
@@ -132,7 +135,7 @@ export function HotelSearchForm({ defaults, onSuccess }: HotelSearchFormProps) {
           </Select>
         </div>
 
-        <div className="min-w-0 w-[calc(33.333%-0.5rem)] shrink-0 md:w-[92px]">
+        <div className="w-[92px] shrink-0">
           <Select name="children" label="Children" defaultValue={String(defaults?.children ?? 0)}>
             {CHILD_OPTIONS.map((count) => (
               <option key={count} value={String(count)}>
@@ -142,13 +145,13 @@ export function HotelSearchForm({ defaults, onSuccess }: HotelSearchFormProps) {
           </Select>
         </div>
 
-        <div className="w-full shrink-0 md:w-auto">
+        <div className="shrink-0">
           <Button
             type="submit"
             size="lg"
             icon={<ArrowRight size={16} />}
             iconPosition="right"
-            className="w-full px-5 md:w-auto"
+            className="w-full px-5 sm:w-auto"
           >
             Search Hotels
           </Button>
