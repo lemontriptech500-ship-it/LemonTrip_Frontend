@@ -57,7 +57,7 @@ export function GlobalChatbot() {
         method: 'POST',
         body: JSON.stringify({
           message,
-          history: nextMessages.slice(-10),
+          history: messages.slice(-10),
           conversationId,
           liveContext: { page: pathname, search: Object.fromEntries(searchParams.entries()) },
         }),
