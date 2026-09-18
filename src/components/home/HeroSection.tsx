@@ -78,9 +78,9 @@ export function HeroSection() {
         </div>
       </div>
               
-      {/* Search widget — not clipped, since it's outside the
-          overflow-hidden background wrapper above */}
-      <div className="absolute inset-x-4 bottom-[-32px] z-20 mx-auto max-w-[1100px] sm:inset-x-6 md:bottom-[-40px] lg:inset-x-8">
+      {/* The longer mobile forms need their own document flow. Floating the
+          card only from desktop prevents it from covering the hero copy. */}
+      <div className="relative z-20 mx-4 mt-8 max-w-[1100px] sm:mx-6 lg:absolute lg:inset-x-8 lg:bottom-[-40px] lg:mx-auto lg:mt-0">
         <TravelSearchWidget />
       </div>
     </section>

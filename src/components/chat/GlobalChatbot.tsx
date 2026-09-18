@@ -57,7 +57,7 @@ export function GlobalChatbot() {
         method: 'POST',
         body: JSON.stringify({
           message,
-          history: nextMessages.slice(-10),
+          history: messages.slice(-10),
           conversationId,
           liveContext: { page: pathname, search: Object.fromEntries(searchParams.entries()) },
         }),
@@ -73,7 +73,7 @@ export function GlobalChatbot() {
   }
 
   return (
-    <div className="fixed bottom-5 right-5 z-50 sm:bottom-6 sm:right-6">
+    <div className="fixed bottom-3 right-3 z-50 sm:bottom-6 sm:right-6">
       {open && (
         <section className="mb-3 flex h-[min(600px,calc(100vh-7rem))] w-[min(380px,calc(100vw-2rem))] flex-col overflow-hidden rounded-[var(--radius-xl)] border border-[var(--color-border)] bg-[var(--color-surface)] shadow-2xl" aria-label="LemonTrip travel assistant">
           <header className="flex items-center justify-between bg-[var(--color-secondary)] px-4 py-3 text-white">
@@ -95,11 +95,11 @@ export function GlobalChatbot() {
           </form>
         </section>
       )}
-      <div className="flex flex-col items-end gap-3">
-        <button type="button" onClick={() => setOpen((value) => !value)} aria-label={open ? 'Close LemonTrip Assistant' : 'Open LemonTrip Assistant'} className="flex h-14 w-14 items-center justify-center rounded-full bg-[var(--color-primary)] text-[var(--green-dark)] shadow-lg transition hover:scale-105 hover:bg-[var(--color-primary-hover)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-secondary)]">
+      <div className="flex flex-col items-end gap-2 sm:gap-3">
+        <button type="button" onClick={() => setOpen((value) => !value)} aria-label={open ? 'Close LemonTrip Assistant' : 'Open LemonTrip Assistant'} className="flex h-11 w-11 items-center justify-center rounded-full bg-[var(--color-primary)] text-[var(--green-dark)] shadow-lg transition hover:scale-105 hover:bg-[var(--color-primary-hover)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-secondary)] sm:h-14 sm:w-14">
           {open ? <X size={23} /> : <Bot size={23} />}
         </button>
-        <a href="https://wa.me/919876543210" target="_blank" rel="noreferrer" aria-label="Chat with LemonTrip on WhatsApp" title="Chat with LemonTrip on WhatsApp" className="flex h-12 w-12 items-center justify-center rounded-full bg-[#25D366] text-white shadow-lg transition hover:scale-105 hover:bg-[#1ebe5d] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-secondary)]">
+        <a href="https://wa.me/919876543210" target="_blank" rel="noreferrer" aria-label="Chat with LemonTrip on WhatsApp" title="Chat with LemonTrip on WhatsApp" className="flex h-10 w-10 items-center justify-center rounded-full bg-[#25D366] text-white shadow-lg transition hover:scale-105 hover:bg-[#1ebe5d] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-secondary)] sm:h-12 sm:w-12">
           <WhatsAppIcon />
         </a>
       </div>

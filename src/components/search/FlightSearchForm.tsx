@@ -105,6 +105,8 @@ export function FlightSearchForm() {
           viewport — one row when there's room (hero widget), two
           rows when there isn't (inside the Modify Search modal) */}
       <div className="flex flex-wrap items-end gap-3">
+      {/* All fields in one row on desktop, stacked on mobile */}
+      <div className="flex flex-col gap-3 lg:flex-row lg:items-end">
         {/* FROM */}
         <div className="min-w-[150px] flex-1 basis-[150px]">
           <label className={fieldLabelClass}>From</label>
@@ -126,10 +128,28 @@ export function FlightSearchForm() {
           type="button"
           onClick={swapCities}
           className="mb-[1px] flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-[var(--green)] text-white shadow-sm transition-colors hover:bg-[var(--green-2)]"
+        {/* Swap - visible alongside the desktop row */}
+        <button
+          type="button"
+          onClick={swapCities}
+          className="mb-[1px] hidden h-8 w-8 shrink-0 items-center justify-center rounded-full bg-[var(--green)] text-white shadow-sm transition-colors hover:bg-[var(--green-2)] lg:flex"
           aria-label="Swap cities"
         >
           <ArrowRightLeft size={14} />
         </button>
+
+
+        {/* Stacked-layout swap, used on phones and tablets */}
+        <div className="flex items-center justify-center lg:hidden">
+          <button
+            type="button"
+            onClick={swapCities}
+            className="flex h-8 w-8 items-center justify-center rounded-full bg-[var(--green)] text-white shadow-sm transition-colors hover:bg-[var(--green-2)]"
+            aria-label="Swap cities"
+          >
+            <ArrowRightLeft size={14} />
+          </button>
+        </div>
 
         {/* TO */}
         <div className="min-w-[150px] flex-1 basis-[150px]">
@@ -193,6 +213,7 @@ export function FlightSearchForm() {
         <button
           type="submit"
           className="flex h-11 shrink-0 items-center justify-center gap-1.5 rounded-[10px] bg-[var(--color-primary)] px-5 text-sm font-bold text-[var(--green-dark)] transition-colors hover:bg-[var(--color-primary-hover)] sm:w-auto"
+          className="flex h-11 w-full shrink-0 items-center justify-center gap-1.5 rounded-[10px] bg-[var(--color-primary)] px-5 text-sm font-bold text-[var(--green-dark)] transition-colors hover:bg-[var(--color-primary-hover)] lg:w-auto"
         >
           Search Flights
           <ArrowRight size={15} />
