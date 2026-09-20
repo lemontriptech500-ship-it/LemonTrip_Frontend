@@ -83,10 +83,10 @@ export function Modal({
         ref={modalRef}
         tabIndex={-1}
         className={cn(
-          'relative flex w-full flex-col bg-[var(--color-surface)] shadow-xl sm:rounded-[var(--radius-xl)]',
+          'relative flex w-[calc(100%-1rem)] max-w-[calc(100%-1rem)] flex-col bg-[var(--color-surface)] shadow-xl sm:w-full sm:max-w-none sm:rounded-[var(--radius-xl)]',
           'animate-in fade-in zoom-in-95 duration-200',
           sizeClasses[size],
-          size === 'full' ? 'h-full rounded-none sm:rounded-none' : 'max-h-[90vh]',
+          size === 'full' ? 'h-[calc(100%-1rem)] rounded-none sm:h-full sm:rounded-none' : 'max-h-[calc(100vh-1rem)]',
           className
         )}
       >
@@ -114,7 +114,7 @@ export function Modal({
         )}
 
         {/* Content */}
-        <div className="flex-1 overflow-y-auto px-6 py-4">
+        <div className="min-h-0 flex-1 overflow-y-auto px-4 py-4 sm:px-6">
           {children}
         </div>
 

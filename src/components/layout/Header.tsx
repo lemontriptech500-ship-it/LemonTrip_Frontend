@@ -74,59 +74,61 @@ export function Header() {
         </Container>
       </div>
 
-      <div className="border-b border-[#e7efe9] bg-white/[.98] text-[var(--ink)] backdrop-blur-sm">
+      <div className="border-b border-[#e7efe9] bg-white/[.98] text-[var(--ink)]">
         <Container
           as="div"
-          className="flex h-[60px] items-center justify-between gap-3 sm:h-[80px] sm:gap-5 lg:h-[75px] lg:gap-6"
+          className="flex h-[60px] items-center justify-between gap-1.5 sm:h-[80px] sm:gap-5 lg:h-[75px] lg:gap-6"
         >
           {/* Logo — no more boxed background, just the mark on white,
               sized up slightly so it carries the same visual weight
               as the reference's wordmark + tagline lockup. */}
           <Link
             href="/"
-            className="relative inline-flex h-[42px] w-[140px] shrink-0 items-center sm:h-[52px] sm:w-[168px] lg:h-[62px] lg:w-[196px]"
+            className="relative inline-flex h-[38px] w-[112px] shrink-0 items-center sm:h-[52px] sm:w-[168px] lg:h-[62px] lg:w-[196px]"
             aria-label={`${SITE_NAME} — Go to homepage`}
           >
             <Image
               src="/lemonTripLogo.jpeg"
               alt={`${SITE_NAME} Logo`}
               fill
-              sizes="(max-width: 640px) 140px, (max-width: 1024px) 168px, 196px"
+              sizes="(max-width: 640px) 112px, (max-width: 1024px) 168px, 196px"
               className="object-contain object-left"
               priority
             />
           </Link>
 
           <DesktopNavigation />
-          <AccountEntry />
+          <div className="flex shrink-0 items-center gap-2 sm:gap-3">
+            <AccountEntry />
 
-          <Link
-            href="/wishlist"
-            aria-label={`Open wishlist${wishlistCount > 0 ? `, ${wishlistCount} item${wishlistCount === 1 ? '' : 's'}` : ''}`}
-            className="relative inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-[var(--color-border)] bg-white text-[var(--green)] transition hover:border-[var(--green)] hover:bg-[var(--green)] hover:text-[var(--yellow)]"
-          >
-            <Heart size={18} aria-hidden="true" />
-            {wishlistCount > 0 && (
-              <span className="absolute -right-1 -top-1 flex h-4 min-w-4 items-center justify-center rounded-full bg-[var(--yellow)] px-1 text-[10px] font-bold leading-none text-[var(--green-dark)]">
-                {wishlistCount > 99 ? '99+' : wishlistCount}
-              </span>
-            )}
-          </Link>
+            <Link
+              href="/wishlist"
+              aria-label={`Open wishlist${wishlistCount > 0 ? `, ${wishlistCount} item${wishlistCount === 1 ? '' : 's'}` : ''}`}
+              className="relative inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-[var(--color-border)] bg-white text-[var(--green)] transition hover:border-[var(--green)] hover:bg-[var(--green)] hover:text-[var(--yellow)]"
+            >
+              <Heart size={18} aria-hidden="true" />
+              {wishlistCount > 0 && (
+                <span className="absolute -right-1 -top-1 flex h-4 min-w-4 items-center justify-center rounded-full bg-[var(--yellow)] px-1 text-[10px] font-bold leading-none text-[var(--green-dark)]">
+                  {wishlistCount > 99 ? '99+' : wishlistCount}
+                </span>
+              )}
+            </Link>
 
-          <button
-            type="button"
-            onClick={toggleCart}
-            aria-label={`Open cart${cartCount > 0 ? `, ${cartCount} item${cartCount === 1 ? '' : 's'}` : ''}`}
-            className="relative inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-[var(--color-border)] bg-white text-[var(--green)] transition hover:border-[var(--green)] hover:bg-[var(--green)] hover:text-[var(--yellow)]"
-          >
-            <ShoppingBag size={18} aria-hidden="true" />
-            {cartCount > 0 && (
-              <span className="absolute -right-1 -top-1 flex h-4 min-w-4 items-center justify-center rounded-full bg-[var(--yellow)] px-1 text-[10px] font-bold leading-none text-[var(--green-dark)]">
-                {cartCount > 99 ? '99+' : cartCount}
-              </span>
-            )}
-          </button>
-          <MobileNavigation />
+            <button
+              type="button"
+              onClick={toggleCart}
+              aria-label={`Open cart${cartCount > 0 ? `, ${cartCount} item${cartCount === 1 ? '' : 's'}` : ''}`}
+              className="relative inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-[var(--color-border)] bg-white text-[var(--green)] transition hover:border-[var(--green)] hover:bg-[var(--green)] hover:text-[var(--yellow)]"
+            >
+              <ShoppingBag size={18} aria-hidden="true" />
+              {cartCount > 0 && (
+                <span className="absolute -right-1 -top-1 flex h-4 min-w-4 items-center justify-center rounded-full bg-[var(--yellow)] px-1 text-[10px] font-bold leading-none text-[var(--green-dark)]">
+                  {cartCount > 99 ? '99+' : cartCount}
+                </span>
+              )}
+            </button>
+            <MobileNavigation />
+          </div>
         </Container>
       </div>
     </header>

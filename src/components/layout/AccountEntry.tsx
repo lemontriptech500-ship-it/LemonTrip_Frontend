@@ -30,12 +30,12 @@ export function AccountEntry() {
 
   // Avoid a flash of the wrong state before the persisted store rehydrates
   if (!hasHydrated) {
-    return <div className="hidden h-9 w-[76px] lg:block xl:h-10" aria-hidden="true" />
+    return <div className="hidden h-9 w-[76px] xl:block xl:h-10" aria-hidden="true" />
   }
 
   if (!isAuthenticated || !user) {
     return (
-      <div className="hidden items-center gap-2 lg:flex xl:gap-3">
+      <div className="hidden items-center gap-2 xl:flex xl:gap-3">
         <Link
           href="/login"
           className="inline-flex h-9 shrink-0 items-center justify-center whitespace-nowrap rounded-[10px] border border-[var(--green)] bg-white px-3 text-sm font-bold text-[var(--green)] transition hover:bg-[var(--green)] hover:text-white xl:h-10 xl:px-5"
@@ -53,7 +53,7 @@ export function AccountEntry() {
   }
 
   return (
-    <div className="relative hidden lg:block" ref={containerRef}>
+    <div className="relative hidden xl:block" ref={containerRef}>
       <button
         type="button"
         onClick={() => setIsOpen((current) => !current)}

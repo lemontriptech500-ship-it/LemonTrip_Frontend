@@ -124,6 +124,7 @@
     box-sizing: border-box;
     margin: 0;
     padding: 0;
+    min-width: 0;
   }
 
   html {
@@ -150,6 +151,7 @@
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     overflow-x: clip;
+    overflow-wrap: anywhere;
   }
 
   img, video {

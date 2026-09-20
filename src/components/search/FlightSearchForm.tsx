@@ -69,7 +69,7 @@ export function FlightSearchForm() {
     setToCity(fromCity)
   }
 
-  const fieldLabelClass = 'mb-1 block text-[11px] font-medium uppercase tracking-wide text-[var(--color-text-muted)] whitespace-nowrap'
+  const fieldLabelClass = 'mb-1 block text-[11px] font-medium uppercase tracking-wide text-[var(--color-text-muted)]'
   const fieldInputClass =
     'w-full h-11 pl-8 pr-2 rounded-[10px] border border-[var(--color-border)] bg-white text-sm text-[var(--color-text-primary)] placeholder:text-[var(--color-text-muted)] focus:outline-none focus:border-[var(--green)] transition-colors'
 
@@ -106,7 +106,7 @@ export function FlightSearchForm() {
           rows when there isn't (inside the Modify Search modal) */}
       <div className="flex flex-wrap items-end gap-3">
         {/* FROM */}
-        <div className="min-w-[150px] flex-1 basis-[150px]">
+        <div className="min-w-0 flex-1 basis-full sm:min-w-[150px] sm:basis-[150px]">
           <label className={fieldLabelClass}>From</label>
           <div className="relative">
             <Plane size={14} className="pointer-events-none absolute left-2.5 top-1/2 -translate-y-1/2 text-[var(--green)]" />
@@ -132,7 +132,7 @@ export function FlightSearchForm() {
         </button>
 
         {/* TO */}
-        <div className="min-w-[150px] flex-1 basis-[150px]">
+        <div className="min-w-0 flex-1 basis-full sm:min-w-[150px] sm:basis-[150px]">
           <label className={fieldLabelClass}>To</label>
           <div className="relative">
             <MapPin size={14} className="pointer-events-none absolute left-2.5 top-1/2 -translate-y-1/2 text-[var(--green)]" />
@@ -148,7 +148,7 @@ export function FlightSearchForm() {
         </div>
 
         {/* DEPARTURE */}
-        <div className="min-w-[140px] flex-1 basis-[140px]">
+        <div className="min-w-0 flex-1 basis-full sm:min-w-[140px] sm:basis-[140px]">
           <label className={fieldLabelClass}>Departure</label>
           <DatePicker
             value={departureDate}
@@ -160,7 +160,7 @@ export function FlightSearchForm() {
         </div>
 
         {/* RETURN */}
-        <div className="min-w-[140px] flex-1 basis-[140px]">
+        <div className="min-w-0 flex-1 basis-full sm:min-w-[140px] sm:basis-[140px]">
           <label className={fieldLabelClass}>Return</label>
           <DatePicker
             value={returnDate}
@@ -173,7 +173,7 @@ export function FlightSearchForm() {
         </div>
 
         {/* TRAVELLERS & CLASS */}
-        <div className="min-w-[150px] flex-1 basis-[150px]">
+        <div className="min-w-0 flex-1 basis-full sm:min-w-[150px] sm:basis-[150px]">
           <label className={fieldLabelClass}>Travellers &amp; Class</label>
           <div className="relative">
             <select

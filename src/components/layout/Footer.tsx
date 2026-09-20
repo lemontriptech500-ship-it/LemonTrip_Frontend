@@ -88,7 +88,7 @@ export function Footer() {
                 <li>
                   <Link
                     href="/contact"
-                    className="group inline-flex items-center gap-1 text-sm text-[rgba(253,254,255,0.85)] hover:text-[var(--color-primary)] transition-colors"
+                    className="group inline-flex max-w-full items-center gap-1 break-words text-sm text-[rgba(253,254,255,0.85)] hover:text-[var(--color-primary)] transition-colors"
                   >
                     <span className="border-b border-transparent group-hover:border-[var(--color-primary)] transition-all">
                       Contact Us
@@ -98,7 +98,7 @@ export function Footer() {
                 <li>
                   <a
                     href="mailto:lemontripindia@gmail.com"
-                    className="group inline-flex items-center gap-1 text-sm text-[rgba(253,254,255,0.85)] hover:text-[var(--color-primary)] transition-colors"
+                    className="group inline-flex max-w-full items-center gap-1 break-words text-sm text-[rgba(253,254,255,0.85)] hover:text-[var(--color-primary)] transition-colors"
                   >
                     <span className="border-b border-transparent group-hover:border-[var(--color-primary)] transition-all">
                       lemontripindia@gmail.com
@@ -108,7 +108,7 @@ export function Footer() {
                 <li>
                   <a
                     href="https://wa.me/919812042030"
-                    className="group inline-flex items-center gap-1 text-sm text-[rgba(253,254,255,0.85)] hover:text-[var(--color-primary)] transition-colors"
+                    className="group inline-flex max-w-full items-center gap-1 break-words text-sm text-[rgba(253,254,255,0.85)] hover:text-[var(--color-primary)] transition-colors"
                   >
                     <span className="border-b border-transparent group-hover:border-[var(--color-primary)] transition-all">
                       WhatsApp Us

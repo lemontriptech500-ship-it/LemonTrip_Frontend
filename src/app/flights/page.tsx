@@ -136,7 +136,7 @@ function FlightResultsContent() {
 
       {isMobileFiltersOpen && (
         <div className="fixed inset-0 z-[100] flex bg-[rgba(44,62,80,0.50)] backdrop-blur-sm lg:hidden animate-in fade-in">
-          <div className="absolute right-0 top-0 bottom-0 w-[300px] bg-[var(--color-surface)] shadow-2xl overflow-y-auto animate-in slide-in-from-right">
+          <div className="absolute right-0 top-0 bottom-0 w-[min(300px,calc(100vw-1rem))] bg-[var(--color-surface)] shadow-2xl overflow-y-auto animate-in slide-in-from-right">
             <div className="p-4 border-b border-[var(--color-border)] flex items-center justify-between sticky top-0 bg-[var(--color-surface)] z-10">
               <h2 className="font-bold text-lg text-[var(--color-text-primary)]">Filters</h2>
               <Button variant="ghost" size="sm" onClick={() => setIsMobileFiltersOpen(false)}>Close</Button>

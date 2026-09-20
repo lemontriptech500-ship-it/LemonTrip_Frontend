@@ -67,7 +67,7 @@ export function BookingProgress({
                 {isCompleted ? <Check size={16} /> : (index + 1)}
               </div>
               <span className={cn(
-                "text-xs font-medium absolute -bottom-6 whitespace-nowrap",
+                "max-w-[4.5rem] text-center text-[10px] font-medium leading-tight sm:max-w-none sm:whitespace-nowrap sm:text-xs",
                 isCompleted ? "text-[var(--color-text-primary)]" :
                 isActive ? "text-[var(--color-primary)]" :
                 "text-[var(--color-text-muted)]"

@@ -82,7 +82,7 @@ export function HotelSearchForm({ defaults, onSuccess }: HotelSearchFormProps) {
   return (
     <form onSubmit={handleSearch} className="w-full">
       <div className="flex flex-wrap items-end gap-3">
-        <div className="min-w-[180px] flex-[2] basis-[220px]">
+        <div className="min-w-0 flex-[2] basis-full sm:min-w-[180px] sm:basis-[220px]">
           <Input
             name="destination"
             label="Destination"
@@ -93,7 +93,7 @@ export function HotelSearchForm({ defaults, onSuccess }: HotelSearchFormProps) {
           />
         </div>
 
-        <div className="min-w-[140px] flex-1 basis-[140px]">
+        <div className="min-w-0 flex-1 basis-full sm:min-w-[140px] sm:basis-[140px]">
           <DatePicker
             label="Check-In"
             value={checkIn}
@@ -104,7 +104,7 @@ export function HotelSearchForm({ defaults, onSuccess }: HotelSearchFormProps) {
           />
         </div>
 
-        <div className="min-w-[140px] flex-1 basis-[140px]">
+        <div className="min-w-0 flex-1 basis-full sm:min-w-[140px] sm:basis-[140px]">
           <DatePicker
             label="Check-Out"
             value={checkOut}
@@ -115,7 +115,7 @@ export function HotelSearchForm({ defaults, onSuccess }: HotelSearchFormProps) {
           />
         </div>
 
-        <div className="w-[92px] shrink-0">
+        <div className="w-full shrink-0 sm:w-[92px]">
           <Select name="rooms" label="Rooms" defaultValue={String(defaults?.rooms ?? 1)}>
             {ROOM_OPTIONS.map((count) => (
               <option key={count} value={String(count)}>
@@ -125,7 +125,7 @@ export function HotelSearchForm({ defaults, onSuccess }: HotelSearchFormProps) {
           </Select>
         </div>
 
-        <div className="w-[92px] shrink-0">
+        <div className="w-full shrink-0 sm:w-[92px]">
           <Select name="adults" label="Adults" defaultValue={String(defaults?.adults ?? 2)}>
             {ADULT_OPTIONS.map((count) => (
               <option key={count} value={String(count)}>
@@ -135,7 +135,7 @@ export function HotelSearchForm({ defaults, onSuccess }: HotelSearchFormProps) {
           </Select>
         </div>
 
-        <div className="w-[92px] shrink-0">
+        <div className="w-full shrink-0 sm:w-[92px]">
           <Select name="children" label="Children" defaultValue={String(defaults?.children ?? 0)}>
             {CHILD_OPTIONS.map((count) => (
               <option key={count} value={String(count)}>

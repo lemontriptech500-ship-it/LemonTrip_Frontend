@@ -26,7 +26,7 @@ export function MobileNavigation() {
   }, [isOpen])
 
   return (
-    <div className="lg:hidden flex items-center">
+    <div className="flex items-center xl:hidden">
       <Button
         variant="ghost"
         size="sm"

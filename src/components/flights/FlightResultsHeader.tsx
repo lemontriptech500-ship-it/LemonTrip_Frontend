@@ -29,13 +29,13 @@ export function FlightResultsHeader({
       </div>
 
       <div className="w-full sm:w-auto flex items-center gap-3">
-        <label className="text-sm font-medium text-[var(--color-text-secondary)] whitespace-nowrap">
+        <label className="shrink-0 text-sm font-medium text-[var(--color-text-secondary)] whitespace-nowrap">
           Sort by:
         </label>
         <Select 
           value={sortOption} 
           onChange={(e) => onSortChange(e.target.value as SortOption)}
-          className="min-w-[180px]"
+          className="min-w-0 flex-1 sm:min-w-[180px] sm:flex-none"
         >
           <option value="recommended">Recommended</option>
           <option value="price_asc">Lowest Price</option>
