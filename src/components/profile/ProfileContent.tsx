@@ -38,6 +38,8 @@ export default function ProfileContent() {
   const [error, setError] = useState('')
   const [isSaving, setIsSaving] = useState(false)
   const [recentBookings, setRecentBookings] = useState<Booking[]>([])
+  const [travelUpdates, setTravelUpdates] = useState(true)
+  const [priceAlerts, setPriceAlerts] = useState(false)
 
   useEffect(() => {
     if (user) setName(user.name)
@@ -137,6 +139,8 @@ export default function ProfileContent() {
 
             <Card className="p-5 sm:p-6"><div className="mb-5 flex items-center justify-between gap-3"><div><p className="text-label text-[var(--color-primary-dark)]">Your journey</p><h2 className="mt-1 text-h3">Recent Bookings</h2></div><Button variant="ghost" size="sm" asChild icon={<ArrowUpRight size={15} />} iconPosition="right"><Link href="/bookings">View all</Link></Button></div>{recentBookings.length === 0 ? <div className="rounded-[var(--radius-md)] bg-[var(--color-surface-secondary)] p-5"><p className="font-medium text-[var(--color-text-primary)]">Your next adventure starts here.</p><p className="mt-1 text-sm text-[var(--color-text-muted)]">Confirmed bookings will appear here after payment.</p><Button className="mt-4" size="sm" asChild><Link href="/flights">Explore flights</Link></Button></div> : <div className="space-y-3">{recentBookings.map((booking) => <div key={booking.id} className="flex flex-col gap-2 rounded-[var(--radius-md)] border border-[var(--color-border)] p-4 sm:flex-row sm:items-center sm:justify-between"><div><p className="font-medium capitalize text-[var(--color-text-primary)]">{booking.type} booking</p><p className="mt-1 text-xs text-[var(--color-text-muted)]">{booking.bookingReference || booking.id}</p></div><p className="font-semibold text-[var(--color-text-primary)]">₹{booking.amount.toLocaleString('en-IN')}</p></div>)}</div>}</Card>
 
+            <Card id="settings" className="scroll-mt-24 p-5 sm:p-6"><div className="mb-5"><p className="text-label text-[var(--color-primary-dark)]">Preferences</p><h2 className="mt-1 text-h3">Settings</h2><p className="mt-2 text-sm text-[var(--color-text-secondary)]">Choose which updates you would like to receive from LemonTrip.</p></div><div className="divide-y divide-[var(--color-border-light)] rounded-[var(--radius-md)] border border-[var(--color-border)]"><PreferenceRow label="Travel updates" description="Booking reminders and important itinerary changes." checked={travelUpdates} onChange={setTravelUpdates} /><PreferenceRow label="Price alerts" description="Let me know when selected travel prices change." checked={priceAlerts} onChange={setPriceAlerts} /></div></Card>
+
             <Card className="p-5 sm:p-6"><div className="mb-5"><p className="text-label text-[var(--color-primary-dark)]">Shortcuts</p><h2 className="mt-1 text-h3">Quick Actions</h2></div><div className="grid grid-cols-2 gap-3 sm:grid-cols-4"><QuickAction icon={<Calendar size={20} />} label="Book Flight" href="/flights" /><QuickAction icon={<ShoppingBag size={20} />} label="My Trips" href="/bookings" /><QuickAction icon={<Wallet size={20} />} label="Wallet" href="/wallet" /><QuickAction icon={<Settings size={20} />} label="Settings" href="/profile#settings" /></div></Card>
           </div>
         </div>
@@ -151,6 +155,10 @@ function Info({ icon, label, value }: { icon: ReactNode; label: string; value: s
 
 function Stat({ icon, label, value }: { icon: ReactNode; label: string; value: string }) {
   return <div className="flex min-w-0 items-center gap-3 rounded-[var(--radius-md)] border border-[var(--color-border)] bg-[var(--color-surface)] p-3 sm:p-4"><div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-[var(--color-primary-soft)] text-[var(--color-primary-dark)]">{icon}</div><div className="min-w-0"><p className="text-caption text-[var(--color-text-muted)]">{label}</p><p className="truncate text-sm font-bold text-[var(--color-text-primary)]">{value}</p></div></div>
+}
+
+function PreferenceRow({ label, description, checked, onChange }: { label: string; description: string; checked: boolean; onChange: (value: boolean) => void }) {
+  return <label className="flex cursor-pointer items-start justify-between gap-4 p-4 transition hover:bg-[var(--color-surface-secondary)]"><span><span className="block text-sm font-semibold text-[var(--color-text-primary)]">{label}</span><span className="mt-1 block text-xs leading-relaxed text-[var(--color-text-muted)]">{description}</span></span><input type="checkbox" checked={checked} onChange={(event) => onChange(event.target.checked)} className="mt-1 h-4 w-4 shrink-0 accent-[var(--green)]" /></label>
 }
 
 function SidebarLink({ icon, label, active = false, href }: { icon: ReactNode; label: string; active?: boolean; href?: string }) {

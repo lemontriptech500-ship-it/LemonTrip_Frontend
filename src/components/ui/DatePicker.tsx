@@ -140,6 +140,7 @@ export function DatePicker({
   const monthNames = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']
   const dayNames = ['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa']
   const isDarkGreen = theme === 'dark-green'
+  const canSelectToday = !minDate || formatDate(new Date()) >= minDate
 
   const displayValue = value ? parseDate(value).toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric' }) : ''
 
@@ -250,7 +251,8 @@ export function DatePicker({
                   onChange?.(formatDate(new Date()))
                   setIsOpen(false)
                 }}
-                className="w-full py-2 text-sm font-medium text-[var(--color-primary)] hover:bg-[var(--color-primary-soft)] rounded-[var(--radius-sm)] transition-colors"
+                disabled={!canSelectToday}
+                className="w-full rounded-[var(--radius-sm)] py-2 text-sm font-medium text-[var(--color-primary)] transition-colors hover:bg-[var(--color-primary-soft)] disabled:cursor-not-allowed disabled:opacity-40"
               >
                 Today
               </button>
