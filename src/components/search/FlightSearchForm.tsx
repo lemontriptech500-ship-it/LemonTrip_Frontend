@@ -41,6 +41,16 @@ export function FlightSearchForm() {
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault()
 
+    if (!departureDate) {
+      alert('Please select a departure date.')
+      return
+    }
+
+    if (tripType === 'roundtrip' && !returnDate) {
+      alert('Please select a return date.')
+      return
+    }
+
     if (fromCity && toCity && fromCity.trim().toLowerCase() === toCity.trim().toLowerCase()) {
       alert("Origin and destination cannot be the same.")
       return

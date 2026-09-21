@@ -28,6 +28,20 @@ const welcomeMessage: ChatMessage = {
   content: 'Hi, I am LemonTrip support. Ask me about trips, bookings, visas, destinations, or how to use LemonTrip.',
 }
 
+function formatAssistantMessage(content: string): string {
+  return content
+    .replace(/<br\s*\/?>/gi, '\n')
+    .replace(/<[^>]+>/g, '')
+    .replace(/^\s{0,3}#{1,6}\s*/gm, '')
+    .replace(/\*\*(.*?)\*\*/g, '$1')
+    .replace(/__(.*?)__/g, '$1')
+    .replace(/^\s*[-*_]{3,}\s*$/gm, '')
+    .replace(/\|/g, '  ')
+    .replace(/[ \t]{2,}/g, ' ')
+    .replace(/\n{3,}/g, '\n\n')
+    .trim()
+}
+
 export function GlobalChatbot() {
   const [open, setOpen] = useState(false)
   const [input, setInput] = useState('')
@@ -84,7 +98,7 @@ export function GlobalChatbot() {
             <button type="button" onClick={() => setOpen(false)} className="rounded-full p-2 hover:bg-white/10" aria-label="Close chat"><X size={18} /></button>
           </header>
           <div className="flex-1 space-y-3 overflow-y-auto bg-[var(--color-background)] p-4" aria-live="polite">
-            {messages.map((message, index) => <div key={`${message.role}-${index}`} className={`flex ${message.role === 'user' ? 'justify-end' : 'justify-start'}`}><p className={`max-w-[85%] whitespace-pre-wrap rounded-2xl px-3 py-2 text-sm ${message.role === 'user' ? 'rounded-br-sm bg-[var(--color-secondary)] text-white' : 'rounded-bl-sm border border-[var(--color-border)] bg-[var(--color-surface)] text-[var(--color-text-primary)]'}`}>{message.content}</p></div>)}
+            {messages.map((message, index) => <div key={`${message.role}-${index}`} className={`flex ${message.role === 'user' ? 'justify-end' : 'justify-start'}`}><p className={`max-w-[85%] whitespace-pre-wrap rounded-2xl px-3 py-2 text-sm leading-relaxed ${message.role === 'user' ? 'rounded-br-sm bg-[var(--color-secondary)] text-white' : 'rounded-bl-sm border border-[var(--color-border)] bg-[var(--color-surface)] text-[var(--color-text-primary)]'}`}>{message.role === 'assistant' ? formatAssistantMessage(message.content) : message.content}</p></div>)}
             {loading && <div className="flex items-center gap-2 text-sm text-[var(--color-text-secondary)]"><Loader2 size={15} className="animate-spin" />Thinking...</div>}
             {error && <p className="text-xs text-[var(--color-error)]">{error}</p>}
             <div ref={endRef} />

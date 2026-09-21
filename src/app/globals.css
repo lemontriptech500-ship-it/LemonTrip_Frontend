@@ -178,6 +178,16 @@
     background-color: var(--color-primary-soft);
     color: var(--color-text-primary);
   }
+
+  /* Page titles use the same editorial serif as the homepage hero. The
+     display utility remains responsible for the larger hero treatment. */
+  h1:not(.text-display) {
+    font-family: var(--font-playfair), Georgia, serif;
+    font-size: clamp(2.15rem, 4vw, 3.5rem);
+    font-weight: 700;
+    line-height: 1.08;
+    letter-spacing: -0.015em;
+  }
 }
 
 /* ============================================================
