@@ -3,6 +3,8 @@ import { Plus_Jakarta_Sans, Montserrat, Playfair_Display } from 'next/font/googl
 import { AppShell } from '@/components/layout'
 import { SITE_NAME } from '@/constants'
 import './globals.css'
+import ClarityInit from '@/components/ClarityInit';
+
 
 // ============================================================
 // Fonts loaded via next/font for zero-layout-shift.
@@ -12,6 +14,7 @@ import './globals.css'
 //                         this is what gives the "professional / editorial"
 //                         look from the reference index.html
 // ============================================================
+
 const jakarta = Plus_Jakarta_Sans({
   subsets: ['latin'],
   variable: '--font-jakarta',
@@ -99,6 +102,7 @@ export default function RootLayout({
       data-scroll-behavior="smooth"
     >
       <body suppressHydrationWarning>
+      <ClarityInit />
         <AppShell>{children}</AppShell>
       </body>
     </html>
