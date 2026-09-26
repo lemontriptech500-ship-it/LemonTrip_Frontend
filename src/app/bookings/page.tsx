@@ -1,19 +1,31 @@
 'use client'
 
 import { useEffect, useState } from 'react'
-import { Plane, Bus, Hotel, TrainFront, Package, FileText } from 'lucide-react'
-import { Container, Card, Badge } from '@/components/ui'
+import { CalendarDays, ChevronRight, ReceiptText, Plane, Bus, Hotel, TrainFront, Package, FileText } from 'lucide-react'
+import { Container, Card, Badge, Button } from '@/components/ui'
 import { getUserBookings, type Booking } from '@/services/bookingService'
+import { formatCurrency } from '@/lib/utils'
 
-function formatDate(iso: string) {
-  const d = new Date(iso)
-  if (isNaN(d.getTime())) return iso
-  return d.toLocaleDateString('en-IN', { day: '2-digit', month: 'short', year: 'numeric' })
+function formatBookingDate(value: string) {
+  const date = new Date(value)
+  if (Number.isNaN(date.getTime())) return 'Date unavailable'
+
+  return new Intl.DateTimeFormat('en-IN', {
+    day: '2-digit',
+    month: 'short',
+    year: 'numeric',
+  }).format(date)
 }
 
-function formatReference(booking: Booking) {
+function getBookingReference(booking: Booking) {
   if (booking.bookingReference) return booking.bookingReference
   return `LT-${booking.id.replace(/-/g, '').slice(0, 8).toUpperCase()}`
+}
+
+function getStatusVariant(status: Booking['status']) {
+  if (status === 'confirmed' || status === 'completed') return 'success' as const
+  if (status === 'cancelled') return 'error' as const
+  return 'warning' as const
 }
 
 const TYPE_META: Record<Booking['type'], { label: string; icon: typeof Plane; className: string }> = {
@@ -38,44 +50,60 @@ export default function BookingsPage() {
   }, [])
 
   return (
-    <div className="section-gap bg-[var(--color-background)]">
+    <div className="section-gap min-h-screen bg-[var(--color-background)]">
       <Container>
-        <h1 className="text-h1">My Bookings</h1>
-        {loading && <p className="mt-6 text-sm text-[var(--color-text-muted)]">Loading bookings...</p>}
-        {error && <p className="mt-6 text-sm text-[var(--color-error)]">{error}</p>}
-        {!loading && !error && bookings.length === 0 && (
-          <p className="mt-6 text-sm text-[var(--color-text-muted)]">No bookings found.</p>
-        )}
-        <div className="mt-6 space-y-4">
-          {bookings.map((booking) => {
-            const meta = TYPE_META[booking.type]
-            const Icon = meta?.icon ?? Package
-            return (
-              <Card key={booking.id} className="flex items-center justify-between gap-4 p-5">
-                <div className="flex items-start gap-4">
-                  <div className={`mt-1 flex h-9 w-9 shrink-0 items-center justify-center rounded-full ${meta?.className ?? 'bg-slate-50 text-slate-700'}`}>
-                    <Icon size={18} />
-                  </div>
-                  <div>
-                    <div className="flex items-center gap-2">
-                      <span className="text-xs font-semibold uppercase tracking-wide text-[var(--color-text-muted)]">
-                        {meta?.label ?? booking.type}
-                      </span>
-                    </div>
-                    <h2 className="font-semibold">{booking.title}</h2>
-                    <p className="mt-1 text-sm text-[var(--color-text-muted)]">
-                      {formatDate(booking.date)} · {formatReference(booking)}
-                    </p>
-                  </div>
-                </div>
-                <div className="text-right">
-                  <Badge variant={booking.status === 'confirmed' ? 'success' : 'warning'}>{booking.status}</Badge>
-                  <p className="mt-1 font-semibold">₹{booking.amount.toLocaleString('en-IN')}</p>
-                </div>
-              </Card>
-            )
-          })}
+        <div className="flex flex-col gap-2 border-b border-[var(--color-border-light)] pb-6 sm:flex-row sm:items-end sm:justify-between">
+          <div>
+            <p className="text-sm font-semibold uppercase tracking-[0.16em] text-[var(--color-primary)]">Your travel activity</p>
+            <h1 className="mt-2 text-h1 text-[var(--color-text-primary)]">My bookings</h1>
+            <p className="mt-2 max-w-xl text-sm text-[var(--color-text-secondary)]">Review your trips, payment status, and booking references in one place.</p>
+          </div>
+          {!loading && !error && bookings.length > 0 && <p className="text-sm text-[var(--color-text-muted)]">{bookings.length} booking{bookings.length === 1 ? '' : 's'}</p>}
         </div>
+
+        {loading && <p className="mt-8 text-sm text-[var(--color-text-muted)]">Loading bookings...</p>}
+        {error && <p className="mt-8 text-sm text-[var(--color-error)]">{error}</p>}
+        {!loading && !error && bookings.length === 0 && <p className="mt-8 text-sm text-[var(--color-text-muted)]">No bookings found.</p>}
+
+        {!loading && !error && bookings.length > 0 && (
+          <div className="mt-8 space-y-4">
+            {bookings.map((booking) => {
+              const meta = TYPE_META[booking.type]
+              const Icon = meta?.icon ?? Package
+              return (
+                <Card key={booking.id} className="overflow-hidden p-0">
+                  <div className="flex flex-col gap-5 p-5 sm:flex-row sm:items-center sm:justify-between sm:p-6">
+                    <div className="flex min-w-0 items-start gap-4">
+                      <div className={`mt-1 flex h-9 w-9 shrink-0 items-center justify-center rounded-full ${meta?.className ?? 'bg-slate-50 text-slate-700'}`}>
+                        <Icon size={18} aria-hidden="true" />
+                      </div>
+                      <div className="min-w-0">
+                        <div className="flex flex-wrap items-center gap-2">
+                          <Badge variant="neutral">{meta?.label ?? booking.type}</Badge>
+                          <Badge variant={getStatusVariant(booking.status)}>{booking.status}</Badge>
+                        </div>
+                        <h2 className="mt-3 truncate text-lg font-semibold text-[var(--color-text-primary)]">{booking.title}</h2>
+                        <div className="mt-3 flex flex-col gap-2 text-sm text-[var(--color-text-secondary)] sm:flex-row sm:flex-wrap sm:gap-x-5">
+                          <span className="inline-flex items-center gap-2"><CalendarDays size={16} aria-hidden="true" />Booked on {formatBookingDate(booking.date)}</span>
+                          <span className="inline-flex items-center gap-2"><ReceiptText size={16} aria-hidden="true" />Reference: <strong className="font-mono text-[var(--color-text-primary)]">{getBookingReference(booking)}</strong></span>
+                        </div>
+                      </div>
+                    </div>
+                    <div className="flex items-center justify-between gap-5 border-t border-[var(--color-border-light)] pt-4 sm:min-w-40 sm:flex-col sm:items-end sm:border-t-0 sm:pt-0">
+                      <div className="sm:text-right">
+                        <p className="text-xs uppercase tracking-wide text-[var(--color-text-muted)]">Total paid</p>
+                        <p className="mt-1 text-lg font-bold text-[var(--color-text-primary)]">{formatCurrency(booking.amount)}</p>
+                      </div>
+                      <Button variant="outline" size="sm" icon={<ChevronRight size={16} />} aria-label={`View ${booking.title}`}>
+                        View details
+                      </Button>
+                    </div>
+                  </div>
+                </Card>
+              )
+            })}
+          </div>
+        )}
       </Container>
     </div>
   )
