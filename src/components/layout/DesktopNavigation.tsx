@@ -6,7 +6,19 @@ import { usePathname } from 'next/navigation'
 import { cn } from '@/lib/utils'
 import { NAV_ITEMS } from '@/constants'
 
-export function DesktopNavigation() {
+interface DesktopNavigationProps {
+  /** True once the page has been scrolled past the hero, meaning the
+   *  header now sits on its light glass background instead of directly
+   *  over the dark hero photo. Inactive links flip from white (readable
+   *  over the photo) to the original dark ink (readable over the light
+   *  glass). The active link also flips text color — green while
+   *  scrolled, white while over the photo, since green-on-green was
+   *  nearly invisible against the hero image. The yellow underline
+   *  stays the same in both states. */
+  isScrolled?: boolean
+}
+
+export function DesktopNavigation({ isScrolled = true }: DesktopNavigationProps) {
   const pathname = usePathname()
   const desktopItems = NAV_ITEMS.filter((item) => !('mobileOnly' in item && item.mobileOnly))
 
@@ -26,8 +38,13 @@ export function DesktopNavigation() {
             className={cn(
               'relative shrink-0 whitespace-nowrap px-1.5 py-5 text-[11px] font-semibold transition-colors duration-200 xl:px-2.5 xl:py-6 xl:text-[13px]',
               isActive
-                ? 'text-[var(--green)] after:absolute after:bottom-[10px] after:left-1.5 after:right-1.5 after:h-[3px] after:rounded-full after:bg-[var(--yellow)] xl:after:bottom-[12px] xl:after:left-2.5 xl:after:right-2.5'
-                : 'text-[#10231a] hover:text-[var(--green)]'
+                ? cn(
+                    'after:absolute after:bottom-[10px] after:left-1.5 after:right-1.5 after:h-[3px] after:rounded-full after:bg-[var(--yellow)] xl:after:bottom-[12px] xl:after:left-2.5 xl:after:right-2.5',
+                    isScrolled ? 'text-[var(--green)]' : 'text-white'
+                  )
+                : isScrolled
+                  ? 'text-[#10231a] hover:text-[var(--green)]'
+                  : 'text-white/90 hover:text-white'
             )}
           >
             {item.label}

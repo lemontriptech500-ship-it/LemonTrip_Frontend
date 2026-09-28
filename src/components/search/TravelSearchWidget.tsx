@@ -13,27 +13,16 @@ import { cn } from '@/lib/utils'
 /**
  * TravelSearchWidget
  * ------------------------------------------------------------
- * Restyled the tab strip to match the reference: tabs now sit on
- * a dark green bar with the active tab rendered as a solid yellow
- * pill, instead of a white bar with an underline indicator.
- *
- *  - Outer card corners bumped to rounded-2xl and shadow deepened
- *    to --shadow-xl (this widget floats and overlaps the hero, so
- *    it needs a stronger shadow than an inline element would).
- *  - Removed the border-b divider between the tab strip and the
- *    form content — the green tab bar and whatever the active
- *    form renders now sit flush, like the reference's single
- *    continuous card.
- *  - Active tab: solid yellow pill, dark green text, rounded-full.
- *  - Inactive tabs: white/75 text directly on the green bar
- *    (previously #7A8793 gray on white).
- *
- * NOTE: I don't have FlightSearchForm.tsx / HotelSearchForm.tsx /
- * etc. — the reference's white field row (labeled "From / To /
- * Departure / Return / Travellers & Class" with no pill-shaped
- * inputs) lives inside those files, not here. If you want the
- * fields themselves restyled to match, share FlightSearchForm.tsx
- * and I'll do the same pass on it.
+ * Glass treatment matching the header:
+ *  - Outer card: bg-white/[0.06] + backdrop-blur-md + border-white/10
+ *    (same values as the header's glass layer).
+ *  - Nudged up with `relative -top-*` so nothing below it shifts.
+ *    Increase the value (e.g. -top-12 sm:-top-20) to move it higher.
+ *  - Tab strip: light dark-green tint (30%), still see-through.
+ *  - Form body: fully transparent so the hero photo shows through.
+ *    `[&_label]:text-white/85` turns <label> captions white. If the
+ *    FROM / TO / DEPARTURE captions are <span> or <p> in the form
+ *    components, they need changing inside those files instead.
  */
 
 const tabItems = [
@@ -50,7 +39,9 @@ export function TravelSearchWidget() {
   const activeItem = tabItems.find((item) => item.id === activeTab)
 
   return (
-<div className="mx-auto max-w-[1100px] overflow-hidden rounded-2xl bg-white shadow-[var(--shadow-xl)]">      <div className="flex items-center gap-1 overflow-x-auto bg-[var(--green-dark)] p-2 hide-scrollbar">
+    <div className="relative -top-8 mx-auto max-w-[1100px] overflow-hidden rounded-2xl border border-white/10 bg-white/[0.06] shadow-[var(--shadow-xl)] backdrop-blur-md sm:-top-12">
+      {/* Tab strip: light green tint, still see-through */}
+      <div className="flex items-center gap-1 overflow-x-auto border-b border-white/10 bg-[var(--green-dark)]/30 p-2 hide-scrollbar">
         {tabItems.map((tab) => {
           const Icon = tab.icon
           const isActive = activeTab === tab.id
@@ -64,7 +55,7 @@ export function TravelSearchWidget() {
                 'flex shrink-0 items-center justify-center gap-1.5 whitespace-nowrap rounded-full px-4 py-2.5 text-sm font-semibold transition-all',
                 isActive
                   ? 'bg-[var(--color-primary)] text-[var(--green-dark)] shadow-sm'
-                  : 'text-white/75 hover:bg-white/10 hover:text-white'
+                  : 'text-white/80 hover:bg-white/10 hover:text-white'
               )}
             >
               <Icon size={16} />
@@ -74,7 +65,8 @@ export function TravelSearchWidget() {
         })}
       </div>
 
-      <div className="p-3 sm:p-5">
+      {/* Form body: transparent, captions forced white */}
+      <div className="bg-transparent p-3 sm:p-5 [&_label]:text-white/85">
         {activeItem?.content}
       </div>
     </div>
