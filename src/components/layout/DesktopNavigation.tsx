@@ -36,7 +36,7 @@ export function DesktopNavigation({ isScrolled = true }: DesktopNavigationProps)
             href={item.href}
             aria-current={isActive ? 'page' : undefined}
             className={cn(
-              'relative shrink-0 whitespace-nowrap px-1.5 py-5 text-[11px] font-semibold transition-colors duration-200 xl:px-2.5 xl:py-6 xl:text-[13px]',
+              'relative whitespace-nowrap px-1.5 py-5 text-[11px] font-semibold transition-colors duration-200 xl:px-2.5 xl:py-6 xl:text-[13px]',
               isActive
                 ? cn(
                     'after:absolute after:bottom-[10px] after:left-1.5 after:right-1.5 after:h-[3px] after:rounded-full after:bg-[var(--yellow)] xl:after:bottom-[12px] xl:after:left-2.5 xl:after:right-2.5',
