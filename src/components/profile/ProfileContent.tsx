@@ -94,15 +94,11 @@ export default function ProfileContent() {
   }
 
   return (
-    <div className="section-gap bg-[var(--color-background)]">
+    <div className="pb-12 bg-[var(--color-background)]">
       <Container>
-        <div className="mb-8 flex flex-col gap-2 sm:flex-row sm:items-end sm:justify-between">
-          <div>
-            <p className="text-label text-[var(--color-primary-dark)]">Your account</p>
-            <h1 className="mt-2 text-h1 text-[var(--color-text-primary)]">Welcome back, {user.name.split(' ')[0]}</h1>
-            <p className="mt-2 max-w-xl text-body text-[var(--color-text-secondary)]">Keep your traveller details current and manage every trip from one place.</p>
-          </div>
-          <div className="flex items-center gap-2 text-sm text-[var(--color-text-muted)]"><ShieldCheck size={16} className="text-[var(--color-success)]" /> Account protected</div>
+        <div className="mb-6 flex items-center justify-between gap-3">
+          {/* <h2 className="text-h3 text-[var(--color-text-primary)]">Welcome back, {user.name.split(' ')[0]}</h2> */}
+          {/* <div className="flex items-center gap-2 text-sm text-[var(--color-text-muted)]"><ShieldCheck size={16} className="text-[var(--color-success)]" /> Account protected</div> */}
         </div>
 
         <div className="grid grid-cols-1 gap-6 lg:grid-cols-[250px_minmax(0,1fr)]">

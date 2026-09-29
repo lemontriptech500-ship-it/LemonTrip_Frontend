@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from 'react'
 import { useRouter } from 'next/navigation'
-import { ArrowDownLeft, ArrowUpRight, CheckCircle2, Loader2, Wallet as WalletIcon } from 'lucide-react'
+import { ArrowDownLeft, ArrowUpRight, CheckCircle2, Loader2 } from 'lucide-react'
 import { Button, Card, Container } from '@/components/ui'
 import { useAuthStore } from '@/store/authStore'
 import { createWalletTopupOrder, getWalletData, getWalletTransactions, verifyWalletTopup, type WalletData, type WalletTransaction } from '@/services/walletService'
@@ -102,16 +102,12 @@ export default function WalletContent() {
     }
   }
 
-  if (!hasHydrated || !user || loading) return <div className="section-gap min-h-[60vh]" aria-busy="true" />
+  if (!hasHydrated || !user || loading) return <div className="min-h-[40vh]" aria-busy="true" />
 
   return (
-    <div className="section-gap min-h-screen bg-[var(--color-background)]">
+    <div className="min-h-[20vh] bg-[var(--color-background)] pb-16">
       <Container className="max-w-5xl">
-        <div className="flex items-center gap-3">
-          <div className="rounded-[var(--radius-md)] bg-[var(--color-primary-soft)] p-3 text-[var(--color-primary)]"><WalletIcon size={26} /></div>
-          <div><h1 className="text-h1">Wallet</h1><p className="text-sm text-[var(--color-text-secondary)]">Manage your LemonTrip balance and payments.</p></div>
-        </div>
-        <div className="mt-8 grid gap-6 lg:grid-cols-[0.9fr_1.1fr]">
+        <div className="grid gap-6 lg:grid-cols-[0.9fr_1.1fr]">
           <Card className="p-6">
             <p className="text-sm text-[var(--color-text-secondary)]">Available balance</p>
             <p className="mt-2 text-4xl font-bold text-[var(--color-text-primary)]">{formatMoney(wallet?.balance || 0, wallet?.currency || 'INR')}</p>

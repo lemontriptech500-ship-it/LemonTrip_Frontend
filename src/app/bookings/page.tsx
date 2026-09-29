@@ -50,23 +50,19 @@ export default function BookingsPage() {
   }, [])
 
   return (
-    <div className="section-gap min-h-screen bg-[var(--color-background)]">
+    <div className="min-h-[60vh] bg-[var(--color-background)] pb-16">
       <Container>
-        <div className="flex flex-col gap-2 border-b border-[var(--color-border-light)] pb-6 sm:flex-row sm:items-end sm:justify-between">
-          <div>
-            <p className="text-sm font-semibold uppercase tracking-[0.16em] text-[var(--color-primary)]">Your travel activity</p>
-            <h1 className="mt-2 text-h1 text-[var(--color-text-primary)]">My bookings</h1>
-            <p className="mt-2 max-w-xl text-sm text-[var(--color-text-secondary)]">Review your trips, payment status, and booking references in one place.</p>
-          </div>
-          {!loading && !error && bookings.length > 0 && <p className="text-sm text-[var(--color-text-muted)]">{bookings.length} booking{bookings.length === 1 ? '' : 's'}</p>}
-        </div>
+        {/* Title and subtitle now live in the banner (bookings/layout.tsx) */}
+        {!loading && !error && bookings.length > 0 && (
+          <p className="mb-6 text-sm text-[var(--color-text-muted)]">{bookings.length} booking{bookings.length === 1 ? '' : 's'}</p>
+        )}
 
-        {loading && <p className="mt-8 text-sm text-[var(--color-text-muted)]">Loading bookings...</p>}
-        {error && <p className="mt-8 text-sm text-[var(--color-error)]">{error}</p>}
-        {!loading && !error && bookings.length === 0 && <p className="mt-8 text-sm text-[var(--color-text-muted)]">No bookings found.</p>}
+        {loading && <p className="text-sm text-[var(--color-text-muted)]">Loading bookings...</p>}
+        {error && <p className="text-sm text-[var(--color-error)]">{error}</p>}
+        {!loading && !error && bookings.length === 0 && <p className="text-sm text-[var(--color-text-muted)]">No bookings found.</p>}
 
         {!loading && !error && bookings.length > 0 && (
-          <div className="mt-8 space-y-4">
+          <div className="space-y-4">
             {bookings.map((booking) => {
               const meta = TYPE_META[booking.type]
               const Icon = meta?.icon ?? Package

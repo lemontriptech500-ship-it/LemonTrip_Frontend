@@ -45,6 +45,9 @@ const HERO_ROUTES = [
   '/offers',
   '/blog',
   '/wishlist',
+  '/profile',
+  '/wallet',
+  '/bookings',
 ]
 
 function hasHeroBanner(pathname: string) {
