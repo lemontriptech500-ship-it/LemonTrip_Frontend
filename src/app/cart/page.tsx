@@ -4,7 +4,7 @@ import React from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
 import { Plus, Minus, Trash2, ShoppingBag, ArrowRight } from 'lucide-react'
-import { Button, Container, SectionHeading } from '@/components/ui'
+import { Button, Container } from '@/components/ui'
 import { useCartStore } from '@/store/cartStore'
 import { formatCurrency } from '@/lib/utils'
 
@@ -13,10 +13,10 @@ export default function CartPage() {
 
   if (items.length === 0) {
     return (
-      <Container className="section-gap">
+      <Container className="pt-10">
         <div className="flex flex-col items-center gap-5 py-20 text-center">
           <ShoppingBag size={56} className="text-[var(--color-border)]" />
-          <h1 className="text-h1 text-[var(--color-text-primary)]">Your Cart is Empty</h1>
+          <h2 className="text-h1 text-[var(--color-text-primary)]">Your Cart is Empty</h2>
           <p className="text-body text-[var(--color-text-secondary)] max-w-md">
             Browse our travel options and add items to your cart to get started.
           </p>
@@ -34,24 +34,23 @@ export default function CartPage() {
   }
 
   return (
-    <Container className="section-gap">
-      <SectionHeading
-        title="Your Cart"
-        description={`${totalItems()} item${totalItems() > 1 ? 's' : ''} in your cart`}
-      />
+    <Container className="pt-10">
+      <p className="text-body text-[var(--color-text-secondary)]">
+        {totalItems()} item{totalItems() > 1 ? 's' : ''} in your cart
+      </p>
 
-      <div className="mt-8 grid grid-cols-1 lg:grid-cols-3 gap-8">
+      <div className="mt-6 grid grid-cols-1 lg:grid-cols-3 gap-8">
         <div className="lg:col-span-2 space-y-4">
           {items.map((item) => (
             <div
               key={item.id}
               className="p-5 rounded-[var(--radius-lg)] border border-[var(--color-border)] bg-[var(--color-surface)] flex flex-col sm:flex-row gap-4"
             >
-           {item.imageUrl && (
-  <div className="relative w-full sm:w-28 h-28 rounded-[var(--radius-md)] overflow-hidden shrink-0 bg-[var(--color-surface-secondary)]">
-    <Image src={item.imageUrl} alt={item.name} fill sizes="112px" className="object-cover" />
-  </div>
-)}
+              {item.imageUrl && (
+                <div className="relative w-full sm:w-28 h-28 rounded-[var(--radius-md)] overflow-hidden shrink-0 bg-[var(--color-surface-secondary)]">
+                  <Image src={item.imageUrl} alt={item.name} fill sizes="112px" className="object-cover" />
+                </div>
+              )}
 
               <div className="flex-1 min-w-0">
                 <div className="flex justify-between items-start">
@@ -69,7 +68,9 @@ export default function CartPage() {
                 </div>
 
                 {item.description && (
-                  <p className="text-body-sm text-[var(--color-text-secondary)] mt-1.5 line-clamp-2">{item.description}</p>
+                  <p className="text-body-sm text-[var(--color-text-secondary)] mt-1.5 line-clamp-2">
+                    {item.description}
+                  </p>
                 )}
 
                 {item.details && (
@@ -136,7 +137,9 @@ export default function CartPage() {
             <div className="border-t border-[var(--color-border)] pt-4 mb-6">
               <div className="flex justify-between items-center">
                 <span className="text-body font-medium text-[var(--color-text-primary)]">Total</span>
-                <span className="text-xl font-bold text-[var(--color-text-primary)]">{formatCurrency(totalPrice())}</span>
+                <span className="text-xl font-bold text-[var(--color-text-primary)]">
+                  {formatCurrency(totalPrice())}
+                </span>
               </div>
             </div>
 

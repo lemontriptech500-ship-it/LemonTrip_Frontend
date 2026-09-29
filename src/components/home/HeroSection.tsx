@@ -28,13 +28,13 @@ const TRUST_BADGES = ['Best Price Guarantee', '24/7 Customer Support', 'Safe & S
 export function HeroSection() {
   return (
     <section
-    className="relative min-h-[620px] bg-neutral-900 pb-16 sm:min-h-[640px] lg:h-[calc(100svh-260px)] lg:min-h-[620px] lg:pb-0"
+    className="relative min-h-[20px] bg-neutral-900 pb-16 sm:min-h-[640px] lg:h-[calc(100svh-260px)] lg:min-h-[620px] lg:pb-0"
   >
       {/* Background layer — clipped to the hero's box */}
       <div className="pointer-events-none absolute inset-0 z-0 overflow-hidden">
         <div
           className="absolute inset-0 bg-cover bg-center bg-no-repeat"
-          style={{ backgroundImage: "url('/herosection_bgimage.webp?hero-v=20260908')" }}
+          style={{ backgroundImage: "url('/herosection_bgimage2.png?hero-v=20260908')" }}
           role="img"
           aria-label="Traveller overlooking a green mountain valley"
         />

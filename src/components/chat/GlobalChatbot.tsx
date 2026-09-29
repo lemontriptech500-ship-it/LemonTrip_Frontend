@@ -2,7 +2,7 @@
 
 import { FormEvent, useEffect, useRef, useState } from 'react'
 import { usePathname, useSearchParams } from 'next/navigation'
-import { Bot, Loader2, Send, X } from 'lucide-react'
+import { Headphones, Loader2, MessageCircle, Send, X } from 'lucide-react'
 import { apiRequest } from '@/lib/apiClient'
 
 interface ChatMessage {
@@ -89,16 +89,16 @@ export function GlobalChatbot() {
   return (
     <div className="fixed bottom-3 right-3 z-50 sm:bottom-6 sm:right-6">
       {open && (
-        <section className="mb-3 flex h-[min(600px,calc(100vh-7rem))] w-[min(380px,calc(100vw-2rem))] flex-col overflow-hidden rounded-[var(--radius-xl)] border border-[var(--color-border)] bg-[var(--color-surface)] shadow-2xl" aria-label="LemonTrip travel assistant">
+        <section className="mb-3 flex h-[min(460px,calc(100vh-11rem))] w-[min(340px,calc(100vw-2rem))] flex-col overflow-hidden rounded-[var(--radius-xl)] border border-[var(--color-border)] bg-[var(--color-surface)] shadow-2xl" aria-label="LemonTrip travel assistant">
           <header className="flex items-center justify-between bg-[var(--color-secondary)] px-4 py-3 text-white">
             <div className="flex items-center gap-3">
-              <span className="flex h-9 w-9 items-center justify-center rounded-full bg-[var(--color-primary)] text-[var(--green-dark)]"><Bot size={19} /></span>
+              <span className="flex h-9 w-9 items-center justify-center rounded-full bg-[var(--color-primary)] text-[var(--green-dark)]"><Headphones size={18} /></span>
               <div><p className="font-bold">LemonTrip Assistant</p><p className="text-xs text-white/75">Travel support and planning</p></div>
             </div>
             <button type="button" onClick={() => setOpen(false)} className="rounded-full p-2 hover:bg-white/10" aria-label="Close chat"><X size={18} /></button>
           </header>
           <div className="flex-1 space-y-3 overflow-y-auto bg-[var(--color-background)] p-4" aria-live="polite">
-            {messages.map((message, index) => <div key={`${message.role}-${index}`} className={`flex ${message.role === 'user' ? 'justify-end' : 'justify-start'}`}><p className={`max-w-[85%] whitespace-pre-wrap rounded-2xl px-3 py-2 text-sm leading-relaxed ${message.role === 'user' ? 'rounded-br-sm bg-[var(--color-secondary)] text-white' : 'rounded-bl-sm border border-[var(--color-border)] bg-[var(--color-surface)] text-[var(--color-text-primary)]'}`}>{message.role === 'assistant' ? formatAssistantMessage(message.content) : message.content}</p></div>)}
+            {messages.map((message, index) => <div key={`${message.role}-${index}`} className={`flex ${message.role === 'user' ? 'justify-end' : 'justify-start'}`}><p className={`max-w-[85%] whitespace-pre-wrap rounded-2xl px-3 py-2 text-[13px] leading-relaxed ${message.role === 'user' ? 'rounded-br-sm bg-[var(--color-secondary)] text-white' : 'rounded-bl-sm border border-[var(--color-border)] bg-[var(--color-surface)] text-[var(--color-text-primary)]'}`}>{message.role === 'assistant' ? formatAssistantMessage(message.content) : message.content}</p></div>)}
             {loading && <div className="flex items-center gap-2 text-sm text-[var(--color-text-secondary)]"><Loader2 size={15} className="animate-spin" />Thinking...</div>}
             {error && <p className="text-xs text-[var(--color-error)]">{error}</p>}
             <div ref={endRef} />
@@ -111,7 +111,7 @@ export function GlobalChatbot() {
       )}
       <div className="flex flex-col items-end gap-2 sm:gap-3">
         <button type="button" onClick={() => setOpen((value) => !value)} aria-label={open ? 'Close LemonTrip Assistant' : 'Open LemonTrip Assistant'} className="flex h-11 w-11 items-center justify-center rounded-full bg-[var(--color-primary)] text-[var(--green-dark)] shadow-lg transition hover:scale-105 hover:bg-[var(--color-primary-hover)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-secondary)] sm:h-14 sm:w-14">
-          {open ? <X size={23} /> : <Bot size={23} />}
+          {open ? <X size={23} /> : <MessageCircle size={23} />}
         </button>
         <a href="https://wa.me/919876543210" target="_blank" rel="noreferrer" aria-label="Chat with LemonTrip on WhatsApp" title="Chat with LemonTrip on WhatsApp" className="flex h-10 w-10 items-center justify-center rounded-full bg-[#25D366] text-white shadow-lg transition hover:scale-105 hover:bg-[#1ebe5d] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-secondary)] sm:h-12 sm:w-12">
           <WhatsAppIcon />
