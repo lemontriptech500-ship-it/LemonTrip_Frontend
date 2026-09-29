@@ -14,24 +14,6 @@ import { MobileNavigation } from './MobileNavigation'
 import { AccountEntry } from './AccountEntry'
 import { AuthModal } from '@/components/auth/AuthModal'
 
-/**
- * Header
- * ------------------------------------------------------------
- * Glassy header: always translucent + blurred; only the opacity of
- * the white glass layer increases once scrolled.
- *
- * ROUTE-AWARE: the unscrolled style (white text on a clear glass
- * layer) only works over a dark banner. Any route listed in
- * HERO_ROUTES (and its sub-pages, e.g. /flights/[id]/payment) has a
- * dark banner behind the header. Any other route uses the "scrolled"
- * style (dark text, denser glass).
- *
- * When you add a banner to a new page, add its path to HERO_ROUTES.
- *
- * The login / register pop-up (<AuthModal />) is mounted here once
- * and opened from AccountEntry and MobileNavigation.
- */
-
 // Routes that start with a dark banner behind the header ('/' = home only)
 const HERO_ROUTES = [
   '/',
@@ -61,7 +43,6 @@ export function Header() {
   const hasHero = hasHeroBanner(pathname)
 
   const [pastThreshold, setPastThreshold] = useState(false)
-  // No banner behind the header? Always use the solid / dark-text style.
   const isScrolled = pastThreshold || !hasHero
 
   const { toggleCart, totalItems, hasHydrated } = useCartStore()
@@ -82,8 +63,6 @@ export function Header() {
   return (
     <>
       <header className="absolute inset-x-0 top-0 z-50 w-full" role="banner">
-        {/* Glass layer — always translucent + blurred; only its opacity
-            and shadow increase on scroll. */}
         <div
           aria-hidden="true"
           className={`pointer-events-none absolute inset-0 backdrop-blur-md transition-all duration-500 ${
@@ -92,41 +71,6 @@ export function Header() {
               : 'bg-white/[0.06] border-b border-white/10'
           }`}
         />
-
-        {/* Top contact strip */}
-        <div className="relative">
-          <Container
-            as="div"
-            className={`flex min-h-8 flex-col gap-1 py-1.5 text-[10px] transition-colors duration-500 sm:flex-row sm:items-center sm:justify-between sm:py-0 sm:text-[12px] ${
-              isScrolled ? 'text-[var(--ink)]' : 'text-white'
-            }`}
-          >
-            <div className="flex flex-wrap items-center gap-x-4 gap-y-1 sm:gap-5">
-              <span className="flex items-center gap-2">
-                <span aria-hidden="true">✉</span>
-                <a href="mailto:info@lemontrip.com" className="transition hover:text-[var(--yellow)]">
-                  info@lemontrip.com
-                </a>
-              </span>
-              <span className="flex items-center gap-2">
-                <span aria-hidden="true">☎</span>
-                <a href="tel:+919876543210" className="transition hover:text-[var(--yellow)]">
-                  +91 98765 43210
-                </a>
-              </span>
-            </div>
-
-            <div className="hidden items-center gap-3 text-[12px] font-medium opacity-90 sm:flex">
-              <span>Follow Us:</span>
-              <span className="flex items-center gap-2">
-                <span aria-hidden="true">f</span>
-                <span aria-hidden="true">◎</span>
-                <span aria-hidden="true">𝕏</span>
-                <span aria-hidden="true">▶</span>
-              </span>
-            </div>
-          </Container>
-        </div>
 
         {/* Main nav bar */}
         <div className="relative">
