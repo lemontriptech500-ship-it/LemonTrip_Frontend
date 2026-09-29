@@ -1,10 +1,35 @@
-import { Container, Card } from '@/components/ui'
+import type { Metadata } from 'next'
+import { Container } from '@/components/ui'
 
-export const metadata = {
+export const metadata: Metadata = {
   title: 'Terms of Service',
-  description: 'LemonTrip terms of service.',
+  description: 'Read the LemonTrip terms of service for using our travel services and website.',
 }
 
 export default function TermsPage() {
-  return <div className="section-gap bg-[var(--color-background)]"><Container><Card className="mx-auto max-w-3xl p-6 sm:p-10"><p className="text-label text-[var(--color-primary-dark)]">LemonTrip</p><h1 className="mt-2 text-h1">Terms of Service</h1><p className="mt-5 text-body text-[var(--color-text-secondary)]">By using LemonTrip, you agree to provide accurate booking information and to use the platform lawfully. Supplier availability, prices, cancellation policies, and payment terms are shown during the relevant booking flow.</p><h2 className="mt-8 text-h3">Bookings and payments</h2><p className="mt-2 text-body text-[var(--color-text-secondary)]">A booking is confirmed only after the required payment and verification steps complete successfully. Questions about a booking can be raised through the support channels provided on the website.</p></Card></Container></div>
+  return (
+    <main className="section-gap bg-[var(--color-background)]">
+      <Container className="max-w-3xl">
+        <h1 className="text-display">Terms of Service</h1>
+        <p className="mt-4 text-body-lg text-[var(--color-text-secondary)]">
+          By using LemonTrip, you agree to use our website and travel services lawfully and to provide accurate information for bookings and support requests.
+        </p>
+        <section className="mt-10 space-y-6 text-body text-[var(--color-text-secondary)]">
+          <div>
+            <h2 className="text-h2 text-[var(--color-text-primary)]">Bookings and payments</h2>
+            <p className="mt-2">Availability, prices, supplier terms, cancellations, and refunds may vary by travel product and are shown during the booking process. A booking is confirmed only after the required payment and verification steps complete successfully.</p>
+            <p className="mt-2">Questions about a booking can be raised through the support channels provided on the website.</p>
+          </div>
+          <div>
+            <h2 className="text-h2 text-[var(--color-text-primary)]">Acceptable use</h2>
+            <p className="mt-2">Do not misuse the website, submit misleading information, interfere with the service, or attempt unauthorized access.</p>
+          </div>
+          <div>
+            <h2 className="text-h2 text-[var(--color-text-primary)]">Contact</h2>
+            <p className="mt-2">For questions about these terms, contact lemontripindia@gmail.com.</p>
+          </div>
+        </section>
+      </Container>
+    </main>
+  )
 }

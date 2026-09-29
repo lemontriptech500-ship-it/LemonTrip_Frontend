@@ -13,7 +13,6 @@ export default function HotelBookingLayout({ children }: { children: React.React
     <>
       <div className="print:hidden">
         <HotelPageHero
-          compact
           title="Book your stay"
           subtitle="Choose your room, add guest details and pay securely."
         />

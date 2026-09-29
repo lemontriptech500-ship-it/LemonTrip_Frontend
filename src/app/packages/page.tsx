@@ -5,7 +5,7 @@ import { PackageCard } from '@/components/packages/PackageCard'
 import { FlightPageHero } from '@/components/flights/FlightPageHero' // generic banner, reused
 
 export const metadata: Metadata = {
-  title: 'Travel Packages & Tours',
+  title: 'Holiday Packages',
   description: 'Explore curated travel packages and tours with LemonTrip.',
 }
 
@@ -19,7 +19,7 @@ export default async function PackagesPage() {
     <div className="bg-[var(--color-background)] pb-20">
       <FlightPageHero
         compact
-        title="Tours & Packages"
+        title="Holiday Packages"
         subtitle="Choose from national escapes across India and international holidays around the world."
       />
       <Container className="pt-10">

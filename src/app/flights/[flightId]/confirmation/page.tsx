@@ -112,7 +112,7 @@ export default function ConfirmationPage({ params }: { params: Promise<{ flightI
   };
 
   return (
-    <div className="section-gap pb-20 bg-[var(--color-background)] min-h-screen">
+    <div className="pt-6 pb-20 bg-[var(--color-background)] min-h-screen sm:pt-8">
       <Container>
         
         <div className="mb-8 max-w-3xl mx-auto print:hidden">

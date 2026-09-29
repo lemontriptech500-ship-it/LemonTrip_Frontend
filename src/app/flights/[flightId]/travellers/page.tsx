@@ -122,7 +122,7 @@ export default function TravellersPage({ params }: { params: Promise<{ flightId:
   const infants = travellers.filter(t => t.type === 'infant');
 
   return (
-    <div className="section-gap pb-20 bg-[var(--color-background)] min-h-screen">
+    <div className="pt-6 pb-20 bg-[var(--color-background)] min-h-screen sm:pt-8">
       <Container>
         
         {/* Progress Indicator */}

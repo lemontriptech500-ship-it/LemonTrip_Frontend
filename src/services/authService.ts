@@ -53,7 +53,7 @@ export async function loginWithGoogle(idToken: string, mode: 'signin' | 'signup'
 }
 
 export async function getCurrentUser(): Promise<User> {
-  const result = await apiRequest<{ user: User }>('/auth/me')
+  const result = await apiRequest<{ user: User }>('/auth/me', { suppressErrorLog: true })
   return normalizeUser(result.user)
 }
 

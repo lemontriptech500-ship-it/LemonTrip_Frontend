@@ -1,9 +1,13 @@
 import { apiRequest } from '@/lib/apiClient'
-import type { BlogPost } from '@/data/blogPosts'
+import { blogPosts, type BlogPost } from '@/data/blogPosts'
 
 export async function getBlogPosts(): Promise<BlogPost[]> {
-  const result = await apiRequest<{ posts: BlogPost[] }>('/blog', { suppressErrorLog: true })
-  return result.posts
+  try {
+    const result = await apiRequest<{ posts: BlogPost[] }>('/blog', { suppressErrorLog: true })
+    return result.posts
+  } catch {
+    return blogPosts
+  }
 }
 
 export async function getBlogPostById(id: string): Promise<BlogPost | null> {
