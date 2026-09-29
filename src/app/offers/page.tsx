@@ -2,19 +2,21 @@
 
 import React from 'react'
 import Link from 'next/link'
-import { Tag, ArrowRight } from 'lucide-react'
-import { Button, Card, Container, SectionHeading } from '@/components/ui'
+import { Tag } from 'lucide-react'
+import { Button, Card, Container } from '@/components/ui'
+import { FlightPageHero } from '@/components/flights/FlightPageHero' // generic banner, reused
 import { featuredOffers } from '@/data/offers'
 
 export default function OffersPage() {
   return (
-    <div className="section-gap bg-[var(--color-background)]">
-      <Container>
-        <SectionHeading
-          title="Offers"
-          description="Discover current promotions across flights, stays, packages, and visa support."
-        />
-        <div className="mt-8 grid gap-5 md:grid-cols-2 lg:grid-cols-4">
+    <div className="bg-[var(--color-background)] pb-20">
+      <FlightPageHero
+        compact
+        title="Offers"
+        subtitle="Discover current promotions across flights, stays, packages, and visa support."
+      />
+      <Container className="pt-10">
+        <div className="grid gap-5 md:grid-cols-2 lg:grid-cols-4">
           {featuredOffers.map((offer) => (
             <Card key={offer.id} className="overflow-hidden" hover padding="none">
               <div className={`relative h-40 ${offer.imageColor}`}>

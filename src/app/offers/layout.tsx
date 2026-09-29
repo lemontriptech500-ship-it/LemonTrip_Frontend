@@ -1,10 +1,22 @@
-import type { Metadata } from 'next'
+import React from 'react'
+import { FlightPageHero } from '@/components/flights/FlightPageHero' // generic banner, reused
 
-export const metadata: Metadata = {
-  title: 'Travel Offers & Deals',
-  description: 'Discover current travel offers across flights, hotels, packages, and visa services with LemonTrip.',
-}
-
-export default function OffersLayout({ children }: { children: React.ReactNode }) {
-  return children
+/**
+ * Save as: src/app/offers/[offerId]/layout.tsx
+ * Banner behind the transparent header on the offer details page.
+ * Nested inside your existing src/app/offers/layout.tsx (metadata only).
+ */
+export default function OfferDetailsLayout({ children }: { children: React.ReactNode }) {
+  return (
+    <>
+      <div className="print:hidden">
+        <FlightPageHero
+          compact
+          title="Offer details"
+          subtitle="Check the promotion and apply it at checkout."
+        />
+      </div>
+      <div className="bg-[var(--color-background)] pt-10 print:pt-0">{children}</div>
+    </>
+  )
 }

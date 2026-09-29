@@ -33,7 +33,10 @@ import { AccountEntry } from './AccountEntry'
  */
 
 // Routes that start with a dark hero image behind the header
-const HERO_ROUTES = ['/', '/flights', '/hotels', '/buses', '/trains', '/packages'] 
+const HERO_ROUTES = [
+  '/', '/flights', '/hotels', '/buses', '/trains',
+  '/packages', '/services', '/visa', '/offers', '/blog', '/wishlist',
+]
 
 export function Header() {
   const pathname = usePathname()

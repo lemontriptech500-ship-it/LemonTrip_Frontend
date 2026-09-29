@@ -66,8 +66,17 @@ const services = [
 export default function ServicesPage() {
   return (
     <div className="bg-[var(--color-background)]">
-      <section className="bg-[var(--green-dark)] py-14 sm:py-20">
-        <Container>
+      {/* Banner sits behind the transparent header. Top padding clears the
+          header (contact strip + nav), same values as FlightPageHero. */}
+      <section className="relative bg-neutral-900 pb-14 pt-[112px] sm:pb-20 sm:pt-[136px] lg:pt-[140px]">
+        <div className="pointer-events-none absolute inset-0 overflow-hidden" aria-hidden="true">
+          <div
+            className="absolute inset-0 bg-cover bg-center bg-no-repeat"
+            style={{ backgroundImage: "url('/herosection_bgimage.webp?hero-v=20260908')" }}
+          />
+          <div className="absolute inset-0 bg-gradient-to-r from-[#042d1b]/90 via-[#042d1b]/60 to-[#042d1b]/30" />
+        </div>
+        <Container className="relative z-10">
           <div className="max-w-3xl">
             <p className="text-label text-[var(--yellow)]">Everything in one place</p>
             <h1 className="mt-3 text-display text-white">Travel planning, made simple.</h1>
