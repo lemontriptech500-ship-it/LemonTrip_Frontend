@@ -12,6 +12,9 @@ interface FlightSearchSummaryProps {
   onModifySearch: () => void;
 }
 
+const formatDate = (d: string) =>
+  new Date(d).toLocaleDateString(undefined, { day: 'numeric', month: 'short', year: 'numeric' });
+
 export function FlightSearchSummary({
   origin,
   destination,
@@ -22,34 +25,35 @@ export function FlightSearchSummary({
   onModifySearch,
 }: FlightSearchSummaryProps) {
   return (
-    <div className="bg-[var(--color-surface-secondary)] rounded-[var(--radius-lg)] p-4 flex flex-col md:flex-row items-center justify-between gap-4 shadow-sm border border-[var(--color-border-light)]">
-      <div className="flex flex-col md:flex-row items-center gap-4 text-[var(--color-text-primary)]">
-        <div className="flex items-center gap-3 font-semibold text-lg">
+    // White floating card: sits over the bottom edge of FlightPageHero
+    <div className="flex flex-col items-stretch justify-between gap-4 rounded-[var(--radius-xl)] border border-[var(--color-border-light)] bg-white p-4 shadow-lg md:flex-row md:items-center md:px-6 md:py-4">
+      <div className="flex flex-col gap-3 text-[var(--color-text-primary)] md:flex-row md:items-center md:gap-6">
+        <div className="flex items-center gap-3 text-lg font-semibold">
           <span>{origin || 'Origin'}</span>
-          <Plane size={18} className="text-[var(--color-primary)]" />
+          <Plane size={18} className="text-[var(--color-primary)]" aria-hidden="true" />
           <span>{destination || 'Destination'}</span>
         </div>
-        
-        <div className="hidden md:block w-px h-6 bg-[var(--color-border)]"></div>
-        
-        <div className="flex items-center gap-4 text-sm text-[var(--color-text-secondary)]">
+
+        <div className="hidden h-6 w-px bg-[var(--color-border)] md:block" />
+
+        <div className="flex flex-wrap items-center gap-x-5 gap-y-2 text-sm text-[var(--color-text-secondary)]">
           <div className="flex items-center gap-1.5">
-            <Calendar size={16} />
-            <span>{departureDate ? new Date(departureDate).toLocaleDateString() : 'Select Date'}</span>
+            <Calendar size={16} aria-hidden="true" />
+            <span>{departureDate ? formatDate(departureDate) : 'Select date'}</span>
             {tripType === 'roundtrip' && returnDate && (
               <>
-                <span className="mx-1">-</span>
-                <span>{new Date(returnDate).toLocaleDateString()}</span>
+                <span className="mx-1">–</span>
+                <span>{formatDate(returnDate)}</span>
               </>
             )}
           </div>
           <div className="flex items-center gap-1.5">
-            <Users size={16} />
+            <Users size={16} aria-hidden="true" />
             <span className="capitalize">{travelClass?.replace('-', ' ') || '1 Adult'}</span>
           </div>
         </div>
       </div>
-      
+
       <Button variant="outline" size="sm" onClick={onModifySearch}>
         Modify Search
       </Button>

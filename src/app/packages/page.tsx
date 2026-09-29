@@ -1,7 +1,8 @@
 import type { Metadata } from 'next'
-import { Container, SectionHeading } from '@/components/ui'
+import { Container } from '@/components/ui'
 import { searchPackages } from '@/services/packageService'
 import { PackageCard } from '@/components/packages/PackageCard'
+import { FlightPageHero } from '@/components/flights/FlightPageHero' // generic banner, reused
 
 export const metadata: Metadata = {
   title: 'Travel Packages & Tours',
@@ -15,13 +16,14 @@ export default async function PackagesPage() {
   const nationalPackages = packages.filter((pkg) => pkg.category === 'national')
   const internationalPackages = packages.filter((pkg) => pkg.category === 'international')
   return (
-    <div className="section-gap bg-[var(--color-background)]">
-      <Container>
-        <SectionHeading
-          title="Tours & Packages"
-          description="Choose from national escapes across India and international holidays around the world."
-        />
-        <section className="mt-10">
+    <div className="bg-[var(--color-background)] pb-20">
+      <FlightPageHero
+        compact
+        title="Tours & Packages"
+        subtitle="Choose from national escapes across India and international holidays around the world."
+      />
+      <Container className="pt-10">
+        <section>
           <h2 className="text-h2">National Tours</h2>
           <p className="mt-2 text-body-sm text-[var(--color-text-secondary)]">Discover India, from heritage cities and spiritual journeys to beaches and mountain escapes.</p>
           <div className="mt-6 grid gap-6 lg:grid-cols-3">
