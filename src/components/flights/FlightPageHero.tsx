@@ -50,3 +50,4 @@ export function FlightPageHero({ title, subtitle, compact = false, children }: F
     </>
   )
 }
+
