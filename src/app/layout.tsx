@@ -33,8 +33,8 @@ const cormorant = Cormorant_Garamond({
 export const metadata: Metadata = {
   metadataBase: new URL('https://lemontrip.in/'),
   icons: {
-    icon: '/lemonTripLogo.jpeg',
-    apple: '/lemonTripLogo.jpeg',
+    icon: '/lemonTripLogo.png',
+    apple: '/lemonTripLogo.png',
   },
   title: {
     default: 'LemonTrip – Flights, Hotels, Tours & Visa',
@@ -71,7 +71,7 @@ export const metadata: Metadata = {
     title: 'LemonTrip – Flights, Hotels, Tours & Visa',
     description:
       'Book flights, hotels, tours and travel packages with LemonTrip. Explore easy travel booking and visa services.',
-    images: ['/lemonTripLogo.jpeg'],
+    images: ['/lemonTripLogo.png'],
   },
   robots: {
     index: true,
