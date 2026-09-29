@@ -20,7 +20,7 @@ export default async function BusesPage() {
         title="Book bus tickets"
         subtitle="Compare comfortable intercity rides from trusted operators."
       />
-      <Container className="pt-10">
+      <Container className="pt-6">
         <div className="grid gap-5 lg:grid-cols-3">
           {buses.map((bus) => (
             <BusResultCard key={bus.id} bus={bus} />

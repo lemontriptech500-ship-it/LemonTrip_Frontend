@@ -22,7 +22,7 @@ export default function FlightBookingLayout({ children }: { children: React.Reac
       </div>
 
       {/* Same background as the pages' own wrapper so no white strip shows between banner and content */}
-      <div className="bg-[var(--color-background)] pt-10 print:pt-0">{children}</div>
+      <div className="bg-[var(--color-background)] pt-0 print:pt-0">{children}</div>
     </>
   )
 }

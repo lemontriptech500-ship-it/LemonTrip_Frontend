@@ -1,5 +1,5 @@
 import { apiRequest, isApiConfigured } from '@/lib/apiClient'
-import type { HolidayPackage } from '@/data/packages'
+import { popularPackages, type HolidayPackage } from '@/data/packages'
 
 export async function searchPackages(params: {
   destination?: string
@@ -7,7 +7,16 @@ export async function searchPackages(params: {
   month?: string
   travellers?: string
 }) {
-  return apiRequest<{ packages: HolidayPackage[]; total: number }>(`/packages/search?${new URLSearchParams(params).toString()}`, { suppressErrorLog: true })
+  try {
+    return await apiRequest<{ packages: HolidayPackage[]; total: number }>(`/packages/search?${new URLSearchParams(params).toString()}`, { suppressErrorLog: true })
+  } catch {
+    let packages = [...popularPackages]
+    if (params.destination) {
+      packages = packages.filter((pkg) => pkg.destination.toLowerCase().includes(params.destination!.toLowerCase()))
+    }
+    if (params.category) packages = packages.filter((pkg) => pkg.category === params.category)
+    return { packages, total: packages.length }
+  }
 }
 
 export async function getPackageById(id: string): Promise<HolidayPackage | null> {

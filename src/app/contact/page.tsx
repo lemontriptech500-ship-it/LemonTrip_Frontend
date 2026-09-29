@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 import { Mail, MapPin, Phone } from 'lucide-react'
 import { Card, Container } from '@/components/ui'
 import { ContactForm } from '@/components/contact/ContactForm'
+import { FlightPageHero } from '@/components/flights/FlightPageHero'
 
 export const metadata: Metadata = {
   title: 'Contact LemonTrip | Travel & Booking Support',
@@ -11,17 +12,10 @@ export const metadata: Metadata = {
 export default function ContactPage() {
   return (
     <div className="bg-[var(--color-background)]">
-      <section className="bg-[var(--green-dark)] py-14 sm:py-20">
-        <Container>
-          <div className="max-w-3xl">
-            <p className="text-label text-[var(--yellow)]">We are here to help</p>
-            <h1 className="mt-3 text-display text-white">Let&apos;s plan the next step.</h1>
-            <p className="mt-5 max-w-2xl text-body-lg text-white/80">
-              Have a question about a booking, destination, or travel service? Send us a message and the LemonTrip team will get back to you.
-            </p>
-          </div>
-        </Container>
-      </section>
+      <FlightPageHero
+        title="Let&apos;s plan the next step."
+        subtitle="We are here to help. Have a question about a booking, destination, or travel service? Send us a message and the LemonTrip team will get back to you."
+      />
 
       <section className="section-gap">
         <Container>

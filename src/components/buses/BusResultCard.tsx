@@ -56,7 +56,7 @@ export function BusResultCard({ bus }: BusResultCardProps) {
             <BusFront size={22} />
           </div>
           <div>
-            <h2 className="font-bold text-[var(--color-text-primary)]">{bus.operator}</h2>
+            <h2 className="text-sm font-bold text-[var(--color-text-primary)]">{bus.operator}</h2>
             <p className="text-sm text-[var(--color-text-secondary)]">{bus.busType}</p>
           </div>
         </div>
