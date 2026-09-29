@@ -1,33 +1,24 @@
 import React from 'react'
 import { Container } from '@/components/ui'
 
-/**
- * FlightPageHero
- * ------------------------------------------------------------
- * Dark photo banner that sits BEHIND the transparent header on
- * /flights and /flights/[id], so the header looks identical to
- * the home page (white text, glass layer).
- *
- * The header is `absolute`, so this banner has top padding equal
- * to the header height (contact strip 32px + nav 60/80/75px) to
- * keep the title from sliding underneath it.
- *
- * `children` (the search summary card) is rendered OUTSIDE the
- * overflow-hidden background layer and pulled up with a negative
- * margin, so it floats over the banner's bottom edge without
- * being clipped.
- */
-
 interface FlightPageHeroProps {
   title: string
   subtitle?: string
+  /** Slimmer banner for checkout steps and simple list pages */
+  compact?: boolean
   children?: React.ReactNode
 }
 
-export function FlightPageHero({ title, subtitle, children }: FlightPageHeroProps) {
+export function FlightPageHero({ title, subtitle, compact = false, children }: FlightPageHeroProps) {
   return (
     <>
-      <section className="relative bg-neutral-900 pb-24 pt-[112px] sm:pt-[136px] lg:pt-[140px]">
+      <section
+        className={`relative bg-neutral-900 ${
+          compact
+            ? 'pb-10 pt-[104px] sm:pt-[128px] lg:pt-[132px]'
+            : 'pb-24 pt-[112px] sm:pt-[136px] lg:pt-[140px]'
+        }`}
+      >
         {/* Background — clipped to the banner */}
         <div className="pointer-events-none absolute inset-0 overflow-hidden" aria-hidden="true">
           <div
@@ -38,7 +29,13 @@ export function FlightPageHero({ title, subtitle, children }: FlightPageHeroProp
         </div>
 
         <Container as="div" className="relative z-10">
-          <h1 className="text-3xl font-semibold tracking-tight text-white sm:text-4xl">{title}</h1>
+          <h1
+            className={`font-semibold tracking-tight text-white ${
+              compact ? 'text-2xl sm:text-3xl' : 'text-3xl sm:text-4xl'
+            }`}
+          >
+            {title}
+          </h1>
           {subtitle && (
             <p className="mt-2 max-w-xl text-sm text-white/80 sm:text-base">{subtitle}</p>
           )}
@@ -53,3 +50,4 @@ export function FlightPageHero({ title, subtitle, children }: FlightPageHeroProp
     </>
   )
 }
+
