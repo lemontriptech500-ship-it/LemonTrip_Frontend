@@ -4,7 +4,8 @@ import React, { useEffect, useState } from 'react'
 import Link from 'next/link'
 import { useSearchParams } from 'next/navigation'
 import { ArrowRight, Clock, Heart, TrainFront } from 'lucide-react'
-import { Button, Card, Container, SectionHeading } from '@/components/ui'
+import { Button, Card, Container } from '@/components/ui'
+import { FlightPageHero } from '@/components/flights/FlightPageHero' // generic banner, reused
 import { mockTrains } from '@/data/trains'
 import { searchTrains } from '@/services/trainService'
 import { useWishlistStore } from '@/store/wishlistStore'
@@ -48,10 +49,14 @@ function TrainResultsContent() {
   }, [searchParams])
 
   return (
-    <div className="section-gap bg-[var(--color-background)]">
-      <Container>
-        <SectionHeading title="Trains" description="Browse catalog routes. Live availability requires an authorized rail provider." />
-        {isLoading ? <p className="mt-10 text-center text-[var(--color-text-secondary)]">Loading trains...</p> : error ? <p className="mt-10 text-center text-[var(--color-error)]">{error}</p> : <div className="mt-10 grid gap-5 lg:grid-cols-3">
+    <div className="bg-[var(--color-background)] pb-20">
+      <FlightPageHero
+        compact
+        title="Book train tickets"
+        subtitle="Browse catalog routes. Live availability requires an authorized rail provider."
+      />
+      <Container className="pt-10">
+        {isLoading ? <p className="text-center text-[var(--color-text-secondary)]">Loading trains...</p> : error ? <p className="text-center text-[var(--color-error)]">{error}</p> : <div className="grid gap-5 lg:grid-cols-3">
           {trains.map((train) => {
             const wishlistId = `train-${train.id}`
             const wishlisted = hasHydrated && isWishlisted(wishlistId)
@@ -137,7 +142,15 @@ function TrainResultsContent() {
 
 export default function TrainsPage() {
   return (
-    <React.Suspense fallback={<div className="section-gap min-h-[40vh]" aria-busy="true" />}>
+    <React.Suspense
+      fallback={
+        <div className="bg-[var(--color-background)] pb-20" aria-busy="true">
+          {/* Keep the banner while loading so the transparent header stays readable */}
+          <FlightPageHero compact title="Book train tickets" />
+          <div className="min-h-[30vh]" />
+        </div>
+      }
+    >
       <TrainResultsContent />
     </React.Suspense>
   )

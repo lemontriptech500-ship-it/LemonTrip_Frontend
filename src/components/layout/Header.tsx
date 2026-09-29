@@ -33,12 +33,13 @@ import { AccountEntry } from './AccountEntry'
  */
 
 // Routes that start with a dark hero image behind the header
-const HERO_ROUTES = ['/']
+const HERO_ROUTES = ['/', '/flights', '/hotels', '/buses', '/trains', '/packages'] 
 
 export function Header() {
   const pathname = usePathname()
-  const hasHero = HERO_ROUTES.includes(pathname)
-
+  const hasHero = HERO_ROUTES.some((route) =>
+  route === '/' ? pathname === '/' : pathname === route || pathname.startsWith(route + '/')
+)
   const [pastThreshold, setPastThreshold] = useState(false)
   // No hero behind the header? Always use the solid / dark-text style.
   const isScrolled = pastThreshold || !hasHero

@@ -1,7 +1,8 @@
 import type { Metadata } from 'next'
-import { Container, SectionHeading } from '@/components/ui'
+import { Container } from '@/components/ui'
 import { searchBuses } from '@/services/busService'
 import { BusResultCard } from '@/components/buses/BusResultCard'
+import { FlightPageHero } from '@/components/flights/FlightPageHero'
 
 export const metadata: Metadata = {
   title: 'Bus Booking – Book Bus Tickets',
@@ -13,10 +14,14 @@ export const dynamic = 'force-dynamic'
 export default async function BusesPage() {
   const { buses } = await searchBuses({})
   return (
-    <div className="section-gap bg-[var(--color-background)]">
-      <Container>
-        <SectionHeading title="Buses" description="Compare comfortable intercity rides from trusted operators." />
-        <div className="mt-10 grid gap-5 lg:grid-cols-3">
+    <div className="bg-[var(--color-background)] pb-20">
+      <FlightPageHero
+        compact
+        title="Book bus tickets"
+        subtitle="Compare comfortable intercity rides from trusted operators."
+      />
+      <Container className="pt-10">
+        <div className="grid gap-5 lg:grid-cols-3">
           {buses.map((bus) => (
             <BusResultCard key={bus.id} bus={bus} />
           ))}
