@@ -21,7 +21,11 @@ export default function PrivacyPage() {
           </div>
           <div>
             <h2 className="text-h2 text-[var(--color-text-primary)]">How we use information</h2>
-            <p className="mt-2">We use this information to provide requested services, communicate about bookings, prevent misuse, and meet legal obligations.</p>
+            <p className="mt-2">We use this information to provide requested services, manage your account, process bookings, communicate important updates, prevent misuse, and meet legal obligations. LemonTrip does not sell personal information.</p>
+          </div>
+          <div>
+            <h2 className="text-h2 text-[var(--color-text-primary)]">Your choices</h2>
+            <p className="mt-2">You can review or update your profile details from your account. Contact support if you need help accessing, correcting, or deleting information associated with your account.</p>
           </div>
           <div>
             <h2 className="text-h2 text-[var(--color-text-primary)]">Contact</h2>

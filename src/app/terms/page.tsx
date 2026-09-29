@@ -17,7 +17,8 @@ export default function TermsPage() {
         <section className="mt-10 space-y-6 text-body text-[var(--color-text-secondary)]">
           <div>
             <h2 className="text-h2 text-[var(--color-text-primary)]">Bookings and payments</h2>
-            <p className="mt-2">Availability, prices, supplier terms, cancellations, and refunds may vary by travel product and are shown during the booking process.</p>
+            <p className="mt-2">Availability, prices, supplier terms, cancellations, and refunds may vary by travel product and are shown during the booking process. A booking is confirmed only after the required payment and verification steps complete successfully.</p>
+            <p className="mt-2">Questions about a booking can be raised through the support channels provided on the website.</p>
           </div>
           <div>
             <h2 className="text-h2 text-[var(--color-text-primary)]">Acceptable use</h2>

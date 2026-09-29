@@ -4,22 +4,24 @@ import React from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
 import { ArrowRight, Clock, FileText } from 'lucide-react'
-import { Button, Card, Container, SectionHeading } from '@/components/ui'
+import { Button, Card, Container } from '@/components/ui'
+import { FlightPageHero } from '@/components/flights/FlightPageHero' // generic banner, reused
 import { mockVisaServices } from '@/data/visaServices'
 
 export default function VisaPage() {
   return (
-    <div className="section-gap bg-[var(--color-background)]">
-      <Container>
-        <SectionHeading
-          title="Visa Services"
-          description="Explore guided visa support options for popular destinations."
-        />
-        <div className="mt-8 grid gap-5 md:grid-cols-2 lg:grid-cols-3">
+    <div className="bg-[var(--color-background)] pb-20">
+      <FlightPageHero
+        compact
+        title="Visa Services"
+        subtitle="Explore guided visa support options for popular destinations."
+      />
+      <Container className="pt-10">
+        <div className="grid gap-5 md:grid-cols-2 lg:grid-cols-3">
           {mockVisaServices.map((service) => (
             <Card key={service.id} className="overflow-hidden" hover padding="none">
               <div className="relative h-44">
-                <Image src={service.imageUrl} alt={`${service.country} travel visa destination`} fill sizes="(max-width: 768px) 100vw, 33vw" className="object-cover" />
+                <Image src={service.imageUrl} alt={`${service.country} travel visa destination`} fill sizes="(max-width: 768px) 100vw, 33vw" onError={(event) => { event.currentTarget.src = '/hero.png' }} className="object-cover" />
                 <div className="absolute inset-0 bg-gradient-to-t from-[rgba(44,62,80,0.55)] to-transparent" />
                 <span className="absolute bottom-4 left-4 flex items-center gap-2 font-semibold text-[var(--color-primary)] text-sm">
                   <FileText size={16} />

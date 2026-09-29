@@ -2,9 +2,33 @@
 
 import React, { useState } from 'react'
 import { useRouter } from 'next/navigation'
-import { Plane, MapPin, ArrowRightLeft } from 'lucide-react'
+import { Plane, MapPin, ArrowRightLeft, ArrowRight } from 'lucide-react'
 import { DatePicker } from '@/components/ui/DatePicker'
 import { buildSearchUrl } from '@/lib/searchParams'
+
+/**
+ * FlightSearchForm
+ * ------------------------------------------------------------
+ * BUG FIX: the field row used `md:flex-row`, which switches to a
+ * single row based on VIEWPORT width, not the width of whatever
+ * container the form actually renders inside. That's fine in the
+ * hero (a ~1100px-wide widget on a desktop viewport), but inside
+ * <FlightModifySearch>'s Modal the available width is much
+ * narrower while the viewport is still "desktop" — so all six
+ * fields still tried to force themselves into one row and got
+ * crushed: labels ran into each other ("DEPARTURERETURN"),
+ * placeholders truncated ("Sele date"), and the two swap buttons
+ * (one hidden/shown per viewport breakpoint) both existed in the
+ * DOM and could visually collide.
+ *
+ * Fixed by switching to `flex-wrap` with a `min-w` per field
+ * instead of a viewport breakpoint: this responds to the actual
+ * rendered width of the immediate container, so it stays one row
+ * in the wide hero widget and wraps cleanly to two rows inside
+ * the narrower modal — no crushing, no breakpoint mismatch.
+ * Also collapsed the two duplicate (mobile/desktop) swap buttons
+ * into a single one that's just a normal item in the flex flow.
+ */
 
 export function FlightSearchForm() {
   const router = useRouter()
@@ -16,6 +40,16 @@ export function FlightSearchForm() {
 
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault()
+
+    if (!departureDate) {
+      alert('Please select a departure date.')
+      return
+    }
+
+    if (tripType === 'roundtrip' && !returnDate) {
+      alert('Please select a return date.')
+      return
+    }
 
     if (fromCity && toCity && fromCity.trim().toLowerCase() === toCity.trim().toLowerCase()) {
       alert("Origin and destination cannot be the same.")
@@ -45,17 +79,21 @@ export function FlightSearchForm() {
     setToCity(fromCity)
   }
 
+  const fieldLabelClass = 'mb-1 block text-[11px] font-medium uppercase tracking-wide text-[var(--color-text-muted)]'
+  const fieldInputClass =
+    'w-full h-11 pl-8 pr-2 rounded-[10px] border border-[var(--color-border)] bg-white text-sm text-[var(--color-text-primary)] placeholder:text-[var(--color-text-muted)] focus:outline-none focus:border-[var(--green)] transition-colors'
+
   return (
-    <form onSubmit={handleSearch} className="min-h-[415px] w-full rounded-lg bg-[#063b24] p-3 md:min-h-[253px] lg:min-h-[120px]">
+    <form onSubmit={handleSearch} className="w-full">
       {/* Trip Type */}
-      <div className="flex items-center gap-2 mb-2">
+      <div className="mb-3 flex items-center gap-2">
         <button
           type="button"
           onClick={() => setTripType('oneway')}
-          className={`px-3 py-1 rounded-full text-xs font-medium transition-all ${
+          className={`rounded-full px-3 py-1 text-xs font-semibold transition-all ${
             tripType === 'oneway'
-              ? 'bg-[#063b24] text-[#FFD21A]'
-              : 'bg-[#063b24] text-[#FFD21A] hover:bg-[#0a4b2c]'
+              ? 'bg-[var(--color-primary)] text-[var(--green-dark)]'
+              : 'text-[var(--color-text-muted)] hover:text-[var(--green-dark)]'
           }`}
         >
           One Way
@@ -63,84 +101,77 @@ export function FlightSearchForm() {
         <button
           type="button"
           onClick={() => setTripType('roundtrip')}
-          className={`px-3 py-1 rounded-full text-xs font-medium transition-all ${
+          className={`rounded-full px-3 py-1 text-xs font-semibold transition-all ${
             tripType === 'roundtrip'
-              ? 'bg-[#063b24] text-[#FFD21A]'
-              : 'bg-[#063b24] text-[#FFD21A] hover:bg-[#0a4b2c]'
+              ? 'bg-[var(--color-primary)] text-[var(--green-dark)]'
+              : 'text-[var(--color-text-muted)] hover:text-[var(--green-dark)]'
           }`}
         >
           Round Trip
         </button>
       </div>
 
-      {/* All fields in one row on desktop, stacked on mobile */}
-      <div className="flex flex-col md:flex-row md:items-end gap-2">
+      {/* Fields wrap based on the container's actual width, not the
+          viewport — one row when there's room (hero widget), two
+          rows when there isn't (inside the Modify Search modal) */}
+      <div className="flex flex-wrap items-end gap-3">
         {/* FROM */}
-        <div className="flex-1 min-w-0">
+        <div className="min-w-0 flex-1 basis-full sm:min-w-[150px] sm:basis-[150px]">
+          <label className={fieldLabelClass}>From</label>
           <div className="relative">
-            <Plane size={14} className="absolute left-2.5 top-1/2 -translate-y-1/2 text-[#FFD21A] pointer-events-none" />
+            <Plane size={14} className="pointer-events-none absolute left-2.5 top-1/2 -translate-y-1/2 text-[var(--green)]" />
             <input
               type="text"
               value={fromCity}
               onChange={(e) => setFromCity(e.target.value)}
               placeholder="Departure City"
               required
-              className="w-full h-10 pl-8 pr-2 rounded-[10px] border border-[#063b24]/20 bg-white text-xs text-[#063b24] placeholder:text-[#063b24]/60 focus:outline-none focus:border-[#063b24] transition-colors"
+              className={fieldInputClass}
             />
           </div>
         </div>
 
-        {/* Swap - hidden on mobile, visible on md+ */}
+        {/* Swap — single button, always in flow (no viewport-conditional duplicate) */}
         <button
           type="button"
           onClick={swapCities}
-          className="hidden md:flex w-7 h-7 rounded-full bg-[#063b24] text-white items-center justify-center shadow-sm hover:bg-[#0d4a2b] transition-colors shrink-0 mb-[1px]"
+          className="mb-[1px] flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-[var(--green)] text-white shadow-sm transition-colors hover:bg-[var(--green-2)]"
           aria-label="Swap cities"
         >
-          <ArrowRightLeft size={12} />
+          <ArrowRightLeft size={14} />
         </button>
 
-        {/* Mobile swap - inline between inputs on mobile */}
-        <div className="flex md:hidden items-center justify-center">
-          <button
-            type="button"
-            onClick={swapCities}
-            className="w-7 h-7 rounded-full bg-[#063b24] text-white flex items-center justify-center shadow-sm hover:bg-[#0d4a2b] transition-colors"
-            aria-label="Swap cities"
-          >
-            <ArrowRightLeft size={12} />
-          </button>
-        </div>
-
         {/* TO */}
-        <div className="flex-1 min-w-0">
+        <div className="min-w-0 flex-1 basis-full sm:min-w-[150px] sm:basis-[150px]">
+          <label className={fieldLabelClass}>To</label>
           <div className="relative">
-            <MapPin size={14} className="absolute left-2.5 top-1/2 -translate-y-1/2 text-[#FFD21A] pointer-events-none" />
+            <MapPin size={14} className="pointer-events-none absolute left-2.5 top-1/2 -translate-y-1/2 text-[var(--green)]" />
             <input
               type="text"
               value={toCity}
               onChange={(e) => setToCity(e.target.value)}
               placeholder="Arrival City"
               required
-              className="w-full h-10 pl-8 pr-2 rounded-[10px] border border-[#063b24]/20 bg-white text-xs text-[#063b24] placeholder:text-[#063b24]/60 focus:outline-none focus:border-[#063b24] transition-colors"
+              className={fieldInputClass}
             />
           </div>
         </div>
 
         {/* DEPARTURE */}
-        <div className="flex-1 min-w-0">
+        <div className="min-w-0 flex-1 basis-full sm:min-w-[140px] sm:basis-[140px]">
+          <label className={fieldLabelClass}>Departure</label>
           <DatePicker
             value={departureDate}
             onChange={setDepartureDate}
             placeholder="Select date"
             minDate={today}
             required
-            theme="dark-green"
           />
         </div>
 
         {/* RETURN */}
-        <div className="flex-1 min-w-0">
+        <div className="min-w-0 flex-1 basis-full sm:min-w-[140px] sm:basis-[140px]">
+          <label className={fieldLabelClass}>Return</label>
           <DatePicker
             value={returnDate}
             onChange={setReturnDate}
@@ -148,33 +179,33 @@ export function FlightSearchForm() {
             minDate={departureDate || today}
             disabled={tripType === 'oneway'}
             required={tripType === 'roundtrip'}
-            theme="dark-green"
           />
         </div>
 
         {/* TRAVELLERS & CLASS */}
-        <div className="flex-1 min-w-0">
+        <div className="min-w-0 flex-1 basis-full sm:min-w-[150px] sm:basis-[150px]">
+          <label className={fieldLabelClass}>Travellers &amp; Class</label>
           <div className="relative">
             <select
               defaultValue="1-economy"
-              className="w-full h-10 pl-2 pr-7 rounded-[10px] border border-[#063b24]/20 bg-white text-xs text-[#063b24] appearance-none focus:outline-none focus:border-[#063b24] transition-colors cursor-pointer"
+              className="h-11 w-full cursor-pointer appearance-none rounded-[10px] border border-[var(--color-border)] bg-white pl-2 pr-7 text-sm text-[var(--color-text-primary)] transition-colors focus:outline-none focus:border-[var(--green)]"
             >
               <option value="1-economy">1 Adult, Economy</option>
               <option value="2-economy">2 Adults, Economy</option>
               <option value="1-business">1 Adult, Business</option>
               <option value="2-business">2 Adults, Business</option>
             </select>
-            <ChevronDown size={12} className="absolute right-2 top-1/2 -translate-y-1/2 text-[#063b24] pointer-events-none" />
+            <ChevronDown size={12} className="pointer-events-none absolute right-2 top-1/2 -translate-y-1/2 text-[var(--color-text-muted)]" />
           </div>
         </div>
 
         {/* Search */}
         <button
           type="submit"
-          className="w-full md:w-[130px] h-10 rounded-[10px] bg-[#063b24] hover:bg-[#0d4a2b] text-white font-semibold text-xs transition-colors flex items-center justify-center gap-1.5 shrink-0"
+          className="flex h-11 shrink-0 items-center justify-center gap-1.5 rounded-[10px] bg-[var(--color-primary)] px-5 text-sm font-bold text-[var(--green-dark)] transition-colors hover:bg-[var(--color-primary-hover)]"
         >
-          <Plane size={14} />
           Search Flights
+          <ArrowRight size={15} />
         </button>
       </div>
     </form>
@@ -188,3 +219,5 @@ function ChevronDown({ size, className }: { size: number; className?: string }) 
     </svg>
   )
 }
+  
+

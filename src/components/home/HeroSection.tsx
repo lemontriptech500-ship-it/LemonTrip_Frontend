@@ -1,34 +1,84 @@
 import React from 'react'
 import { TravelSearchWidget } from '@/components/search/TravelSearchWidget'
 
+/**
+ * HeroSection
+ * ------------------------------------------------------------
+ * BUG FIX: the floating search widget was still being clipped at
+ * the bottom no matter how compact the forms got, because
+ * `overflow-hidden` was on the same <section> the widget needed
+ * to overflow past. A parent can't clip overflow AND let a child
+ * spill outside its box — those are contradictory. Moved
+ * `overflow-hidden` onto a new inner wrapper that contains ONLY
+ * the background photo + gradients (which do need to stay clipped
+ * to the hero's box); the search widget is now a sibling of that
+ * wrapper, not nested inside it, so it renders fully regardless
+ * of how tall any given tab's form is.
+ *
+ * DARKENING: a uniform dark overlay (bg-black/20) sits above the
+ * photo and the left-to-right gradient. The header and the search
+ * widget are translucent glass over this photo, so darkening the
+ * photo darkens both. Change the number to adjust:
+ *   /10 subtle · /20 slight · /30 noticeable · /40 dark
+ * For a green tint instead of grey-black, use bg-[#042d1b]/30.
+ */
+
+const TRUST_BADGES = ['Best Price Guarantee', '24/7 Customer Support', 'Safe & Secure Travel']
+
 export function HeroSection() {
   return (
-    <section className="relative h-[560px] overflow-hidden bg-[#063b24] sm:h-[540px] lg:h-[440px] xl:h-[458px]">
-      <div
-        className="pointer-events-none absolute inset-0 z-0 bg-cover bg-center bg-no-repeat"
-        style={{ backgroundImage: "url('/hero.png?hero-v=20260908')" }}
-        role="img"
-        aria-label="Traveller overlooking a green mountain valley"
-      >
+    <section
+    className="relative min-h-[620px] bg-neutral-900 pb-16 sm:min-h-[640px] lg:h-[calc(100svh-260px)] lg:min-h-[620px] lg:pb-0"
+  >
+      {/* Background layer — clipped to the hero's box */}
+      <div className="pointer-events-none absolute inset-0 z-0 overflow-hidden">
+        <div
+          className="absolute inset-0 bg-cover bg-center bg-no-repeat"
+          style={{ backgroundImage: "url('/herosection_bgimage.webp?hero-v=20260908')" }}
+          role="img"
+          aria-label="Traveller overlooking a green mountain valley"
+        />
+        {/* Directional fade — dark on the left where the text sits,
+            fading out toward the right so the photo still reads */}
+        <div className="absolute inset-0 bg-gradient-to-r from-[#042d1b]/75 via-[#042d1b]/35 to-transparent" />
+        {/* Uniform darkening — makes the photo (and the glass header /
+            search widget over it) slightly darker */}
         <div className="absolute inset-0 bg-black/25" />
       </div>
 
-      <div className="relative z-10 flex h-full flex-col items-center px-4 py-8 sm:px-6 sm:py-10 lg:px-8 lg:py-5">
-        <div className="flex w-full max-w-[940px] flex-1 flex-col items-center justify-center text-center">
-          <p className="mb-3 text-[10px] font-bold uppercase tracking-[0.2em] text-[#168CC8] sm:text-[11px] md:text-xs md:mb-4">
-            Enterprise Travel Solutions
-          </p>
-          <h1 className="mb-3 max-w-3xl text-[clamp(2.2rem,6vw,5rem)] font-extrabold leading-[0.95] tracking-[-0.04em] text-white md:mb-4 lg:text-[3.5rem]">
-            Streamline Your Business<br />Travel
-          </h1>
-          <p className="max-w-[750px] px-2 text-sm leading-relaxed text-white/90 md:text-base">
-            Book flights, hotels, trains, buses, and holiday packages all in one place. Need a visa? We&apos;ve got you covered with expert assistance.
-          </p>
-        </div>
+      {/* <div className="relative z-10 flex h-full flex-col px-4 pt-16 sm:px-6 sm:pt-20 lg:pl-16 lg:pr-8 lg:pt-20 xl:pl-24">
+        <div className="mx-auto w-full max-w-[760px] text-left text-white lg:mx-0">
+          <span className="mb-5 inline-flex items-center gap-2 rounded-full border border-white/30 bg-white/10 px-4 py-2 text-[11px] font-semibold uppercase tracking-wide backdrop-blur-sm sm:text-xs">
+            ✦ Premium Travel Experience
+          </span>
 
-        <div className="w-full max-w-[1100px]">
-          <TravelSearchWidget />
+          <h1 className="!font-semibold text-display tracking-tight text-white">
+            Travel Beyond{' '}
+            <span className="text-[var(--color-primary)]">Expectations.</span>
+          </h1>
+
+          <p className="mt-5 max-w-[540px] text-sm leading-relaxed text-white/85 sm:text-base md:text-lg">
+            Discover the world with reliable travel solutions, curated experiences and
+            technology-driven service from LemonTrip.
+          </p>
+
+          <div className="mt-7 flex flex-wrap gap-2.5 sm:gap-3">
+            {TRUST_BADGES.map((label) => (
+              <span
+                key={label}
+                className="rounded-xl bg-white px-3.5 py-2.5 text-[11px] font-bold text-[var(--color-secondary)] shadow-sm sm:text-xs"
+              >
+                ✓ {label}
+              </span>
+            ))}
+          </div>
         </div>
+      </div> */}
+              
+      {/* The longer mobile forms need their own document flow. Floating the
+          card only from desktop prevents it from covering the hero copy. */}
+      <div className="relative z-20 mx-4 mt-8 max-w-[1100px] sm:mx-6 lg:absolute lg:inset-x-8 lg:bottom-[-40px] lg:mx-auto lg:mt-0">
+        <TravelSearchWidget />
       </div>
     </section>
   )

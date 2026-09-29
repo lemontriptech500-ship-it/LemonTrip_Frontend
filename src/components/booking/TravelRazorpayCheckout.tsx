@@ -68,10 +68,12 @@ export function TravelRazorpayCheckout({
   const [couponCode, setCouponCode] = useState('')
   const [couponMessage, setCouponMessage] = useState<string | null>(null)
   const [couponApplied, setCouponApplied] = useState(false)
+  const [couponDiscount, setCouponDiscount] = useState(0)
 
   async function handleApplyCoupon() {
     setCouponMessage(null)
     setCouponApplied(false)
+    setCouponDiscount(0)
     const code = couponCode.trim()
     if (!code) {
       setCouponMessage('Enter a coupon code.')
@@ -85,7 +87,8 @@ export function TravelRazorpayCheckout({
       return
     }
     setCouponApplied(true)
-    setCouponMessage(`Coupon applied. Discount: ${result.discountAmount ?? 0}`)
+    setCouponDiscount(result.discountAmount ?? 0)
+    setCouponMessage(`Coupon applied. Discount: ₹${(result.discountAmount ?? 0).toLocaleString('en-IN')}`)
   }
 
   async function handleRazorpayCheckout() {
@@ -225,6 +228,10 @@ export function TravelRazorpayCheckout({
       </div>
       {couponMessage && <p className={`mt-2 text-sm ${couponApplied ? 'text-[var(--color-success)]' : 'text-[var(--color-error)]'}`}>{couponMessage}</p>}
       {error && <p className="mt-3 text-sm font-medium text-[var(--color-error)]">{error}</p>}
+      <div className="mt-4 flex items-center justify-between border-t border-[var(--color-border)] pt-4 text-sm">
+        <span className="text-[var(--color-text-secondary)]">Amount to pay</span>
+        <span className="font-bold text-[var(--color-text-primary)]">₹{Math.max(0, (showQuantity ? amount * Number(quantity) : amount) - couponDiscount).toLocaleString('en-IN')}</span>
+      </div>
       <Button 
         className="mt-4" 
         onClick={paymentMethod === 'wallet' ? handleWalletPayment : handleRazorpayCheckout} 

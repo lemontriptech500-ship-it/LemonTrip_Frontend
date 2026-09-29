@@ -1,7 +1,7 @@
 'use client'
 
 import React, { Suspense, useEffect, useMemo, useState } from 'react'
-import { useRouter, useSearchParams } from 'next/navigation'
+import { useSearchParams } from 'next/navigation'
 import { Building, Filter } from 'lucide-react'
 import { Button, Container } from '@/components/ui'
 import { EmptyState } from '@/components/common'
@@ -9,8 +9,8 @@ import type { Hotel } from '@/types/hotels'
 import { searchHotels } from '@/services/hotelService'
 import { useHotelFilters } from '@/hooks/useHotelFilters'
 import { getHotelSearchFromUrl, getNightCount } from '@/lib/hotelUtils'
-import { HotelSearchSummary } from '@/components/hotels/HotelSearchSummary'
-import { HotelModifySearch } from '@/components/hotels/HotelModifySearch'
+import { HotelPageHero } from '@/components/hotels/HotelPageHero'
+import { HotelSearchForm } from '@/components/search/HotelSearchForm' // <-- check this name/path
 import { HotelFilters, HotelMobileFilters } from '@/components/hotels/HotelFilters'
 import { HotelResultsHeader } from '@/components/hotels/HotelResultsHeader'
 import { HotelResultCard } from '@/components/hotels/HotelResultCard'
@@ -22,7 +22,6 @@ function HotelResultsContent() {
   const search = useMemo(() => getHotelSearchFromUrl(new URLSearchParams(searchQuery)), [searchQuery])
   const nights = getNightCount(search.checkIn, search.checkOut)
 
-  const [isModifyOpen, setIsModifyOpen] = useState(false)
   const [isMobileFiltersOpen, setIsMobileFiltersOpen] = useState(false)
 
   const [matchedHotels, setMatchedHotels] = useState<Hotel[]>([])
@@ -59,7 +58,8 @@ function HotelResultsContent() {
     filteredCount,
   } = useHotelFilters(matchedHotels)
 
-  const openModifySearch = () => setIsModifyOpen(true)
+  // The search form is now on the page, so "modify search" just scrolls to it
+  const scrollToSearch = () => window.scrollTo({ top: 0, behavior: 'smooth' })
 
   const filterProps = {
     filters,
@@ -68,13 +68,18 @@ function HotelResultsContent() {
     hasActiveFilters,
   }
 
-  return (
-    <div className="section-gap pb-20">
-      <Container>
-        <div className="mb-8">
-          <HotelSearchSummary search={search} onModifySearch={openModifySearch} />
-        </div>
+  const heroTitle = search.destination ? `Hotels in ${search.destination}` : 'Find your stay'
 
+  return (
+    // No `section-gap`: the hero handles its own top spacing
+    <div className="pb-20">
+      <HotelPageHero title={heroTitle} subtitle="Compare stays and book the right room in minutes.">
+        <div className="rounded-[var(--radius-xl)] border border-[var(--color-border-light)] bg-white p-4 shadow-lg sm:p-6">
+          <HotelSearchForm />
+        </div>
+      </HotelPageHero>
+
+      <Container className="pt-10">
         {isLoading ? (
           <div className="flex flex-col gap-4" aria-busy="true" aria-label="Loading hotel search results">
             <HotelResultSkeleton />
@@ -85,7 +90,7 @@ function HotelResultsContent() {
             title="No stays found"
             description="We couldn't find any hotels right now. Try a destination, or adjust your search."
             icon={<Building />}
-            action={{ label: 'Modify search', onClick: openModifySearch }}
+            action={{ label: 'Change search', onClick: scrollToSearch }}
           />
         ) : (
           <div className="flex flex-col lg:flex-row gap-8">
@@ -93,7 +98,7 @@ function HotelResultsContent() {
               <HotelFilters {...filterProps} />
             </aside>
 
-            <div className="lg:hidden flex justify-end -mt-4">
+            <div className="lg:hidden flex justify-end">
               <Button
                 variant="outline"
                 size="sm"
@@ -136,12 +141,6 @@ function HotelResultsContent() {
         )}
       </Container>
 
-      <HotelModifySearch
-        isOpen={isModifyOpen}
-        onClose={() => setIsModifyOpen(false)}
-        currentSearch={search}
-      />
-
       <HotelMobileFilters
         isOpen={isMobileFiltersOpen}
         onClose={() => setIsMobileFiltersOpen(false)}
@@ -151,14 +150,14 @@ function HotelResultsContent() {
   )
 }
 
-
-
 export default function HotelsPage() {
   return (
     <Suspense
       fallback={
-        <div className="section-gap pb-20">
-          <Container>
+        <div className="pb-20">
+          {/* Keep the banner in the fallback so the transparent header is never over a white page */}
+          <HotelPageHero title="Find your stay" />
+          <Container className="pt-10">
             <div className="flex flex-col gap-4" aria-busy="true" aria-label="Loading hotel search results">
               <HotelResultSkeleton />
               <HotelResultSkeleton />

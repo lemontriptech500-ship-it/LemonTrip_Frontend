@@ -42,7 +42,7 @@ export const mockVisaServices: VisaService[] = [
     visaType: 'B1/B2 Tourist Visa',
     processingTime: '3 to 6 weeks',
     startingFrom: 'From INR 14,999',
-    imageUrl: 'https://images.unsplash.com/photo-1485738422979-f5c462d49f04?w=900&q=85',
+    imageUrl: '/hero.png',
     documents: ['Passport', 'DS-160 Confirmation', 'Photo', 'Bank Statement'],
   },
   {

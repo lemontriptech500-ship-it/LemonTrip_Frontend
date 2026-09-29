@@ -3,6 +3,22 @@ import Image from 'next/image'
 import { Container, SectionHeading } from '@/components/ui'
 import { Layers, Zap, ShieldCheck, Headphones, PlaneTakeoff, CreditCard } from 'lucide-react'
 
+/**
+ * WhyChooseUs
+ * ------------------------------------------------------------
+ * `align="center"` now works — SectionHeading has a centered
+ * variant (title + description stacked, center-aligned) for
+ * exactly this kind of "intro, then symmetric grid" section.
+ *
+ * Card styling refined to match the rest of the homepage:
+ *  - Icon badge corners bumped to rounded-xl (was rounded-md)
+ *    and given a touch more size, so it reads as a proper icon
+ *    tile rather than a small square.
+ *  - Card corners bumped to rounded-2xl, hover shadow deepened
+ *    to --shadow-md (was a generic shadow-sm), and the border
+ *    softened slightly on hover for a subtle lift effect.
+ */
+
 const features = [
   {
     id: 1,
@@ -44,32 +60,35 @@ const features = [
 
 export function WhyChooseUs() {
   return (
-    <section className="section-gap bg-[var(--color-surface)] relative overflow-hidden">
+    <section className="section-gap relative overflow-hidden bg-[var(--color-surface)]">
       {/* Background Logo */}
-      <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
+      <div className="pointer-events-none absolute inset-0 flex items-center justify-center">
         <Image
           src="/logo.svg"
           alt=""
           width={500}
           height={500}
-          className="w-[500px] h-[500px] object-contain opacity-[0.04]"
+          className="h-[500px] w-[500px] object-contain opacity-[0.04]"
         />
       </div>
 
       <Container className="relative z-10">
-        <SectionHeading 
-          title="Why Choose LemonTrip" 
+        <SectionHeading
+          title="Why Choose LemonTrip"
           description="We are committed to providing you with the best travel booking experience."
           align="center"
         />
 
-        <div className="mt-10 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="mt-10 grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
           {features.map((feature) => {
             const Icon = feature.icon
             return (
-              <div key={feature.id} className="flex gap-4 p-5 rounded-[var(--radius-lg)] border border-[var(--color-border-light)] bg-[var(--color-surface)] hover:shadow-sm transition-shadow">
+              <div
+                key={feature.id}
+                className="flex gap-4 rounded-2xl border border-[var(--color-border-light)] bg-[var(--color-surface)] p-5 transition-shadow duration-300 hover:border-[var(--color-border)] hover:shadow-[var(--shadow-md)]"
+              >
                 <div className="shrink-0">
-                  <div className="w-10 h-10 rounded-[var(--radius-md)] bg-[var(--color-primary)] text-[var(--green-dark)] flex items-center justify-center shadow-sm">
+                  <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-[var(--color-primary)] text-[var(--green-dark)] shadow-sm">
                     <Icon size={20} />
                   </div>
                 </div>

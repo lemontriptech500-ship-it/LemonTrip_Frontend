@@ -2,7 +2,21 @@
 
 import React from 'react'
 import Image from 'next/image'
-import { Container } from '@/components/ui'
+import { SectionHeading } from '@/components/ui'
+
+/**
+ * PopularDestinations
+ * ------------------------------------------------------------
+ * Restyled to match the reference index.html ".destinations"
+ * section:
+ *  - shared SectionHeading (title left / description right)
+ *    instead of the small yellow underline-accent heading
+ *  - taller cards (220px mobile / 260px desktop, vs. the old
+ *    17:10 aspect ratio) so the destination name has more room
+ *  - gradient overlay now starts at ~35% of the card height
+ *    (matching the reference) instead of a shallow bottom fade,
+ *    which reads as noticeably more premium
+ */
 
 const destinations = [
   {
@@ -45,25 +59,18 @@ const destinations = [
 
 export function PopularDestinations() {
   return (
-    <section className="w-full bg-white">
-      <div className="mx-auto max-w-[1200px] px-4 pb-3 pt-4 sm:pb-5 sm:pt-6 lg:pb-3 lg:pt-4">
-        <div className="mb-3 flex items-end justify-between">
-          <div>
-            <h2 className="text-[#111111] text-[20px] font-bold leading-tight">
-              Popular Destinations
-            </h2>
-            <span className="block mt-1.5 h-[3px] w-[45px] rounded-full bg-[var(--color-primary)]" />
-          </div>
-        </div>
+    <section className="w-full bg-white py-12 sm:py-16 lg:py-10">
+      <div className="mx-auto max-w-[1280px] px-4 sm:px-6 lg:px-8">
+        <SectionHeading
+          title="Popular Destinations"
+          description="Handpicked places and experiences designed for unforgettable journeys."
+        />
 
-        <div
-          className="grid grid-cols-2 gap-3 sm:grid-cols-3 sm:gap-4 lg:grid-cols-6"
-        >
+        <div className="mt-8 grid grid-cols-2 gap-3 sm:mt-10 sm:grid-cols-3 sm:gap-4 lg:grid-cols-6">
           {destinations.map((dest) => (
             <div
               key={dest.name}
-              data-card
-              className="relative aspect-[17/10] w-full overflow-hidden rounded-[10px] group"
+              className="group relative h-[220px] w-full overflow-hidden rounded-2xl lg:h-[260px]"
             >
               <Image
                 src={dest.image}
@@ -72,16 +79,13 @@ export function PopularDestinations() {
                 sizes="(max-width: 768px) 50vw, 16vw"
                 className="absolute inset-0 h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/65 via-black/5 to-transparent" />
-              <div className="absolute bottom-0 left-0 p-3">
-                <p className="text-white text-[15px] font-semibold leading-tight">
-                  {dest.name}
-                </p>
-                <p className="text-white text-[11px] font-medium">
-                  {dest.label}
-                </p>
-                <p className="text-white text-[14px] font-bold">
-                  {dest.price}
+              {/* gradient starts at 35% down, matching the reference */}
+              <div className="absolute inset-x-0 bottom-0 top-[35%] bg-gradient-to-t from-black/80 via-black/25 to-transparent" />
+
+              <div className="absolute bottom-0 left-0 w-full p-4">
+                <p className="text-lg font-bold leading-tight text-white">{dest.name}</p>
+                <p className="text-xs font-medium text-white/90">
+                  {dest.label} {dest.price}
                 </p>
               </div>
             </div>

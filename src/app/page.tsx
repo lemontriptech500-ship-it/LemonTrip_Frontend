@@ -2,7 +2,7 @@ import type { Metadata } from 'next'
 import { HeroSection } from '@/components/home/HeroSection'
 import { TravelBenefits } from '@/components/home/TravelBenefits'
 import { PopularDestinations } from '@/components/home/PopularDestinations'
-import { QuickCategories } from '@/components/home/QuickCategories'
+// import { QuickCategories } from '@/components/home/QuickCategories'
 import { FeaturedOffers } from '@/components/home/FeaturedOffers'
 import { TrendingDestinations } from '@/components/home/TrendingDestinations'
 import { PopularPackages } from '@/components/home/PopularPackages'
@@ -26,8 +26,18 @@ export default async function HomePage() {
         type="application/ld+json"
         dangerouslySetInnerHTML={{
           __html: JSON.stringify([
-            { '@context': 'https://schema.org', '@type': 'Organization', name: 'LemonTrip', url: 'https://lemontrip.in/' },
-            { '@context': 'https://schema.org', '@type': 'WebSite', name: 'LemonTrip', url: 'https://lemontrip.in/' },
+            {
+              '@context': 'https://schema.org',
+              '@type': 'Organization',
+              name: 'LemonTrip',
+              url: 'https://lemontrip.in/',
+            },
+            {
+              '@context': 'https://schema.org',
+              '@type': 'WebSite',
+              name: 'LemonTrip',
+              url: 'https://lemontrip.in/',
+            },
           ]),
         }}
       />
@@ -35,7 +45,7 @@ export default async function HomePage() {
       <HeroSection />
       <TravelBenefits />
       <PopularDestinations />
-      <QuickCategories />
+      {/* <QuickCategories /> */}
       <FeaturedOffers />
       <TrendingDestinations />
       <PopularPackages />

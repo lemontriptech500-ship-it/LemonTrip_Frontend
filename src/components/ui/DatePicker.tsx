@@ -39,7 +39,7 @@ export function DatePicker({
 
     const rect = trigger.getBoundingClientRect()
     const popupWidth = Math.min(288, window.innerWidth - 24)
-    const popupHeight = 360
+    const popupHeight = Math.min(390, window.innerHeight - 24)
     const gap = 8
     const top = rect.bottom + gap + popupHeight <= window.innerHeight
       ? rect.bottom + gap
@@ -60,6 +60,13 @@ export function DatePicker({
 
   useEffect(() => {
     if (!isOpen) return
+    const anchorDate = value || minDate
+    if (anchorDate) {
+      const parsed = parseDate(anchorDate)
+      if (!Number.isNaN(parsed.getTime())) {
+        setCurrentMonth(new Date(parsed.getFullYear(), parsed.getMonth(), 1))
+      }
+    }
     updatePopupPosition()
     const handleViewportChange = () => updatePopupPosition()
     window.addEventListener('resize', handleViewportChange)
@@ -68,7 +75,7 @@ export function DatePicker({
       window.removeEventListener('resize', handleViewportChange)
       window.removeEventListener('scroll', handleViewportChange, true)
     }
-  }, [isOpen])
+  }, [isOpen, minDate, value])
 
   const formatDate = (date: Date) => {
     return date.toISOString().split('T')[0]
@@ -133,13 +140,14 @@ export function DatePicker({
   const monthNames = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']
   const dayNames = ['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa']
   const isDarkGreen = theme === 'dark-green'
+  const canSelectToday = !minDate || formatDate(new Date()) >= minDate
 
   const displayValue = value ? parseDate(value).toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric' }) : ''
 
   return (
     <div ref={containerRef} className={cn('flex flex-col gap-1.5', className)}>
       {label && (
-        <label className={cn('text-label', isDarkGreen ? 'text-[#FFD21A]' : 'text-[var(--color-text-primary)]')}>
+        <label className={cn('whitespace-nowrap text-label', isDarkGreen ? 'text-[#FFD21A]' : 'text-[var(--color-text-primary)]')}>
           {label}
           {required && <span className="text-[var(--color-error)] ml-0.5">*</span>}
         </label>
@@ -153,7 +161,7 @@ export function DatePicker({
           disabled={disabled}
           className={cn(
             'w-full h-11 px-3 rounded-[var(--radius-md)] border bg-[var(--color-surface)]',
-            'text-left text-sm flex items-center gap-2',
+            'min-w-0 text-left text-sm flex items-center gap-2 overflow-hidden',
             'transition-all duration-150',
             'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[rgba(39,174,96,0.20)] focus-visible:border-[var(--color-primary)]',
             !disabled && 'hover:border-[var(--color-border-strong)] cursor-pointer',
@@ -163,15 +171,15 @@ export function DatePicker({
           )}
         >
           <Calendar size={16} className={cn(isDarkGreen ? 'text-[#FFD21A]' : 'text-[var(--color-text-muted)]', 'shrink-0')} />
-          <span className={cn(displayValue ? (isDarkGreen ? 'text-[var(--color-primary-dark)]' : 'text-[var(--color-text-primary)]') : (isDarkGreen ? 'text-[var(--color-primary-dark)]/60' : 'text-[var(--color-text-muted)]'))}>
+          <span className={cn('min-w-0 truncate', displayValue ? (isDarkGreen ? 'text-[var(--color-primary-dark)]' : 'text-[var(--color-text-primary)]') : (isDarkGreen ? 'text-[var(--color-primary-dark)]/60' : 'text-[var(--color-text-muted)]'))}>
             {displayValue || placeholder}
           </span>
         </button>
 
         {isOpen && (
           <div
-            className="fixed z-[120] w-[min(18rem,calc(100vw-1.5rem))] rounded-[var(--radius-lg)] border border-[var(--color-border)] bg-[var(--color-surface)] p-4 shadow-xl animate-fade-in"
-            style={{ top: popupPosition.top, left: popupPosition.left }}
+            className="fixed z-[120] max-h-[calc(100vh-1.5rem)] w-[min(18rem,calc(100vw-1.5rem))] overflow-y-auto rounded-[var(--radius-lg)] border border-[var(--color-border)] bg-[var(--color-surface)] p-4 shadow-xl animate-fade-in"
+            style={{ top: popupPosition.top, left: popupPosition.left, maxWidth: 'calc(100vw - 1.5rem)' }}
           >
             {/* Header */}
             <div className="mb-4 flex items-center justify-between">
@@ -243,7 +251,8 @@ export function DatePicker({
                   onChange?.(formatDate(new Date()))
                   setIsOpen(false)
                 }}
-                className="w-full py-2 text-sm font-medium text-[var(--color-primary)] hover:bg-[var(--color-primary-soft)] rounded-[var(--radius-sm)] transition-colors"
+                disabled={!canSelectToday}
+                className="w-full rounded-[var(--radius-sm)] py-2 text-sm font-medium text-[var(--color-primary)] transition-colors hover:bg-[var(--color-primary-soft)] disabled:cursor-not-allowed disabled:opacity-40"
               >
                 Today
               </button>

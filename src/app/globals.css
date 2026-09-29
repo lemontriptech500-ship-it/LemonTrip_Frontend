@@ -20,6 +20,10 @@
   --bg: #f7faf8;
   --line: #e2eae5;
 
+  /* ─── Font stacks (variables are injected by next/font in layout.tsx) ─── */
+  --font-sans:  var(--font-manrope), system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --font-serif: var(--font-cormorant), Georgia, 'Times New Roman', serif;
+
   /* ─── Brand Primary ─── */
   --color-primary:        var(--yellow);
   --color-primary-hover:  #e4bb00;
@@ -87,8 +91,8 @@
   --shadow-xs:   0 1px 2px 0 rgb(44 62 80 / 0.04);
   --shadow-sm:   0 1px 3px 0 rgb(44 62 80 / 0.06), 0 1px 2px -1px rgb(44 62 80 / 0.04);
   --shadow-md:   0 4px 8px -2px rgb(44 62 80 / 0.08), 0 2px 4px -2px rgb(44 62 80 / 0.04);
-  --shadow-lg:   0 10px 20px -5px rgb(44 62 80 / 0.08), 0 4px 8px -4px rgb(44 62 80 / 0.04);
-  --shadow-xl:   0 20px 40px -10px rgb(44 62 80 / 0.10), 0 8px 16px -8px rgb(44 62 80 / 0.06);
+  --shadow-lg:   0 18px 40px -8px rgba(4, 53, 31, 0.14), 0 4px 10px -4px rgba(4, 53, 31, 0.08);
+  --shadow-xl:   0 24px 60px -10px rgba(4, 53, 31, 0.16), 0 8px 20px -8px rgba(4, 53, 31, 0.10);
 
   /* ─── Transitions ─── */
   --transition-fast: 150ms cubic-bezier(0.4, 0, 0.2, 1);
@@ -120,6 +124,7 @@
     box-sizing: border-box;
     margin: 0;
     padding: 0;
+    min-width: 0;
   }
 
   html {
@@ -137,15 +142,25 @@
     }
   }
 
+  /* Manrope is the single sans for the whole site. */
   body {
     background-color: var(--color-background);
     color: var(--color-text-primary);
-    font-family: var(--font-jakarta), system-ui, sans-serif;
+    font-family: var(--font-sans);
     font-size: 0.9375rem;
     line-height: 1.65;
+    letter-spacing: -0.003em;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
     overflow-x: clip;
+    overflow-wrap: anywhere;
+  }
+
+  /* Form controls do not inherit fonts by default. */
+  button, input, select, textarea {
+    font-family: inherit;
+    letter-spacing: inherit;
   }
 
   img, video {
@@ -172,40 +187,56 @@
     background-color: var(--color-primary-soft);
     color: var(--color-text-primary);
   }
+
+  /* Page titles use the elegant serif. Cormorant Garamond has a small
+     x-height, so sizes are ~10% larger than they would be for Playfair. */
+  h1:not(.text-display) {
+    font-family: var(--font-serif);
+    font-size: clamp(2.4rem, 4.4vw, 3.9rem);
+    font-weight: 700;
+    line-height: 1.05;
+    letter-spacing: -0.01em;
+  }
 }
 
 /* ============================================================
    TYPOGRAPHY SYSTEM
+   ------------------------------------------------------------
+   Two families only:
+   - Cormorant Garamond (serif): .text-display, .text-h1, .text-h2
+   - Manrope (sans): everything else, including h3/h4, labels,
+     captions, nav, buttons and card titles.
    ============================================================ */
 
 @layer components {
   .text-display {
-    @apply text-4xl font-bold leading-[1.10] tracking-tight;
-    font-family: var(--font-montserrat), system-ui, sans-serif;
+    font-family: var(--font-serif);
+    @apply text-5xl font-bold leading-[1.02] tracking-tight;
   }
   @media (min-width: 768px) {
-    .text-display { font-size: 3.5rem; }
+    .text-display { font-size: clamp(3.4rem, 6.4vw, 5.9rem); letter-spacing: -0.015em; }
   }
 
   .text-h1 {
-    @apply text-2xl font-bold leading-[1.15] tracking-tight;
-    font-family: var(--font-montserrat), system-ui, sans-serif;
+    font-family: var(--font-serif);
+    @apply text-4xl font-bold leading-[1.05] tracking-tight;
   }
   @media (min-width: 768px) {
-    .text-h1 { font-size: 2.25rem; }
+    .text-h1 { font-size: 2.95rem; }
   }
 
   .text-h2 {
-    @apply text-xl font-semibold leading-[1.20] tracking-tight;
-    font-family: var(--font-montserrat), system-ui, sans-serif;
+    font-family: var(--font-serif);
+    @apply text-3xl font-bold leading-[1.1] tracking-tight;
   }
   @media (min-width: 768px) {
-    .text-h2 { font-size: 1.625rem; }
+    .text-h2 { font-size: 2.6rem; }
   }
 
   .text-h3 {
     @apply text-lg font-semibold leading-[1.25];
-    font-family: var(--font-montserrat), system-ui, sans-serif;
+    font-family: var(--font-sans);
+    letter-spacing: -0.01em;
   }
   @media (min-width: 768px) {
     .text-h3 { font-size: 1.25rem; }
@@ -213,7 +244,8 @@
 
   .text-h4 {
     @apply text-base font-semibold leading-snug;
-    font-family: var(--font-montserrat), system-ui, sans-serif;
+    font-family: var(--font-sans);
+    letter-spacing: -0.01em;
   }
 
   .text-body-lg {
@@ -236,12 +268,12 @@
 
   .text-label {
     @apply text-xs font-semibold uppercase tracking-wider;
-    font-family: var(--font-montserrat), system-ui, sans-serif;
+    font-family: var(--font-sans);
   }
 
   .text-caption {
     @apply text-xs font-normal leading-normal tracking-wide;
-    font-family: var(--font-montserrat), system-ui, sans-serif;
+    font-family: var(--font-sans);
   }
 
   /* ============================================================

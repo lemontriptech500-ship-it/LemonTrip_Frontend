@@ -1,23 +1,28 @@
 import type { Metadata } from 'next'
-import { Plus_Jakarta_Sans, Montserrat } from 'next/font/google'
+import { Manrope, Cormorant_Garamond } from 'next/font/google'
 import { AppShell } from '@/components/layout'
 import { SITE_NAME } from '@/constants'
 import './globals.css'
+import ClarityInit from '@/components/ClarityInit'
 
 // ============================================================
 // Fonts loaded via next/font for zero-layout-shift.
-//  - --font-jakarta  → main body text
-//  - --font-montserrat → headings & non-body text
+//  - --font-manrope   → body text, nav, buttons, labels, captions,
+//                       card titles (modern, refined sans)
+//  - --font-cormorant → elegant serif for h1 / section titles only
 // ============================================================
-const jakarta = Plus_Jakarta_Sans({
+
+const manrope = Manrope({
   subsets: ['latin'],
-  variable: '--font-jakarta',
+  weight: ['400', '500', '600', '700'],
+  variable: '--font-manrope',
   display: 'swap',
 })
 
-const montserrat = Montserrat({
+const cormorant = Cormorant_Garamond({
   subsets: ['latin'],
-  variable: '--font-montserrat',
+  weight: ['500', '600', '700'],
+  variable: '--font-cormorant',
   display: 'swap',
 })
 
@@ -83,8 +88,13 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="en" className={`${jakarta.variable} ${montserrat.variable}`} data-scroll-behavior="smooth">
+    <html
+      lang="en"
+      className={`${manrope.variable} ${cormorant.variable}`}
+      data-scroll-behavior="smooth"
+    >
       <body suppressHydrationWarning>
+        <ClarityInit />
         <AppShell>{children}</AppShell>
       </body>
     </html>

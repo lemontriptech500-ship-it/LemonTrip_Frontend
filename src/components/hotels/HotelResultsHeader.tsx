@@ -36,7 +36,7 @@ export function HotelResultsHeader({
           id="hotel-sort"
           value={sortOption}
           onChange={(e) => onSortChange(e.target.value as HotelSortOption)}
-          className="min-w-[180px]"
+          className="min-w-0 flex-1 sm:min-w-[180px] sm:flex-none"
         >
           <option value="recommended">Recommended</option>
           <option value="price_asc">Price: low to high</option>
