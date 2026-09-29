@@ -63,7 +63,7 @@ export function AccountEntry({ isScrolled = true }: AccountEntryProps) {
         <button
           type="button"
           onClick={() => openAuthModal('signup')}
-          className="inline-flex h-9 shrink-0 items-center justify-center whitespace-nowrap rounded-[10px] bg-[var(--yellow)] px-4 text-sm font-bold text-[var(--green-dark)] shadow-[0_8px_18px_rgba(255,210,26,0.25)] transition hover:brightness-95 xl:h-10 xl:px-6"
+          className="inline-flex h-9 shrink-0 items-center justify-center whitespace-nowrap rounded-[10px] bg-[var(--yellow)] px-4 text-sm font-bold text-[var(--green-dark)]  transition hover:brightness-95 xl:h-10 xl:px-6"
         >
           Book Now
         </button>
@@ -97,7 +97,7 @@ export function AccountEntry({ isScrolled = true }: AccountEntryProps) {
           isScrolled — it's an overlay on top of the page, not part of
           the glass header itself, so its own text colors stay fixed. */}
       {isOpen && (
-        <div className="absolute right-0 top-full mt-2 w-64 rounded-[12px] border border-[#e7efe9] bg-white p-4 shadow-lg">
+        <div className="absolute right-0 top-full mt-2 w-64 rounded-[12px] border border-[#e7efe9] bg-white p-4   ">
           <p className="text-sm font-bold text-[var(--ink)]">{user.name}</p>
           <p className="mt-0.5 truncate text-xs text-[var(--color-text-secondary,#6b7a70)]">{user.email}</p>
 

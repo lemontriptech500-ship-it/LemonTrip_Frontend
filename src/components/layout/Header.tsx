@@ -30,6 +30,7 @@ const HERO_ROUTES = [
   '/profile',
   '/wallet',
   '/bookings',
+  '/cart',
 ]
 
 function hasHeroBanner(pathname: string) {
@@ -80,11 +81,11 @@ export function Header() {
           >
             <Link
               href="/"
-              className="relative inline-flex h-[38px] w-[112px] shrink-0 items-center sm:h-[52px] sm:w-[168px] lg:h-[62px] lg:w-[196px]"
+              className="relative inline-flex h-[38px] w-[112px] shrink-0 items-center sm:h-[52px] sm:w-[168px] lg:h-[62px] lg:w-[120px]"
               aria-label={`${SITE_NAME} — Go to homepage`}
             >
               <Image
-                src="/website_logo.webp"
+                src="/header_logo.png"
                 alt={`${SITE_NAME} Logo`}
                 fill
                 sizes="(max-width: 640px) 112px, (max-width: 1024px) 168px, 196px"

@@ -4,6 +4,21 @@ import { Facebook, Instagram, Linkedin, Mail, MessageCircle, ArrowUpRight } from
 import { Container } from '@/components/ui'
 import { SITE_NAME, SITE_TAGLINE, FOOTER_NAV } from '@/constants'
 import { NewsletterSignup } from './NewsletterSignup'
+import { FooterAuthLink } from './FooterAuthLink'
+function getAuthLink(href: string): { mode: 'signin' | 'signup'; requireAuth: boolean } | null {
+  switch (href) {
+    case '/login':
+      return { mode: 'signin', requireAuth: false }
+    case '/signup':
+    case '/register':
+      return { mode: 'signup', requireAuth: false }
+    case '/profile':
+      return { mode: 'signin', requireAuth: true }
+    default:
+      return null
+  }
+}
+
 
 export function Footer() {
   const currentYear = new Date().getFullYear()
@@ -65,19 +80,29 @@ export function Footer() {
                   {group.heading}
                 </h3>
                 <ul className="flex flex-col gap-3">
-                  {group.links.map((link) => (
-                    <li key={link.href}>
-                      <Link
-                        href={link.href}
-                        className="group inline-flex items-center gap-1 text-sm text-[rgba(253,254,255,0.85)] hover:text-[var(--color-primary)] transition-colors"
-                      >
-                        <span className="border-b border-transparent group-hover:border-[var(--color-primary)] transition-all">
-                          {link.label}
-                        </span>
-                        <ArrowUpRight size={12} className="opacity-0 group-hover:opacity-100 transition-opacity" />
-                      </Link>
-                    </li>
-                  ))}
+                {group.links.map((link) => {
+  const auth = getAuthLink(link.href)
+
+  return (
+    <li key={link.href}>
+      {auth ? (
+        <FooterAuthLink href={link.href} mode={auth.mode} requireAuth={auth.requireAuth}>
+          {link.label}
+        </FooterAuthLink>
+      ) : (
+        <Link
+          href={link.href}
+          className="group inline-flex items-center gap-1 text-sm text-[rgba(253,254,255,0.85)] hover:text-[var(--color-primary)] transition-colors"
+        >
+          <span className="border-b border-transparent group-hover:border-[var(--color-primary)] transition-all">
+            {link.label}
+          </span>
+          <ArrowUpRight size={12} className="opacity-0 group-hover:opacity-100 transition-opacity" />
+        </Link>
+      )}
+    </li>
+  )
+})}
                 </ul>
               </div>
             ))}
