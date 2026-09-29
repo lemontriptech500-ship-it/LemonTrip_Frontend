@@ -1,5 +1,5 @@
 import React from 'react'
-import { FlightPageHero } from '@/components/flights/FlightPageHero' // generic banner, reused
+import { HotelPageHero } from '@/components/hotels/HotelPageHero'
 
 /**
  * Save as: src/app/hotels/[hotelId]/layout.tsx
@@ -12,7 +12,7 @@ export default function HotelBookingLayout({ children }: { children: React.React
   return (
     <>
       <div className="print:hidden">
-        <FlightPageHero
+        <HotelPageHero
           compact
           title="Book your stay"
           subtitle="Choose your room, add guest details and pay securely."

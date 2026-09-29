@@ -9,7 +9,7 @@ import type { Hotel } from '@/types/hotels'
 import { searchHotels } from '@/services/hotelService'
 import { useHotelFilters } from '@/hooks/useHotelFilters'
 import { getHotelSearchFromUrl, getNightCount } from '@/lib/hotelUtils'
-import { FlightPageHero } from '@/components/flights/FlightPageHero' // generic banner, reused
+import { HotelPageHero } from '@/components/hotels/HotelPageHero'
 import { HotelSearchForm } from '@/components/search/HotelSearchForm' // <-- check this name/path
 import { HotelFilters, HotelMobileFilters } from '@/components/hotels/HotelFilters'
 import { HotelResultsHeader } from '@/components/hotels/HotelResultsHeader'
@@ -73,11 +73,11 @@ function HotelResultsContent() {
   return (
     // No `section-gap`: the hero handles its own top spacing
     <div className="pb-20">
-      <FlightPageHero title={heroTitle} subtitle="Compare stays and book the right room in minutes.">
+      <HotelPageHero title={heroTitle} subtitle="Compare stays and book the right room in minutes.">
         <div className="rounded-[var(--radius-xl)] border border-[var(--color-border-light)] bg-white p-4 shadow-lg sm:p-6">
           <HotelSearchForm />
         </div>
-      </FlightPageHero>
+      </HotelPageHero>
 
       <Container className="pt-10">
         {isLoading ? (
@@ -156,7 +156,7 @@ export default function HotelsPage() {
       fallback={
         <div className="pb-20">
           {/* Keep the banner in the fallback so the transparent header is never over a white page */}
-          <FlightPageHero title="Find your stay" />
+          <HotelPageHero title="Find your stay" />
           <Container className="pt-10">
             <div className="flex flex-col gap-4" aria-busy="true" aria-label="Loading hotel search results">
               <HotelResultSkeleton />
