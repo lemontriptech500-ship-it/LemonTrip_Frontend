@@ -1,7 +1,8 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
 import { Calendar, ArrowRight } from 'lucide-react'
-import { Button, Card, Container, SectionHeading } from '@/components/ui'
+import { Button, Card, Container } from '@/components/ui'
+import { FlightPageHero } from '@/components/flights/FlightPageHero' // generic banner, reused
 import { getBlogPosts } from '@/services/blogService'
 
 export const metadata: Metadata = {
@@ -14,13 +15,14 @@ export const dynamic = 'force-dynamic'
 export default async function BlogPage() {
   const blogPosts = await getBlogPosts()
   return (
-    <div className="section-gap bg-[var(--color-background)]">
-      <Container>
-        <SectionHeading
-          title="Travel Journal"
-          description="Read practical guides and inspiration for your next journey."
-        />
-        <div className="mt-8 grid gap-5 md:grid-cols-2 lg:grid-cols-3">
+    <div className="bg-[var(--color-background)] pb-20">
+      <FlightPageHero
+        compact
+        title="Travel Journal"
+        subtitle="Read practical guides and inspiration for your next journey."
+      />
+      <Container className="pt-10">
+        <div className="grid gap-5 md:grid-cols-2 lg:grid-cols-3">
           {blogPosts.map((post) => (
             <Card key={post.id} className="overflow-hidden" hover padding="none">
               <div className={`h-48 ${post.imageFallbackColor}`}>

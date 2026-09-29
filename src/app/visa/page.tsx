@@ -4,18 +4,20 @@ import React from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
 import { ArrowRight, Clock, FileText } from 'lucide-react'
-import { Button, Card, Container, SectionHeading } from '@/components/ui'
+import { Button, Card, Container } from '@/components/ui'
+import { FlightPageHero } from '@/components/flights/FlightPageHero' // generic banner, reused
 import { mockVisaServices } from '@/data/visaServices'
 
 export default function VisaPage() {
   return (
-    <div className="section-gap bg-[var(--color-background)]">
-      <Container>
-        <SectionHeading
-          title="Visa Services"
-          description="Explore guided visa support options for popular destinations."
-        />
-        <div className="mt-8 grid gap-5 md:grid-cols-2 lg:grid-cols-3">
+    <div className="bg-[var(--color-background)] pb-20">
+      <FlightPageHero
+        compact
+        title="Visa Services"
+        subtitle="Explore guided visa support options for popular destinations."
+      />
+      <Container className="pt-10">
+        <div className="grid gap-5 md:grid-cols-2 lg:grid-cols-3">
           {mockVisaServices.map((service) => (
             <Card key={service.id} className="overflow-hidden" hover padding="none">
               <div className="relative h-44">
