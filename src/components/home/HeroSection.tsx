@@ -15,14 +15,12 @@ import { TravelSearchWidget } from '@/components/search/TravelSearchWidget'
  * wrapper, not nested inside it, so it renders fully regardless
  * of how tall any given tab's form is.
  *
- * NEW: added a bottom fade — the background photo now dissolves
- * into white toward the base of the hero (matching the reference),
- * instead of cutting off with a hard edge. This sits as its own
- * layer above the photo and the left-to-right dark overlay, only
- * covering the lower portion of the section.
- *
- * Everything else (text inset, headline weight/italic, trust
- * badges) is unchanged from the last version.
+ * DARKENING: a uniform dark overlay (bg-black/20) sits above the
+ * photo and the left-to-right gradient. The header and the search
+ * widget are translucent glass over this photo, so darkening the
+ * photo darkens both. Change the number to adjust:
+ *   /10 subtle · /20 slight · /30 noticeable · /40 dark
+ * For a green tint instead of grey-black, use bg-[#042d1b]/30.
  */
 
 const TRUST_BADGES = ['Best Price Guarantee', '24/7 Customer Support', 'Safe & Secure Travel']
@@ -42,9 +40,10 @@ export function HeroSection() {
         />
         {/* Directional fade — dark on the left where the text sits,
             fading out toward the right so the photo still reads */}
-<div className="absolute inset-0 bg-gradient-to-r from-[#042d1b]/75 via-[#042d1b]/35 to-transparent" />
-        {/* Bottom fade — dissolves the photo into white so it blends
-            into the section below instead of cutting off sharply */}
+        <div className="absolute inset-0 bg-gradient-to-r from-[#042d1b]/75 via-[#042d1b]/35 to-transparent" />
+        {/* Uniform darkening — makes the photo (and the glass header /
+            search widget over it) slightly darker */}
+        <div className="absolute inset-0 bg-black/25" />
       </div>
 
       {/* <div className="relative z-10 flex h-full flex-col px-4 pt-16 sm:px-6 sm:pt-20 lg:pl-16 lg:pr-8 lg:pt-20 xl:pl-24">

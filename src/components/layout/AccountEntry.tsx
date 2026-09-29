@@ -5,6 +5,7 @@ import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import { User } from 'lucide-react'
 import { useAuthStore } from '@/store/authStore'
+import { useAuthModalStore } from '@/store/authModalStore'
 
 interface AccountEntryProps {
   /** See DesktopNavigation for the full explanation — true once the
@@ -18,6 +19,7 @@ interface AccountEntryProps {
 export function AccountEntry({ isScrolled = true }: AccountEntryProps) {
   const router = useRouter()
   const { user, isAuthenticated, hasHydrated, logout } = useAuthStore()
+  const openAuthModal = useAuthModalStore((state) => state.open)
   const [isOpen, setIsOpen] = useState(false)
   const containerRef = useRef<HTMLDivElement>(null)
 
@@ -45,8 +47,10 @@ export function AccountEntry({ isScrolled = true }: AccountEntryProps) {
   if (!isAuthenticated || !user) {
     return (
       <div className="hidden items-center gap-2 xl:flex xl:gap-3">
-        <Link
-          href="/login"
+        {/* Opens the login pop-up (AuthModal) instead of navigating to /login */}
+        <button
+          type="button"
+          onClick={() => openAuthModal('signin')}
           className={
             isScrolled
               ? 'inline-flex h-9 shrink-0 items-center justify-center whitespace-nowrap rounded-[10px] border border-[var(--green)] bg-white px-3 text-sm font-bold text-[var(--green)] transition hover:bg-[var(--green)] hover:text-white xl:h-10 xl:px-5'
@@ -54,13 +58,15 @@ export function AccountEntry({ isScrolled = true }: AccountEntryProps) {
           }
         >
           Login
-        </Link>
-        <Link
-          href="/signup"
+        </button>
+        {/* Opens the pop-up on the "Create account" tab instead of /signup */}
+        <button
+          type="button"
+          onClick={() => openAuthModal('signup')}
           className="inline-flex h-9 shrink-0 items-center justify-center whitespace-nowrap rounded-[10px] bg-[var(--yellow)] px-4 text-sm font-bold text-[var(--green-dark)] shadow-[0_8px_18px_rgba(255,210,26,0.25)] transition hover:brightness-95 xl:h-10 xl:px-6"
         >
           Book Now
-        </Link>
+        </button>
       </div>
     )
   }

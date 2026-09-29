@@ -7,10 +7,12 @@ import { Menu, X } from 'lucide-react'
 import { cn } from '@/lib/utils'
 import { NAV_ITEMS } from '@/constants'
 import { Button } from '@/components/ui'
+import { useAuthModalStore } from '@/store/authModalStore'
 
 export function MobileNavigation() {
   const [isOpen, setIsOpen] = useState(false)
   const pathname = usePathname()
+  const openAuthModal = useAuthModalStore((state) => state.open)
 
   useEffect(() => {
     setIsOpen(false)
@@ -24,6 +26,12 @@ export function MobileNavigation() {
     }
     return () => { document.body.style.overflow = 'unset' }
   }, [isOpen])
+
+  // Close the drawer first, then open the login / register pop-up
+  const openAuth = (mode: 'signin' | 'signup') => {
+    setIsOpen(false)
+    openAuthModal(mode)
+  }
 
   return (
     <div className="flex items-center xl:hidden">
@@ -89,12 +97,8 @@ export function MobileNavigation() {
         </nav>
 
         <div className="flex flex-col gap-2 border-t border-[var(--green)]/15 bg-white p-4">
-          <Link href="/login" className="w-full">
-            <Button variant="outline" fullWidth>Login</Button>
-          </Link>
-          <Link href="/signup" className="w-full">
-            <Button variant="primary" fullWidth>Sign Up</Button>
-          </Link>
+          <Button variant="outline" fullWidth onClick={() => openAuth('signin')}>Login</Button>
+          <Button variant="primary" fullWidth onClick={() => openAuth('signup')}>Sign Up</Button>
         </div>
       </div>
     </div>
