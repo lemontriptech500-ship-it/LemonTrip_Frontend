@@ -11,18 +11,9 @@ import { VisaSearchForm } from './VisaSearchForm'
 import { cn } from '@/lib/utils'
 
 /**
- * TravelSearchWidget
- * ------------------------------------------------------------
- * Glass treatment matching the header:
- *  - Outer card: bg-white/[0.06] + backdrop-blur-md + border-white/10
- *    (same values as the header's glass layer).
- *  - Nudged up with `relative -top-*` so nothing below it shifts.
- *    Increase the value (e.g. -top-12 sm:-top-20) to move it higher.
- *  - Tab strip: light dark-green tint (30%), still see-through.
- *  - Form body: fully transparent so the hero photo shows through.
- *    `[&_label]:text-white/85` turns <label> captions white. If the
- *    FROM / TO / DEPARTURE captions are <span> or <p> in the form
- *    components, they need changing inside those files instead.
+ * TravelSearchWidget v3 — one card, two zones.
+ * Dark-green tab header (yellow active tab, connects visually to the
+ * hero gradient) on top of a white form body.
  */
 
 const tabItems = [
@@ -39,34 +30,41 @@ export function TravelSearchWidget() {
   const activeItem = tabItems.find((item) => item.id === activeTab)
 
   return (
-    <div className="relative -top-8 mx-auto max-w-[1100px] overflow-hidden rounded-2xl border border-white/10 bg-white/[0.06] shadow-[var(--shadow-xl)] backdrop-blur-md sm:-top-12">
-      {/* Tab strip: light green tint, still see-through */}
-      <div className="flex items-center gap-1 overflow-x-auto border-b border-white/10 bg-[var(--green-dark)]/30 p-2 hide-scrollbar">
+    <div className="mx-auto max-w-[1100px] overflow-hidden rounded-3xl bg-white shadow-[0_30px_70px_-15px_rgba(4,45,27,0.55)] ring-1 ring-black/5">
+      <div
+        role="tablist"
+        aria-label="Search category"
+        className="hide-scrollbar flex gap-1 overflow-x-auto bg-[var(--green-dark)] px-3 pt-3 sm:px-5"
+      >
         {tabItems.map((tab) => {
           const Icon = tab.icon
           const isActive = activeTab === tab.id
-
           return (
             <button
               key={tab.id}
               type="button"
+              role="tab"
+              aria-selected={isActive}
               onClick={() => setActiveTab(tab.id)}
               className={cn(
-                'flex shrink-0 items-center justify-center gap-1.5 whitespace-nowrap rounded-full px-4 py-2.5 text-sm font-semibold transition-all',
+                'flex shrink-0 items-center gap-2 whitespace-nowrap rounded-t-xl px-4 py-3 text-sm font-semibold transition-colors sm:px-6',
+                'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--yellow)]',
                 isActive
-                  ? 'bg-[var(--color-primary)] text-[var(--green-dark)] shadow-sm'
-                  : 'text-white/80 hover:bg-white/10 hover:text-white'
+                  ? 'bg-white text-[var(--green-dark)]'
+                  : 'text-white/75 hover:bg-white/10 hover:text-white'
               )}
             >
-              <Icon size={16} />
-              <span>{tab.label}</span>
+              <Icon size={16} aria-hidden="true" />
+              {tab.label}
             </button>
           )
         })}
       </div>
 
-      {/* Form body: transparent, captions forced white */}
-      <div className="bg-transparent p-3 sm:p-5 [&_label]:text-white/85">
+      <div
+        role="tabpanel"
+        className="bg-white p-4 sm:p-6 [&_label]:font-medium [&_label]:text-neutral-600"
+      >
         {activeItem?.content}
       </div>
     </div>
