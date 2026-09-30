@@ -63,7 +63,7 @@ export function TravelSearchWidget() {
 
       <div
         role="tabpanel"
-        className="bg-white p-4 sm:p-6 [&_label]:font-medium [&_label]:text-neutral-600"
+        className="min-h-[585px] bg-white p-4 sm:min-h-[451px] sm:p-6 md:min-h-[228px] lg:min-h-[206px] xl:min-h-[150px] [&_label]:font-medium [&_label]:text-neutral-600"
       >
         {activeItem?.content}
       </div>
