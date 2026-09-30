@@ -15,11 +15,12 @@ export default async function BusesPage() {
   const { buses } = await searchBuses({})
   return (
     <div className="bg-[var(--color-background)] pb-20">
-      <FlightPageHero
-        compact
-        title="Book bus tickets"
-        subtitle="Compare comfortable intercity rides from trusted operators."
-      />
+  <FlightPageHero
+  compact
+  title="Book your bus ride"
+  subtitle="Review the schedule and pay securely."
+  backgroundImage="/bus.png"
+/>
       <Container className="pt-6">
         <div className="grid gap-5 lg:grid-cols-3">
           {buses.map((bus) => (

@@ -10,11 +10,12 @@ export default function TrainRouteLayout({ children }: { children: React.ReactNo
   return (
     <>
       <div className="print:hidden">
-        <FlightPageHero
-          compact
-          title="Book your train journey"
-          subtitle="Review the route and continue to booking."
-        />
+      <FlightPageHero
+  compact
+  title="Book train tickets"
+  subtitle="Browse catalog routes. Live availability requires an authorized rail provider."
+  backgroundImage="/trains.png"
+/>
       </div>
       <div className="bg-[var(--color-background)] pt-10 print:pt-0">{children}</div>
     </>

@@ -14,7 +14,7 @@ export function FlightPageHero({
   title,
   subtitle,
   children,
-  backgroundImage = '/herosection_bgimage.webp?hero-v=20260908',
+  backgroundImage = '/herosection_bgimage2.png?hero-v=20260908',
 }: FlightPageHeroProps) {
   return (
     <>
