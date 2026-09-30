@@ -1,5 +1,17 @@
 import React from 'react'
+import Image from 'next/image'
 import { Container } from '@/components/ui'
+
+export const PAGE_HERO_IMAGES = {
+  flight: '/herosection_bgimage2.png?hero-v=20260908',
+  hotel: '/hotels.webp',
+  bus: '/bus.png',
+  train: '/trains.png',
+  package: '/packages.png',
+  visa: 'https://images.unsplash.com/photo-1526772662000-3f88f10405ff?w=1800&q=85',
+  offer: 'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=1800&q=85',
+  travel: '/hero_new.png',
+} as const
 
 interface FlightPageHeroProps {
   title: string
@@ -14,7 +26,7 @@ export function FlightPageHero({
   title,
   subtitle,
   children,
-  backgroundImage = '/herosection_bgimage2.png?hero-v=20260908',
+  backgroundImage = PAGE_HERO_IMAGES.flight,
 }: FlightPageHeroProps) {
   return (
     <>
@@ -26,6 +38,10 @@ export function FlightPageHero({
             style={{ backgroundImage: `url('${backgroundImage}')` }}
           />
           <div className="absolute inset-0 bg-gradient-to-r from-[#042d1b]/90 via-[#042d1b]/60 to-[#042d1b]/30" />
+        </div>
+
+        <div aria-hidden="true" className="pointer-events-none absolute right-8 top-1/2 z-10 hidden h-16 w-[280px] -translate-y-1/2 opacity-90 xl:block">
+          <Image src="/website_logo.webp" alt="" fill sizes="280px" className="object-contain object-right" />
         </div>
 
         <Container as="div" className="relative z-10">

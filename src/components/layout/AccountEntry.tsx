@@ -7,16 +7,7 @@ import { User } from 'lucide-react'
 import { useAuthStore } from '@/store/authStore'
 import { useAuthModalStore } from '@/store/authModalStore'
 
-interface AccountEntryProps {
-  /** See DesktopNavigation for the full explanation — true once the
-   *  header has scrolled off the hero photo onto its light glass
-   *  background. Only the outlined "Login" button and the avatar
-   *  fallback ring need to switch; "Book Now" already sits on a solid
-   *  yellow chip so it stays legible on both backgrounds untouched. */
-  isScrolled?: boolean
-}
-
-export function AccountEntry({ isScrolled = true }: AccountEntryProps) {
+export function AccountEntry() {
   const router = useRouter()
   const { user, isAuthenticated, hasHydrated, logout } = useAuthStore()
   const openAuthModal = useAuthModalStore((state) => state.open)
@@ -51,11 +42,7 @@ export function AccountEntry({ isScrolled = true }: AccountEntryProps) {
         <button
           type="button"
           onClick={() => openAuthModal('signin')}
-          className={
-            isScrolled
-              ? 'inline-flex h-9 shrink-0 items-center justify-center whitespace-nowrap rounded-[10px] border border-[var(--green)] bg-white px-3 text-sm font-bold text-[var(--green)] transition hover:bg-[var(--green)] hover:text-white xl:h-10 xl:px-5'
-              : 'inline-flex h-9 shrink-0 items-center justify-center whitespace-nowrap rounded-[10px] border border-white/50 bg-white/10 px-3 text-sm font-bold text-white backdrop-blur-sm transition hover:bg-white/20 xl:h-10 xl:px-5'
-          }
+          className="inline-flex h-9 shrink-0 items-center justify-center whitespace-nowrap rounded-[10px] border border-white/50 bg-white/10 px-3 text-sm font-bold text-white backdrop-blur-sm xl:h-10 xl:px-5"
         >
           Login
         </button>
@@ -63,7 +50,7 @@ export function AccountEntry({ isScrolled = true }: AccountEntryProps) {
         <button
           type="button"
           onClick={() => openAuthModal('signup')}
-          className="inline-flex h-9 shrink-0 items-center justify-center whitespace-nowrap rounded-[10px] bg-[var(--yellow)] px-4 text-sm font-bold text-[var(--green-dark)]  transition hover:brightness-95 xl:h-10 xl:px-6"
+          className="inline-flex h-9 shrink-0 items-center justify-center whitespace-nowrap rounded-[10px] bg-[var(--yellow)] px-4 text-sm font-bold text-[var(--green-dark)] shadow-[0_8px_18px_rgba(255,210,26,0.25)] xl:h-10 xl:px-6"
         >
           Book Now
         </button>
@@ -79,11 +66,7 @@ export function AccountEntry({ isScrolled = true }: AccountEntryProps) {
         aria-haspopup="true"
         aria-expanded={isOpen}
         aria-label="Account menu"
-        className={
-          isScrolled
-            ? 'inline-flex h-9 w-9 items-center justify-center overflow-hidden rounded-full border-2 border-[var(--green)] bg-[var(--green-dark)] text-white transition hover:brightness-110 xl:h-10 xl:w-10'
-            : 'inline-flex h-9 w-9 items-center justify-center overflow-hidden rounded-full border-2 border-white/70 bg-white/10 text-white backdrop-blur-sm transition hover:bg-white/20 xl:h-10 xl:w-10'
-        }
+        className="inline-flex h-9 w-9 items-center justify-center overflow-hidden rounded-full border-2 border-white/70 bg-white/10 text-white backdrop-blur-sm xl:h-10 xl:w-10"
       >
         {user.avatar ? (
           // eslint-disable-next-line @next/next/no-img-element

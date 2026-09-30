@@ -5,7 +5,7 @@ import Link from 'next/link'
 import { useSearchParams } from 'next/navigation'
 import { ArrowRight, Clock, Heart, TrainFront } from 'lucide-react'
 import { Button, Card, Container } from '@/components/ui'
-import { FlightPageHero } from '@/components/flights/FlightPageHero' // generic banner, reused
+import { FlightPageHero, PAGE_HERO_IMAGES } from '@/components/flights/FlightPageHero'
 import { mockTrains } from '@/data/trains'
 import { searchTrains } from '@/services/trainService'
 import { useWishlistStore } from '@/store/wishlistStore'
@@ -50,12 +50,12 @@ function TrainResultsContent() {
 
   return (
     <div className="bg-[var(--color-background)] pb-20">
-  <FlightPageHero
-  compact
-  title="Book train tickets"
-  subtitle="Browse catalog routes. Live availability requires an authorized rail provider."
-  backgroundImage="/trains.png"
-/>
+      <FlightPageHero
+        compact
+        backgroundImage={PAGE_HERO_IMAGES.train}
+        title="Book train tickets"
+        subtitle="Browse catalog routes. Live availability requires an authorized rail provider."
+      />
       <Container className="pt-10">
         {isLoading ? <p className="text-center text-[var(--color-text-secondary)]">Loading trains...</p> : error ? <p className="text-center text-[var(--color-error)]">{error}</p> : <div className="grid gap-5 lg:grid-cols-3">
           {trains.map((train) => {
@@ -147,7 +147,8 @@ export default function TrainsPage() {
       fallback={
         <div className="bg-[var(--color-background)] pb-20" aria-busy="true">
           {/* Keep the banner while loading so the transparent header stays readable */}
-          <FlightPageHero compact title="Book train tickets" backgroundImage="/trains.png" />          <div className="min-h-[30vh]" />
+          <FlightPageHero compact backgroundImage={PAGE_HERO_IMAGES.train} title="Book train tickets" />
+          <div className="min-h-[30vh]" />
         </div>
       }
     >

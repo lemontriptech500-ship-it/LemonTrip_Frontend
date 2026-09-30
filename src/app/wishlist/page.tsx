@@ -5,7 +5,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { Trash2, Heart, ShoppingCart } from 'lucide-react'
 import { Button, Container } from '@/components/ui'
-import { FlightPageHero } from '@/components/flights/FlightPageHero' // generic banner, reused
+import { FlightPageHero, PAGE_HERO_IMAGES } from '@/components/flights/FlightPageHero'
 import { useWishlistStore } from '@/store/wishlistStore'
 import { useCartStore } from '@/store/cartStore'
 import { formatCurrency } from '@/lib/utils'
@@ -24,7 +24,7 @@ export default function WishlistPage() {
 
   return (
     <div className="bg-[var(--color-background)] pb-20">
-      <FlightPageHero compact title="Your Wishlist" subtitle={subtitle} />
+      <FlightPageHero compact backgroundImage={PAGE_HERO_IMAGES.travel} title="Your Wishlist" subtitle={subtitle} />
 
       <Container className="pt-10">
         {hasHydrated && items.length === 0 ? (

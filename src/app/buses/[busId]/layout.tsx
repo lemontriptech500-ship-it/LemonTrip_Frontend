@@ -1,5 +1,5 @@
 import React from 'react'
-import { FlightPageHero } from '@/components/flights/FlightPageHero' // generic banner, reused
+import { FlightPageHero, PAGE_HERO_IMAGES } from '@/components/flights/FlightPageHero'
 
 /**
  * Save as: src/app/buses/[busId]/layout.tsx
@@ -11,6 +11,7 @@ export default function BusRideLayout({ children }: { children: React.ReactNode 
       <div className="print:hidden">
         <FlightPageHero
           compact
+          backgroundImage={PAGE_HERO_IMAGES.bus}
           title="Book your bus ride"
           subtitle="Review the schedule and pay securely."
         />

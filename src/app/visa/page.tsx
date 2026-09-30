@@ -5,7 +5,7 @@ import Link from 'next/link'
 import Image from 'next/image'
 import { ArrowRight, Clock, FileText } from 'lucide-react'
 import { Button, Card, Container } from '@/components/ui'
-import { FlightPageHero } from '@/components/flights/FlightPageHero' // generic banner, reused
+import { FlightPageHero, PAGE_HERO_IMAGES } from '@/components/flights/FlightPageHero'
 import { mockVisaServices } from '@/data/visaServices'
 
 export default function VisaPage() {
@@ -13,6 +13,7 @@ export default function VisaPage() {
     <div className="bg-[var(--color-background)] pb-20">
       <FlightPageHero
         compact
+        backgroundImage={PAGE_HERO_IMAGES.visa}
         title="Visa Services"
         subtitle="Explore guided visa support options for popular destinations."
       />

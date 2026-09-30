@@ -1,5 +1,5 @@
 import React from 'react'
-import { FlightPageHero } from '@/components/flights/FlightPageHero' // generic banner, reused
+import { FlightPageHero, PAGE_HERO_IMAGES } from '@/components/flights/FlightPageHero'
 
 /**
  * Save as: src/app/packages/[packageId]/layout.tsx
@@ -11,6 +11,7 @@ export default function PackageDetailsLayout({ children }: { children: React.Rea
       <div className="print:hidden">
         <FlightPageHero
           compact
+          backgroundImage={PAGE_HERO_IMAGES.package}
           title="Book your holiday"
           subtitle="Review the package highlights and pay securely."
         />

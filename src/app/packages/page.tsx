@@ -2,7 +2,7 @@ import type { Metadata } from 'next'
 import { Container } from '@/components/ui'
 import { searchPackages } from '@/services/packageService'
 import { PackageCard } from '@/components/packages/PackageCard'
-import { FlightPageHero } from '@/components/flights/FlightPageHero' // generic banner, reused
+import { FlightPageHero, PAGE_HERO_IMAGES } from '@/components/flights/FlightPageHero'
 
 export const metadata: Metadata = {
   title: 'Holiday Packages',
@@ -17,12 +17,12 @@ export default async function PackagesPage() {
   const internationalPackages = packages.filter((pkg) => pkg.category === 'international')
   return (
     <div className="bg-[var(--color-background)] pb-20">
-   <FlightPageHero
-  compact
-  title="Holiday Packages"
-  subtitle="Choose from national escapes across India and international holidays around the world."
-  backgroundImage="/packages.png"
-/>
+      <FlightPageHero
+        compact
+        backgroundImage={PAGE_HERO_IMAGES.package}
+        title="Holiday Packages"
+        subtitle="Choose from national escapes across India and international holidays around the world."
+      />
       <Container className="pt-10">
         <section>
           <h2 className="text-h2">National Tours</h2>

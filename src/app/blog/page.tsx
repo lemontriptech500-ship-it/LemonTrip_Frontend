@@ -2,7 +2,7 @@ import type { Metadata } from 'next'
 import Link from 'next/link'
 import { Calendar, ArrowRight } from 'lucide-react'
 import { Button, Card, Container } from '@/components/ui'
-import { FlightPageHero } from '@/components/flights/FlightPageHero' // generic banner, reused
+import { FlightPageHero, PAGE_HERO_IMAGES } from '@/components/flights/FlightPageHero'
 import { getBlogPosts } from '@/services/blogService'
 
 export const metadata: Metadata = {
@@ -18,6 +18,7 @@ export default async function BlogPage() {
     <div className="bg-[var(--color-background)] pb-20">
       <FlightPageHero
         compact
+        backgroundImage={PAGE_HERO_IMAGES.travel}
         title="Travel Journal"
         subtitle="Read practical guides and inspiration for your next journey."
       />

@@ -1,9 +1,7 @@
 import React from 'react'
-import { FlightPageHero } from '@/components/flights/FlightPageHero'
+import { FlightPageHero, PAGE_HERO_IMAGES } from '@/components/flights/FlightPageHero'
 
 /** Retains the hotel artwork while sharing dimensions and typography with page heroes. */
-
-const HOTEL_HERO_IMAGE = '/hotels.webp'
 
 interface HotelPageHeroProps {
   title: string
@@ -17,7 +15,7 @@ export function HotelPageHero({ title, subtitle, children }: HotelPageHeroProps)
     <FlightPageHero
       title={title}
       subtitle={subtitle}
-      backgroundImage={HOTEL_HERO_IMAGE}
+      backgroundImage={PAGE_HERO_IMAGES.hotel}
     >
       {children}
     </FlightPageHero>

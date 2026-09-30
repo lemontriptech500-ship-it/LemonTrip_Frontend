@@ -2,7 +2,7 @@ import type { Metadata } from 'next'
 import { Mail, MapPin, Phone } from 'lucide-react'
 import { Card, Container } from '@/components/ui'
 import { ContactForm } from '@/components/contact/ContactForm'
-import { FlightPageHero } from '@/components/flights/FlightPageHero'
+import { FlightPageHero, PAGE_HERO_IMAGES } from '@/components/flights/FlightPageHero'
 
 export const metadata: Metadata = {
   title: 'Contact LemonTrip | Travel & Booking Support',
@@ -13,6 +13,7 @@ export default function ContactPage() {
   return (
     <div className="bg-[var(--color-background)]">
       <FlightPageHero
+        backgroundImage={PAGE_HERO_IMAGES.travel}
         title="Let&apos;s plan the next step."
         subtitle="We are here to help. Have a question about a booking, destination, or travel service? Send us a message and the LemonTrip team will get back to you."
       />
