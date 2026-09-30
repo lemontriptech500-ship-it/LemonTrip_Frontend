@@ -1,84 +1,63 @@
 import React from 'react'
+import { BadgeCheck, Headset, ShieldCheck } from 'lucide-react'
 import { TravelSearchWidget } from '@/components/search/TravelSearchWidget'
 
 /**
- * HeroSection
- * ------------------------------------------------------------
- * BUG FIX: the floating search widget was still being clipped at
- * the bottom no matter how compact the forms got, because
- * `overflow-hidden` was on the same <section> the widget needed
- * to overflow past. A parent can't clip overflow AND let a child
- * spill outside its box — those are contradictory. Moved
- * `overflow-hidden` onto a new inner wrapper that contains ONLY
- * the background photo + gradients (which do need to stay clipped
- * to the hero's box); the search widget is now a sibling of that
- * wrapper, not nested inside it, so it renders fully regardless
- * of how tall any given tab's form is.
- *
- * DARKENING: a uniform dark overlay (bg-black/20) sits above the
- * photo and the left-to-right gradient. The header and the search
- * widget are translucent glass over this photo, so darkening the
- * photo darkens both. Change the number to adjust:
- *   /10 subtle · /20 slight · /30 noticeable · /40 dark
- * For a green tint instead of grey-black, use bg-[#042d1b]/30.
+ * HeroSection v3
+ * - Header floats over the hero (absolute), so the hero content has
+ *   top padding to clear it.
+ * - Overflow clipping is on the background wrapper only, so the widget
+ *   can straddle the bottom edge (keep this — it fixes the old clipping bug).
+ * - Headline + one-line trust row restored on the left. Copy is a
+ *   placeholder: edit freely.
+ * - Add ~pb-16 / mt-16 to the section after the hero so the widget
+ *   overlap doesn't collide with it.
  */
 
-const TRUST_BADGES = ['Best Price Guarantee', '24/7 Customer Support', 'Safe & Secure Travel']
+const TRUST = [
+  { icon: BadgeCheck, label: 'Best price guarantee' },
+  { icon: Headset, label: '24/7 support' },
+  { icon: ShieldCheck, label: 'Safe & secure booking' },
+]
 
 export function HeroSection() {
   return (
-    <section
-    className="relative min-h-[620px] bg-neutral-900 pb-16 sm:min-h-[640px] lg:h-[calc(100svh-260px)] lg:min-h-[620px] lg:pb-0"
-  >
-      {/* Background layer — clipped to the hero's box */}
+    <section className="relative bg-neutral-900 pb-10 sm:min-h-[640px] lg:h-[calc(100svh-120px)] lg:min-h-[700px] lg:pb-0">
+      {/* Background — clipped to the hero box */}
       <div className="pointer-events-none absolute inset-0 z-0 overflow-hidden">
         <div
           className="absolute inset-0 bg-cover bg-center bg-no-repeat"
-          style={{ backgroundImage: "url('/herosection_bgimage.webp?hero-v=20260908')" }}
+          style={{ backgroundImage: "url('/herosection_bgimage2.png?hero-v=20260908')" }}
           role="img"
-          aria-label="Traveller overlooking a green mountain valley"
+          aria-label="Aircraft on the runway at dusk"
         />
-        {/* Directional fade — dark on the left where the text sits,
-            fading out toward the right so the photo still reads */}
-        <div className="absolute inset-0 bg-gradient-to-r from-[#042d1b]/75 via-[#042d1b]/35 to-transparent" />
-        {/* Uniform darkening — makes the photo (and the glass header /
-            search widget over it) slightly darker */}
-        <div className="absolute inset-0 bg-black/25" />
+        <div className="absolute inset-0 bg-gradient-to-r from-[#042d1b]/85 via-[#042d1b]/45 to-transparent" />
+        <div className="absolute inset-x-0 bottom-0 h-40 bg-gradient-to-t from-black/40 to-transparent" />
       </div>
 
-      {/* <div className="relative z-10 flex h-full flex-col px-4 pt-16 sm:px-6 sm:pt-20 lg:pl-16 lg:pr-8 lg:pt-20 xl:pl-24">
-        <div className="mx-auto w-full max-w-[760px] text-left text-white lg:mx-0">
-          <span className="mb-5 inline-flex items-center gap-2 rounded-full border border-white/30 bg-white/10 px-4 py-2 text-[11px] font-semibold uppercase tracking-wide backdrop-blur-sm sm:text-xs">
-            ✦ Premium Travel Experience
-          </span>
-
-          <h1 className="!font-semibold text-display tracking-tight text-white">
-            Travel Beyond{' '}
-            <span className="text-[var(--color-primary)]">Expectations.</span>
+      {/* Copy */}
+      <div className="relative z-10 px-4 pt-22 sm:px-6 sm:pt-40 lg:pl-16 lg:pr-8 xl:pl-24">
+        
+                <div className="max-w-[640px] text-white">
+          <h1 className="text-display !font-semibold tracking-tight">
+            Book your journey.
           </h1>
-
-          <p className="mt-5 max-w-[540px] text-sm leading-relaxed text-white/85 sm:text-base md:text-lg">
-            Discover the world with reliable travel solutions, curated experiences and
-            technology-driven service from LemonTrip.
+          <p className="mt-4 max-w-[520px] text-base leading-relaxed text-white/85 md:text-lg">
+            Flights, hotels, buses, trains, holiday packages and visas from LemonTrip, at prices you can compare.
           </p>
-
-          <div className="mt-7 flex flex-wrap gap-2.5 sm:gap-3">
-            {TRUST_BADGES.map((label) => (
-              <span
-                key={label}
-                className="rounded-xl bg-white px-3.5 py-2.5 text-[11px] font-bold text-[var(--color-secondary)] shadow-sm sm:text-xs"
-              >
-                ✓ {label}
-              </span>
+          <ul className="mt-6 flex flex-wrap gap-x-6 gap-y-2 text-sm font-medium text-white/90">
+            {TRUST.map(({ icon: Icon, label }) => (
+              <li key={label} className="inline-flex items-center gap-2">
+                <Icon size={18} className="text-[var(--yellow)]" aria-hidden="true" />
+                {label}
+              </li>
             ))}
-          </div>
+          </ul>
         </div>
-      </div> */}
-              
-      {/* The longer mobile forms need their own document flow. Floating the
-          card only from desktop prevents it from covering the hero copy. */}
-      <div className="relative z-20 mx-4 mt-8 max-w-[1100px] sm:mx-6 lg:absolute lg:inset-x-8 lg:bottom-[-40px] lg:mx-auto lg:mt-0">
-        <TravelSearchWidget />
+      </div>
+
+      {/* Widget: in flow on mobile, straddles the hero's bottom edge on desktop */}
+      <div className="relative z-20 mx-4 mt-8 max-w-[1100px] sm:mx-6 lg:absolute lg:inset-x-8 lg:bottom-[40px] lg:mx-auto lg:mt-0">        <TravelSearchWidget />
       </div>
     </section>
   )

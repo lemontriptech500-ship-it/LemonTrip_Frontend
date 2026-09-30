@@ -19,7 +19,7 @@ export default async function PackagesPage() {
     <div className="bg-[var(--color-background)] pb-20">
       <FlightPageHero
         compact
-        backgroundImage={PAGE_HERO_IMAGES.travel}
+        backgroundImage={PAGE_HERO_IMAGES.package}
         title="Holiday Packages"
         subtitle="Choose from national escapes across India and international holidays around the world."
       />

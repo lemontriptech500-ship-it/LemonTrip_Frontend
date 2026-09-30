@@ -3,10 +3,11 @@ import Image from 'next/image'
 import { Container } from '@/components/ui'
 
 export const PAGE_HERO_IMAGES = {
-  flight: '/herosection_bgimage.webp?hero-v=20260908',
+  flight: '/herosection_bgimage2.png?hero-v=20260908',
   hotel: '/hotels.webp',
-  bus: '/buses.webp',
-  train: 'https://images.unsplash.com/photo-1474487548417-781cb71495f3?w=1800&q=85',
+  bus: '/bus.png',
+  train: '/trains.png',
+  package: '/packages.png',
   visa: 'https://images.unsplash.com/photo-1526772662000-3f88f10405ff?w=1800&q=85',
   offer: 'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=1800&q=85',
   travel: '/hero_new.png',

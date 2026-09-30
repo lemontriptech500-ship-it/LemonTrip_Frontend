@@ -11,7 +11,7 @@ export default function PackageDetailsLayout({ children }: { children: React.Rea
       <div className="print:hidden">
         <FlightPageHero
           compact
-          backgroundImage={PAGE_HERO_IMAGES.travel}
+          backgroundImage={PAGE_HERO_IMAGES.package}
           title="Book your holiday"
           subtitle="Review the package highlights and pay securely."
         />

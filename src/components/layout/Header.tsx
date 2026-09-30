@@ -19,7 +19,6 @@ import { AuthModal } from '@/components/auth/AuthModal'
  * The login / register pop-up (<AuthModal />) is mounted here once
  * and opened from AccountEntry and MobileNavigation.
  */
-
 export function Header() {
   const { toggleCart, totalItems, hasHydrated } = useCartStore()
   const cartCount = hasHydrated ? totalItems() : 0

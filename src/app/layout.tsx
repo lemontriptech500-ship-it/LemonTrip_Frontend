@@ -64,14 +64,14 @@ export const metadata: Metadata = {
     title: 'LemonTrip – Flights, Hotels, Tours & Visa',
     description:
       'Book flights, hotels, tours and travel packages with LemonTrip. Explore easy travel booking and visa services.',
-    images: [{ url: '/lemonTripLogo.jpeg', alt: 'LemonTrip' }],
+    images: [{ url: '/website_logo.webp', alt: 'LemonTrip' }],
   },
   twitter: {
     card: 'summary_large_image',
     title: 'LemonTrip – Flights, Hotels, Tours & Visa',
     description:
       'Book flights, hotels, tours and travel packages with LemonTrip. Explore easy travel booking and visa services.',
-    images: ['/lemonTripLogo.jpeg'],
+    images: ['/website_logo.webp'],
   },
   robots: {
     index: true,

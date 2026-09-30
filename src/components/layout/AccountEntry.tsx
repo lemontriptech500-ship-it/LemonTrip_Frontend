@@ -80,7 +80,7 @@ export function AccountEntry() {
           isScrolled — it's an overlay on top of the page, not part of
           the glass header itself, so its own text colors stay fixed. */}
       {isOpen && (
-        <div className="absolute right-0 top-full mt-2 w-64 rounded-[12px] border border-[#e7efe9] bg-white p-4 shadow-lg">
+        <div className="absolute right-0 top-full mt-2 w-64 rounded-[12px] border border-[#e7efe9] bg-white p-4   ">
           <p className="text-sm font-bold text-[var(--ink)]">{user.name}</p>
           <p className="mt-0.5 truncate text-xs text-[var(--color-text-secondary,#6b7a70)]">{user.email}</p>
 
