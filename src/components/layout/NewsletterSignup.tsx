@@ -35,15 +35,18 @@ export function NewsletterSignup() {
   }
 
   return (
-    <div className="border-t border-[rgba(253,254,255,0.12)] pt-6">
-      <div className="mb-3 flex items-center gap-2">
-        <Mail size={16} className="text-[var(--color-primary)]" aria-hidden />
-        <h4 className="text-xs font-semibold uppercase tracking-widest text-[var(--color-primary)]">Travel Notes</h4>
+    <div className="grid gap-4 border-b border-[rgba(253,254,255,0.12)] py-6 md:grid-cols-[minmax(0,1fr)_minmax(320px,0.9fr)] md:items-center">
+      <div>
+        <div className="mb-1.5 flex items-center gap-2">
+          <Mail size={16} className="text-[var(--color-primary)]" aria-hidden />
+          <h2 className="text-xs font-semibold uppercase tracking-widest text-[var(--color-primary)]">Travel Notes</h2>
+        </div>
+        <p className="max-w-lg text-sm leading-relaxed text-[rgba(253,254,255,0.78)]">
+          Get destination ideas, travel deals, and practical planning tips in your inbox.
+        </p>
       </div>
-      <p className="mb-4 max-w-sm text-sm leading-relaxed text-[rgba(253,254,255,0.78)]">
-        Get destination ideas, travel deals, and practical planning tips in your inbox.
-      </p>
-      <form onSubmit={handleSubmit} className="flex flex-col gap-2 sm:flex-row" noValidate>
+      <div>
+        <form onSubmit={handleSubmit} className="flex flex-col gap-2 sm:flex-row" noValidate>
         <label htmlFor="newsletter-email" className="sr-only">Email address</label>
         <input
           id="newsletter-email"
@@ -54,7 +57,7 @@ export function NewsletterSignup() {
           autoComplete="email"
           required
           disabled={loading}
-          className="h-11 min-w-0 flex-1 rounded-[var(--radius-md)] border border-[rgba(253,254,255,0.25)] bg-[rgba(253,254,255,0.08)] px-3 text-sm text-[#FDFEFE] placeholder:text-[rgba(253,254,255,0.55)] focus:border-[var(--color-primary)] focus:outline-none focus:ring-2 focus:ring-[rgba(255,210,26,0.25)] disabled:opacity-60"
+          className="h-10 min-w-0 flex-1 rounded-[var(--radius-md)] border border-[rgba(253,254,255,0.25)] bg-[rgba(253,254,255,0.08)] px-3 text-sm text-[#FDFEFE] placeholder:text-[rgba(253,254,255,0.55)] focus:border-[var(--color-primary)] focus:outline-none focus:ring-2 focus:ring-[rgba(255,210,26,0.25)] disabled:opacity-60"
         />
         <Button type="submit" size="md" loading={loading} icon={mode === 'subscribe' ? <Send size={15} /> : undefined} className="shrink-0">
           {mode === 'subscribe' ? 'Subscribe' : 'Unsubscribe'}
@@ -72,10 +75,11 @@ export function NewsletterSignup() {
       <button
         type="button"
         onClick={() => { setMode((current) => current === 'subscribe' ? 'unsubscribe' : 'subscribe'); setStatus(null) }}
-        className="mt-3 text-left text-[11px] text-[rgba(253,254,255,0.55)] underline-offset-2 hover:text-[#FDFEFE] hover:underline"
+        className="mt-2 text-left text-[11px] text-[rgba(253,254,255,0.55)] underline-offset-2 hover:text-[#FDFEFE] hover:underline"
       >
         {mode === 'subscribe' ? 'Already subscribed? Unsubscribe' : 'Back to newsletter signup'}
       </button>
+      </div>
     </div>
   )
 }

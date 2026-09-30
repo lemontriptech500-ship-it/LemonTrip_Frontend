@@ -2,7 +2,7 @@ import type { Metadata } from 'next'
 import { Container } from '@/components/ui'
 import { searchPackages } from '@/services/packageService'
 import { PackageCard } from '@/components/packages/PackageCard'
-import { FlightPageHero } from '@/components/flights/FlightPageHero' // generic banner, reused
+import { FlightPageHero, PAGE_HERO_IMAGES } from '@/components/flights/FlightPageHero'
 
 export const metadata: Metadata = {
   title: 'Holiday Packages',
@@ -19,6 +19,7 @@ export default async function PackagesPage() {
     <div className="bg-[var(--color-background)] pb-20">
       <FlightPageHero
         compact
+        backgroundImage={PAGE_HERO_IMAGES.travel}
         title="Holiday Packages"
         subtitle="Choose from national escapes across India and international holidays around the world."
       />

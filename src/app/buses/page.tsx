@@ -2,7 +2,7 @@ import type { Metadata } from 'next'
 import { Container } from '@/components/ui'
 import { searchBuses } from '@/services/busService'
 import { BusResultCard } from '@/components/buses/BusResultCard'
-import { FlightPageHero } from '@/components/flights/FlightPageHero'
+import { FlightPageHero, PAGE_HERO_IMAGES } from '@/components/flights/FlightPageHero'
 
 export const metadata: Metadata = {
   title: 'Bus Booking – Book Bus Tickets',
@@ -17,6 +17,7 @@ export default async function BusesPage() {
     <div className="bg-[var(--color-background)] pb-20">
       <FlightPageHero
         compact
+        backgroundImage={PAGE_HERO_IMAGES.bus}
         title="Book bus tickets"
         subtitle="Compare comfortable intercity rides from trusted operators."
       />

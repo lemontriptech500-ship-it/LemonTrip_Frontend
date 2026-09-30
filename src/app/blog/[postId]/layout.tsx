@@ -1,5 +1,5 @@
 import React from 'react'
-import { FlightPageHero } from '@/components/flights/FlightPageHero' // generic banner, reused
+import { FlightPageHero, PAGE_HERO_IMAGES } from '@/components/flights/FlightPageHero'
 
 /**
  * Save as: src/app/blog/[postId]/layout.tsx
@@ -12,6 +12,7 @@ export default function BlogPostLayout({ children }: { children: React.ReactNode
       <div className="print:hidden">
         <FlightPageHero
           compact
+          backgroundImage={PAGE_HERO_IMAGES.travel}
           title="Travel Journal"
           subtitle="Guides, tips and inspiration for your next journey."
         />

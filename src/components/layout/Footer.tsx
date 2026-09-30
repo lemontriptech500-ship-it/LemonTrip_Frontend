@@ -11,23 +11,23 @@ export function Footer() {
 
   return (
     <footer className="bg-[var(--color-secondary)]" role="contentinfo">
-      <Container className="py-14">
-        <div className="grid gap-10 sm:grid-cols-2 lg:grid-cols-12">
-          <div className="flex flex-col gap-5 lg:col-span-4">
+      <Container className="py-10 sm:py-12">
+        <div className="grid gap-10 border-b border-[rgba(253,254,255,0.12)] pb-9 lg:grid-cols-12">
+          <div className="flex flex-col gap-4 lg:col-span-4">
             <Link
               href="/"
-              className="relative inline-flex h-[72px] w-[280px] max-w-full items-center transition-opacity hover:opacity-90"
+              className="relative inline-flex h-[62px] w-[248px] max-w-full items-center transition-opacity hover:opacity-90"
               aria-label={`${SITE_NAME} — Go to homepage`}
             >
-              <Image src="/website_logo.webp" alt={`${SITE_NAME} Logo`} fill sizes="280px" className="object-contain object-left" />
+              <Image src="/website_logo.webp" alt={`${SITE_NAME} Logo`} fill sizes="248px" className="object-contain object-left" />
             </Link>
-            <p className="text-sm text-[rgba(253,254,255,0.85)] max-w-sm leading-relaxed">
+            <p className="max-w-sm text-sm leading-relaxed text-[rgba(253,254,255,0.78)]">
               {SITE_TAGLINE} Book flights, hotels, and holiday packages with ease.
             </p>
 
-            <div className="flex flex-col gap-3 mt-2">
-              <h4 className="text-xs font-semibold uppercase tracking-widest text-[var(--color-primary)]">Connect With Us</h4>
-              <div className="flex flex-col gap-2.5">
+            <div className="mt-1 flex flex-col gap-3">
+              <h2 className="text-xs font-semibold uppercase tracking-widest text-[var(--color-primary)]">Connect With Us</h2>
+              <div className="grid gap-x-5 gap-y-2 sm:grid-cols-2 lg:grid-cols-1 xl:grid-cols-2">
                 <SocialLink
                   href="https://www.instagram.com/lemontripofficial?igsi=NWpxNjUwaWo4ODZp"
                   ariaLabel="Follow us on Instagram"
@@ -55,40 +55,39 @@ export function Footer() {
               </div>
             </div>
 
-            <NewsletterSignup />
           </div>
 
-          <div className="grid grid-cols-2 gap-8 sm:grid-cols-3 lg:col-span-8 lg:gap-10">
+          <div className="grid grid-cols-2 gap-x-6 gap-y-8 sm:grid-cols-4 lg:col-span-8 lg:gap-8">
             {FOOTER_NAV.map((group) => (
-              <div key={group.heading} className="flex flex-col gap-4">
-                <h3 className="text-sm font-semibold uppercase tracking-widest text-[var(--color-primary)]">
+              <nav key={group.heading} aria-label={`${group.heading} footer links`} className="flex flex-col gap-3">
+                <h2 className="text-xs font-semibold uppercase tracking-widest text-[var(--color-primary)]">
                   {group.heading}
-                </h3>
-                <ul className="flex flex-col gap-3">
+                </h2>
+                <ul className="flex flex-col gap-2.5">
                   {group.links.map((link) => (
                     <li key={link.href}>
                       <Link
                         href={link.href}
-                        className="group inline-flex items-center gap-1 text-sm text-[rgba(253,254,255,0.85)] hover:text-[var(--color-primary)] transition-colors"
+                        className="group inline-flex items-center gap-1 text-sm leading-snug text-[rgba(253,254,255,0.82)] transition-colors hover:text-[var(--color-primary)]"
                       >
-                        <span className="border-b border-transparent group-hover:border-[var(--color-primary)] transition-all">
+                        <span className="border-b border-transparent transition-all group-hover:border-[var(--color-primary)]">
                           {link.label}
                         </span>
-                        <ArrowUpRight size={12} className="opacity-0 group-hover:opacity-100 transition-opacity" />
+                        <ArrowUpRight size={12} className="opacity-0 transition-opacity group-hover:opacity-100" />
                       </Link>
                     </li>
                   ))}
                 </ul>
-              </div>
+              </nav>
             ))}
 
             <div className="flex flex-col gap-4">
-              <h3 className="text-sm font-semibold uppercase tracking-widest text-[var(--color-primary)]">Contact</h3>
-              <ul className="flex flex-col gap-3">
+              <h2 className="text-xs font-semibold uppercase tracking-widest text-[var(--color-primary)]">Contact</h2>
+              <ul className="flex flex-col gap-2.5">
                 <li>
                   <Link
                     href="/contact"
-                    className="group inline-flex max-w-full items-center gap-1 break-words text-sm text-[rgba(253,254,255,0.85)] hover:text-[var(--color-primary)] transition-colors"
+                    className="group inline-flex max-w-full items-center gap-1 break-words text-sm leading-snug text-[rgba(253,254,255,0.82)] transition-colors hover:text-[var(--color-primary)]"
                   >
                     <span className="border-b border-transparent group-hover:border-[var(--color-primary)] transition-all">
                       Contact Us
@@ -98,7 +97,7 @@ export function Footer() {
                 <li>
                   <a
                     href="mailto:lemontripindia@gmail.com"
-                    className="group inline-flex max-w-full items-center gap-1 break-words text-sm text-[rgba(253,254,255,0.85)] hover:text-[var(--color-primary)] transition-colors"
+                    className="group inline-flex max-w-full items-center gap-1 break-words text-sm leading-snug text-[rgba(253,254,255,0.82)] transition-colors hover:text-[var(--color-primary)]"
                   >
                     <span className="border-b border-transparent group-hover:border-[var(--color-primary)] transition-all">
                       lemontripindia@gmail.com
@@ -108,7 +107,7 @@ export function Footer() {
                 <li>
                   <a
                     href="https://wa.me/919812042030"
-                    className="group inline-flex max-w-full items-center gap-1 break-words text-sm text-[rgba(253,254,255,0.85)] hover:text-[var(--color-primary)] transition-colors"
+                    className="group inline-flex max-w-full items-center gap-1 break-words text-sm leading-snug text-[rgba(253,254,255,0.82)] transition-colors hover:text-[var(--color-primary)]"
                   >
                     <span className="border-b border-transparent group-hover:border-[var(--color-primary)] transition-all">
                       WhatsApp Us
@@ -120,11 +119,13 @@ export function Footer() {
           </div>
         </div>
 
-        <div className="mt-12 border-t border-[rgba(253,254,255,0.12)] pt-8 flex flex-col md:flex-row items-center justify-between gap-4">
-          <p className="text-xs text-[rgba(253,254,255,0.65)] text-center md:text-left">
+        <NewsletterSignup />
+
+        <div className="flex flex-col items-center justify-between gap-3 pt-5 text-center sm:flex-row sm:text-left">
+          <p className="text-xs text-[rgba(253,254,255,0.62)]">
             &copy; {currentYear} {SITE_NAME}. All rights reserved.
           </p>
-          <div className="flex gap-6 text-xs text-[rgba(253,254,255,0.65)]">
+          <div className="flex flex-wrap justify-center gap-x-5 gap-y-2 text-xs text-[rgba(253,254,255,0.62)] sm:justify-end">
             <Link href="/privacy" className="hover:text-[var(--color-primary)] hover:underline transition-colors">Privacy Policy</Link>
             <Link href="/terms" className="hover:text-[var(--color-primary)] hover:underline transition-colors">Terms of Service</Link>
           </div>

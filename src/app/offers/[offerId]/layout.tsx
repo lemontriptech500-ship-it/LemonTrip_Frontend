@@ -1,5 +1,5 @@
 import React from 'react'
-import { FlightPageHero } from '@/components/flights/FlightPageHero' // generic banner, reused
+import { FlightPageHero, PAGE_HERO_IMAGES } from '@/components/flights/FlightPageHero'
 
 /**
  * Save as: src/app/offers/[offerId]/layout.tsx
@@ -12,6 +12,7 @@ export default function OfferDetailsLayout({ children }: { children: React.React
       <div className="print:hidden">
         <FlightPageHero
           compact
+          backgroundImage={PAGE_HERO_IMAGES.offer}
           title="Offer details"
           subtitle="Check the promotion and apply it at checkout."
         />

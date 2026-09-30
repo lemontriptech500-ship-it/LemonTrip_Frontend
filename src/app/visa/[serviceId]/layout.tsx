@@ -1,5 +1,5 @@
 import React from 'react'
-import { FlightPageHero } from '@/components/flights/FlightPageHero' // generic banner, reused
+import { FlightPageHero, PAGE_HERO_IMAGES } from '@/components/flights/FlightPageHero'
 
 /**
  * Save as: src/app/visa/[serviceId]/layout.tsx
@@ -12,6 +12,7 @@ export default function VisaServiceLayout({ children }: { children: React.ReactN
       <div className="print:hidden">
         <FlightPageHero
           compact
+          backgroundImage={PAGE_HERO_IMAGES.visa}
           title="Apply for your visa"
           subtitle="Check the requirements and submit your application."
         />

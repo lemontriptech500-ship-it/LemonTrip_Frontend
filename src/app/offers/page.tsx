@@ -4,7 +4,7 @@ import React from 'react'
 import Link from 'next/link'
 import { Tag } from 'lucide-react'
 import { Button, Card, Container } from '@/components/ui'
-import { FlightPageHero } from '@/components/flights/FlightPageHero' // generic banner, reused
+import { FlightPageHero, PAGE_HERO_IMAGES } from '@/components/flights/FlightPageHero'
 import { featuredOffers } from '@/data/offers'
 
 export default function OffersPage() {
@@ -12,6 +12,7 @@ export default function OffersPage() {
     <div className="bg-[var(--color-background)] pb-20">
       <FlightPageHero
         compact
+        backgroundImage={PAGE_HERO_IMAGES.offer}
         title="Offers"
         subtitle="Discover current promotions across flights, stays, packages, and visa support."
       />

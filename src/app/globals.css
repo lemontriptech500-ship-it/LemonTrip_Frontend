@@ -76,7 +76,7 @@
   /* ─── Layout ─── */
   --max-content-width: 1280px;
   --gutter-x:          1rem;
-  --section-gap:       4rem;
+  --section-gap:       3rem;
 
   /* ─── Border Radius Scale ─── */
   --radius-sm:   0.25rem;
@@ -109,7 +109,7 @@
 @media (min-width: 1024px) {
   :root {
     --gutter-x:   2rem;
-    --section-gap: 6rem;
+    --section-gap: 4rem;
   }
 }
 

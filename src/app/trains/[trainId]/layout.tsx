@@ -1,5 +1,5 @@
 import React from 'react'
-import { FlightPageHero } from '@/components/flights/FlightPageHero' // generic banner, reused
+import { FlightPageHero, PAGE_HERO_IMAGES } from '@/components/flights/FlightPageHero'
 
 /**
  * Save as: src/app/trains/[trainId]/layout.tsx
@@ -12,6 +12,7 @@ export default function TrainRouteLayout({ children }: { children: React.ReactNo
       <div className="print:hidden">
         <FlightPageHero
           compact
+          backgroundImage={PAGE_HERO_IMAGES.train}
           title="Book your train journey"
           subtitle="Review the route and continue to booking."
         />

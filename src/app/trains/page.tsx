@@ -5,7 +5,7 @@ import Link from 'next/link'
 import { useSearchParams } from 'next/navigation'
 import { ArrowRight, Clock, Heart, TrainFront } from 'lucide-react'
 import { Button, Card, Container } from '@/components/ui'
-import { FlightPageHero } from '@/components/flights/FlightPageHero' // generic banner, reused
+import { FlightPageHero, PAGE_HERO_IMAGES } from '@/components/flights/FlightPageHero'
 import { mockTrains } from '@/data/trains'
 import { searchTrains } from '@/services/trainService'
 import { useWishlistStore } from '@/store/wishlistStore'
@@ -52,6 +52,7 @@ function TrainResultsContent() {
     <div className="bg-[var(--color-background)] pb-20">
       <FlightPageHero
         compact
+        backgroundImage={PAGE_HERO_IMAGES.train}
         title="Book train tickets"
         subtitle="Browse catalog routes. Live availability requires an authorized rail provider."
       />
@@ -146,7 +147,7 @@ export default function TrainsPage() {
       fallback={
         <div className="bg-[var(--color-background)] pb-20" aria-busy="true">
           {/* Keep the banner while loading so the transparent header stays readable */}
-          <FlightPageHero compact title="Book train tickets" />
+          <FlightPageHero compact backgroundImage={PAGE_HERO_IMAGES.train} title="Book train tickets" />
           <div className="min-h-[30vh]" />
         </div>
       }

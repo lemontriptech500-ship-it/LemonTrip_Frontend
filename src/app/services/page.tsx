@@ -12,7 +12,7 @@ import {
   TrainFront,
 } from 'lucide-react'
 import { Button, Card, Container } from '@/components/ui'
-import { FlightPageHero } from '@/components/flights/FlightPageHero'
+import { FlightPageHero, PAGE_HERO_IMAGES } from '@/components/flights/FlightPageHero'
 
 export const metadata: Metadata = {
   title: 'Travel Services',
@@ -68,6 +68,7 @@ export default function ServicesPage() {
   return (
     <div className="bg-[var(--color-background)]">
       <FlightPageHero
+        backgroundImage={PAGE_HERO_IMAGES.travel}
         title="Travel planning, made simple."
         subtitle="Everything in one place, from the first search to the final itinerary. LemonTrip brings the essential travel services together in one clear experience."
       />
