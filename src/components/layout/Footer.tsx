@@ -1,5 +1,6 @@
 import React from 'react'
 import Link from 'next/link'
+import Image from 'next/image'
 import { Facebook, Instagram, Linkedin, Mail, MessageCircle, ArrowUpRight } from 'lucide-react'
 import { Container } from '@/components/ui'
 import { SITE_NAME, SITE_TAGLINE, FOOTER_NAV } from '@/constants'
@@ -15,11 +16,10 @@ export function Footer() {
           <div className="flex flex-col gap-5 lg:col-span-4">
             <Link
               href="/"
-              className="inline-flex items-center gap-1.5 text-2xl font-bold tracking-tight text-[#FDFEFE] hover:opacity-90 transition-opacity"
+              className="relative inline-flex h-[72px] w-[280px] max-w-full items-center transition-opacity hover:opacity-90"
               aria-label={`${SITE_NAME} — Go to homepage`}
             >
-              <span>Lemon</span>
-              <span className="text-[var(--color-primary)]">Trip</span>
+              <Image src="/website_logo.webp" alt={`${SITE_NAME} Logo`} fill sizes="280px" className="object-contain object-left" />
             </Link>
             <p className="text-sm text-[rgba(253,254,255,0.85)] max-w-sm leading-relaxed">
               {SITE_TAGLINE} Book flights, hotels, and holiday packages with ease.

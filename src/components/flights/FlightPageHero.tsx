@@ -1,4 +1,5 @@
 import React from 'react'
+import Image from 'next/image'
 import { Container } from '@/components/ui'
 
 interface FlightPageHeroProps {
@@ -26,6 +27,10 @@ export function FlightPageHero({
             style={{ backgroundImage: `url('${backgroundImage}')` }}
           />
           <div className="absolute inset-0 bg-gradient-to-r from-[#042d1b]/90 via-[#042d1b]/60 to-[#042d1b]/30" />
+        </div>
+
+        <div aria-hidden="true" className="pointer-events-none absolute right-8 top-1/2 z-10 hidden h-16 w-[280px] -translate-y-1/2 opacity-90 xl:block">
+          <Image src="/website_logo.webp" alt="" fill sizes="280px" className="object-contain object-right" />
         </div>
 
         <Container as="div" className="relative z-10">

@@ -33,8 +33,8 @@ const cormorant = Cormorant_Garamond({
 export const metadata: Metadata = {
   metadataBase: new URL('https://lemontrip.in/'),
   icons: {
-    icon: '/lemonTripLogo.jpeg',
-    apple: '/lemonTripLogo.jpeg',
+    icon: '/website_logo.webp',
+    apple: '/website_logo.webp',
   },
   title: {
     default: 'LemonTrip – Flights, Hotels, Tours & Visa',
