@@ -17,11 +17,12 @@ export default async function PackagesPage() {
   const internationalPackages = packages.filter((pkg) => pkg.category === 'international')
   return (
     <div className="bg-[var(--color-background)] pb-20">
-      <FlightPageHero
-        compact
-        title="Holiday Packages"
-        subtitle="Choose from national escapes across India and international holidays around the world."
-      />
+   <FlightPageHero
+  compact
+  title="Holiday Packages"
+  subtitle="Choose from national escapes across India and international holidays around the world."
+  backgroundImage="/packages.png"
+/>
       <Container className="pt-10">
         <section>
           <h2 className="text-h2">National Tours</h2>

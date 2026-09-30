@@ -50,11 +50,12 @@ function TrainResultsContent() {
 
   return (
     <div className="bg-[var(--color-background)] pb-20">
-      <FlightPageHero
-        compact
-        title="Book train tickets"
-        subtitle="Browse catalog routes. Live availability requires an authorized rail provider."
-      />
+  <FlightPageHero
+  compact
+  title="Book train tickets"
+  subtitle="Browse catalog routes. Live availability requires an authorized rail provider."
+  backgroundImage="/trains.png"
+/>
       <Container className="pt-10">
         {isLoading ? <p className="text-center text-[var(--color-text-secondary)]">Loading trains...</p> : error ? <p className="text-center text-[var(--color-error)]">{error}</p> : <div className="grid gap-5 lg:grid-cols-3">
           {trains.map((train) => {
@@ -146,8 +147,7 @@ export default function TrainsPage() {
       fallback={
         <div className="bg-[var(--color-background)] pb-20" aria-busy="true">
           {/* Keep the banner while loading so the transparent header stays readable */}
-          <FlightPageHero compact title="Book train tickets" />
-          <div className="min-h-[30vh]" />
+          <FlightPageHero compact title="Book train tickets" backgroundImage="/trains.png" />          <div className="min-h-[30vh]" />
         </div>
       }
     >
