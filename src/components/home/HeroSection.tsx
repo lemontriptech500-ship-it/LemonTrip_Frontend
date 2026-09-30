@@ -22,7 +22,7 @@ const TRUST = [
 
 export function HeroSection() {
   return (
-    <section className="relative bg-neutral-900 pb-10 sm:min-h-[640px] lg:h-[calc(100svh-120px)] lg:min-h-[700px] lg:pb-0">
+    <section className="relative bg-neutral-900 pb-10 sm:min-h-[640px] lg:h-[100svh] lg:min-h-[100svh] lg:pb-0">
       {/* Background — clipped to the hero box */}
       <div className="pointer-events-none absolute inset-0 z-0 overflow-hidden">
         <div
@@ -36,9 +36,8 @@ export function HeroSection() {
       </div>
 
       {/* Copy */}
-      <div className="relative z-10 px-4 pt-22 sm:px-6 sm:pt-40 lg:pl-16 lg:pr-8 xl:pl-24">
-        
-                <div className="max-w-[640px] text-white">
+      <div className="relative z-10 px-4 pt-[152px] sm:px-6 sm:pt-[200px] lg:pl-[6vw] lg:pr-8">
+        <div className="max-w-[760px] text-white">
           <h1 className="text-display !font-semibold tracking-tight">
             Book your journey.
           </h1>

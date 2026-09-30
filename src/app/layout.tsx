@@ -33,7 +33,7 @@ const cormorant = Cormorant_Garamond({
 export const metadata: Metadata = {
   metadataBase: new URL('https://lemontrip.in/'),
   icons: {
-    icon: '/website_logo.webp',
+    icon: [{ url: '/web_logo_news.svg', type: 'image/svg+xml' }],
     apple: '/website_logo.webp',
   },
   title: {
