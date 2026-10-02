@@ -31,12 +31,14 @@ export default async function HomePage() {
               '@type': 'Organization',
               name: 'LemonTrip',
               url: 'https://lemontrip.in/',
+              logo: 'https://lemontrip.in/web_logo_news.png',
             },
             {
               '@context': 'https://schema.org',
               '@type': 'WebSite',
               name: 'LemonTrip',
               url: 'https://lemontrip.in/',
+              image: 'https://lemontrip.in/web_logo_news.png',
             },
           ]),
         }}

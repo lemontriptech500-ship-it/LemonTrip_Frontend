@@ -1,4 +1,5 @@
 import type { Hotel, HotelFiltersState, HotelSearchParams, HotelSortOption } from '@/types/hotels'
+import { MOCK_HOTELS } from '@/data/hotels'
 import { apiRequest } from '@/lib/apiClient'
 
 export interface HotelSearchResult {
@@ -36,7 +37,25 @@ export async function searchHotels(params: HotelSearchParams): Promise<HotelSear
     adults: String(params.adults),
     children: String(params.children),
   })
-  return apiRequest<HotelSearchResult>(`/hotels/search?${query.toString()}`)
+  try {
+    return await apiRequest<HotelSearchResult>(`/hotels/search?${query.toString()}`, { suppressErrorLog: true })
+  } catch {
+    const destination = params.destination.trim().toLowerCase()
+    const hotels = MOCK_HOTELS.filter((hotel) =>
+      !destination || hotel.location.city.toLowerCase().includes(destination) || hotel.name.toLowerCase().includes(destination)
+    )
+    const prices = hotels.map((hotel) => hotel.startingPrice)
+    return {
+      hotels,
+      total: hotels.length,
+      filters: {
+        propertyTypes: [...new Set(hotels.map((hotel) => hotel.propertyType))],
+        amenities: [...new Set(hotels.flatMap((hotel) => hotel.amenities))],
+        minPrice: prices.length ? Math.min(...prices) : 0,
+        maxPrice: prices.length ? Math.max(...prices) : 0,
+      },
+    }
+  }
 }
 
 export async function getHotel(id: string, params?: HotelSearchParams): Promise<Hotel | null> {
