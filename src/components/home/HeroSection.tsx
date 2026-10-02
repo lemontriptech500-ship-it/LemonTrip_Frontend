@@ -36,7 +36,7 @@ export function HeroSection() {
       </div>
 
       {/* Copy */}
-      <div className="relative z-10 px-4 pt-[152px] sm:px-6 sm:pt-[200px] lg:pl-[6vw] lg:pr-8">
+      <div className="relative z-10 px-4 pt-[168px] sm:px-6 sm:pt-[216px] lg:pl-[10.25vw] lg:pr-8 lg:pt-[288px]">
         <div className="max-w-[760px] text-white">
           <h1 className="text-display !font-semibold tracking-tight">
             Book your journey.
