@@ -20,8 +20,16 @@ export async function searchFlights(params: {
   passengers?: string
   class?: string
 }): Promise<FlightSearchResult> {
-  if (isApiConfigured) return apiRequest<FlightSearchResult>(`/flights/search?${new URLSearchParams(params as Record<string, string>).toString()}`)
-  await new Promise((resolve) => setTimeout(resolve, 800))
+  if (isApiConfigured) {
+    try {
+      return await apiRequest<FlightSearchResult>(
+        `/flights/search?${new URLSearchParams(params as Record<string, string>).toString()}`,
+        { suppressErrorLog: true }
+      )
+    } catch {
+      // Keep flight browsing usable while the optional backend is offline.
+    }
+  }
 
   let results = [...MOCK_FLIGHTS]
 

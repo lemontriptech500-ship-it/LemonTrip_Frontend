@@ -33,7 +33,8 @@ const cormorant = Cormorant_Garamond({
 export const metadata: Metadata = {
   metadataBase: new URL('https://lemontrip.in/'),
   icons: {
-    icon: [{ url: '/web_logo_news.svg', type: 'image/svg+xml' }],
+    icon: [{ url: '/favicon.svg', type: 'image/svg+xml' }],
+    shortcut: '/favicon.svg',
     apple: '/website_logo.webp',
   },
   title: {
@@ -64,14 +65,14 @@ export const metadata: Metadata = {
     title: 'LemonTrip – Flights, Hotels, Tours & Visa',
     description:
       'Book flights, hotels, tours and travel packages with LemonTrip. Explore easy travel booking and visa services.',
-    images: [{ url: '/website_logo.webp', alt: 'LemonTrip' }],
+    images: [{ url: 'https://lemontrip.in/web_logo_news.png', alt: 'Official LemonTrip travel booking logo' }],
   },
   twitter: {
     card: 'summary_large_image',
     title: 'LemonTrip – Flights, Hotels, Tours & Visa',
     description:
       'Book flights, hotels, tours and travel packages with LemonTrip. Explore easy travel booking and visa services.',
-    images: ['/website_logo.webp'],
+    images: ['https://lemontrip.in/web_logo_news.png'],
   },
   robots: {
     index: true,

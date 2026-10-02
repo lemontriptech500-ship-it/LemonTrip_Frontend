@@ -1,6 +1,21 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
-  <rect width="64" height="64" rx="15" fill="#063b24"/>
-  <path d="M31.7 15.5c2.4 3.1 11.1 5.1 13.1 14.7 2.2 10.4-5.1 20.3-12.8 23.1-7.8-2.8-15-12.7-12.8-23.1 2-9.6 10.5-11.6 12.5-14.7Z" fill="#ffd21a"/>
-  <path d="M30.2 18.7c-5.3-7.1-11.8-6.2-14.1-4.8 2.1 7.2 7.6 10.6 14 9.6" fill="#72b85a"/>
-  <path d="M31.4 18.7c1-3.6 3.5-5.9 7.4-6.7" fill="none" stroke="#ffd21a" stroke-linecap="round" stroke-width="3.2"/>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024">
+  <rect width="1024" height="1024" rx="180" fill="#053b2a"/>
+
+  <g transform="translate(0 8)">
+    <path d="M585 355 C 695 300, 815 290, 885 245" fill="none" stroke="#f5d433" stroke-width="34" stroke-linecap="round"/>
+    <path d="M865 245 L 845 315 L 910 290 Z" fill="#f5d433"/>
+
+    <g transform="translate(170 120)">
+      <path d="M195 265 C 165 220, 160 160, 190 118 C 255 27, 398 40, 449 147 C 488 224, 468 321, 404 365 C 330 418, 225 395, 195 265 Z" fill="#f7d236"/>
+      <path d="M301 110 C 276 62, 285 13, 330 0 C 366 19, 371 78, 339 120 Z" fill="#4a9d4b"/>
+      <path d="M412 103 C 451 68, 495 65, 536 96 C 494 122, 444 121, 412 103 Z" fill="#4a9d4b"/>
+      <path d="M333 127 C 293 89, 282 66, 286 37 C 339 72, 343 96, 333 127 Z" fill="#5fae55"/>
+      <path d="M327 139 C 305 110, 311 67, 339 41" fill="none" stroke="#f5d433" stroke-width="14" stroke-linecap="round"/>
+    </g>
+
+    <g transform="translate(92 40)">
+      <text x="78" y="670" fill="#ffffff" font-family="Arial, Helvetica, sans-serif" font-size="220" font-weight="800">Lemon</text>
+      <text x="582" y="670" fill="#f5d433" font-family="Arial, Helvetica, sans-serif" font-size="220" font-weight="800">Trip</text>
+    </g>
+  </g>
 </svg>
