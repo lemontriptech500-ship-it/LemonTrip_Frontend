@@ -31,18 +31,21 @@ export default async function HomePage() {
               '@type': 'Organization',
               name: 'LemonTrip',
               url: 'https://lemontrip.in/',
+              logo: 'https://lemontrip.in/web_logo_news.png',
             },
             {
               '@context': 'https://schema.org',
               '@type': 'WebSite',
               name: 'LemonTrip',
               url: 'https://lemontrip.in/',
+              image: 'https://lemontrip.in/web_logo_news.png',
             },
           ]),
         }}
       />
       <div className="flex flex-col w-full">
       <HeroSection />
+      <TrustSection />
       {/* <TravelBenefits /> */}
       <PopularDestinations />
       {/* <QuickCategories /> */}
@@ -51,7 +54,6 @@ export default async function HomePage() {
       <PopularPackages />
       <VisaHighlight />
       <WhyChooseUs />
-      <TrustSection />
       <BlogPreview />
       <FinalCTA />
       </div>

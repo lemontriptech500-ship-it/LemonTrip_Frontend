@@ -79,11 +79,12 @@ export function Header() {
               aria-label={`${SITE_NAME} — Go to homepage`}
             >
               <Image
-                src="/website_logo.webp"
-                alt={`${SITE_NAME} Logo`}
-                fill
+                src="/web_logo_news.png"
+                alt="Official LemonTrip travel booking logo"
+                width={2172}
+                height={724}
                 sizes="(max-width: 640px) 136px, (max-width: 1024px) 184px, 224px"
-                className="relative origin-left scale-[1.1] object-contain object-left"
+                className="h-full w-full object-contain object-left"
                 priority
               />
             </Link>

@@ -48,7 +48,14 @@ export function Footer() {
               className="relative inline-flex h-[62px] w-[248px] max-w-full items-center"
               aria-label={`${SITE_NAME} — Go to homepage`}
             >
-              <Image src="/website_logo.webp" alt={`${SITE_NAME} Logo`} fill sizes="248px" className="object-contain object-left" />
+              <Image
+                src="/web_logo_news.png"
+                alt="Official LemonTrip travel booking logo"
+                width={2172}
+                height={724}
+                sizes="248px"
+                className="h-full w-full object-contain object-left"
+              />
             </Link>
             <p className="max-w-sm text-sm leading-relaxed text-white/75">
               {SITE_TAGLINE} Book flights, hotels, and holiday packages with ease.
