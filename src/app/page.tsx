@@ -45,6 +45,7 @@ export default async function HomePage() {
       />
       <div className="flex flex-col w-full">
       <HeroSection />
+      <TrustSection />
       {/* <TravelBenefits /> */}
       <PopularDestinations />
       {/* <QuickCategories /> */}
@@ -53,7 +54,6 @@ export default async function HomePage() {
       <PopularPackages />
       <VisaHighlight />
       <WhyChooseUs />
-      <TrustSection />
       <BlogPreview />
       <FinalCTA />
       </div>
