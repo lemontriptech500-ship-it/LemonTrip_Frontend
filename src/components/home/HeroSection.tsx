@@ -25,21 +25,19 @@ export function HeroSection() {
     <section className="relative bg-neutral-900 pb-10 sm:min-h-[640px] lg:h-[100svh] lg:min-h-[100svh] lg:pb-0">
       {/* Background — clipped to the hero box */}
       <div className="pointer-events-none absolute inset-0 z-0 overflow-hidden">
-      <div
-  className="absolute inset-0 bg-cover bg-center bg-no-repeat lg:bg-[length:105%_auto] lg:bg-bottom"
-  style={{
-    backgroundImage: "url('/neww.png?hero-v=20261006')",
-    backgroundColor: '#4a8fd6',
-  }}
-  role="img"
-  aria-label="LemonTrip aircraft on the runway under a blue sky"
-/>
-        <div className="absolute inset-0 bg-gradient-to-r from-[#042d1b]/40 via-[#042d1b]/15 to-transparent" />
+        <div
+          className="absolute inset-0 bg-cover bg-center bg-no-repeat"
+          style={{ backgroundImage: "url('/heroImage.png')", backgroundPosition: 'right 100%', transform: 'translateY(-20px)' }}
+          role="img"
+          aria-label="Aircraft on the runway at dusk"
+        />
+        <div className="absolute inset-0 bg-[rgba(6,59,36,0.22)]" />
+        <div className="absolute inset-0 bg-gradient-to-r from-[color:var(--green-dark)]/85 via-[color:var(--green-dark)]/45 to-transparent" />
         <div className="absolute inset-x-0 bottom-0 h-40 bg-gradient-to-t from-black/40 to-transparent" />
       </div>
 
       {/* Copy */}
-      <div className="relative z-10 px-4 pt-[152px] sm:px-6 sm:pt-[200px] lg:pl-[6vw] lg:pr-8">
+      <div className="relative z-10 px-4 pt-[254px] sm:px-6 sm:pt-[302px] lg:pl-[6vw] lg:pr-8 lg:pt-[286px]">
         <div className="max-w-[760px] text-white">
           <h1 className="text-display !font-semibold tracking-tight">
             Book your journey.
@@ -50,7 +48,7 @@ export function HeroSection() {
           <ul className="mt-6 flex flex-wrap gap-x-6 gap-y-2 text-sm font-medium text-white/90">
             {TRUST.map(({ icon: Icon, label }) => (
               <li key={label} className="inline-flex items-center gap-2">
-                <Icon size={18} className="text-[var(--yellow)]" aria-hidden="true" />
+                <Icon size={16} className="text-[var(--yellow)]" aria-hidden="true" />
                 {label}
               </li>
             ))}
@@ -59,7 +57,8 @@ export function HeroSection() {
       </div>
 
       {/* Widget: in flow on mobile, straddles the hero's bottom edge on desktop */}
-      <div className="relative z-20 mx-4 mt-8 max-w-[1100px] sm:mx-6 lg:absolute lg:inset-x-8 lg:bottom-[32px] lg:mx-auto lg:mt-0">        <TravelSearchWidget />
+      <div className="relative z-20 mx-4 mt-8 max-w-[1100px] sm:mx-6 lg:absolute lg:inset-x-8 lg:bottom-[40px] lg:mx-auto lg:mt-0">
+        <TravelSearchWidget />
       </div>
     </section>
   )
