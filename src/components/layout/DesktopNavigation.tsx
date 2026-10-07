@@ -9,17 +9,16 @@ import { cn } from '@/lib/utils'
 const primaryItems = [
   { label: 'Flights', href: '/flights' },
   { label: 'Hotels', href: '/hotels' },
-  { label: 'Packages', href: '/packages' },
-  { label: 'Visas', href: '/visa' },
-  { label: 'Offers', href: '/offers' },
+  { label: 'Trains', href: '/trains' },
+  { label: 'Buses', href: '/buses' },
+  { label: 'Holidays', href: '/packages' },
+  { label: 'Visa', href: '/visa' },
 ]
 
 const moreItems = [
-  { label: 'Buses', href: '/buses' },
-  { label: 'Trains', href: '/trains' },
-  { label: 'Services', href: '/services' },
-  { label: 'Travel guides', href: '/blog' },
-  { label: 'Support', href: '/contact' },
+  { label: 'Offers', href: '/offers' },
+  { label: 'Travel Stories', href: '/blog' },
+  { label: 'Help', href: '/contact' },
 ]
 
 export function DesktopNavigation() {
@@ -49,7 +48,7 @@ export function DesktopNavigation() {
           {item.label}
         </Link>
       ))}
-      <details className={cn('group relative', isHomePage && 'hidden')}>
+      <details className="group relative">
         <summary className={cn(
           'flex cursor-pointer list-none items-center gap-1 whitespace-nowrap px-2.5 py-2.5 text-[12px] font-medium text-white drop-shadow-[0_1px_3px_rgba(0,0,0,0.35)] transition hover:text-white/80 [&::-webkit-details-marker]:hidden',
           !isHomePage && 'px-1.5 py-5 text-[13px]'

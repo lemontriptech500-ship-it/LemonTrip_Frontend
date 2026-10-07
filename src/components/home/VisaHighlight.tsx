@@ -2,18 +2,17 @@ import React from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
 import { Container, Button } from '@/components/ui'
-import { Globe2, FileText, CheckCircle, ArrowRight } from 'lucide-react'
+import { Globe2, FileText, ArrowRight } from 'lucide-react'
 
 /**
  * A focused visa promotion with clear hierarchy, concise copy,
  * and a bright destination image against the LemonTrip palette.
  */
 
-const FEATURES = [
-  'Tourist & Business Visas',
-  'Document Checklists',
-  'Application Tracking',
-  'Expert Guidance',
+const STEPS = [
+  { number: '01', title: 'Choose your visa', detail: 'Find the right service for your destination.' },
+  { number: '02', title: 'Prepare your documents', detail: 'Follow a clear checklist with expert guidance.' },
+  { number: '03', title: 'Track your application', detail: 'Stay updated as your application progresses.' },
 ]
 
 export function VisaHighlight() {
@@ -37,11 +36,12 @@ export function VisaHighlight() {
               Find the right service, prepare your documents, and follow your application with expert guidance at every step.
             </p>
 
-            <div className="mb-6 grid gap-3 sm:grid-cols-2">
-              {FEATURES.map((feature) => (
-                <div key={feature} className="flex items-center gap-2">
-                  <CheckCircle size={16} className="text-[var(--yellow)]" />
-                  <span className="text-sm font-medium text-white/90">{feature}</span>
+            <div className="mb-7 grid gap-3 sm:grid-cols-3">
+              {STEPS.map((step) => (
+                <div key={step.number} className="border-t border-white/25 pt-3">
+                  <span className="text-xs font-bold tracking-widest text-[var(--yellow)]">{step.number}</span>
+                  <p className="mt-1 text-sm font-semibold text-white">{step.title}</p>
+                  <p className="mt-1 text-xs leading-relaxed text-white/65">{step.detail}</p>
                 </div>
               ))}
             </div>

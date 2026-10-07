@@ -47,15 +47,15 @@ export function FeaturedOffers() {
           action={{ label: 'View All Offers', href: '/offers' }}
         />
 
-        <div className="mt-6 grid grid-cols-1 gap-5 md:grid-cols-2 lg:grid-cols-4">
+        <div className="mt-6 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
           {activeOffers.map((offer) => (
             <Card
               key={offer.id}
               hover
               padding="none"
-              className="group flex h-full flex-col overflow-hidden rounded-[var(--radius-2xl)] !shadow-[var(--shadow-md)] hover:!shadow-[var(--shadow-lg)]"
+              className="group flex h-full flex-col overflow-hidden rounded-[20px] !shadow-[var(--shadow-sm)] transition hover:!shadow-[var(--shadow-lg)]"
             >
-              <div className={`relative h-44 w-full overflow-hidden ${offer.imageColor}`}>
+              <div className={`relative h-36 w-full overflow-hidden ${offer.imageColor}`}>
                 {offer.imageUrl ? (
                   <Image
                     src={offer.imageUrl}
@@ -79,24 +79,26 @@ export function FeaturedOffers() {
                 </span>
               </div>
 
-              <div className="flex flex-grow flex-col p-5">
-                {offer.discount && <p className="mb-1 text-2xl font-bold leading-tight text-[var(--green-dark)]">{offer.discount}</p>}
-                <h3 className="text-h3 mb-1.5">{getOfferTitle(offer.title)}</h3>
-                <p className="text-body-sm text-[var(--color-text-secondary)] mb-3 flex-grow">
+                <div className="flex flex-grow flex-col p-4">
+                <div className="mb-1 flex items-center justify-between gap-2">
+                  <h3 className="line-clamp-1 text-sm font-bold text-[var(--green-dark)]">{getOfferTitle(offer.title)}</h3>
+                  {offer.discount && <span className="shrink-0 text-xs font-extrabold text-[var(--green-2)]">{offer.discount}</span>}
+                </div>
+                <p className="mb-2 line-clamp-2 text-xs leading-relaxed text-[var(--color-text-secondary)]">
                   {offer.description}
                 </p>
 
                 {offer.code && (
                   <div className="mt-auto flex items-center justify-between rounded-[var(--radius-sm)] border border-dashed border-[var(--color-border)] bg-[var(--color-surface-secondary)] p-2">
-                    <span className="text-caption text-[var(--color-text-muted)]">Code:</span>
-                    <span className="font-mono font-bold text-xs text-[var(--color-text-primary)]">
+                    <span className="text-[10px] text-[var(--color-text-muted)]">Code</span>
+                    <span className="font-mono text-[11px] font-bold text-[var(--color-text-primary)]">
                       {offer.code}
                     </span>
                   </div>
                 )}
                 <Link
                   href={getOfferHref(offer.category)}
-                  className="mt-4 inline-flex min-h-11 items-center justify-center gap-2 rounded-[var(--radius-md)] bg-[var(--yellow)] px-4 text-sm font-bold text-[var(--green-dark)] transition duration-200 hover:bg-[var(--color-primary-hover)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--green-2)]"
+                  className="mt-3 inline-flex min-h-9 items-center justify-center gap-2 rounded-full bg-[var(--yellow)] px-4 text-xs font-bold text-[var(--green-dark)] transition duration-200 hover:bg-[var(--color-primary-hover)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--green-2)]"
                 >
                   Book now <ArrowRight size={16} aria-hidden="true" />
                 </Link>

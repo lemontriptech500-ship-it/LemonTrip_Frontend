@@ -41,11 +41,11 @@ export default async function HomePage() {
       />
       <div className="flex flex-col w-full">
       <HeroSection />
-      <PopularDestinations />
       <TrustSection />
       {/* <TravelBenefits /> */}
       {/* <QuickCategories /> */}
       <FeaturedOffers />
+      <PopularDestinations />
       <PopularPackages />
       <VisaHighlight />
       <WhyChooseUs />

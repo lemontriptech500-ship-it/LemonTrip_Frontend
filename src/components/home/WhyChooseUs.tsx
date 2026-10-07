@@ -73,38 +73,26 @@ const features = [
   {
     id: 1,
     icon: 'travel' as const,
-    title: 'Multiple Travel Services',
-    description: 'Flights, hotels, trains, buses, and packages all in one unified platform.',
+    title: 'Every trip, one place',
+    description: 'Flights, stays, trains, buses and holidays come together in one booking experience.',
   },
   {
     id: 2,
     icon: 'booking' as const,
-    title: 'Easy Booking Experience',
-    description: 'A seamless, fast, and intuitive booking process designed for your convenience.',
+    title: 'Easy from start to finish',
+    description: 'Compare options clearly and book your journey in a few simple steps.',
   },
   {
     id: 3,
     icon: 'visa' as const,
-    title: 'Visa Assistance',
-    description: 'Comprehensive guidance and tracking for your international visa applications.',
+    title: 'Visa help when you need it',
+    description: 'Get practical guidance and support through your visa application.',
   },
   {
     id: 4,
     icon: 'payments' as const,
-    title: 'Secure Payments',
-    description: 'Industry-standard encryption to keep your transactions and data safe.',
-  },
-  {
-    id: 5,
-    icon: 'support' as const,
-    title: '24/7 Customer Support',
-    description: 'Our dedicated team is here to assist you anytime, anywhere.',
-  },
-  {
-    id: 6,
-    icon: 'information' as const,
-    title: 'Transparent Information',
-    description: 'No hidden fees. We believe in complete transparency for all your bookings.',
+    title: 'Care you can count on',
+    description: 'Our support team is ready to help before, during and after your trip.',
   },
 ]
 
@@ -118,12 +106,12 @@ export function WhyChooseUs() {
           align="center"
         />
 
-        <div className="mt-6 grid grid-cols-1 gap-5 md:grid-cols-2 lg:grid-cols-3">
+        <div className="mt-6 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
           {features.map((feature) => {
             return (
               <div
                 key={feature.id}
-                className="flex min-h-28 gap-4 rounded-[var(--radius-2xl)] border border-[var(--color-border-light)] bg-[var(--color-surface)] p-5 shadow-[var(--shadow-sm)] transition duration-200 hover:-translate-y-0.5 hover:border-[var(--color-border)] hover:shadow-[var(--shadow-md)]"
+                className="flex min-h-28 gap-4 rounded-2xl border border-[var(--color-border-light)] bg-[var(--color-surface)] p-5 shadow-[var(--shadow-sm)] transition duration-200 hover:-translate-y-0.5 hover:border-[var(--color-border)] hover:shadow-[var(--shadow-md)]"
               >
                 <div className="shrink-0">
                   <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-[var(--color-primary)] text-[var(--green-dark)]">

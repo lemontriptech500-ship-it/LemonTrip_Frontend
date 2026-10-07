@@ -43,21 +43,21 @@ export function Header() {
             as="div"
             className={`flex h-[58px] items-center justify-between gap-1.5 sm:h-[64px] sm:gap-4 lg:h-[66px] lg:gap-5 ${isHomePage ? 'lg:relative lg:grid lg:grid-cols-[160px_minmax(0,1fr)_auto]' : ''}`}
           >
-      <Link
-  href="/"
-  className="relative inline-flex h-[40px] w-[124px] shrink-0 items-center sm:h-[46px] sm:w-[150px] lg:h-[52px] lg:w-[160px]"
-  aria-label={`${SITE_NAME} — Go to homepage`}
->
-  <Image
-    src="/web_logo_news.png"
-    alt="Official LemonTrip travel booking logo"
-    width={2172}
-    height={724}
-    sizes="(max-width: 640px) 124px, (max-width: 1024px) 150px, 160px"
-    className="h-full w-full object-contain object-left drop-shadow-[0_2px_8px_rgba(0,0,0,0.35)]"
-    priority
-  />
-</Link>
+            <Link
+              href="/"
+              className={`relative inline-flex h-[40px] w-[124px] shrink-0 items-center sm:h-[46px] sm:w-[150px] lg:h-[52px] lg:w-[160px] ${isHomePage ? 'rounded-xl border border-white/90 bg-[var(--green-dark)] px-2 shadow-[0_6px_20px_rgba(0,0,0,0.2)]' : ''}`}
+              aria-label={`${SITE_NAME} — Go to homepage`}
+            >
+              <Image
+                src="/web_logo_news.png"
+                alt="Official LemonTrip travel booking logo"
+                width={2172}
+                height={724}
+                sizes="(max-width: 640px) 124px, (max-width: 1024px) 150px, 160px"
+                className="h-full w-full object-contain object-left drop-shadow-[0_2px_8px_rgba(0,0,0,0.35)]"
+                priority
+              />
+            </Link>
 
             <DesktopNavigation />
             <div className={`flex shrink-0 items-center gap-2 sm:gap-3 ${isHomePage ? 'lg:col-start-3 lg:translate-y-4' : ''}`}>
