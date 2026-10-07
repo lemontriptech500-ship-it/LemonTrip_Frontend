@@ -22,8 +22,7 @@ const TRUST = [
 
 export function HeroSection() {
   return (
-    <section className="relative bg-neutral-900 pb-10 sm:min-h-[640px] lg:h-[100svh] lg:min-h-[100svh] lg:pb-0">
-      {/* Background — clipped to the hero box */}
+<section className="relative bg-[#0b3d2a] pb-10 sm:min-h-[640px] lg:h-[100svh] lg:min-h-[100svh] lg:pb-0">      {/* Background — clipped to the hero box */}
       <div className="pointer-events-none absolute inset-0 z-0 overflow-hidden">
         <div
           className="absolute inset-x-0 top-0 h-[540px] bg-cover bg-no-repeat md:hidden"
@@ -31,20 +30,23 @@ export function HeroSection() {
           role="img"
           aria-label="LemonTrip aircraft in a mountain landscape"
         />
-        <div
-          className="absolute inset-0 hidden bg-cover bg-center bg-no-repeat md:block"
-          style={{ backgroundImage: "url('/heroImage.png')", backgroundPosition: 'right 100%', transform: 'translateY(-20px)' }}
-          role="img"
-          aria-label="Aircraft on the runway at dusk"
-        />
+    <div
+  className="absolute inset-0 hidden bg-no-repeat md:block"
+  style={{
+    backgroundImage: "url('/heroImage_newws.png')",
+    backgroundSize: '100% auto',      // fit the full width instead of cropping (cover)
+    backgroundPosition: 'center 35%', // raise/lower the image: lower % = moves up
+  }}
+  role="img"
+  aria-label="Aircraft on the runway at dusk"
+/>
         <div className="absolute inset-0 bg-[rgba(6,59,36,0.22)]" />
         <div className="absolute inset-0 bg-gradient-to-r from-[color:var(--green-dark)]/85 via-[color:var(--green-dark)]/45 to-transparent" />
         <div className="absolute inset-x-0 bottom-0 h-40 bg-gradient-to-t from-black/40 to-transparent" />
       </div>
 
       {/* Copy */}
-      <div className="relative z-10 px-4 pt-[254px] sm:px-6 sm:pt-[302px] lg:pl-[6vw] lg:pr-8 lg:pt-[286px]">
-        <div className="max-w-[760px] text-white">
+      <div className="relative z-10 px-4 pt-[254px] sm:px-6 sm:pt-[250px] lg:pl-[6vw] lg:pr-8 lg:pt-[190px]">        <div className="max-w-[760px] text-white">
           <h1 className="text-display !font-semibold tracking-tight">
             Book your journey.
           </h1>
@@ -63,7 +65,7 @@ export function HeroSection() {
       </div>
 
       {/* Widget: in flow on mobile, straddles the hero's bottom edge on desktop */}
-      <div className="relative z-20 mx-4 mt-8 max-w-[1100px] sm:mx-6 lg:absolute lg:inset-x-8 lg:bottom-[40px] lg:mx-auto lg:mt-0">
+      <div className="relative z-20 mx-4 mt-7 max-w-[1100px] sm:mx-6 lg:absolute lg:inset-x-8 lg:bottom-[18px] lg:mx-auto lg:mt-0">
         <TravelSearchWidget />
       </div>
     </section>
