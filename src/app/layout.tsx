@@ -1,5 +1,5 @@
 import type { Metadata } from 'next'
-import { Cormorant_Garamond, Inter } from 'next/font/google'
+import { Plus_Jakarta_Sans, Inter } from 'next/font/google'
 import { AppShell } from '@/components/layout'
 import { SITE_NAME } from '@/constants'
 import './globals.css'
@@ -8,7 +8,7 @@ import ClarityInit from '@/components/ClarityInit'
 // ============================================================
 // Fonts loaded via next/font for zero-layout-shift.
 //  - --font-inter → body text, navigation, buttons and labels
-//  - --font-cormorant → display and section headings
+//  - --font-jakarta → display and section headings
 // ============================================================
 
 const inter = Inter({
@@ -18,10 +18,10 @@ const inter = Inter({
   display: 'swap',
 })
 
-const cormorant = Cormorant_Garamond({
+const jakarta = Plus_Jakarta_Sans({
   subsets: ['latin'],
-  weight: ['500', '600', '700'],
-  variable: '--font-cormorant',
+  weight: ['500', '600', '700', '800'],
+  variable: '--font-jakarta',
   display: 'swap',
 })
 
@@ -92,7 +92,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${inter.variable} ${cormorant.variable}`}
+      className={`${inter.variable} ${jakarta.variable}`}
       data-scroll-behavior="smooth"
     >
       <body suppressHydrationWarning>

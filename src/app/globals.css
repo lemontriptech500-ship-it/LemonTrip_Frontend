@@ -9,20 +9,20 @@
 
 :root {
   /* ─── Brand Palette from Lemon Trip landing page ─── */
-  --green: #173e14;
-  --green-dark: #063b24;
+  --green: #0f3d2e;
+  --green-dark: #0b3a29;
   --green-2: #118047;
-  --yellow: #fad311;
-  --yellow-soft: #fff6bd;
+  --yellow: #ffd200;
+  --yellow-soft: #fff4b8;
   --ink: #10231a;
   --muted: #64736b;
   --white: #ffffff;
-  --bg: #f7faf8;
+  --bg: #f6f7f2;
   --line: #e2eae5;
 
   /* ─── Font stacks (variables are injected by next/font in layout.tsx) ─── */
   --font-sans:  var(--font-inter), system-ui, -apple-system, 'Segoe UI', sans-serif;
-  --font-heading: var(--font-cormorant), Georgia, 'Times New Roman', serif;
+  --font-heading: var(--font-jakarta), var(--font-inter), system-ui, sans-serif;
 
   /* ─── Brand Primary ─── */
   --color-primary:        var(--yellow);
@@ -33,7 +33,7 @@
 
   /* ─── Brand Secondary ─── */
   --color-secondary:       var(--green-dark);
-  --color-secondary-hover: #042d1d;
+  --color-secondary-hover: #072a1d;
   --color-secondary-soft:  rgba(6, 59, 36, 0.10);
 
   /* ─── Brand Accent ─── */
@@ -80,10 +80,10 @@
 
   /* ─── Border Radius Scale ─── */
   --radius-sm:   0.25rem;
-  --radius-md:   0.75rem;
-  --radius-lg:   0.875rem;
-  --radius-xl:   1rem;
-  --radius-2xl:  1.25rem;
+  --radius-md:   0.875rem;
+  --radius-lg:   1.25rem;
+  --radius-xl:   1.5rem;
+  --radius-2xl:  2rem;
   --radius-pill: 9999px;
 
   /* ─── Shadow / Elevation Scale ─── */
@@ -197,13 +197,14 @@
   h5,
   h6 {
     font-family: var(--font-heading);
+    letter-spacing: -0.02em;
   }
 }
 
 /* ============================================================
    TYPOGRAPHY SYSTEM
    ------------------------------------------------------------
-   Cormorant Garamond headlines pair with Inter body text, navigation and controls.
+   Plus Jakarta Sans headlines pair with Inter body text, navigation and controls.
    ============================================================ */
 
 @layer components {
@@ -287,6 +288,64 @@
 
   .section-gap {
     padding-block: var(--section-gap);
+  }
+
+  /* ============================================================
+      FIGMA REDESIGN HELPERS
+      ============================================================ */
+
+  /* Dark green hero / promise panels */
+  .surface-dark {
+    background-color: var(--green-dark);
+    color: #ffffff;
+  }
+
+  /* Second line of a headline in brand yellow: <span class="text-highlight"> */
+  .text-highlight {
+    color: var(--yellow);
+  }
+
+  /* Small uppercase section label, e.g. "HANDPICKED FOR YOU" */
+  .eyebrow {
+    @apply text-xs font-semibold uppercase;
+    font-family: var(--font-sans);
+    letter-spacing: 0.14em;
+    color: var(--color-text-muted);
+  }
+  .surface-dark .eyebrow { color: var(--yellow); }
+
+  /* Arch-shaped hero image frame */
+  .arch-frame {
+    overflow: hidden;
+    border-radius: 9999px 9999px var(--radius-xl) var(--radius-xl);
+  }
+
+  /* Rounded filter chip: Honeymoon, Beach & Boating ... */
+  .chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.375rem;
+    padding: 0.5rem 1rem;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-pill);
+    background: var(--color-surface);
+    font-size: 0.75rem;
+    font-weight: 600;
+    white-space: nowrap;
+    transition: border-color var(--transition-fast), background-color var(--transition-fast);
+  }
+  .chip:hover,
+  .chip[data-active="true"] {
+    border-color: var(--yellow);
+    background: var(--yellow-soft);
+  }
+
+  /* Search card that overlaps the dark header area */
+  .search-card {
+    background: var(--color-surface);
+    border-radius: var(--radius-xl);
+    box-shadow: var(--shadow-xl);
+    padding: 1.25rem;
   }
 
   /* ============================================================

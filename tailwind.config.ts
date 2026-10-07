@@ -53,7 +53,7 @@ module.exports = {
       },
       fontFamily: {
         sans: ['var(--font-inter)', 'system-ui', 'sans-serif'],
-        heading: ['var(--font-cormorant)', 'Georgia', 'Times New Roman', 'serif'],
+        heading: ['var(--font-jakarta)', 'var(--font-inter)', 'system-ui', 'sans-serif'],
       },
       maxWidth: {
         container: '1280px',
