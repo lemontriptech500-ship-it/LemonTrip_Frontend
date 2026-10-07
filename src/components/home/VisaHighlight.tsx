@@ -18,7 +18,7 @@ const FEATURES = [
 
 export function VisaHighlight() {
   return (
-    <section className="section-gap bg-[var(--color-background-soft)]">
+    <section className="section-gap bg-[var(--color-background)]">
       <Container>
         <div className="relative flex flex-col items-center gap-9 overflow-hidden rounded-3xl border border-white/15 bg-gradient-to-br from-[var(--green-dark)] to-[var(--green)] p-6 shadow-[0_24px_64px_rgba(6,59,36,0.18)] sm:p-8 md:p-10 lg:flex-row lg:gap-12 lg:p-12">
           <div className="absolute right-0 top-0 h-[500px] w-[500px] -translate-y-1/2 translate-x-1/3 rounded-full bg-gradient-to-br from-[rgba(255,210,26,0.08)] to-transparent blur-3xl" />

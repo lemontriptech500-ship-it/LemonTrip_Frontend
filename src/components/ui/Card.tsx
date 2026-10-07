@@ -21,9 +21,9 @@ const paddingStyles = {
 
 const shadowStyles = {
   none: '',
-  sm: 'shadow-sm',
-  md: 'shadow-md',
-  lg: 'shadow-lg',
+  sm: 'shadow-[var(--shadow-sm)]',
+  md: 'shadow-[var(--shadow-md)]',
+  lg: 'shadow-[var(--shadow-lg)]',
 }
 
 export function Card({
@@ -41,10 +41,10 @@ export function Card({
       id={id}
       role={role}
       className={cn(
-        'rounded-[var(--radius-lg)] bg-[var(--color-surface)] border border-[var(--color-border)]',
+        'rounded-[var(--radius-xl)] border border-[var(--color-border-light)] bg-[var(--color-surface)]',
         paddingStyles[padding],
         shadowStyles[shadow],
-        hover && 'transition-all duration-200 ease-out hover:-translate-y-0.5 hover:shadow-md hover:border-[var(--color-border-strong)]',
+        hover && 'transition-all duration-200 ease-out hover:-translate-y-0.5 hover:shadow-[var(--shadow-lg)] hover:border-[var(--color-border-strong)]',
         fullHeight && 'h-full',
         className,
       )}

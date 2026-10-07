@@ -58,7 +58,7 @@ export function FlightResultCard({ flight }: FlightResultCardProps) {
       </button>
 
       <div className="flex flex-row md:flex-col items-center gap-3 w-full md:w-28 shrink-0">
-        <div className="w-11 h-11 rounded-[var(--radius-md)] bg-[var(--color-primary-soft)] flex items-center justify-center font-bold text-[var(--color-primary)] text-sm">
+        <div className="w-11 h-11 rounded-[var(--radius-md)] bg-[var(--color-primary)] flex items-center justify-center font-bold text-[var(--green-dark)] text-sm">
           {flight.airlineCode}
         </div>
         <div className="text-left md:text-center">

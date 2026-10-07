@@ -1,97 +1,96 @@
-'use client'
-
-import React from 'react'
 import Image from 'next/image'
-import { SectionHeading } from '@/components/ui'
-
-/**
- * PopularDestinations
- * ------------------------------------------------------------
- * Restyled to match the reference index.html ".destinations"
- * section:
- *  - shared SectionHeading (title left / description right)
- *    instead of the small yellow underline-accent heading
- *  - taller cards (220px mobile / 260px desktop, vs. the old
- *    17:10 aspect ratio) so the destination name has more room
- *  - gradient overlay now starts at ~35% of the card height
- *    (matching the reference) instead of a shallow bottom fade,
- *    which reads as noticeably more premium
- */
+import Link from 'next/link'
+import { ArrowRight } from 'lucide-react'
+import { Container, SectionHeading } from '@/components/ui'
 
 const destinations = [
   {
     name: 'Dubai',
-    label: 'Packages From',
-    price: '₹24,999',
-    image: 'https://images.unsplash.com/photo-1512453979798-5ea266f8880c?w=600&q=80',
+    country: 'United Arab Emirates',
+    note: 'A city of skyline views and desert escapes',
+    image: 'https://images.unsplash.com/photo-1512453979798-5ea266f8880c?w=900&q=85',
+    badge: 'Popular destination',
   },
   {
-    name: 'Maldives',
-    label: 'Packages From',
-    price: '₹29,999',
-    image: 'https://images.unsplash.com/photo-1514282401047-d79a71a590e8?w=600&q=80',
-  },
-  {
-    name: 'Thailand',
-    label: 'Packages From',
-    price: '₹19,999',
-    image: 'https://images.unsplash.com/photo-1552465011-b4e21bf6e79a?w=600&q=80',
-  },
-  {
-    name: 'Singapore',
-    label: 'Packages From',
-    price: '₹22,999',
-    image: 'https://images.unsplash.com/photo-1525625293386-3f8f99389edd?w=600&q=80',
-  },
-  {
-    name: 'Europe',
-    label: 'Packages From',
-    price: '₹49,999',
-    image: 'https://images.unsplash.com/photo-1499856871958-5b9627545d1a?w=600&q=80',
-  },
-  {
-    name: 'Kashmir',
-    label: 'Packages From',
-    price: '₹15,999',
-    image: 'https://images.unsplash.com/photo-1599661046289-e31897846e41?w=600&q=80',
+    name: 'Tokyo',
+    country: 'Japan',
+    note: 'Find your next adventure in Japan',
+    image: 'https://images.unsplash.com/photo-1493976040374-85c8e12f0c0e?w=900&q=85',
+    badge: 'LemonTrip favourite',
   },
 ]
 
 export function PopularDestinations() {
   return (
-    <section className="w-full bg-white py-12 sm:py-16 lg:py-10">
-      <div className="mx-auto max-w-[1280px] px-4 sm:px-6 lg:px-8">
+    <section id="popular-destinations" aria-label="Popular destinations and travel offers" className="section-gap bg-[var(--color-background-soft)]">
+      <Container>
         <SectionHeading
           title="Popular Destinations"
-          description="Handpicked places and experiences designed for unforgettable journeys."
+          description="Explore places travellers love and find an offer for your next getaway."
+          action={{ label: 'Explore all packages', href: '/packages' }}
         />
-
-        <div className="mt-8 grid grid-cols-2 gap-3 sm:mt-10 sm:grid-cols-3 sm:gap-4 lg:grid-cols-6">
-          {destinations.map((dest) => (
-            <div
-              key={dest.name}
-              className="group relative h-[220px] w-full overflow-hidden rounded-2xl lg:h-[260px]"
+        <div className="mt-7 grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-3">
+          {destinations.map((destination) => (
+            <Link
+              key={destination.name}
+              href="/packages"
+              aria-label={`Explore LemonTrip trips to ${destination.name}, ${destination.country}`}
+              className="group grid min-h-[208px] grid-cols-[1fr_1fr] overflow-hidden rounded-[var(--radius-2xl)] border border-[var(--color-border-light)] bg-white shadow-[var(--shadow-md)] transition duration-200 hover:-translate-y-1 hover:shadow-[var(--shadow-lg)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--green-2)]"
             >
-              <Image
-                src={dest.image}
-                alt={dest.name}
-                fill
-                sizes="(max-width: 768px) 50vw, 16vw"
-                className="absolute inset-0 h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
-              />
-              {/* gradient starts at 35% down, matching the reference */}
-              <div className="absolute inset-x-0 bottom-0 top-[35%] bg-gradient-to-t from-black/80 via-black/25 to-transparent" />
-
-              <div className="absolute bottom-0 left-0 w-full p-4">
-                <p className="text-lg font-bold leading-tight text-white">{dest.name}</p>
-                <p className="text-xs font-medium text-white/90">
-                  {dest.label} {dest.price}
-                </p>
-              </div>
-            </div>
+              <span className="flex flex-col items-start justify-center p-4 sm:p-5">
+                <span className="rounded-full bg-[var(--color-background-soft)] px-2.5 py-1 text-[9px] font-bold text-[var(--green-dark)] sm:text-[10px]">
+                  {destination.badge}
+                </span>
+                <span className="mt-2 text-lg font-bold leading-tight text-[var(--green-dark)] sm:text-xl">
+                  {destination.name}
+                </span>
+                <span className="mt-0.5 text-xs text-[var(--color-text-secondary)]">
+                  {destination.country}
+                </span>
+                <span className="mt-2 text-xs leading-snug text-[var(--color-text-secondary)]">
+                  {destination.note}
+                </span>
+                <span className="mt-2 inline-flex items-center gap-1 text-xs font-bold text-[var(--green)]">
+                  Explore trips <ArrowRight size={14} aria-hidden="true" />
+                </span>
+              </span>
+              <span className="relative min-h-full overflow-hidden bg-[var(--color-background-soft)]">
+                <Image
+                  src={destination.image}
+                  alt={`${destination.name}, ${destination.country}`}
+                  fill
+                  sizes="(max-width: 767px) 55vw, (max-width: 1279px) 28vw, 18vw"
+                  className="object-cover transition-transform duration-500 group-hover:scale-105"
+                />
+              </span>
+            </Link>
           ))}
+
+          <Link
+            href="/offers"
+            aria-label="Browse current LemonTrip travel offers"
+            className="group relative flex min-h-[208px] items-end overflow-hidden rounded-[var(--radius-2xl)] bg-[var(--green-dark)] p-5 text-white shadow-[var(--shadow-md)] transition duration-200 hover:-translate-y-1 hover:shadow-[var(--shadow-lg)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--green-2)] sm:p-6"
+          >
+            <Image
+              src="/hero.png"
+              alt=""
+              fill
+              sizes="(max-width: 767px) 100vw, (max-width: 1279px) 50vw, 28vw"
+              className="object-cover object-right opacity-45 transition-transform duration-500 group-hover:scale-105"
+            />
+            <span className="absolute inset-0 bg-gradient-to-r from-[var(--green-dark)] via-[rgba(6,59,36,0.78)] to-[rgba(6,59,36,0.2)]" />
+            <span className="relative z-10 max-w-[260px]">
+              <span className="mb-2 inline-flex rounded-full bg-white/15 px-2.5 py-1 text-[9px] font-bold uppercase tracking-wider text-white sm:text-[10px]">
+                LemonTrip offers
+              </span>
+              <span className="block text-xl font-bold leading-tight sm:text-2xl">A little more adventure, for a little less.</span>
+              <span className="mt-3 inline-flex items-center gap-2 rounded-xl bg-[var(--yellow)] px-3.5 py-2 text-xs font-bold text-[var(--green-dark)] transition group-hover:bg-white">
+                Browse current offers <ArrowRight size={14} aria-hidden="true" />
+              </span>
+            </span>
+          </Link>
         </div>
-      </div>
+      </Container>
     </section>
   )
 }

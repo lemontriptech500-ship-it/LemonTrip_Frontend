@@ -34,16 +34,16 @@ export function MobileNavigation() {
   }
 
   return (
-    <div className="flex items-center xl:hidden">
+    <div className="flex items-center lg:hidden">
       <Button
         variant="ghost"
         size="sm"
         onClick={() => setIsOpen(true)}
         aria-label="Open mobile menu"
         aria-expanded={isOpen}
-        className="px-2 text-[#FFD21A]"
+        className="px-2 text-white drop-shadow-[0_1px_3px_rgba(0,0,0,0.35)]"
       >
-        <Menu size={22} className="text-[#FFD21A]" />
+        <Menu size={22} className="text-white drop-shadow-[0_1px_3px_rgba(0,0,0,0.35)]" />
       </Button>
 
       {isOpen && (

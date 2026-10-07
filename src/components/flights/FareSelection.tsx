@@ -26,7 +26,7 @@ export function FareSelection({ fareOptions, selectedFareId, onSelectFare }: Far
               className={cn(
                 "relative flex flex-col p-5 rounded-[var(--radius-xl)] border-2 cursor-pointer transition-all duration-200",
                 isSelected 
-                  ? "border-[var(--color-primary)] bg-[rgba(39, 174, 96, 0.05) shadow-md scale-[1.02]" 
+                  ? "border-[var(--color-primary)] bg-[var(--color-primary-soft)] shadow-[var(--shadow-md)] scale-[1.02]"
                   : "border-[var(--color-border)] bg-[var(--color-surface)] hover:border-[var(--color-border-strong)] hover:shadow-sm"
               )}
               role="radio"

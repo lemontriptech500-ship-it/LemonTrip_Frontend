@@ -37,12 +37,13 @@ export async function BlogPreview() {
           action={{ label: 'View All Articles', href: '/blog' }}
         />
 
-        <div className="mt-8 grid grid-cols-1 gap-5 md:grid-cols-3">
+        <div className="mt-6 grid grid-cols-1 gap-5 md:grid-cols-3">
           {blogPosts.map((post) => (
             <Card
               key={post.id}
               hover
-              className="flex h-full flex-col overflow-hidden rounded-2xl !shadow-[var(--shadow-md)] hover:!shadow-[var(--shadow-lg)]"
+              padding="none"
+              className="group flex h-full flex-col overflow-hidden rounded-[var(--radius-2xl)] !shadow-[var(--shadow-md)] hover:!shadow-[var(--shadow-lg)]"
             >
               <div className={`relative h-44 w-full ${post.imageFallbackColor}`}>
                 {post.imageUrl && (
@@ -51,7 +52,7 @@ export async function BlogPreview() {
                     alt=""
                     fill
                     sizes="(max-width: 768px) 100vw, 33vw"
-                    className="object-cover"
+                    className="object-cover transition-transform duration-500 group-hover:scale-105"
                   />
                 )}
               </div>
@@ -62,7 +63,7 @@ export async function BlogPreview() {
                   <span>{post.date}</span>
                 </div>
 
-                <h3 className="text-h4 mb-2 line-clamp-2 leading-snug">{post.title}</h3>
+                <h3 className="text-h3 mb-2 line-clamp-2 leading-snug">{post.title}</h3>
                 <p className="text-body-sm text-[var(--color-text-secondary)] mb-3 flex-grow line-clamp-3">
                   {post.excerpt}
                 </p>

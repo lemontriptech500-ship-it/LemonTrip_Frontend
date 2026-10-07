@@ -1,5 +1,6 @@
 import React from 'react'
 import Image from 'next/image'
+import Link from 'next/link'
 import { Container, SectionHeading } from '@/components/ui'
 import { trendingDestinations } from '@/data/destinations'
 import { MapPin, ArrowRight } from 'lucide-react'
@@ -36,11 +37,13 @@ export function TrendingDestinations() {
           description="Explore the most popular places to visit right now."
         />
 
-        <div className="mt-8 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
+        <div className="mt-6 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
           {trendingDestinations.map((dest) => (
-            <div
+            <Link
               key={dest.id}
-              className="group relative aspect-[4/3] cursor-pointer overflow-hidden rounded-2xl shadow-[var(--shadow-md)] transition-shadow duration-300 hover:shadow-[var(--shadow-xl)]"
+              href="/packages"
+              aria-label={`Explore trips to ${dest.name}, ${dest.country}`}
+              className="group relative aspect-[4/3] overflow-hidden rounded-[var(--radius-2xl)] shadow-[var(--shadow-md)] transition duration-300 hover:-translate-y-1 hover:shadow-[var(--shadow-lg)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--green-2)]"
             >
               {dest.imageUrl ? (
                 <Image
@@ -63,17 +66,17 @@ export function TrendingDestinations() {
               </span>
 
               <div className="absolute bottom-0 left-0 w-full p-5 text-white">
-                <h3 className="text-h3 mb-0.5 font-bold text-white">{dest.name}</h3>
-                <div className="mb-2 flex items-center gap-1 text-sm text-white/85">
-                  <MapPin size={14} />
+                <h3 className="text-h3 mb-0.5 text-white">{dest.name}</h3>
+                <div className="mb-2 flex items-center gap-1 text-xs text-white/85">
+                  <MapPin size={16} />
                   <span>{dest.country}</span>
                 </div>
-                <div className="flex translate-y-2 items-center gap-2 text-sm text-white/85 opacity-0 transition-all duration-300 group-hover:translate-y-0 group-hover:opacity-100">
-                  <span>{dest.description}</span>
-                  <ArrowRight size={14} />
+                <div className="flex items-center gap-2 text-sm text-white/90">
+                  <span className="line-clamp-2">{dest.description}</span>
+                  <ArrowRight className="shrink-0 transition-transform duration-200 group-hover:translate-x-1" size={16} />
                 </div>
               </div>
-            </div>
+            </Link>
           ))}
         </div>
       </Container>

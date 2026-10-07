@@ -1,10 +1,8 @@
 import type { Metadata } from 'next'
 import { HeroSection } from '@/components/home/HeroSection'
-import { TravelBenefits } from '@/components/home/TravelBenefits'
 import { PopularDestinations } from '@/components/home/PopularDestinations'
 // import { QuickCategories } from '@/components/home/QuickCategories'
 import { FeaturedOffers } from '@/components/home/FeaturedOffers'
-import { TrendingDestinations } from '@/components/home/TrendingDestinations'
 import { PopularPackages } from '@/components/home/PopularPackages'
 import { VisaHighlight } from '@/components/home/VisaHighlight'
 import { WhyChooseUs } from '@/components/home/WhyChooseUs'
@@ -13,8 +11,8 @@ import { BlogPreview } from '@/components/home/BlogPreview'
 import { FinalCTA } from '@/components/home/FinalCTA'
 
 export const metadata: Metadata = {
-  title: 'LemonTrip – Flights, Hotels, Tours & Visa',
-  description: 'Book flights, hotels, tours, buses and travel packages with LemonTrip. Explore easy travel booking and visa services.',
+  title: 'LemonTrip – Flights, Hotels, Holidays, Buses, Trains & Visa',
+  description: 'Book flights, hotels, holiday packages, buses, train tickets and visa services with LemonTrip.',
 }
 
 export const dynamic = 'force-dynamic'
@@ -31,26 +29,23 @@ export default async function HomePage() {
               '@type': 'Organization',
               name: 'LemonTrip',
               url: 'https://lemontrip.in/',
-              logo: 'https://lemontrip.in/web_logo_news.png',
             },
             {
               '@context': 'https://schema.org',
               '@type': 'WebSite',
               name: 'LemonTrip',
               url: 'https://lemontrip.in/',
-              image: 'https://lemontrip.in/web_logo_news.png',
             },
           ]),
         }}
       />
       <div className="flex flex-col w-full">
       <HeroSection />
+      <PopularDestinations />
       <TrustSection />
       {/* <TravelBenefits /> */}
-      <PopularDestinations />
       {/* <QuickCategories /> */}
       <FeaturedOffers />
-      <TrendingDestinations />
       <PopularPackages />
       <VisaHighlight />
       <WhyChooseUs />

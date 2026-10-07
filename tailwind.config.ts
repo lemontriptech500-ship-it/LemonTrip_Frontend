@@ -52,7 +52,8 @@ module.exports = {
         'info-bg':   'var(--color-info-bg)',
       },
       fontFamily: {
-        sans: ['var(--font-jakarta)', 'system-ui', 'sans-serif'],
+        sans: ['var(--font-inter)', 'system-ui', 'sans-serif'],
+        heading: ['var(--font-cormorant)', 'Georgia', 'Times New Roman', 'serif'],
       },
       maxWidth: {
         container: '1280px',

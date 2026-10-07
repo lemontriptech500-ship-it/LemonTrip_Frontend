@@ -79,21 +79,18 @@ export function FlightSearchForm() {
     setToCity(fromCity)
   }
 
-  const fieldLabelClass = 'mb-1 block text-[11px] font-medium uppercase tracking-wide text-[var(--color-text-muted)]'
-  const fieldInputClass =
-    'w-full h-11 pl-8 pr-2 rounded-[10px] border border-[var(--color-border)] bg-white text-sm text-[var(--color-text-primary)] placeholder:text-[var(--color-text-muted)] focus:outline-none focus:border-[var(--green)] transition-colors'
-
+  const fieldLabelClass = 'mb-1 block text-[11px] font-medium text-neutral-500'
   return (
     <form onSubmit={handleSearch} className="w-full">
       {/* Trip Type */}
-      <div className="mb-3 flex items-center gap-2">
+      <div className="mb-3 flex items-center justify-end">
         <button
           type="button"
           onClick={() => setTripType('oneway')}
-          className={`rounded-full px-3 py-1 text-xs font-semibold transition-all ${
+          className={`rounded-full px-4 py-2 text-xs font-semibold transition-all ${
             tripType === 'oneway'
               ? 'bg-[var(--color-primary)] text-[var(--green-dark)]'
-              : 'text-[var(--color-text-muted)] hover:text-[var(--green-dark)]'
+              : 'text-neutral-600 hover:bg-neutral-100'
           }`}
         >
           One Way
@@ -101,10 +98,10 @@ export function FlightSearchForm() {
         <button
           type="button"
           onClick={() => setTripType('roundtrip')}
-          className={`rounded-full px-3 py-1 text-xs font-semibold transition-all ${
+          className={`rounded-full px-4 py-2 text-xs font-semibold transition-all ${
             tripType === 'roundtrip'
               ? 'bg-[var(--color-primary)] text-[var(--green-dark)]'
-              : 'text-[var(--color-text-muted)] hover:text-[var(--green-dark)]'
+              : 'text-neutral-600 hover:bg-neutral-100'
           }`}
         >
           Round Trip
@@ -114,51 +111,49 @@ export function FlightSearchForm() {
       {/* Fields wrap based on the container's actual width, not the
           viewport — one row when there's room (hero widget), two
           rows when there isn't (inside the Modify Search modal) */}
-      <div className="flex flex-wrap items-end gap-3">
+      <div className="grid grid-cols-1 items-stretch gap-2 sm:grid-cols-2 lg:grid-cols-[1.15fr_1.15fr_1fr_1fr_1.1fr_auto] lg:gap-0 lg:rounded-2xl lg:border lg:border-neutral-200">
         {/* FROM */}
-        <div className="min-w-0 flex-1 basis-full sm:min-w-[150px] sm:basis-[150px]">
+        <div className="min-w-0 rounded-xl border border-neutral-200 px-3 py-2 lg:rounded-none lg:border-0 lg:border-r lg:border-neutral-200">
           <label className={fieldLabelClass}>From</label>
           <div className="relative">
-            <Plane size={14} className="pointer-events-none absolute left-2.5 top-1/2 -translate-y-1/2 text-[var(--green)]" />
+            <Plane size={15} className="pointer-events-none absolute left-0 top-1/2 -translate-y-1/2 text-neutral-500" />
             <input
               type="text"
               value={fromCity}
               onChange={(e) => setFromCity(e.target.value)}
               placeholder="Departure City"
               required
-              className={fieldInputClass}
+              className="h-8 w-full bg-transparent pl-6 pr-1 text-sm text-neutral-900 placeholder:text-neutral-500 focus:outline-none"
             />
           </div>
         </div>
 
-        {/* Swap — single button, always in flow (no viewport-conditional duplicate) */}
-        <button
-          type="button"
-          onClick={swapCities}
-          className="mb-[1px] flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-[var(--green)] text-white shadow-sm transition-colors hover:bg-[var(--green-2)]"
-          aria-label="Swap cities"
-        >
-          <ArrowRightLeft size={14} />
-        </button>
-
         {/* TO */}
-        <div className="min-w-0 flex-1 basis-full sm:min-w-[150px] sm:basis-[150px]">
+        <div className="relative min-w-0 rounded-xl border border-neutral-200 px-3 py-2 lg:rounded-none lg:border-0 lg:border-r lg:border-neutral-200">
+          <button
+            type="button"
+            onClick={swapCities}
+            className="absolute right-2 top-2 z-10 flex h-7 w-7 items-center justify-center rounded-full border border-neutral-200 bg-white text-neutral-600 shadow-sm transition-colors hover:bg-neutral-50 lg:-left-4 lg:right-auto lg:top-1/2 lg:-translate-y-1/2"
+            aria-label="Swap cities"
+          >
+            <ArrowRightLeft size={13} />
+          </button>
           <label className={fieldLabelClass}>To</label>
           <div className="relative">
-            <MapPin size={14} className="pointer-events-none absolute left-2.5 top-1/2 -translate-y-1/2 text-[var(--green)]" />
+            <MapPin size={15} className="pointer-events-none absolute left-0 top-1/2 -translate-y-1/2 text-neutral-500" />
             <input
               type="text"
               value={toCity}
               onChange={(e) => setToCity(e.target.value)}
               placeholder="Arrival City"
               required
-              className={fieldInputClass}
+              className="h-8 w-full bg-transparent pl-6 pr-1 text-sm text-neutral-900 placeholder:text-neutral-500 focus:outline-none"
             />
           </div>
         </div>
 
         {/* DEPARTURE */}
-        <div className="min-w-0 flex-1 basis-full sm:min-w-[140px] sm:basis-[140px]">
+        <div className="min-w-0 rounded-xl border border-neutral-200 px-3 py-2 lg:rounded-none lg:border-0 lg:border-r lg:border-neutral-200 [&_button]:!h-8 [&_button]:!rounded-none [&_button]:!border-0 [&_button]:!px-0">
           <label className={fieldLabelClass}>Departure</label>
           <DatePicker
             value={departureDate}
@@ -170,7 +165,7 @@ export function FlightSearchForm() {
         </div>
 
         {/* RETURN */}
-        <div className="min-w-0 flex-1 basis-full sm:min-w-[140px] sm:basis-[140px]">
+        <div className="min-w-0 rounded-xl border border-neutral-200 px-3 py-2 lg:rounded-none lg:border-0 lg:border-r lg:border-neutral-200 [&_button]:!h-8 [&_button]:!rounded-none [&_button]:!border-0 [&_button]:!px-0">
           <label className={fieldLabelClass}>Return</label>
           <DatePicker
             value={returnDate}
@@ -183,12 +178,12 @@ export function FlightSearchForm() {
         </div>
 
         {/* TRAVELLERS & CLASS */}
-        <div className="min-w-0 flex-1 basis-full sm:min-w-[150px] sm:basis-[150px]">
+        <div className="min-w-0 rounded-xl border border-neutral-200 px-3 py-2 lg:rounded-none lg:border-0 lg:border-r lg:border-neutral-200">
           <label className={fieldLabelClass}>Travellers &amp; Class</label>
           <div className="relative">
             <select
               defaultValue="1-economy"
-              className="h-11 w-full cursor-pointer appearance-none rounded-[10px] border border-[var(--color-border)] bg-white pl-2 pr-7 text-sm text-[var(--color-text-primary)] transition-colors focus:outline-none focus:border-[var(--green)]"
+              className="h-8 w-full cursor-pointer appearance-none bg-transparent pl-0 pr-5 text-sm text-neutral-900 focus:outline-none"
             >
               <option value="1-economy">1 Adult, Economy</option>
               <option value="2-economy">2 Adults, Economy</option>
@@ -202,7 +197,7 @@ export function FlightSearchForm() {
         {/* Search */}
         <button
           type="submit"
-          className="flex h-11 shrink-0 items-center justify-center gap-1.5 rounded-[10px] bg-[var(--color-primary)] px-5 text-sm font-bold text-[var(--green-dark)] transition-colors hover:bg-[var(--color-primary-hover)]"
+          className="flex h-12 shrink-0 items-center justify-center gap-2 rounded-xl bg-[var(--color-primary)] px-5 text-sm font-bold text-[var(--green-dark)] transition-colors hover:bg-[var(--color-primary-hover)] lg:ml-3"
         >
           Search Flights
           <ArrowRight size={15} />
@@ -220,4 +215,3 @@ function ChevronDown({ size, className }: { size: number; className?: string }) 
   )
 }
   
-

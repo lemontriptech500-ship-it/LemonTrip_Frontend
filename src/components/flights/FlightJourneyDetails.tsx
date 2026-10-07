@@ -88,7 +88,7 @@ export function FlightJourneyDetails({ flight }: FlightJourneyDetailsProps) {
 
                   {/* Layover */}
                   {!isLastSegment && (
-                    <div className="mt-4 py-2 px-4 rounded-md bg-[rgba(22, 160, 133, 0.10) text-[var(--color-warning)] text-sm font-medium inline-flex items-center gap-2">
+                    <div className="mt-4 inline-flex items-center gap-2 rounded-[var(--radius-md)] bg-[var(--color-accent-soft)] px-4 py-2 text-sm font-medium text-[var(--color-secondary)]">
                       <MapPin size={16} />
                       Layover in {segment.destination} - {formatDuration(layoverMinutes)}
                     </div>

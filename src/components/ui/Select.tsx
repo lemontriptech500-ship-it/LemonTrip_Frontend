@@ -23,7 +23,7 @@ export interface SelectProps
 
 const selectSizeStyles: Record<InputSize, string> = {
   sm: 'h-8  pl-3 pr-8 text-sm',
-  md: 'h-10 pl-3 pr-10 text-sm',
+  md: 'h-11 pl-3 pr-10 text-sm',
   lg: 'h-12 pl-4 pr-12 text-base',
 }
 
@@ -81,12 +81,12 @@ export function Select({
             selectSizeStyles[size],
             !hasError && [
               'border-[var(--color-border)]',
-              'hover:border-[var(--color-secondary-hover)]',
-              'focus-visible:border-[var(--color-primary)] focus-visible:ring-[rgba(39, 174, 96, 0.20)',
+              'hover:border-[var(--color-border-strong)]',
+              'focus-visible:border-[var(--color-accent)] focus-visible:ring-[rgba(17,128,71,0.18)]',
             ],
             hasError && [
               'border-[var(--color-error)]',
-              'focus-visible:border-[var(--color-error)] focus-visible:ring-[rgba(192, 57, 43, 0.20)',
+              'focus-visible:border-[var(--color-error)] focus-visible:ring-[rgba(192,57,43,0.16)]',
             ],
             disabled && 'cursor-not-allowed opacity-50 bg-[var(--color-surface-secondary)]',
             className,

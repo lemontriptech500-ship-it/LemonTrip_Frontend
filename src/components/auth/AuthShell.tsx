@@ -29,7 +29,7 @@ export function AuthShell({ mode, children }: AuthShellProps) {
               loading="eager"
               className="absolute inset-0 h-full w-full object-cover opacity-75"
             />
-            <div className="absolute inset-0 bg-[rgba(44, 62, 80, 0.65)" />
+            <div className="absolute inset-0 bg-[rgba(6,59,36,0.64)]" />
             <div className="relative flex h-full flex-col justify-between p-10 text-white">
               <Link href="/" className="relative inline-flex h-9 w-36 items-center rounded-lg bg-[var(--color-surface)] px-2 py-1" aria-label={`${SITE_NAME} home`}>
                 <Image src="/lemonTripLogo.jpeg" alt={`${SITE_NAME} Logo`} fill sizes="144px" className="object-cover object-center" />

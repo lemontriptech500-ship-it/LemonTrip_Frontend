@@ -6,7 +6,7 @@ export interface VisaApplication {
   country: string
   visaType: string
   applicantName: string
-  status: 'submitted' | 'under_process' | 'appointment' | 'approved' | 'rejected'
+  status: 'submitted' | 'in_review' | 'approved' | 'rejected'
   submittedDate: string
   documents: string[]
 }
@@ -78,7 +78,7 @@ export async function trackVisaApplication(applicationId: string): Promise<VisaA
   if (isApiConfigured) return apiRequest<VisaApplication | null>(`/visa/applications/${encodeURIComponent(applicationId)}`)
   await new Promise((resolve) => setTimeout(resolve, 500))
 
-  const statuses: VisaApplication['status'][] = ['submitted', 'under_process', 'appointment', 'approved']
+  const statuses: VisaApplication['status'][] = ['submitted', 'in_review', 'approved']
   const randomStatus = statuses[Math.floor(Math.random() * statuses.length)]
 
   return {

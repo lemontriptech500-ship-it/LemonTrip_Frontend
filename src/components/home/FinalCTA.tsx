@@ -23,14 +23,14 @@ import { ArrowRight } from 'lucide-react'
 
 export function FinalCTA() {
   return (
-    <section className="relative overflow-hidden bg-[var(--color-secondary-soft)] py-20">
+    <section className="section-gap relative overflow-hidden bg-[var(--color-secondary-soft)]">
       <div className="absolute inset-0 opacity-40">
         <div className="absolute right-0 top-0 h-[400px] w-[400px] -translate-y-1/2 translate-x-1/3 rounded-full bg-[rgba(17,128,71,0.18)] blur-3xl" />
         <div className="absolute bottom-0 left-0 h-[300px] w-[300px] -translate-x-1/3 translate-y-1/2 rounded-full bg-[rgba(255,210,26,0.16)] blur-3xl" />
       </div>
 
       <Container className="relative z-10 text-center">
-        <h2 className="text-h1 mb-5 text-[var(--color-text-primary)]">
+        <h2 className="text-h2 mb-5 text-[var(--color-text-primary)]">
           Ready for your next adventure?
         </h2>
         <p className="text-body-lg mx-auto mb-8 max-w-2xl text-[var(--color-text-secondary)]">

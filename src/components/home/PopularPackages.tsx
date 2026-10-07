@@ -36,7 +36,7 @@ export async function PopularPackages() {
     // Keep the homepage renderable while the catalog API recovers.
   }
   return (
-    <section className="section-gap bg-[var(--color-background)]">
+    <section className="section-gap bg-[var(--color-background-soft)]">
       <Container>
         <SectionHeading
           title="Popular Holiday Packages"
@@ -44,24 +44,25 @@ export async function PopularPackages() {
           action={{ label: 'Explore Packages', href: '/packages' }}
         />
 
-        <div className="mt-8 grid grid-cols-1 gap-6 lg:grid-cols-3">
+        <div className="mt-6 grid grid-cols-1 gap-5 lg:grid-cols-3">
           {packages.slice(0, 3).map((pkg) => (
             <Card
               key={pkg.id}
               hover
-              className="flex h-full flex-col overflow-hidden rounded-2xl !shadow-[var(--shadow-lg)]"
+              padding="none"
+              className="group flex h-full flex-col overflow-hidden rounded-[var(--radius-2xl)] !shadow-[var(--shadow-md)] hover:!shadow-[var(--shadow-lg)]"
             >
-              <div className={`relative h-48 w-full ${pkg.imageFallbackColor}`}>
+              <div className={`relative h-44 w-full ${pkg.imageFallbackColor}`}>
                 {pkg.imageUrl && (
                   <Image
                     src={pkg.imageUrl}
                     alt={`${pkg.destination} travel package`}
                     fill
                     sizes="(max-width: 768px) 100vw, 33vw"
-                    className="object-cover"
+                    className="object-cover transition-transform duration-500 group-hover:scale-105"
                   />
                 )}
-                <div className="absolute inset-0 bg-gradient-to-t from-[rgba(44,62,80,0.40)] to-transparent" />
+                <div className="absolute inset-0 bg-gradient-to-t from-[rgba(6,59,36,0.40)] to-transparent" />
 
                 {pkg.badge && (
                   <span className="absolute left-3 top-3 rounded-full bg-[var(--color-primary)] px-3 py-1 text-[11px] font-extrabold uppercase tracking-wide text-[var(--color-secondary)]">
@@ -72,7 +73,7 @@ export async function PopularPackages() {
 
               <div className="flex flex-grow flex-col p-5">
                 <div className="mb-2 flex items-center gap-2 text-[var(--color-text-secondary)]">
-                  <Clock size={14} />
+                  <Clock size={16} />
                   <span className="text-xs font-medium">{pkg.duration}</span>
                 </div>
 
@@ -84,7 +85,7 @@ export async function PopularPackages() {
                 <div className="mb-5 space-y-1.5">
                   {pkg.highlights.slice(0, 3).map((highlight, i) => (
                     <div key={i} className="flex items-center gap-2 text-xs text-[var(--color-text-primary)]">
-                      <CheckCircle2 size={14} className="text-[var(--color-success)] shrink-0" />
+                      <CheckCircle2 size={16} className="text-[var(--color-success)] shrink-0" />
                       <span>{highlight}</span>
                     </div>
                   ))}

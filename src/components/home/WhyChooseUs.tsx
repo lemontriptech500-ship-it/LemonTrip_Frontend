@@ -118,12 +118,12 @@ export function WhyChooseUs() {
           align="center"
         />
 
-        <div className="mt-8 grid grid-cols-1 gap-5 md:grid-cols-2 lg:grid-cols-3">
+        <div className="mt-6 grid grid-cols-1 gap-5 md:grid-cols-2 lg:grid-cols-3">
           {features.map((feature) => {
             return (
               <div
                 key={feature.id}
-                className="flex min-h-28 gap-4 rounded-2xl border border-[var(--color-border-light)] bg-[var(--color-surface)] p-5 transition duration-200 hover:-translate-y-0.5 hover:border-[var(--color-border)] hover:shadow-[var(--shadow-md)]"
+                className="flex min-h-28 gap-4 rounded-[var(--radius-2xl)] border border-[var(--color-border-light)] bg-[var(--color-surface)] p-5 shadow-[var(--shadow-sm)] transition duration-200 hover:-translate-y-0.5 hover:border-[var(--color-border)] hover:shadow-[var(--shadow-md)]"
               >
                 <div className="shrink-0">
                   <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-[var(--color-primary)] text-[var(--green-dark)]">

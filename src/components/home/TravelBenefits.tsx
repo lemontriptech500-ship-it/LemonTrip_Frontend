@@ -47,7 +47,7 @@ const benefits = [
 
 export function TravelBenefits() {
   return (
-    <section className="w-full bg-white py-3 sm:py-4 lg:pb-4 lg:pt-16">
+    <section className="w-full bg-[var(--color-surface)] py-3 sm:py-4 lg:pb-4 lg:pt-16">
       <div className="mx-auto max-w-[1200px] px-4">
         <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-5">
           {benefits.map((item) => {
@@ -55,9 +55,9 @@ export function TravelBenefits() {
             return (
               <div
                 key={item.title}
-                className="flex items-center gap-3 rounded-2xl border border-[var(--color-border-light)] bg-white p-3 shadow-[var(--shadow-sm)] transition-all duration-200 hover:-translate-y-0.5 hover:shadow-[var(--shadow-md)] sm:gap-4 sm:p-4 lg:p-2.5"
+                className="flex items-center gap-3 rounded-2xl border border-[var(--color-border-light)] bg-[var(--color-surface)] p-3 shadow-[var(--shadow-sm)] transition-all duration-200 hover:-translate-y-0.5 hover:shadow-[var(--shadow-md)] sm:gap-4 sm:p-4 lg:p-2.5"
               >
-                <div className="flex h-[36px] w-[36px] shrink-0 items-center justify-center rounded-full bg-[var(--color-primary-soft)] sm:h-[44px] sm:w-[44px]">
+                <div className="flex h-[36px] w-[36px] shrink-0 items-center justify-center rounded-full bg-[var(--color-primary)] sm:h-[44px] sm:w-[44px]">
                   <Icon size={18} className="text-[var(--green-dark)] sm:text-[22px]" strokeWidth={2} />
                 </div>
                 <div className="min-w-0">

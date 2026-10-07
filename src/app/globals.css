@@ -9,10 +9,10 @@
 
 :root {
   /* ─── Brand Palette from Lemon Trip landing page ─── */
-  --green: #0b5d35;
+  --green: #173e14;
   --green-dark: #063b24;
   --green-2: #118047;
-  --yellow: #ffd21a;
+  --yellow: #fad311;
   --yellow-soft: #fff6bd;
   --ink: #10231a;
   --muted: #64736b;
@@ -21,8 +21,8 @@
   --line: #e2eae5;
 
   /* ─── Font stacks (variables are injected by next/font in layout.tsx) ─── */
-  --font-sans:  var(--font-manrope), system-ui, -apple-system, 'Segoe UI', sans-serif;
-  --font-serif: var(--font-cormorant), Georgia, 'Times New Roman', serif;
+  --font-sans:  var(--font-inter), system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --font-heading: var(--font-cormorant), Georgia, 'Times New Roman', serif;
 
   /* ─── Brand Primary ─── */
   --color-primary:        var(--yellow);
@@ -76,14 +76,14 @@
   /* ─── Layout ─── */
   --max-content-width: 1280px;
   --gutter-x:          1rem;
-  --section-gap:       3rem;
+  --section-gap:       1.75rem;
 
   /* ─── Border Radius Scale ─── */
   --radius-sm:   0.25rem;
-  --radius-md:   0.375rem;
-  --radius-lg:   0.5rem;
-  --radius-xl:   0.75rem;
-  --radius-2xl:  1rem;
+  --radius-md:   0.75rem;
+  --radius-lg:   0.875rem;
+  --radius-xl:   1rem;
+  --radius-2xl:  1.25rem;
   --radius-pill: 9999px;
 
   /* ─── Shadow / Elevation Scale ─── */
@@ -109,7 +109,7 @@
 @media (min-width: 1024px) {
   :root {
     --gutter-x:   2rem;
-    --section-gap: 4rem;
+    --section-gap: 2.5rem;
   }
 }
 
@@ -142,7 +142,7 @@
     }
   }
 
-  /* Manrope is the single sans for the whole site. */
+  /* Inter is the single sans for the whole site. */
   body {
     background-color: var(--color-background);
     color: var(--color-text-primary);
@@ -188,29 +188,27 @@
     color: var(--color-text-primary);
   }
 
-  /* Page titles use the elegant serif. Cormorant Garamond has a small
-     x-height, so sizes are ~10% larger than they would be for Playfair. */
-  h1:not(.text-display) {
-    font-family: var(--font-serif);
-    font-size: clamp(2.4rem, 4.4vw, 3.9rem);
-    font-weight: 700;
-    line-height: 1.05;
-    letter-spacing: -0.01em;
+  /* All semantic headings use the same display family; size and weight stay
+     with their component classes so page titles can share the system cleanly. */
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    font-family: var(--font-heading);
   }
 }
 
 /* ============================================================
    TYPOGRAPHY SYSTEM
    ------------------------------------------------------------
-   Two families only:
-   - Cormorant Garamond (serif): .text-display, .text-h1, .text-h2
-   - Manrope (sans): everything else, including h3/h4, labels,
-     captions, nav, buttons and card titles.
+   Cormorant Garamond headlines pair with Inter body text, navigation and controls.
    ============================================================ */
 
 @layer components {
   .text-display {
-    font-family: var(--font-serif);
+    font-family: var(--font-heading);
     @apply text-5xl font-bold leading-[1.02] tracking-tight;
   }
   @media (min-width: 768px) {
@@ -218,7 +216,7 @@
   }
 
   .text-h1 {
-    font-family: var(--font-serif);
+    font-family: var(--font-heading);
     @apply text-4xl font-bold leading-[1.05] tracking-tight;
   }
   @media (min-width: 768px) {
@@ -226,8 +224,8 @@
   }
 
   .text-h2 {
-    font-family: var(--font-serif);
-    @apply text-3xl font-bold leading-[1.1] tracking-tight;
+    font-family: var(--font-heading);
+    @apply text-3xl font-semibold leading-[1.1] tracking-tight;
   }
   @media (min-width: 768px) {
     .text-h2 { font-size: 2.6rem; }
@@ -235,7 +233,7 @@
 
   .text-h3 {
     @apply text-lg font-semibold leading-[1.25];
-    font-family: var(--font-sans);
+    font-family: var(--font-heading);
     letter-spacing: -0.01em;
   }
   @media (min-width: 768px) {
@@ -244,7 +242,7 @@
 
   .text-h4 {
     @apply text-base font-semibold leading-snug;
-    font-family: var(--font-sans);
+    font-family: var(--font-heading);
     letter-spacing: -0.01em;
   }
 

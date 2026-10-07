@@ -32,41 +32,33 @@ export function AccountEntry() {
 
   // Avoid a flash of the wrong state before the persisted store rehydrates
   if (!hasHydrated) {
-    return <div className="hidden h-9 w-[76px] xl:block xl:h-10" aria-hidden="true" />
+    return <div className="hidden h-8 w-[72px] lg:block" aria-hidden="true" />
   }
 
   if (!isAuthenticated || !user) {
     return (
-      <div className="hidden items-center gap-2 xl:flex xl:gap-3">
-        {/* Opens the login pop-up (AuthModal) instead of navigating to /login */}
-        <button
-          type="button"
-          onClick={() => openAuthModal('signin')}
-          className="inline-flex h-9 shrink-0 items-center justify-center whitespace-nowrap rounded-[10px] border border-white/50 bg-white/10 px-3 text-sm font-bold text-white backdrop-blur-sm xl:h-10 xl:px-5"
-        >
-          Login
-        </button>
+      <div className="hidden items-center gap-2 lg:flex">
         {/* Opens the pop-up on the "Create account" tab instead of /signup */}
         <button
           type="button"
           onClick={() => openAuthModal('signup')}
-          className="inline-flex h-9 shrink-0 items-center justify-center whitespace-nowrap rounded-[10px] bg-[var(--yellow)] px-4 text-sm font-bold text-[var(--green-dark)] shadow-[0_8px_18px_rgba(255,210,26,0.25)] xl:h-10 xl:px-6"
+          className="inline-flex h-8 shrink-0 items-center justify-center whitespace-nowrap rounded-lg bg-[var(--yellow)] px-4 text-xs font-bold text-[var(--green-dark)] shadow-[0_8px_18px_rgba(255,210,26,0.25)]"
         >
-          Book Now
+          Sign Up
         </button>
       </div>
     )
   }
 
   return (
-    <div className="relative hidden xl:block" ref={containerRef}>
+    <div className="relative hidden lg:block" ref={containerRef}>
       <button
         type="button"
         onClick={() => setIsOpen((current) => !current)}
         aria-haspopup="true"
         aria-expanded={isOpen}
         aria-label="Account menu"
-        className="inline-flex h-9 w-9 items-center justify-center overflow-hidden rounded-full border-2 border-white/70 bg-white/10 text-white backdrop-blur-sm xl:h-10 xl:w-10"
+        className="inline-flex h-8 w-8 items-center justify-center overflow-hidden rounded-full border border-white/70 bg-white/10 text-white backdrop-blur-sm"
       >
         {user.avatar ? (
           // eslint-disable-next-line @next/next/no-img-element
@@ -80,16 +72,16 @@ export function AccountEntry() {
           isScrolled — it's an overlay on top of the page, not part of
           the glass header itself, so its own text colors stay fixed. */}
       {isOpen && (
-        <div className="absolute right-0 top-full mt-2 w-64 rounded-[12px] border border-[#e7efe9] bg-white p-4   ">
+        <div className="absolute right-0 top-full mt-2 w-64 rounded-[var(--radius-xl)] border border-[var(--color-border)] bg-[var(--color-surface)] p-4 shadow-[var(--shadow-lg)]">
           <p className="text-sm font-bold text-[var(--ink)]">{user.name}</p>
           <p className="mt-0.5 truncate text-xs text-[var(--color-text-secondary,#6b7a70)]">{user.email}</p>
 
-          <div className="my-3 border-t border-[#e7efe9]" />
+          <div className="my-3 border-t border-[var(--color-border-light)]" />
 
           <Link
             href="/profile"
             onClick={() => setIsOpen(false)}
-            className="flex items-center gap-2 rounded-[8px] px-1 py-2 text-sm font-medium text-[var(--ink)] transition hover:bg-[#f4f8f5]"
+            className="flex items-center gap-2 rounded-[var(--radius-md)] px-2 py-2 text-sm font-medium text-[var(--color-text-primary)] transition hover:bg-[var(--color-background-soft)]"
           >
             <User size={16} aria-hidden="true" />
             My profile
@@ -98,7 +90,7 @@ export function AccountEntry() {
           <button
             type="button"
             onClick={handleLogout}
-            className="mt-1 flex w-full items-center gap-2 rounded-[8px] px-1 py-2 text-left text-sm font-medium text-[var(--ink)] transition hover:bg-[#f4f8f5]"
+            className="mt-1 flex w-full items-center gap-2 rounded-[var(--radius-md)] px-2 py-2 text-left text-sm font-medium text-[var(--color-text-primary)] transition hover:bg-[var(--color-background-soft)]"
           >
             <span aria-hidden="true">↪</span>
             Log out

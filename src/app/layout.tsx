@@ -1,5 +1,5 @@
 import type { Metadata } from 'next'
-import { Manrope, Cormorant_Garamond } from 'next/font/google'
+import { Cormorant_Garamond, Inter } from 'next/font/google'
 import { AppShell } from '@/components/layout'
 import { SITE_NAME } from '@/constants'
 import './globals.css'
@@ -7,15 +7,14 @@ import ClarityInit from '@/components/ClarityInit'
 
 // ============================================================
 // Fonts loaded via next/font for zero-layout-shift.
-//  - --font-manrope   → body text, nav, buttons, labels, captions,
-//                       card titles (modern, refined sans)
-//  - --font-cormorant → elegant serif for h1 / section titles only
+//  - --font-inter → body text, navigation, buttons and labels
+//  - --font-cormorant → display and section headings
 // ============================================================
 
-const manrope = Manrope({
+const inter = Inter({
   subsets: ['latin'],
   weight: ['400', '500', '600', '700'],
-  variable: '--font-manrope',
+  variable: '--font-inter',
   display: 'swap',
 })
 
@@ -37,13 +36,16 @@ export const metadata: Metadata = {
     apple: [{ url: '/favicon.jpeg', type: 'image/jpeg', sizes: '512x512' }],
   },
   title: {
-    default: 'LemonTrip – Flights, Hotels, Tours & Visa',
+    default: 'LemonTrip – Flights, Hotels, Holidays, Buses, Trains & Visa',
     template: `%s | ${SITE_NAME}`,
   },
   description:
-    'Book flights, hotels, tours, buses and travel packages with LemonTrip. Explore easy travel booking and visa services.',
+    'Book flights, hotels, holiday packages, buses, train tickets and visa services with LemonTrip.',
   keywords: [
     'travel booking',
+    'LemonTrip flights',
+    'LemonTrip hotels',
+    'LemonTrip holidays',
     'flights',
     'hotels',
     'bus tickets',
@@ -61,16 +63,16 @@ export const metadata: Metadata = {
     locale: 'en_IN',
     url: 'https://lemontrip.in/',
     siteName: SITE_NAME,
-    title: 'LemonTrip – Flights, Hotels, Tours & Visa',
+    title: 'LemonTrip – Flights, Hotels, Holidays, Buses, Trains & Visa',
     description:
-      'Book flights, hotels, tours and travel packages with LemonTrip. Explore easy travel booking and visa services.',
+      'Book flights, hotels, holiday packages, buses, train tickets and visa services with LemonTrip.',
     images: [{ url: 'https://lemontrip.in/web_logo_news.png', alt: 'Official LemonTrip travel booking logo' }],
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'LemonTrip – Flights, Hotels, Tours & Visa',
+    title: 'LemonTrip – Flights, Hotels, Holidays, Buses, Trains & Visa',
     description:
-      'Book flights, hotels, tours and travel packages with LemonTrip. Explore easy travel booking and visa services.',
+      'Book flights, hotels, holiday packages, buses, train tickets and visa services with LemonTrip.',
     images: ['https://lemontrip.in/web_logo_news.png'],
   },
   robots: {
@@ -90,7 +92,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${manrope.variable} ${cormorant.variable}`}
+      className={`${inter.variable} ${cormorant.variable}`}
       data-scroll-behavior="smooth"
     >
       <body suppressHydrationWarning>

@@ -67,12 +67,12 @@ export function Textarea({
           'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-0',
           !hasError && [
             'border-[var(--color-border)]',
-            'hover:border-[var(--color-secondary-hover)]',
-            'focus-visible:border-[var(--color-primary)] focus-visible:ring-[rgba(39, 174, 96, 0.20)',
+            'hover:border-[var(--color-border-strong)]',
+            'focus-visible:border-[var(--color-accent)] focus-visible:ring-[rgba(17,128,71,0.18)]',
           ],
           hasError && [
             'border-[var(--color-error)]',
-            'focus-visible:border-[var(--color-error)] focus-visible:ring-[rgba(192, 57, 43, 0.20)',
+            'focus-visible:border-[var(--color-error)] focus-visible:ring-[rgba(192,57,43,0.16)]',
           ],
           disabled && 'cursor-not-allowed opacity-50 bg-[var(--color-surface-secondary)]',
           className,

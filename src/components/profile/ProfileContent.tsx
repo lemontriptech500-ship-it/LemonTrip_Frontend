@@ -278,7 +278,7 @@ export default function ProfileContent() {
                   {bookings.slice(0, 5).map((booking) => (
                     <li key={booking.id} className="flex items-center justify-between gap-4 px-5 py-4 sm:px-6">
                       <div className="flex min-w-0 items-center gap-3">
-                        <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-[var(--radius-md)] bg-[var(--color-primary-soft)] text-[var(--color-primary-dark)]">
+                        <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-[var(--radius-md)] bg-[var(--color-primary)] text-[var(--green-dark)]">
                           <ShoppingBag size={18} />
                         </div>
                         <div className="min-w-0">

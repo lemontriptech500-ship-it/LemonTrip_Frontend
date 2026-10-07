@@ -124,7 +124,7 @@ export default function ConfirmationPage({ params }: { params: Promise<{ flightI
           <div className="flex-1 w-full min-w-0">
             {/* Success Header */}
             <div className="bg-[var(--color-surface)] border border-[var(--color-border)] rounded-[var(--radius-xl)] p-8 mb-8 text-center flex flex-col items-center shadow-sm">
-              <div className="flex h-16 w-16 items-center justify-center rounded-full bg-[rgba(39,174,96,0.10)] text-[var(--color-success)] mb-4">
+              <div className="mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-[var(--color-success-bg)] text-[var(--color-success)]">
                 <CheckCircle2 size={32} />
               </div>
               <h1 className="text-3xl font-bold text-[var(--color-text-primary)] mb-2">

@@ -30,7 +30,7 @@ export function PaymentMethodSelector({ selected, onSelect }: PaymentMethodSelec
             className={cn(
               "flex items-center gap-4 p-4 w-full text-left rounded-[var(--radius-lg)] border transition-all duration-200",
               isSelected 
-                ? "border-[var(--color-primary)] bg-[rgba(39, 174, 96, 0.05)" 
+                ? "border-[var(--color-primary)] bg-[var(--color-primary-soft)] shadow-[var(--shadow-sm)]"
                 : "border-[var(--color-border)] bg-[var(--color-surface)] hover:border-[var(--color-secondary-hover)]"
             )}
           >
@@ -43,7 +43,7 @@ export function PaymentMethodSelector({ selected, onSelect }: PaymentMethodSelec
             
             <div className={cn(
               "p-2 rounded-full",
-              isSelected ? "bg-[rgba(39, 174, 96, 0.10) text-[var(--color-primary)]" : "bg-[var(--color-surface-secondary)] text-[var(--color-text-secondary)]"
+              isSelected ? "bg-[var(--color-primary-soft)] text-[var(--green-dark)]" : "bg-[var(--color-surface-secondary)] text-[var(--color-text-secondary)]"
             )}>
               <Icon size={20} />
             </div>

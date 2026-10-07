@@ -25,8 +25,8 @@ const variantStyles: Record<AlertVariant, { wrapper: string; icon: string; text:
   },
   warning: {
     wrapper: 'bg-[var(--color-warning-bg)] border-[var(--color-warning)]',
-    icon: 'text-[var(--color-warning)]',
-    text: 'text-[var(--color-warning)]',
+    icon: 'text-[var(--green-dark)]',
+    text: 'text-[var(--green-dark)]',
   },
   error: {
     wrapper: 'bg-[var(--color-error-bg)] border-[var(--color-error)]',

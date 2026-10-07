@@ -28,24 +28,25 @@ const socials = [
   { href: 'mailto:lemontripindia@gmail.com', label: 'Email', icon: <Mail size={18} /> },
 ]
 
-const linkClass = 'text-sm leading-snug text-white/80 transition-colors hover:text-[var(--color-primary)]'
-const headingClass = 'text-xs font-semibold uppercase tracking-widest text-[var(--color-primary)]'
+const linkClass = 'inline-flex text-sm leading-snug text-white/70 transition duration-200 hover:translate-x-1 hover:text-[var(--color-primary)] focus-visible:rounded-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[var(--color-primary)]'
+const headingClass = 'text-xs font-bold uppercase tracking-[0.16em] text-[var(--color-primary)]'
 
 export function Footer() {
   const currentYear = new Date().getFullYear()
 
   return (
-    <footer className="relative overflow-hidden bg-[var(--color-secondary)]" role="contentinfo">
+    <footer className="relative overflow-hidden bg-[#052f22] text-white" role="contentinfo">
+      <div className="absolute inset-x-0 top-0 h-1 bg-gradient-to-r from-transparent via-[var(--color-primary)] to-transparent" aria-hidden="true" />
       <div
-        className="pointer-events-none absolute inset-0 bg-gradient-to-br from-[#042d1b]/80 via-transparent to-black/25"
+        className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_10%_0%,rgba(255,210,26,0.09),transparent_34%),linear-gradient(135deg,rgba(4,45,27,0.5),transparent_55%,rgba(0,0,0,0.22))]"
         aria-hidden="true"
       />
-      <Container className="relative py-10 sm:py-12">
-        <div className="grid gap-x-8 gap-y-9 border-b border-white/10 pb-8 lg:grid-cols-12">
+      <Container className="relative py-12 sm:py-14">
+        <div className="grid gap-x-12 gap-y-10 border-b border-white/10 pb-10 lg:grid-cols-12 lg:pb-12">
           <section className="flex flex-col gap-4 lg:col-span-4" aria-label="About LemonTrip">
             <Link
               href="/"
-              className="relative inline-flex h-[62px] w-[248px] max-w-full items-center"
+              className="relative inline-flex h-[62px] w-[248px] max-w-full items-center rounded-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[var(--color-primary)]"
               aria-label={`${SITE_NAME} — Go to homepage`}
             >
               <Image
@@ -57,12 +58,12 @@ export function Footer() {
                 className="h-full w-full object-contain object-left"
               />
             </Link>
-            <p className="max-w-sm text-sm leading-relaxed text-white/75">
+            <p className="max-w-sm text-sm leading-6 text-white/70">
               {SITE_TAGLINE} Book flights, hotels, and holiday packages with ease.
             </p>
             <div>
               <h2 className={headingClass}>Connect with us</h2>
-              <ul className="mt-3 flex flex-wrap gap-2.5" aria-label="Social media">
+              <ul className="mt-4 flex flex-wrap gap-2.5" aria-label="Social media">
                 {socials.map((social) => (
                   <li key={social.label}>
                     <a
@@ -70,7 +71,7 @@ export function Footer() {
                       aria-label={social.label}
                       target={social.href.startsWith('http') ? '_blank' : undefined}
                       rel={social.href.startsWith('http') ? 'noopener noreferrer' : undefined}
-                      className="flex h-9 w-9 items-center justify-center rounded-full border border-white/15 text-white/85 transition-colors hover:border-[var(--color-primary)] hover:bg-[var(--color-primary)] hover:text-[var(--color-secondary)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--color-primary)]"
+                      className="flex h-10 w-10 items-center justify-center rounded-full border border-white/15 bg-white/[0.04] text-white/80 transition duration-200 hover:-translate-y-0.5 hover:border-[var(--color-primary)] hover:bg-[var(--color-primary)] hover:text-[var(--color-secondary)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--color-primary)]"
                     >
                       {social.icon}
                     </a>
@@ -80,11 +81,11 @@ export function Footer() {
             </div>
           </section>
 
-          <div className="grid grid-cols-2 gap-x-5 gap-y-7 sm:grid-cols-4 lg:col-span-8 lg:gap-7">
+          <div className="grid grid-cols-2 gap-x-6 gap-y-8 sm:grid-cols-4 lg:col-span-8 lg:gap-8">
             {FOOTER_NAV.map((group) => (
               <nav key={group.heading} aria-label={`${group.heading} footer links`}>
                 <h2 className={headingClass}>{group.heading}</h2>
-                <ul className="mt-3 flex flex-col gap-2.5">
+                <ul className="mt-4 flex flex-col gap-3">
                   {group.links.map((link) => {
                     const auth = getAuthLink(link.href)
                     return (
@@ -105,7 +106,7 @@ export function Footer() {
 
             <div>
               <h2 className={headingClass}>Contact</h2>
-              <ul className="mt-3 flex flex-col gap-2.5">
+              <ul className="mt-4 flex flex-col gap-3">
                 <li><Link href="/contact" className={linkClass}>Contact us</Link></li>
                 <li><a href="mailto:lemontripindia@gmail.com" className={`${linkClass} break-all`}>lemontripindia@gmail.com</a></li>
                 <li><a href="https://wa.me/919812042030" target="_blank" rel="noopener noreferrer" className={linkClass}>WhatsApp us</a></li>
@@ -114,8 +115,10 @@ export function Footer() {
           </div>
         </div>
 
-        <div className="py-6">
-          <NewsletterSignup />
+        <div className="py-8 sm:py-9">
+          <div className="rounded-2xl border border-white/10 bg-white/[0.045] px-5 shadow-[0_18px_45px_-32px_rgba(0,0,0,0.7)] sm:px-8">
+            <NewsletterSignup />
+          </div>
         </div>
 
         <div className="flex flex-col items-center justify-between gap-3 border-t border-white/10 pt-5 text-center sm:flex-row sm:text-left">

@@ -29,12 +29,12 @@ function getStatusVariant(status: Booking['status']) {
 }
 
 const TYPE_META: Record<Booking['type'], { label: string; icon: typeof Plane; className: string }> = {
-  flight: { label: 'Flight', icon: Plane, className: 'bg-blue-50 text-blue-700' },
-  bus: { label: 'Bus', icon: Bus, className: 'bg-amber-50 text-amber-700' },
-  hotel: { label: 'Hotel', icon: Hotel, className: 'bg-purple-50 text-purple-700' },
-  train: { label: 'Train', icon: TrainFront, className: 'bg-teal-50 text-teal-700' },
-  package: { label: 'Package', icon: Package, className: 'bg-pink-50 text-pink-700' },
-  visa: { label: 'Visa', icon: FileText, className: 'bg-slate-50 text-slate-700' },
+  flight: { label: 'Flight', icon: Plane, className: 'bg-[var(--color-accent-soft)] text-[var(--color-secondary)]' },
+  bus: { label: 'Bus', icon: Bus, className: 'bg-[var(--color-accent-soft)] text-[var(--color-secondary)]' },
+  hotel: { label: 'Hotel', icon: Hotel, className: 'bg-[var(--color-accent-soft)] text-[var(--color-secondary)]' },
+  train: { label: 'Train', icon: TrainFront, className: 'bg-[var(--color-accent-soft)] text-[var(--color-secondary)]' },
+  package: { label: 'Package', icon: Package, className: 'bg-[var(--color-accent-soft)] text-[var(--color-secondary)]' },
+  visa: { label: 'Visa', icon: FileText, className: 'bg-[var(--color-accent-soft)] text-[var(--color-secondary)]' },
 }
 
 export default function BookingsPage() {
