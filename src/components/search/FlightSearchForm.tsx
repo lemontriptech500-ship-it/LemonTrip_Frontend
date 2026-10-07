@@ -83,35 +83,37 @@ export function FlightSearchForm() {
   return (
     <form onSubmit={handleSearch} className="w-full">
       {/* Trip Type */}
-      <div className="mb-3 flex items-center justify-end">
-        <button
-          type="button"
-          onClick={() => setTripType('oneway')}
-          className={`rounded-full px-4 py-2 text-xs font-semibold transition-all ${
-            tripType === 'oneway'
-              ? 'bg-[var(--color-primary)] text-[var(--green-dark)]'
-              : 'text-neutral-600 hover:bg-neutral-100'
-          }`}
-        >
-          One Way
-        </button>
-        <button
-          type="button"
-          onClick={() => setTripType('roundtrip')}
-          className={`rounded-full px-4 py-2 text-xs font-semibold transition-all ${
-            tripType === 'roundtrip'
-              ? 'bg-[var(--color-primary)] text-[var(--green-dark)]'
-              : 'text-neutral-600 hover:bg-neutral-100'
-          }`}
-        >
-          Round Trip
-        </button>
+      <div className="mb-2 flex items-center justify-end">
+        <div className="inline-flex items-center rounded-full border border-neutral-200 bg-white p-1 shadow-sm">
+          <button
+            type="button"
+            onClick={() => setTripType('oneway')}
+            className={`rounded-full px-3.5 py-1.5 text-[11px] font-semibold transition-all ${
+              tripType === 'oneway'
+                ? 'bg-[var(--green-dark)] text-white'
+                : 'text-neutral-600 hover:bg-neutral-100'
+            }`}
+          >
+            One Way
+          </button>
+          <button
+            type="button"
+            onClick={() => setTripType('roundtrip')}
+            className={`rounded-full px-3.5 py-1.5 text-[11px] font-semibold transition-all ${
+              tripType === 'roundtrip'
+                ? 'bg-[var(--green-dark)] text-white'
+                : 'text-neutral-600 hover:bg-neutral-100'
+            }`}
+          >
+            Round Trip
+          </button>
+        </div>
       </div>
 
       {/* Fields wrap based on the container's actual width, not the
           viewport — one row when there's room (hero widget), two
           rows when there isn't (inside the Modify Search modal) */}
-      <div className="grid grid-cols-1 items-stretch gap-2 sm:grid-cols-2 lg:grid-cols-[1.15fr_1.15fr_1fr_1fr_1.1fr_auto] lg:gap-0 lg:rounded-2xl lg:border lg:border-neutral-200">
+      <div className="grid grid-cols-1 items-stretch gap-2 sm:grid-cols-2 lg:grid-cols-[1.15fr_1.15fr_1fr_1fr_1.1fr_auto] lg:gap-0 lg:rounded-2xl lg:border lg:border-neutral-200 lg:bg-white lg:shadow-sm">
         {/* FROM */}
         <div className="min-w-0 rounded-xl border border-neutral-200 px-3 py-2 lg:rounded-none lg:border-0 lg:border-r lg:border-neutral-200">
           <label className={fieldLabelClass}>From</label>

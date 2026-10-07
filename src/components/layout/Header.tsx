@@ -41,11 +41,11 @@ export function Header() {
         <div className="relative">
           <Container
             as="div"
-            className="flex h-[58px] items-center justify-between gap-1.5 sm:h-[64px] sm:gap-4 lg:h-[66px] lg:gap-5"
+            className={`flex h-[58px] items-center justify-between gap-1.5 sm:h-[64px] sm:gap-4 lg:h-[66px] lg:gap-5 ${isHomePage ? 'lg:relative lg:grid lg:grid-cols-[160px_minmax(0,1fr)_auto]' : ''}`}
           >
             <Link
               href="/"
-              className="relative inline-flex h-[40px] w-[124px] shrink-0 items-center sm:h-[46px] sm:w-[150px] lg:h-[48px] lg:w-[160px]"
+              className={`relative inline-flex h-[40px] w-[124px] shrink-0 items-center sm:h-[46px] sm:w-[150px] lg:h-[48px] lg:w-[160px] ${isHomePage ? 'rounded-xl border border-white/90 bg-[var(--green-dark)] px-2 shadow-[0_6px_20px_rgba(0,0,0,0.2)] lg:hidden' : ''}`}
               aria-label={`${SITE_NAME} — Go to homepage`}
             >
               <Image
@@ -60,8 +60,18 @@ export function Header() {
             </Link>
 
             <DesktopNavigation />
-            <div className="flex shrink-0 items-center gap-2 sm:gap-3">
-              <AccountEntry />
+            <div className={`flex shrink-0 items-center gap-2 sm:gap-3 ${isHomePage ? 'lg:col-start-3 lg:translate-y-4' : ''}`}>
+              {isHomePage && (
+                <>
+                  <Link href="/contact" className="hidden h-8 items-center rounded-full bg-[var(--yellow)] px-4 text-xs font-bold text-[var(--green-dark)] shadow-[0_6px_18px_rgba(255,210,26,0.22)] transition hover:brightness-105 lg:inline-flex">
+                    Contact Us
+                  </Link>
+                  <span className="hidden text-xs font-semibold tracking-wide text-white/90 lg:inline" aria-label="Language: English">EN</span>
+                </>
+              )}
+              <div className={isHomePage ? 'hidden lg:block' : ''}>
+                <AccountEntry />
+              </div>
 
               <Link
                 href="/wishlist"
