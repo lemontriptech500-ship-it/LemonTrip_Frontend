@@ -26,7 +26,13 @@ export function HeroSection() {
       {/* Background — clipped to the hero box */}
       <div className="pointer-events-none absolute inset-0 z-0 overflow-hidden">
         <div
-          className="absolute inset-0 bg-cover bg-center bg-no-repeat"
+          className="absolute inset-x-0 top-0 h-[540px] bg-cover bg-no-repeat md:hidden"
+          style={{ backgroundImage: "url('/mobilehero.jpeg')", backgroundPosition: 'center 65%' }}
+          role="img"
+          aria-label="LemonTrip aircraft in a mountain landscape"
+        />
+        <div
+          className="absolute inset-0 hidden bg-cover bg-center bg-no-repeat md:block"
           style={{ backgroundImage: "url('/heroImage.png')", backgroundPosition: 'right 100%', transform: 'translateY(-20px)' }}
           role="img"
           aria-label="Aircraft on the runway at dusk"

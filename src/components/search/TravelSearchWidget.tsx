@@ -63,9 +63,18 @@ export function TravelSearchWidget() {
 
       <div
         role="tabpanel"
-        className="min-h-[585px] bg-white p-4 sm:min-h-[451px] sm:p-6 md:min-h-[228px] lg:min-h-[206px] xl:min-h-[150px] [&_label]:font-medium [&_label]:text-neutral-600"
+        className="relative min-h-[585px] overflow-hidden bg-white p-4 sm:min-h-[451px] sm:p-6 md:min-h-[228px] md:overflow-visible lg:min-h-[206px] xl:min-h-[150px] [&_label]:font-medium [&_label]:text-neutral-600"
       >
-        {activeItem?.content}
+        <div
+          aria-hidden="true"
+          className="pointer-events-none absolute inset-0 opacity-20 md:hidden"
+          style={{
+            backgroundImage: "url('/mobilehero.jpeg')",
+            backgroundPosition: 'center top',
+            backgroundSize: 'auto 200%',
+          }}
+        />
+        <div className="relative z-10">{activeItem?.content}</div>
       </div>
     </div>
   )
