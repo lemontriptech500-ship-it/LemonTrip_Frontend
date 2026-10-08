@@ -6,6 +6,7 @@ import { FeaturedOffers } from '@/components/home/FeaturedOffers'
 import { PopularPackages } from '@/components/home/PopularPackages'
 import { VisaHighlight } from '@/components/home/VisaHighlight'
 import { WhyChooseUs } from '@/components/home/WhyChooseUs'
+import { TravelerAssist } from '@/components/home/TravelerAssist'
 import { TrustSection } from '@/components/home/TrustSection'
 import { BlogPreview } from '@/components/home/BlogPreview'
 import { FinalCTA } from '@/components/home/FinalCTA'
@@ -49,6 +50,7 @@ export default async function HomePage() {
       <PopularPackages />
       <VisaHighlight />
       <WhyChooseUs />
+      <TravelerAssist />
       <BlogPreview />
       <FinalCTA />
       </div>

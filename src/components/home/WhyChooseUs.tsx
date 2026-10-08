@@ -1,130 +1,93 @@
-import React from 'react'
-import { Container, SectionHeading } from '@/components/ui'
-
-type FeatureIcon = 'travel' | 'booking' | 'visa' | 'payments' | 'support' | 'information'
-
-function FeatureIllustration({ type }: { type: FeatureIcon }) {
-  const stroke = 'var(--green-dark)'
-  const yellow = 'var(--yellow-soft)'
-
-  return (
-    <svg viewBox="0 0 64 64" className="h-10 w-10" fill="none" aria-hidden="true">
-      {type === 'travel' && <>
-        <circle cx="31" cy="42" r="13" fill="var(--yellow-soft)" stroke={stroke} strokeWidth="3" />
-        <path d="M19 42h24M31 29c4 4 6 8 6 13s-2 9-6 13m0-26c-4 4-6 8-6 13s2 9 6 13" stroke={stroke} strokeWidth="2" />
-        <path d="m9 40 9-11 3 2-5 9 13-7 3 3-16 13-7-1 6-8-6 3Z" fill={yellow} stroke={yellow} strokeWidth="2" strokeLinejoin="round" />
-        <path d="m36 16 15-5-6 8 8 4-2 3-11-2-7 7-3-2 3-9-5-4 1-3 7 3Z" fill={stroke} />
-      </>}
-      {type === 'booking' && <>
-        <rect x="13" y="14" width="36" height="39" rx="5" fill="var(--yellow-soft)" stroke={stroke} strokeWidth="3" />
-        <path d="M22 10v9m18-9v9M14 25h34" stroke={stroke} strokeWidth="4" strokeLinecap="round" />
-        <path d="M22 33h6m8 0h5M22 42h6m8 0h3" stroke={stroke} strokeWidth="3" strokeLinecap="round" />
-        <circle cx="47" cy="46" r="11" fill={yellow} />
-        <path d="m42 46 3 3 6-7" stroke={stroke} strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" />
-      </>}
-      {type === 'visa' && <>
-        <path d="m14 14 27-5 8 39-27 5-8-39Z" fill={stroke} />
-        <circle cx="31" cy="29" r="9" stroke="var(--yellow-soft)" strokeWidth="2" />
-        <path d="M22 29h18m-9-9c3 3 4 6 4 9s-1 6-4 9m0-18c-3 3-4 6-4 9s1 6 4 9" stroke="var(--yellow-soft)" strokeWidth="1.5" />
-        <rect x="34" y="38" width="22" height="16" rx="3" fill={yellow} stroke={stroke} strokeWidth="2" />
-        <text x="37" y="49" fill={stroke} fontSize="8" fontWeight="800">VISA</text>
-        <path d="m49 13 2-5m5 11 5-2m-6 9 4 1" stroke={yellow} strokeWidth="2.5" strokeLinecap="round" />
-      </>}
-      {type === 'payments' && <>
-        <path d="m32 7 21 9v15c0 13-9 22-21 27C20 53 11 44 11 31V16l21-9Z" fill={stroke} />
-        <path d="m32 13 15 6v12c0 9-6 16-15 21-9-5-15-12-15-21V19l15-6Z" stroke="var(--yellow-soft)" strokeWidth="2" />
-        <rect x="25" y="29" width="14" height="12" rx="3" fill={yellow} />
-        <path d="M28 29v-4a4 4 0 0 1 8 0v4" stroke={yellow} strokeWidth="3" strokeLinecap="round" />
-        <circle cx="32" cy="35" r="1.5" fill={stroke} />
-      </>}
-      {type === 'support' && <>
-        <path d="M13 33v-5a19 19 0 0 1 38 0v5" stroke={stroke} strokeWidth="5" strokeLinecap="round" />
-        <rect x="9" y="29" width="9" height="16" rx="4" fill={yellow} stroke={stroke} strokeWidth="2" />
-        <rect x="46" y="29" width="9" height="16" rx="4" fill={yellow} stroke={stroke} strokeWidth="2" />
-        <circle cx="32" cy="31" r="12" fill="#f2c79d" />
-        <path d="M20 30c1-13 23-17 25 1-4-2-7-6-8-9-4 5-10 8-17 8Z" fill={stroke} />
-        <path d="M17 55c2-10 8-15 15-15s13 5 15 15" fill={stroke} />
-        <path d="M23 34h.5m16-.5h.5" stroke={stroke} strokeWidth="2.5" strokeLinecap="round" />
-        <rect x="40" y="43" width="19" height="13" rx="5" fill={yellow} />
-        <circle cx="46" cy="49" r="1" fill={stroke} /><circle cx="51" cy="49" r="1" fill={stroke} />
-      </>}
-      {type === 'information' && <>
-        <rect x="13" y="8" width="34" height="48" rx="4" fill="var(--white)" stroke={stroke} strokeWidth="3" />
-        <path d="M21 20h18M21 28h18M21 36h12" stroke={stroke} strokeWidth="3" strokeLinecap="round" />
-        <circle cx="47" cy="44" r="11" fill={yellow} />
-        <path d="M47 43v7m0-12h.1" stroke={stroke} strokeWidth="3" strokeLinecap="round" />
-        <path d="m54 29 3-3m-1 10 4-1" stroke={yellow} strokeWidth="2.5" strokeLinecap="round" />
-      </>}
-    </svg>
-  )
-}
-
-/**
- * WhyChooseUs
- * ------------------------------------------------------------
- * `align="center"` now works — SectionHeading has a centered
- * variant (title + description stacked, center-aligned) for
- * exactly this kind of "intro, then symmetric grid" section.
- *
- * The icon tiles use the shared yellow and deep-green brand colors.
- */
+import { Container } from '@/components/ui'
+import { Compass, CalendarCheck, FileCheck2, ShieldCheck } from 'lucide-react'
 
 const features = [
   {
     id: 1,
-    icon: 'travel' as const,
+    icon: Compass,
     title: 'Every trip, one place',
     description: 'Flights, stays, trains, buses and holidays come together in one booking experience.',
   },
   {
     id: 2,
-    icon: 'booking' as const,
+    icon: CalendarCheck,
     title: 'Easy from start to finish',
     description: 'Compare options clearly and book your journey in a few simple steps.',
   },
   {
     id: 3,
-    icon: 'visa' as const,
+    icon: FileCheck2,
     title: 'Visa help when you need it',
     description: 'Get practical guidance and support through your visa application.',
   },
   {
     id: 4,
-    icon: 'payments' as const,
+    icon: ShieldCheck,
     title: 'Care you can count on',
     description: 'Our support team is ready to help before, during and after your trip.',
   },
 ]
 
+/**
+ * WhyChooseUs — premium version:
+ * soft gradient backdrop, eyebrow + accent line, numbered cards with a
+ * dark-green icon tile, yellow top bar and lift on hover.
+ */
 export function WhyChooseUs() {
   return (
-    <section className="section-gap bg-[var(--color-surface)]">
-      <Container>
-        <SectionHeading
-          title="Why Choose LemonTrip"
-          description="We are committed to providing you with the best travel booking experience."
-          align="center"
-        />
+    <section className="section-gap relative overflow-hidden bg-[var(--color-surface)]">
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-x-0 top-0 h-72 bg-gradient-to-b from-[var(--color-background-soft)] to-transparent"
+      />
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute -right-24 top-16 h-72 w-72 rounded-full bg-[rgba(255,210,0,0.12)] blur-3xl"
+      />
 
-        <div className="mt-6 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
-          {features.map((feature) => {
+      <Container className="relative">
+        <div className="mx-auto max-w-2xl text-center">
+          <p className="eyebrow">Why LemonTrip</p>
+          <h2 className="text-h2 mt-3 text-[var(--color-text-primary)]">
+            Why Choose <span className="text-[var(--green-2)]">LemonTrip</span>
+          </h2>
+          <div className="mx-auto mt-5 h-1 w-16 rounded-full bg-[var(--color-primary)]" aria-hidden="true" />
+          <p className="text-body mt-5 text-[var(--color-text-secondary)]">
+            We are committed to providing you with the best travel booking experience.
+          </p>
+        </div>
+
+        <div className="mt-12 grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-4">
+          {features.map((feature, index) => {
+            const Icon = feature.icon
             return (
-              <div
+              <article
                 key={feature.id}
-                className="flex min-h-28 gap-4 rounded-2xl border border-[var(--color-border-light)] bg-[var(--color-surface)] p-5 shadow-[var(--shadow-sm)] transition duration-200 hover:-translate-y-0.5 hover:border-[var(--color-border)] hover:shadow-[var(--shadow-md)]"
+                className="group relative overflow-hidden rounded-[var(--radius-2xl)] border border-[var(--color-border-light)] bg-white p-7 shadow-[var(--shadow-sm)] transition duration-300 hover:-translate-y-1.5 hover:shadow-[var(--shadow-xl)]"
               >
-                <div className="shrink-0">
-                  <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-[var(--color-primary)] text-[var(--green-dark)]">
-                    <FeatureIllustration type={feature.icon} />
-                  </div>
+                {/* yellow bar that slides in on hover */}
+                <span
+                  aria-hidden="true"
+                  className="absolute inset-x-0 top-0 h-1 origin-left scale-x-0 bg-[var(--color-primary)] transition-transform duration-300 group-hover:scale-x-100"
+                />
+
+                {/* big faded number */}
+                <span
+                  aria-hidden="true"
+                  className="absolute right-6 top-4 select-none text-5xl font-extrabold leading-none text-[rgba(11,58,41,0.07)]"
+                >
+                  {String(index + 1).padStart(2, '0')}
+                </span>
+
+                <div className="flex h-14 w-14 items-center justify-center rounded-[var(--radius-lg)] bg-[var(--green-dark)] text-[var(--color-primary)] shadow-[var(--shadow-md)] transition-transform duration-300 group-hover:-rotate-3 group-hover:scale-105">
+                  <Icon size={26} strokeWidth={1.8} aria-hidden="true" />
                 </div>
-                <div>
-                  <h3 className="text-h3 mb-1.5">{feature.title}</h3>
-                  <p className="text-body-sm text-[var(--color-text-secondary)]">
-                    {feature.description}
-                  </p>
-                </div>
-              </div>
+
+                <h3 className="mt-6 text-xl font-extrabold leading-snug text-[var(--color-text-primary)]">
+                  {feature.title}
+                </h3>
+                <p className="text-body-sm mt-2.5 text-[var(--color-text-secondary)]">{feature.description}</p>
+              </article>
             )
           })}
         </div>
