@@ -1,16 +1,9 @@
 import React from 'react'
 import { Container } from '@/components/ui'
 
-export const PAGE_HERO_IMAGES = {
-  flight: '/Airliner Ascending Over Mosque Cityscape.png?hero-v=20260908',
-  hotel: '/Modern Plaza with Mosque and Pavilion.png',
-  bus: '/Modern Coach Bus by a Grand Mosque.png',
-  train: '/Daylight High-Speed Train and Mosque Skyline.png',
-  package: '/Luxury Waterfront Escape with Mosque Views.png',
-  visa: 'https://images.unsplash.com/photo-1526772662000-3f88f10405ff?w=1800&q=85',
-  offer: 'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=1800&q=85',
-  travel: '/Traveler Overlooking a Mosque Waterfront.png',
-} as const
+import { PAGE_HERO_IMAGES } from '@/constants/pageHeroImages'
+
+export { PAGE_HERO_IMAGES } from '@/constants/pageHeroImages'
 
 interface FlightPageHeroProps {
   title: string

@@ -2,13 +2,14 @@
 
 import Link from 'next/link'
 import { useState } from 'react'
-import { ArrowRight, Clock, CheckCircle2, ShoppingCart, Check, Sparkles } from 'lucide-react'
+import { ArrowRight, Clock, CheckCircle2, ShoppingCart, Check, Sparkles, MapPin, Compass } from 'lucide-react'
 import { Button, Card } from '@/components/ui'
 import { useCartStore } from '@/store/cartStore'
 import type { HolidayPackage } from '@/data/packages'
 
 interface PackageCardProps {
   pkg: HolidayPackage
+  featured?: boolean
 }
 
 /**
@@ -23,9 +24,10 @@ function parsePackagePrice(startingPrice: string): number {
   return Number(match[0].replace(/,/g, '')) || 0
 }
 
-export function PackageCard({ pkg }: PackageCardProps) {
+export function PackageCard({ pkg, featured = false }: PackageCardProps) {
   const addItem = useCartStore((state) => state.addItem)
   const [justAdded, setJustAdded] = useState(false)
+  const [imageFailed, setImageFailed] = useState(false)
 
   const handleAddToCart = () => {
     addItem({
@@ -45,59 +47,37 @@ export function PackageCard({ pkg }: PackageCardProps) {
   }
 
   return (
-    <Card className="group flex h-full min-h-[28rem] flex-col overflow-hidden sm:min-h-[32.5rem] lg:min-h-0" hover padding="none">
-      <div className={`relative h-52 overflow-hidden ${pkg.imageFallbackColor}`}>
-        {pkg.imageUrl && (
-          <img src={pkg.imageUrl} alt={`${pkg.destination} travel package`} loading="lazy" className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105" />
+    <Card className={`group h-full overflow-hidden rounded-2xl border-[var(--color-border)] ${featured ? 'flex flex-col md:grid md:grid-cols-[1.1fr_1fr]' : 'flex flex-col'}`} hover padding="none">
+      <Link href={`/packages/${pkg.id}`} aria-label={`Explore ${pkg.destination}`} className={`relative block shrink-0 overflow-hidden ${featured ? 'h-72 md:h-full md:min-h-[410px]' : 'h-72 sm:h-80'} bg-[var(--color-secondary-soft)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-[-4px] focus-visible:outline-[var(--yellow)] ${pkg.imageFallbackColor}`}>
+        <div className="absolute inset-0 flex items-center justify-center"><Compass size={64} strokeWidth={1} aria-hidden="true" className="text-[var(--green-2)]" /></div>
+        {pkg.imageUrl && !imageFailed && (
+          // Package images may come from any host supplied by the catalog API.
+          // eslint-disable-next-line @next/next/no-img-element
+          <img src={pkg.imageUrl} alt="" loading="lazy" onError={() => setImageFailed(true)} className="absolute inset-0 h-full w-full object-cover transition-transform duration-700 group-hover:scale-105" />
         )}
-        <div className="absolute inset-0 bg-gradient-to-t from-[#062d1b]/85 via-[#062d1b]/10 to-black/20" />
-        <div className="absolute inset-x-4 top-4 flex items-start justify-between gap-2">
-          <span className="rounded-full border border-white/25 bg-[#063b24]/75 px-3 py-1 text-[11px] font-semibold uppercase text-white backdrop-blur-sm">
-            {pkg.category === 'national' ? 'India' : 'International'}
-          </span>
-          {pkg.badge && (
-            <span className="inline-flex items-center gap-1 rounded-full bg-[var(--yellow)] px-3 py-1 text-[11px] font-bold text-[var(--green-dark)]">
-              <Sparkles size={12} aria-hidden="true" /> {pkg.badge}
-            </span>
-          )}
+        <div className="absolute inset-0 bg-gradient-to-t from-[#062d1b]/70 via-transparent to-black/10" />
+        <div className="absolute inset-x-4 top-4 flex flex-wrap items-start justify-between gap-2">
+          <span className="inline-flex items-center gap-1.5 rounded-full bg-white px-3 py-1.5 text-xs font-semibold text-[var(--green-dark)]"><MapPin size={13} aria-hidden="true" />{pkg.category === 'national' ? 'India' : 'International'}</span>
+          {pkg.badge && <span className="inline-flex items-center gap-1 rounded-full bg-[var(--yellow)] px-3 py-1.5 text-xs font-bold text-[var(--green-dark)]"><Sparkles size={12} aria-hidden="true" />{pkg.badge}</span>}
         </div>
-        <div className="absolute inset-x-4 bottom-4 flex items-end justify-between gap-3 text-white">
-          <div className="flex min-w-0 items-center gap-1.5 text-xs font-medium text-white/90">
-            <Clock size={14} aria-hidden="true" />
-            <span>{pkg.duration}</span>
+        <span className="absolute bottom-4 left-4 inline-flex items-center gap-1.5 rounded-full border border-white/30 bg-[#063b24]/65 px-3 py-1.5 text-xs font-medium text-white backdrop-blur-sm"><Clock size={14} aria-hidden="true" />{pkg.duration}</span>
+      </Link>
+      <div className={`flex flex-1 flex-col p-6 ${featured ? 'sm:p-9' : 'sm:p-7'}`}>
+        <p className="mb-2 text-[10px] font-bold uppercase tracking-[0.17em] text-[var(--green-2)]">{featured ? 'In the spotlight' : 'Discover somewhere new'}</p>
+        <h3 className="font-heading text-3xl font-semibold leading-tight text-[var(--green-dark)]"><Link href={`/packages/${pkg.id}`} className="hover:text-[var(--green-2)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[var(--green-2)]">{pkg.destination}</Link></h3>
+        <p className="mt-3 line-clamp-3 text-sm leading-6 text-[var(--color-text-secondary)]">{pkg.description}</p>
+        <ul className="mt-5 flex flex-wrap gap-x-4 gap-y-2">
+          {pkg.highlights.slice(0, 3).map(highlight => <li key={highlight} className="flex items-start gap-2 text-xs text-[var(--color-text-secondary)]"><CheckCircle2 size={14} aria-hidden="true" className="mt-0.5 shrink-0 text-[var(--green-2)]" /><span>{highlight}</span></li>)}
+        </ul>
+        <div className="mt-auto pt-6">
+          <div className="border-t border-[var(--color-border-light)] pt-4"><p className="text-[10px] font-bold uppercase tracking-[0.12em] text-[var(--color-text-muted)]">Package price</p><p className="mt-1 text-base font-bold text-[var(--green-dark)]">{pkg.startingPrice}</p></div>
+          <div className="mt-4 flex flex-col gap-2 xs:flex-row xs:gap-2.5">
+            <Button className="flex-1 rounded-lg" variant="secondary" icon={<ArrowRight size={15} />} iconPosition="right" asChild><Link href={`/packages/${pkg.id}`}>View trip</Link></Button>
+            <Button className="flex-1 rounded-lg" variant="outline" onClick={handleAddToCart} aria-label={`Add ${pkg.destination} to cart`}>
+              {justAdded ? <span className="flex items-center justify-center gap-1.5"><Check size={14} aria-hidden="true" />Added</span> : <span className="flex items-center justify-center gap-1.5"><ShoppingCart size={14} aria-hidden="true" />Add to cart</span>}
+            </Button>
           </div>
-          <span className="shrink-0 rounded-md bg-white px-3 py-1.5 text-sm font-bold text-[var(--green-dark)] shadow-sm">
-            {pkg.startingPrice}
-          </span>
-        </div>
-      </div>
-      <div className="flex flex-1 flex-col p-5">
-        <h2 className="min-h-12 line-clamp-2 text-h3 leading-snug">{pkg.destination}</h2>
-        <p className="mt-2 min-h-[3.75rem] line-clamp-3 text-body-sm text-[var(--color-text-secondary)]">{pkg.description}</p>
-        <div className="mt-4 min-h-[4.5rem] space-y-1.5">
-          {pkg.highlights.slice(0, 3).map((highlight) => (
-            <span key={highlight} className="flex min-w-0 items-center gap-1.5 text-xs font-medium text-[var(--color-text-primary)]">
-              <CheckCircle2 size={13} className="shrink-0 text-[var(--green)]" />
-              <span className="truncate">{highlight}</span>
-            </span>
-          ))}
-        </div>
-
-        <div className="mt-auto flex flex-col gap-2 pt-5 xs:flex-row xs:gap-2.5">
-          <Button className="flex-1" variant="outline" icon={<ArrowRight size={15} />} iconPosition="right" asChild>
-            <Link href={`/packages/${pkg.id}`}>View trip</Link>
-          </Button>
-          <Button className="flex-1" onClick={handleAddToCart}>
-            {justAdded ? (
-              <span className="flex items-center justify-center gap-1.5">
-                <Check size={14} /> Added
-              </span>
-            ) : (
-              <span className="flex items-center justify-center gap-1.5">
-                <ShoppingCart size={14} /> Add to Cart
-              </span>
-            )}
-          </Button>
+          <span role="status" className="sr-only">{justAdded ? `${pkg.destination} added to cart` : ''}</span>
         </div>
       </div>
     </Card>
