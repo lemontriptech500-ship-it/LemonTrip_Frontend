@@ -15,6 +15,13 @@ import { AccountEntry } from './AccountEntry'
 import { AuthModal } from '@/components/auth/AuthModal'
 
 /**
+ * Routes whose page starts with a hero banner.
+ * On these routes the header floats transparently on top of the banner
+ * (same style as the home page). Add more prefixes here as needed.
+ */
+const OVERLAY_ROUTES = ['/flights', '/hotels', '/trains','/buses','/packages','/visa','/offers','/blog','/contact']
+
+/**
  * Header
  * ------------------------------------------------------------
  * The login / register pop-up (<AuthModal />) is mounted here once
@@ -22,7 +29,8 @@ import { AuthModal } from '@/components/auth/AuthModal'
  */
 export function Header() {
   const pathname = usePathname()
-  const isHomePage = pathname === '/'
+  const isOverlayHeader =
+    pathname === '/' || OVERLAY_ROUTES.some((route) => pathname.startsWith(route))
   const { toggleCart, totalItems, hasHydrated } = useCartStore()
   const cartCount = hasHydrated ? totalItems() : 0
 
@@ -32,7 +40,7 @@ export function Header() {
   return (
     <>
       <header
-        className={isHomePage
+        className={isOverlayHeader
           ? 'absolute inset-x-0 top-0 z-50 w-full'
           : 'relative z-50 w-full bg-[var(--green-dark)] shadow-[0_4px_16px_rgba(0,0,0,0.12)] lg:pb-4'}
         role="banner"
@@ -41,7 +49,7 @@ export function Header() {
         <div className="relative">
           <Container
             as="div"
-            className={`flex h-[58px] items-center justify-between gap-1.5 sm:h-[64px] sm:gap-4 lg:h-[66px] lg:gap-5 ${isHomePage ? 'lg:relative lg:grid lg:grid-cols-[160px_minmax(0,1fr)_auto]' : ''}`}
+            className={`flex h-[58px] items-center justify-between gap-1.5 sm:h-[64px] sm:gap-4 lg:h-[66px] lg:gap-5 ${isOverlayHeader ? 'lg:relative lg:grid lg:grid-cols-[160px_minmax(0,1fr)_auto]' : ''}`}
           >
             <Link
               href="/"
@@ -60,7 +68,7 @@ export function Header() {
             </Link>
 
             <DesktopNavigation />
-            <div className={`flex shrink-0 items-center gap-2 sm:gap-3 lg:translate-y-4 ${isHomePage ? 'lg:col-start-3' : ''}`}>
+            <div className={`flex shrink-0 items-center gap-2 sm:gap-3 lg:translate-y-4 ${isOverlayHeader ? 'lg:col-start-3' : ''}`}>
               <Link href="/contact" className="hidden h-8 items-center rounded-full bg-[var(--yellow)] px-4 text-xs font-bold text-[var(--green-dark)] shadow-[0_6px_18px_rgba(255,210,26,0.22)] transition hover:brightness-105 lg:inline-flex">
                 Contact Us
               </Link>

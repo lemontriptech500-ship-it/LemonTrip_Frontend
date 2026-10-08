@@ -4,7 +4,7 @@ import { TravelSearchWidget } from '@/components/search/TravelSearchWidget'
 
 export function HeroSection() {
   return (
-    <section className="relative min-h-[100svh] overflow-hidden bg-neutral-900 pb-8 max-md:min-h-0 max-md:overflow-visible max-md:bg-[#f8f7ef] max-md:pb-0 lg:h-[min(560px,68svh)] lg:min-h-[480px] lg:pb-0">
+    <section className="relative min-h-[100svh] overflow-hidden bg-neutral-900 pb-8 max-md:min-h-0 max-md:overflow-visible max-md:bg-[#f8f7ef] max-md:pb-0  lg:h-[min(760px,92svh)] lg:min-h-[660px] lg:pb-0">
       <div className="pointer-events-none absolute inset-0 z-0 overflow-hidden bg-neutral-900 max-md:bottom-[50%]">
         <div
           className="absolute inset-0 bg-cover bg-no-repeat md:hidden"
@@ -32,8 +32,9 @@ export function HeroSection() {
         <div className="absolute inset-x-0 bottom-0 h-48 bg-gradient-to-t from-black/30 to-transparent max-md:hidden" />
       </div>
 
-      <div className="relative z-10 mx-auto hidden w-full max-w-[1350px] px-8 lg:block xl:px-0 lg:pt-[clamp(76px,10svh,96px)]">
-        <p className="inline-flex items-center gap-2 rounded-full border border-[var(--yellow)]/35 bg-[rgba(6,59,36,0.58)] px-3 py-1 text-[11px] font-bold tracking-[0.08em] text-[var(--yellow)] backdrop-blur-sm">
+      <div className="relative z-10 mx-auto hidden w-full max-w-[1350px] px-14 lg:block lg:pt-[clamp(130px,14svh,140px)]">
+
+     <p className="inline-flex items-center gap-2 rounded-full border border-[var(--yellow)]/35 bg-[rgba(6,59,36,0.58)] px-3 py-1 text-[11px] font-bold tracking-[0.08em] text-[var(--yellow)] backdrop-blur-sm">
           <span aria-hidden="true">✦</span> EXPLORE THE WORLD
         </p>
         <h1 className="mt-4 max-w-[760px] font-heading text-[clamp(3.25rem,4vw,4rem)] font-semibold leading-[0.94] tracking-[-0.045em] text-white drop-shadow-[0_3px_12px_rgba(0,0,0,0.45)]">

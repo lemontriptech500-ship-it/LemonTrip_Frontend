@@ -2,14 +2,14 @@ import React from 'react'
 import { Container } from '@/components/ui'
 
 export const PAGE_HERO_IMAGES = {
-  flight: '/herosection_bgimage2.png?hero-v=20260908',
-  hotel: '/hotels.webp',
-  bus: '/bus.png',
-  train: '/trains.png',
-  package: '/packages.png',
+  flight: '/Airliner Ascending Over Mosque Cityscape.png?hero-v=20260908',
+  hotel: '/Modern Plaza with Mosque and Pavilion.png',
+  bus: '/Modern Coach Bus by a Grand Mosque.png',
+  train: '/Daylight High-Speed Train and Mosque Skyline.png',
+  package: '/Luxury Waterfront Escape with Mosque Views.png',
   visa: 'https://images.unsplash.com/photo-1526772662000-3f88f10405ff?w=1800&q=85',
   offer: 'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=1800&q=85',
-  travel: '/hero_new.png',
+  travel: '/Traveler Overlooking a Mosque Waterfront.png',
 } as const
 
 interface FlightPageHeroProps {
@@ -29,7 +29,8 @@ export function FlightPageHero({
 }: FlightPageHeroProps) {
   return (
     <>
-      <section className="relative isolate min-h-[250px] overflow-hidden bg-neutral-900 pb-10 pt-10 sm:min-h-[280px] sm:pb-12 sm:pt-12 lg:min-h-[300px] lg:pb-14">
+      {/* Top padding clears the transparent header that floats over this banner */}
+      <section className="relative isolate min-h-[300px] overflow-hidden  pb-20 pt-[104px] sm:min-h-[330px] sm:pb-24 sm:pt-[116px] lg:min-h-[370px] lg:pb-28 lg:pt-[130px]">
         {/* Background — clipped to the banner */}
         <div className="pointer-events-none absolute inset-0 overflow-hidden" aria-hidden="true">
           <div
@@ -37,7 +38,7 @@ export function FlightPageHero({
             style={{ backgroundImage: `url('${backgroundImage}')` }}
           />
           <div className="absolute inset-0 bg-gradient-to-r from-[#031f18]/90 via-[#063b24]/65 to-[#063b24]/25" />
-          <div className="absolute inset-x-0 top-0 h-28 bg-gradient-to-b from-black/25 to-transparent" />
+          <div className="absolute inset-x-0 top-0 h-40 bg-gradient-to-b from-black/35 to-transparent" />
         </div>
 
         <Container as="div" className="relative z-10">
@@ -53,8 +54,10 @@ export function FlightPageHero({
         </Container>
       </section>
 
+      {/* Larger negative margin lifts the widget higher over the banner.
+          Adjust the -mt-* values to nudge it up or down. */}
       {children && (
-        <Container as="div" className="relative z-10 -mt-10">
+        <Container as="div" className="relative z-10 -mt-16 sm:-mt-20">
           {children}
         </Container>
       )}
