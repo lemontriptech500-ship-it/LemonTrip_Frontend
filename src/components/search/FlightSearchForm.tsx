@@ -113,9 +113,9 @@ export function FlightSearchForm() {
       {/* Fields wrap based on the container's actual width, not the
           viewport — one row when there's room (hero widget), two
           rows when there isn't (inside the Modify Search modal) */}
-      <div className="grid grid-cols-1 items-stretch gap-2 sm:grid-cols-2 lg:grid-cols-[1.15fr_1.15fr_1fr_1fr_1.1fr_auto] lg:gap-0 lg:rounded-2xl lg:border lg:border-neutral-200 lg:bg-white lg:shadow-sm">
+      <div className="grid grid-cols-2 items-stretch gap-2 sm:grid-cols-2 lg:grid-cols-[1.15fr_1.15fr_1fr_1fr_1.1fr_auto] lg:gap-0 lg:rounded-2xl lg:border lg:border-neutral-200 lg:bg-white lg:shadow-sm">
         {/* FROM */}
-        <div className="min-w-0 rounded-xl border border-neutral-200 px-3 py-2 lg:rounded-none lg:border-0 lg:border-r lg:border-neutral-200">
+        <div className="min-w-0 rounded-xl border border-neutral-200 px-3 py-2 max-sm:col-span-1 lg:rounded-none lg:border-0 lg:border-r lg:border-neutral-200">
           <label className={fieldLabelClass}>From</label>
           <div className="relative">
             <Plane size={15} className="pointer-events-none absolute left-0 top-1/2 -translate-y-1/2 text-neutral-500" />
@@ -180,7 +180,7 @@ export function FlightSearchForm() {
         </div>
 
         {/* TRAVELLERS & CLASS */}
-        <div className="min-w-0 rounded-xl border border-neutral-200 px-3 py-2 lg:rounded-none lg:border-0 lg:border-r lg:border-neutral-200">
+        <div className="min-w-0 rounded-xl border border-neutral-200 px-3 py-2 max-sm:col-span-1 lg:rounded-none lg:border-0 lg:border-r lg:border-neutral-200">
           <label className={fieldLabelClass}>Travellers &amp; Class</label>
           <div className="relative">
             <select
@@ -199,7 +199,7 @@ export function FlightSearchForm() {
         {/* Search */}
         <button
           type="submit"
-          className="flex h-12 shrink-0 items-center justify-center gap-2 rounded-xl bg-[var(--color-primary)] px-5 text-sm font-bold text-[var(--green-dark)] transition-colors hover:bg-[var(--color-primary-hover)] lg:ml-3"
+          className="col-span-2 flex h-12 shrink-0 items-center justify-center gap-2 rounded-xl bg-[var(--green-dark)] px-5 text-sm font-bold text-white transition-colors hover:bg-[var(--green-2)] lg:col-span-1 lg:ml-3"
         >
           Search Flights
           <ArrowRight size={15} />

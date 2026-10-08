@@ -57,7 +57,7 @@ export function FlightResultCard({ flight }: FlightResultCardProps) {
         <Heart size={16} fill={wishlisted ? 'currentColor' : 'none'} className={wishlisted ? 'text-[var(--color-error)]' : ''} />
       </button>
 
-      <div className="flex flex-row md:flex-col items-center gap-3 w-full md:w-28 shrink-0">
+      <div className="flex w-full shrink-0 flex-row items-center gap-3 pr-10 md:w-28 md:flex-col md:pr-0">
         <div className="w-11 h-11 rounded-[var(--radius-md)] bg-[var(--color-primary)] flex items-center justify-center font-bold text-[var(--green-dark)] text-sm">
           {flight.airlineCode}
         </div>

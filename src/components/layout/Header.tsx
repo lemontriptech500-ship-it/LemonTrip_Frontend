@@ -45,7 +45,7 @@ export function Header() {
           >
             <Link
               href="/"
-              className={`relative inline-flex h-[40px] w-[124px] shrink-0 items-center sm:h-[46px] sm:w-[150px] lg:h-[52px] lg:w-[160px] ${isHomePage ? 'rounded-xl border border-white/90 bg-[var(--green-dark)] px-2 shadow-[0_6px_20px_rgba(0,0,0,0.2)]' : ''}`}
+              className="relative order-last inline-flex h-[44px] w-[136px] shrink-0 items-center xs:h-[52px] xs:w-[158px] sm:h-[46px] sm:w-[150px] lg:order-first lg:h-[52px] lg:w-[160px]"
               aria-label={`${SITE_NAME} — Go to homepage`}
             >
               <Image
@@ -53,8 +53,8 @@ export function Header() {
                 alt="Official LemonTrip travel booking logo"
                 width={2172}
                 height={724}
-                sizes="(max-width: 640px) 124px, (max-width: 1024px) 150px, 160px"
-                className="h-full w-full object-contain object-left drop-shadow-[0_2px_8px_rgba(0,0,0,0.35)]"
+                sizes="(max-width: 374px) 136px, (max-width: 639px) 158px, (max-width: 1023px) 150px, 160px"
+                className="h-full w-full object-contain object-center"
                 priority
               />
             </Link>

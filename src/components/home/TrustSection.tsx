@@ -10,7 +10,7 @@ const trustPoints = [
 
 export function TrustSection() {
   return (
-    <section aria-label="LemonTrip booking benefits" className="border-b border-[var(--color-border-light)] bg-white py-5 sm:py-6">
+    <section aria-label="LemonTrip booking benefits" className="hidden border-b border-[var(--color-border-light)] bg-white py-5 sm:py-6 lg:block">
       <Container>
         <div className="flex flex-wrap items-center justify-center gap-x-8 gap-y-3 lg:justify-between">
           {trustPoints.map(({ icon: Icon, title }) => (
