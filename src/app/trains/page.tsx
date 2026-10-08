@@ -6,6 +6,7 @@ import { useSearchParams } from 'next/navigation'
 import { ArrowRight, Clock, Heart, TrainFront } from 'lucide-react'
 import { Button, Card, Container } from '@/components/ui'
 import { FlightPageHero, PAGE_HERO_IMAGES } from '@/components/flights/FlightPageHero'
+import { TrainSearchForm } from '@/components/search/TrainSearchForm'
 import { mockTrains } from '@/data/trains'
 import { searchTrains } from '@/services/trainService'
 import { useWishlistStore } from '@/store/wishlistStore'
@@ -55,7 +56,11 @@ function TrainResultsContent() {
         backgroundImage={PAGE_HERO_IMAGES.train}
         title="Book train tickets"
         subtitle="Browse catalog routes. Live availability requires an authorized rail provider."
-      />
+      >
+        <div className="rounded-[var(--radius-xl)] border border-[var(--color-border-light)] bg-white p-4 shadow-[var(--shadow-lg)] sm:p-6">
+          <TrainSearchForm />
+        </div>
+      </FlightPageHero>
       <Container className="pt-10">
         {isLoading ? <p className="text-center text-[var(--color-text-secondary)]">Loading trains...</p> : error ? <p className="text-center text-[var(--color-error)]">{error}</p> : <div className="grid gap-5 lg:grid-cols-3">
           {trains.map((train) => {
@@ -147,7 +152,11 @@ export default function TrainsPage() {
       fallback={
         <div className="bg-[var(--color-background)] pb-20" aria-busy="true">
           {/* Keep the banner while loading so the transparent header stays readable */}
-          <FlightPageHero compact backgroundImage={PAGE_HERO_IMAGES.train} title="Book train tickets" />
+          <FlightPageHero compact backgroundImage={PAGE_HERO_IMAGES.train} title="Book train tickets">
+            <div className="rounded-[var(--radius-xl)] border border-[var(--color-border-light)] bg-white p-4 shadow-[var(--shadow-lg)] sm:p-6">
+              <TrainSearchForm />
+            </div>
+          </FlightPageHero>
           <div className="min-h-[30vh]" />
         </div>
       }
