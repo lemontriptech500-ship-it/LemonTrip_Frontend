@@ -45,7 +45,7 @@ export function PackageCard({ pkg }: PackageCardProps) {
   }
 
   return (
-    <Card className="group flex h-full min-h-[32.5rem] flex-col overflow-hidden lg:min-h-0" hover padding="none">
+    <Card className="group flex h-full min-h-[28rem] flex-col overflow-hidden sm:min-h-[32.5rem] lg:min-h-0" hover padding="none">
       <div className={`relative h-52 overflow-hidden ${pkg.imageFallbackColor}`}>
         {pkg.imageUrl && (
           <img src={pkg.imageUrl} alt={`${pkg.destination} travel package`} loading="lazy" className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105" />
@@ -83,7 +83,7 @@ export function PackageCard({ pkg }: PackageCardProps) {
           ))}
         </div>
 
-        <div className="mt-auto flex gap-2.5 pt-5">
+        <div className="mt-auto flex flex-col gap-2 pt-5 xs:flex-row xs:gap-2.5">
           <Button className="flex-1" variant="outline" icon={<ArrowRight size={15} />} iconPosition="right" asChild>
             <Link href={`/packages/${pkg.id}`}>View trip</Link>
           </Button>

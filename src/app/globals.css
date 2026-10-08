@@ -407,3 +407,36 @@
     scrollbar-width: none;
   }
 }
+
+/* Phone-sized layout defaults used by every App Router page. */
+@media (max-width: 639px) {
+  :root {
+    --gutter-x: 1rem;
+    --section-gap: 1.5rem;
+  }
+
+  .text-display {
+    font-size: clamp(2.35rem, 11vw, 3rem);
+    line-height: 1.02;
+  }
+
+  .text-h1 {
+    font-size: clamp(2rem, 8.5vw, 2.4rem);
+    line-height: 1.06;
+  }
+
+  .text-h2 {
+    font-size: clamp(1.75rem, 7.5vw, 2.1rem);
+    line-height: 1.1;
+  }
+
+  .section-gap {
+    padding-block: var(--section-gap);
+  }
+
+  input,
+  select,
+  textarea {
+    font-size: 16px;
+  }
+}

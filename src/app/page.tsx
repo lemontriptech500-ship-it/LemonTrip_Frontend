@@ -6,7 +6,6 @@ import { FeaturedOffers } from '@/components/home/FeaturedOffers'
 import { PopularPackages } from '@/components/home/PopularPackages'
 import { VisaHighlight } from '@/components/home/VisaHighlight'
 import { WhyChooseUs } from '@/components/home/WhyChooseUs'
-import { TrustSection } from '@/components/home/TrustSection'
 import { BlogPreview } from '@/components/home/BlogPreview'
 import { FinalCTA } from '@/components/home/FinalCTA'
 
@@ -41,7 +40,6 @@ export default async function HomePage() {
       />
       <div className="flex flex-col w-full">
       <HeroSection />
-      <TrustSection />
       {/* <TravelBenefits /> */}
       {/* <QuickCategories /> */}
       <FeaturedOffers />
