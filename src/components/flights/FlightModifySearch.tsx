@@ -15,7 +15,7 @@ export function FlightModifySearch({ isOpen, onClose }: FlightModifySearchProps)
       title="Modify Search"
       size="xl"
     >
-      <div className="pt-2">
+      <div className="pt-1">
         <FlightSearchForm />
       </div>
     </Modal>
