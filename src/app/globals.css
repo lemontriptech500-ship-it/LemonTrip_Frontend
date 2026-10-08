@@ -229,7 +229,7 @@
     @apply text-3xl font-semibold leading-[1.1] tracking-tight;
   }
   @media (min-width: 768px) {
-    .text-h2 { font-size: 2.6rem; }
+    .text-h2 { font-size: 2.1rem; }
   }
 
   .text-h3 {

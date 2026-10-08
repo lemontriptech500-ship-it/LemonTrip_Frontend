@@ -1,31 +1,15 @@
 import Image from 'next/image'
 import Link from 'next/link'
-import { Container, SectionHeading, Card, Button } from '@/components/ui'
+import { Container, SectionHeading, Card } from '@/components/ui'
 import { searchPackages } from '@/services/packageService'
 import { popularPackages as fallbackPackages } from '@/data/packages'
-import { Clock, CheckCircle2 } from 'lucide-react'
+import { Clock, ArrowRight, CheckCircle2 } from 'lucide-react'
 
 /**
- * PopularPackages
- * ------------------------------------------------------------
- * Restyled to match the reference index.html "Featured
- * Experiences" package cards, which put the price and the CTA
- * side-by-side in a footer row rather than floating the price
- * over the photo and running a full-width outline button below:
- *
- *  - Removed the small price chip floating over the image.
- *  - Added an optional badge pill, top-left over the image
- *    (e.g. "Best Seller" / "Popular" / "Luxury") — only renders
- *    if `pkg.badge` exists in your data, so this is a no-op until
- *    you add that field; nothing breaks if it's absent.
- *  - Price moved to a "Starting from / ₹X" block in the footer,
- *    next to a solid (not outline) brand-yellow "View Details"
- *    button — this is the single biggest visual match to the
- *    reference's package cards.
- *  - Card corners/shadow bumped to rounded-2xl + --shadow-lg,
- *    consistent with FeaturedOffers and TrendingDestinations.
- *  - Duration + highlights checklist kept as-is — that's useful
- *    detail the reference doesn't have, no reason to drop it.
+ * PopularPackages — Figma "Featured packages" look:
+ * photo with the name + price over it, a small badge chip,
+ * highlight chips, and a yellow "View Details" button.
+ * Data / fetching logic is unchanged.
  */
 
 export async function PopularPackages() {
@@ -38,21 +22,22 @@ export async function PopularPackages() {
   return (
     <section className="section-gap bg-[var(--color-background-soft)]">
       <Container>
+        <p className="eyebrow mb-2">Handpicked for you</p>
         <SectionHeading
           title="Popular Holiday Packages"
           description="Handpicked travel packages for your perfect getaway."
           action={{ label: 'Explore Packages', href: '/packages' }}
         />
 
-        <div className="mt-6 grid grid-cols-1 gap-5 lg:grid-cols-3">
+        <div className="mt-7 grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
           {packages.slice(0, 3).map((pkg) => (
             <Card
               key={pkg.id}
               hover
               padding="none"
-              className="group flex h-full flex-col overflow-hidden rounded-[var(--radius-2xl)] !shadow-[var(--shadow-md)] hover:!shadow-[var(--shadow-lg)]"
+              className="group flex h-full flex-col overflow-hidden rounded-[var(--radius-2xl)] !shadow-[var(--shadow-md)] hover:!shadow-[var(--shadow-xl)]"
             >
-              <div className={`relative h-44 w-full ${pkg.imageFallbackColor}`}>
+              <div className={`relative h-56 w-full overflow-hidden ${pkg.imageFallbackColor}`}>
                 {pkg.imageUrl && (
                   <Image
                     src={pkg.imageUrl}
@@ -62,45 +47,51 @@ export async function PopularPackages() {
                     className="object-cover transition-transform duration-500 group-hover:scale-105"
                   />
                 )}
-                <div className="absolute inset-0 bg-gradient-to-t from-[rgba(6,59,36,0.40)] to-transparent" />
+                <div className="absolute inset-0 bg-gradient-to-t from-[rgba(6,59,36,0.85)] via-[rgba(6,59,36,0.15)] to-transparent" />
 
                 {pkg.badge && (
-                  <span className="absolute left-3 top-3 rounded-full bg-[var(--color-primary)] px-3 py-1 text-[11px] font-extrabold uppercase tracking-wide text-[var(--color-secondary)]">
+                  <span className="absolute left-4 top-4 rounded-full bg-[var(--color-primary)] px-3 py-1 text-[11px] font-extrabold uppercase tracking-wide text-[var(--green-dark)]">
                     {pkg.badge}
                   </span>
                 )}
+
+                <div className="absolute inset-x-0 bottom-0 p-5 text-white">
+                  <h3 className="text-xl font-extrabold leading-tight">{pkg.destination}</h3>
+                  <p className="mt-1 flex items-center gap-1.5 text-xs text-white/85">
+                    <Clock size={13} aria-hidden="true" />
+                    {pkg.duration}
+                  </p>
+                </div>
               </div>
 
               <div className="flex flex-grow flex-col p-5">
-                <div className="mb-2 flex items-center gap-2 text-[var(--color-text-secondary)]">
-                  <Clock size={16} />
-                  <span className="text-xs font-medium">{pkg.duration}</span>
-                </div>
-
-                <h3 className="text-h3 mb-2">{pkg.destination}</h3>
-                <p className="text-body-sm text-[var(--color-text-secondary)] mb-4 flex-grow">
+                <p className="mb-4 line-clamp-2 flex-grow text-body-sm text-[var(--color-text-secondary)]">
                   {pkg.description}
                 </p>
 
-                <div className="mb-5 space-y-1.5">
+                <ul className="mb-5 flex flex-wrap gap-2">
                   {pkg.highlights.slice(0, 3).map((highlight, i) => (
-                    <div key={i} className="flex items-center gap-2 text-xs text-[var(--color-text-primary)]">
-                      <CheckCircle2 size={16} className="text-[var(--color-success)] shrink-0" />
-                      <span>{highlight}</span>
-                    </div>
+                    <li
+                      key={i}
+                      className="inline-flex items-center gap-1.5 rounded-full border border-[var(--color-border)] bg-[var(--color-surface)] px-3 py-1 text-[11px] font-semibold text-[var(--color-text-primary)]"
+                    >
+                      <CheckCircle2 size={12} className="shrink-0 text-[var(--color-success)]" aria-hidden="true" />
+                      {highlight}
+                    </li>
                   ))}
-                </div>
+                </ul>
 
-                {/* Price + CTA footer row, matching the reference's
-                    package card layout */}
-                <div className="mt-auto flex items-center justify-between border-t border-[var(--color-border)] pt-4">
+                <div className="mt-auto flex items-center justify-between gap-3 border-t border-[var(--color-border-light)] pt-4">
                   <div>
-                    <p className="text-caption text-[var(--color-text-muted)]">Starting from</p>
-                    <p className="text-base font-bold text-[var(--color-success)]">{pkg.startingPrice}</p>
+                    <p className="eyebrow !text-[10px]">Starting from</p>
+                    <p className="text-base font-extrabold leading-snug text-[var(--green-dark)]">{pkg.startingPrice}</p>
                   </div>
-                  <Button variant="primary" asChild>
-                    <Link href={`/packages/${pkg.id}`}>View Details</Link>
-                  </Button>
+                  <Link
+                    href={`/packages/${pkg.id}`}
+                    className="inline-flex h-11 shrink-0 items-center justify-center gap-2 whitespace-nowrap rounded-[var(--radius-lg)] bg-[var(--color-primary)] px-5 text-sm font-bold text-[var(--green-dark)] transition-colors hover:bg-[var(--color-primary-hover)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--green-2)] focus-visible:ring-offset-2"
+                  >
+                    View Details <ArrowRight size={15} aria-hidden="true" />
+                  </Link>
                 </div>
               </div>
             </Card>
