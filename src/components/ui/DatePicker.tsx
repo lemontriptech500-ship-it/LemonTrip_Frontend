@@ -234,7 +234,7 @@ export function DatePicker({
                       disabled && 'text-[var(--color-text-muted)]/40 cursor-not-allowed',
                       !disabled && !selected && 'text-[var(--color-text-primary)] hover:bg-[var(--color-primary-soft)]',
                       selected && 'bg-[var(--color-primary)] text-[var(--color-text-primary)]',
-                      today && !selected && 'border border-[var(--color-primary)] text-[var(--color-primary)]'
+                      today && !selected && 'border border-[var(--color-primary)] font-semibold text-[var(--color-secondary)]'
                     )}
                   >
                     {day}
@@ -252,7 +252,7 @@ export function DatePicker({
                   setIsOpen(false)
                 }}
                 disabled={!canSelectToday}
-                className="w-full rounded-[var(--radius-sm)] py-2 text-sm font-medium text-[var(--color-primary)] transition-colors hover:bg-[var(--color-primary-soft)] disabled:cursor-not-allowed disabled:opacity-40"
+                className="w-full rounded-[var(--radius-sm)] py-2 text-sm font-semibold text-[var(--color-secondary)] transition-colors hover:bg-[var(--color-primary-soft)] disabled:cursor-not-allowed disabled:opacity-40"
               >
                 Today
               </button>

@@ -89,7 +89,7 @@ export function Tabs({
                 'flex items-center gap-2 whitespace-nowrap px-4 py-3 font-medium transition-all',
                 'focus-visible:outline-none focus-visible:bg-[var(--color-surface-secondary)]',
                 isActive
-                  ? 'border-b-2 border-[var(--color-primary)] text-[var(--color-primary)]'
+                  ? 'border-b-[3px] border-[var(--color-primary)] font-semibold text-[var(--color-text-primary)]'
                   : 'border-b-2 border-transparent text-[var(--color-text-secondary)] hover:text-[var(--color-text-primary)] hover:border-[var(--color-border-light)]'
               )}
             >
