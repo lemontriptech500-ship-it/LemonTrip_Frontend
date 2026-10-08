@@ -3,7 +3,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { Container, SectionHeading, Card } from '@/components/ui'
 import { featuredOffers } from '@/data/offers'
-import { ArrowRight, Tag } from 'lucide-react'
+import { ArrowRight, Tag, Ticket } from 'lucide-react'
 
 function getOfferHref(category: string) {
   const normalizedCategory = category.toLowerCase()
@@ -21,19 +21,10 @@ function getOfferTitle(title: string) {
 }
 
 /**
- * FeaturedOffers
- * ------------------------------------------------------------
- * Visual language brought in line with the reference index.html
- * ".packages" cards, while keeping your existing offer/code data
- * model (this section shows discount codes, not bookable
- * packages, so the content stays as-is):
- *  - category label becomes a solid badge pill over the image
- *    (top-left), instead of a centered icon-only placeholder
- *  - card corners/shadow deepened to --shadow-lg (now matches
- *    the reference's softer, larger-spread shadow token)
- *  - Section headings follow the shared Inter typography system.
+ * FeaturedOffers — premium version:
+ * tall photo with a yellow category pill, large discount figure,
+ * dashed coupon strip and a dark-green "Book now" button.
  */
-
 export function FeaturedOffers() {
   const today = new Date().toISOString().slice(0, 10)
   const activeOffers = featuredOffers.filter((offer) => !offer.validTill || offer.validTill >= today).slice(0, 4)
@@ -42,20 +33,21 @@ export function FeaturedOffers() {
     <section className="section-gap bg-[var(--color-surface)]">
       <Container>
         <SectionHeading
+          eyebrow="Limited-time deals"
           title="Exclusive Offers"
           description="Save on your next journey with these limited-time deals."
           action={{ label: 'View All Offers', href: '/offers' }}
         />
 
-        <div className="mt-6 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
+        <div className="mt-10 grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-4">
           {activeOffers.map((offer) => (
             <Card
               key={offer.id}
               hover
               padding="none"
-              className="group flex h-full flex-col overflow-hidden rounded-[20px] !shadow-[var(--shadow-sm)] transition hover:!shadow-[var(--shadow-lg)]"
+              className="group flex h-full flex-col overflow-hidden rounded-[var(--radius-2xl)] !shadow-[var(--shadow-md)] hover:!shadow-[var(--shadow-xl)]"
             >
-              <div className={`relative h-36 w-full overflow-hidden ${offer.imageColor}`}>
+              <div className={`relative h-48 w-full overflow-hidden ${offer.imageColor}`}>
                 {offer.imageUrl ? (
                   <Image
                     src={offer.imageUrl}
@@ -65,42 +57,43 @@ export function FeaturedOffers() {
                     className="object-cover transition-transform duration-500 group-hover:scale-105"
                   />
                 ) : (
-                  <Tag
-                    className="absolute inset-0 m-auto text-[var(--color-text-muted)]"
-                    size={40}
-                    aria-hidden="true"
-                  />
+                  <Tag className="absolute inset-0 m-auto text-[var(--color-text-muted)]" size={40} aria-hidden="true" />
                 )}
-                <div className="absolute inset-0 bg-gradient-to-t from-[rgba(6,59,36,0.55)] to-transparent" />
+                <div className="absolute inset-0 bg-gradient-to-t from-[rgba(11,58,41,0.75)] via-transparent to-transparent" />
 
-                {/* Category as a solid badge pill, like the reference's "BEST SELLER" tag */}
-                <span className="absolute left-3 top-3 rounded-full bg-[var(--color-primary)] px-3 py-1 text-[11px] font-extrabold uppercase tracking-wide text-[var(--color-secondary)]">
+                <span className="absolute left-4 top-4 rounded-full bg-[var(--color-primary)] px-3 py-1 text-[11px] font-extrabold uppercase tracking-wide text-[var(--green-dark)] shadow-[var(--shadow-sm)]">
                   {offer.category}
                 </span>
+
+                {offer.discount && (
+                  <p className="absolute bottom-3 left-4 text-2xl font-extrabold leading-none text-white drop-shadow">
+                    {offer.discount}
+                  </p>
+                )}
               </div>
 
-                <div className="flex flex-grow flex-col p-4">
-                <div className="mb-1 flex items-center justify-between gap-2">
-                  <h3 className="line-clamp-1 text-sm font-bold text-[var(--green-dark)]">{getOfferTitle(offer.title)}</h3>
-                  {offer.discount && <span className="shrink-0 text-xs font-extrabold text-[var(--green-2)]">{offer.discount}</span>}
-                </div>
-                <p className="mb-2 line-clamp-2 text-xs leading-relaxed text-[var(--color-text-secondary)]">
+              <div className="flex flex-grow flex-col p-5">
+                <h3 className="text-lg font-extrabold leading-snug text-[var(--color-text-primary)]">
+                  {getOfferTitle(offer.title)}
+                </h3>
+                <p className="text-body-sm mb-4 mt-2 flex-grow text-[var(--color-text-secondary)]">
                   {offer.description}
                 </p>
 
                 {offer.code && (
-                  <div className="mt-auto flex items-center justify-between rounded-[var(--radius-sm)] border border-dashed border-[var(--color-border)] bg-[var(--color-surface-secondary)] p-2">
-                    <span className="text-[10px] text-[var(--color-text-muted)]">Code</span>
-                    <span className="font-mono text-[11px] font-bold text-[var(--color-text-primary)]">
-                      {offer.code}
+                  <div className="flex items-center justify-between gap-2 rounded-[var(--radius-md)] border border-dashed border-[var(--color-border-strong)] bg-[var(--color-surface-secondary)] px-3 py-2.5">
+                    <span className="inline-flex items-center gap-1.5 text-[11px] font-semibold uppercase tracking-wider text-[var(--color-text-muted)]">
+                      <Ticket size={13} aria-hidden="true" /> Code
                     </span>
+                    <span className="font-mono text-xs font-bold text-[var(--green-dark)]">{offer.code}</span>
                   </div>
                 )}
+
                 <Link
                   href={getOfferHref(offer.category)}
-                  className="mt-3 inline-flex min-h-9 items-center justify-center gap-2 rounded-full bg-[var(--yellow)] px-4 text-xs font-bold text-[var(--green-dark)] transition duration-200 hover:bg-[var(--color-primary-hover)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--green-2)]"
+                  className="mt-4 inline-flex h-11 items-center justify-center gap-2 rounded-[var(--radius-lg)] bg-[var(--green-dark)] px-4 text-sm font-bold text-white transition-colors hover:bg-[var(--green)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-primary)] focus-visible:ring-offset-2"
                 >
-                  Book now <ArrowRight size={16} aria-hidden="true" />
+                  Book now <ArrowRight size={15} aria-hidden="true" />
                 </Link>
               </div>
             </Card>

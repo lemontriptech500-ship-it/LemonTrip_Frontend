@@ -1,24 +1,32 @@
-import { BadgeCheck, Headset, LockKeyhole, RefreshCw } from 'lucide-react'
+import { BadgePercent, Headset, LockKeyhole, ClipboardCheck } from 'lucide-react'
 import { Container } from '@/components/ui'
 
 const trustPoints = [
-  { icon: BadgeCheck, title: 'Best price guarantee' },
-  { icon: Headset, title: '24/7 travel support' },
-  { icon: LockKeyhole, title: 'Safe & secure booking' },
-  { icon: RefreshCw, title: 'Flexible options' },
+  { icon: BadgePercent, title: 'Best Price Guarantee', detail: 'Find the best deals' },
+  { icon: Headset, title: '24/7 Customer Support', detail: "We're here to help" },
+  { icon: LockKeyhole, title: 'Secure Booking', detail: 'Your data is protected' },
+  { icon: ClipboardCheck, title: 'Flexible Options', detail: 'Change with ease' },
 ]
 
+/** Premium trust strip: dark green band, yellow icon discs, thin dividers. */
 export function TrustSection() {
   return (
-    <section aria-label="LemonTrip booking benefits" className="border-b border-[var(--color-border-light)] bg-white py-5 sm:py-6">
+    <section aria-label="LemonTrip booking benefits" className="relative bg-[var(--green-dark)] py-7 sm:py-8">
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-[rgba(255,210,0,0.5)] to-transparent"
+      />
       <Container>
-        <div className="flex flex-wrap items-center justify-center gap-x-8 gap-y-3 lg:justify-between">
-          {trustPoints.map(({ icon: Icon, title }) => (
-            <div key={title} className="flex items-center gap-2.5">
-              <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-[var(--yellow-soft)] text-[var(--green-dark)]">
-                <Icon size={16} strokeWidth={2.2} aria-hidden="true" />
+        <div className="grid grid-cols-2 gap-x-4 gap-y-6 lg:grid-cols-4 lg:gap-0 lg:divide-x lg:divide-white/10">
+          {trustPoints.map(({ icon: Icon, title, detail }) => (
+            <div key={title} className="flex items-center gap-3 lg:justify-center lg:px-4">
+              <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-[var(--color-primary)] text-[var(--green-dark)] shadow-[0_6px_18px_rgba(255,210,0,0.25)] sm:h-12 sm:w-12">
+                <Icon size={21} strokeWidth={2.2} aria-hidden="true" />
               </span>
-              <span className="text-xs font-semibold text-[var(--green-dark)] sm:text-sm">{title}</span>
+              <span className="min-w-0">
+                <span className="block text-xs font-bold leading-tight text-white sm:text-sm">{title}</span>
+                <span className="mt-0.5 block text-[11px] leading-snug text-white/65 sm:text-xs">{detail}</span>
+              </span>
             </div>
           ))}
         </div>

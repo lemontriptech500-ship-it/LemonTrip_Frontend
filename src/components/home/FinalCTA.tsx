@@ -1,49 +1,47 @@
 import React from 'react'
 import Link from 'next/link'
-import { Container, Button } from '@/components/ui'
+import { Container } from '@/components/ui'
 import { ArrowRight } from 'lucide-react'
 
-/**
- * FinalCTA
- * ------------------------------------------------------------
- * Fixes + restyle:
- *  - Both decorative blur circles had malformed arbitrary values
- *    (`bg-[rgba(52, 152, 219, 0.20) rounded-full ...`) — missing
- *    closing bracket, spaces inside rgba() — so neither ever
- *    rendered. Fixed the bracket syntax on both.
- *  - The blue (rgba(52,152,219,...)) wasn't a token anywhere in
- *    your palette — swapped both blobs to your actual brand
- *    green/yellow tints, matching the same blurred-blob treatment
- *    used in VisaHighlight, so the site doesn't quietly introduce
- *    a fourth accent color nobody asked for.
- *  - Heading switched from `.text-display` (reserved for the hero,
- *    up to ~5.4rem) to `.text-h1` — display-scale type on a mid-page
- *    CTA read oversized next to everything else on the homepage.
- */
-
+/** FinalCTA — premium version: dark green panel with soft yellow glow. */
 export function FinalCTA() {
   return (
-    <section className="section-gap relative overflow-hidden bg-[var(--color-secondary-soft)]">
-      <div className="absolute inset-0 opacity-40">
-        <div className="absolute right-0 top-0 h-[400px] w-[400px] -translate-y-1/2 translate-x-1/3 rounded-full bg-[rgba(17,128,71,0.18)] blur-3xl" />
-        <div className="absolute bottom-0 left-0 h-[300px] w-[300px] -translate-x-1/3 translate-y-1/2 rounded-full bg-[rgba(255,210,26,0.16)] blur-3xl" />
-      </div>
+    <section className="section-gap bg-[var(--color-background)]">
+      <Container>
+        <div className="surface-dark relative overflow-hidden rounded-[var(--radius-2xl)] px-6 py-14 text-center shadow-[var(--shadow-xl)] sm:px-12 sm:py-20">
+          <div
+            aria-hidden="true"
+            className="pointer-events-none absolute -right-20 -top-24 h-80 w-80 rounded-full bg-[rgba(255,210,0,0.16)] blur-3xl"
+          />
+          <div
+            aria-hidden="true"
+            className="pointer-events-none absolute -bottom-28 -left-20 h-80 w-80 rounded-full bg-[rgba(17,128,71,0.35)] blur-3xl"
+          />
 
-      <Container className="relative z-10 text-center">
-        <h2 className="text-h2 mb-5 text-[var(--color-text-primary)]">
-          Ready for your next adventure?
-        </h2>
-        <p className="text-body-lg mx-auto mb-8 max-w-2xl text-[var(--color-text-secondary)]">
-          Join thousands of travelers who trust LemonTrip for their bookings. Start planning your
-          journey today.
-        </p>
-        <div className="flex flex-col justify-center gap-3 sm:flex-row">
-          <Button size="lg" icon={<ArrowRight size={16} />} iconPosition="right" asChild>
-            <Link href="/flights">Explore Flights</Link>
-          </Button>
-          <Button size="lg" variant="outline" asChild>
-            <Link href="/packages">Explore Destinations</Link>
-          </Button>
+          <div className="relative mx-auto max-w-2xl">
+            <p className="eyebrow">Start planning</p>
+            <h2 className="mt-3 text-3xl font-extrabold leading-tight text-white sm:text-5xl">
+              Ready for your next <span className="text-highlight">adventure?</span>
+            </h2>
+            <p className="mx-auto mt-5 max-w-xl text-base leading-relaxed text-white/75">
+              Join thousands of travelers who trust LemonTrip for their bookings. Start planning your journey today.
+            </p>
+
+            <div className="mt-9 flex flex-col justify-center gap-3 sm:flex-row">
+              <Link
+                href="/flights"
+                className="inline-flex h-12 items-center justify-center gap-2 rounded-[var(--radius-lg)] bg-[var(--color-primary)] px-7 text-sm font-bold text-[var(--green-dark)] transition-colors hover:bg-[var(--color-primary-hover)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--green-dark)]"
+              >
+                Explore Flights <ArrowRight size={16} aria-hidden="true" />
+              </Link>
+              <Link
+                href="/packages"
+                className="inline-flex h-12 items-center justify-center gap-2 rounded-[var(--radius-lg)] border border-white/30 px-7 text-sm font-bold text-white transition-colors hover:bg-white/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--green-dark)]"
+              >
+                Explore Destinations
+              </Link>
+            </div>
+          </div>
         </div>
       </Container>
     </section>
