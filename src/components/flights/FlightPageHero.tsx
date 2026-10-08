@@ -1,5 +1,4 @@
 import React from 'react'
-import Image from 'next/image'
 import { Container } from '@/components/ui'
 
 export const PAGE_HERO_IMAGES = {
@@ -30,26 +29,26 @@ export function FlightPageHero({
 }: FlightPageHeroProps) {
   return (
     <>
-      <section className="relative min-h-[272px] bg-neutral-900 pb-10 pt-[92px] sm:pt-[116px] lg:pt-[120px]">
+      <section className="relative isolate min-h-[250px] overflow-hidden bg-neutral-900 pb-10 pt-10 sm:min-h-[280px] sm:pb-12 sm:pt-12 lg:min-h-[300px] lg:pb-14">
         {/* Background — clipped to the banner */}
         <div className="pointer-events-none absolute inset-0 overflow-hidden" aria-hidden="true">
           <div
             className="absolute inset-0 bg-cover bg-center bg-no-repeat"
             style={{ backgroundImage: `url('${backgroundImage}')` }}
           />
-          <div className="absolute inset-0 bg-gradient-to-r from-[#042d1b]/90 via-[#042d1b]/60 to-[#042d1b]/30" />
-        </div>
-
-        <div aria-hidden="true" className="pointer-events-none absolute right-8 top-1/2 z-10 hidden h-16 w-[280px] -translate-y-1/2 opacity-90 xl:block">
-          <Image src="/website_logo.webp" alt="" fill sizes="280px" className="object-contain object-right" />
+          <div className="absolute inset-0 bg-gradient-to-r from-[#031f18]/90 via-[#063b24]/65 to-[#063b24]/25" />
+          <div className="absolute inset-x-0 top-0 h-28 bg-gradient-to-b from-black/25 to-transparent" />
         </div>
 
         <Container as="div" className="relative z-10">
-          <h1 className="max-w-3xl text-3xl font-semibold leading-tight tracking-tight text-white sm:text-4xl">
+          <p className="mb-2 text-[10px] font-bold uppercase tracking-[0.2em] text-[var(--yellow)] sm:text-[11px]">
+            Explore · Book · Travel
+          </p>
+          <h1 className="max-w-3xl font-heading text-[clamp(2.25rem,4.5vw,3.5rem)] font-semibold leading-[0.98] tracking-tight text-white">
             {title}
           </h1>
           {subtitle && (
-            <p className="mt-2 max-w-xl text-sm leading-relaxed text-white/80 sm:text-base">{subtitle}</p>
+            <p className="mt-3 max-w-2xl text-sm leading-relaxed text-white/85 sm:text-base">{subtitle}</p>
           )}
         </Container>
       </section>
@@ -62,4 +61,3 @@ export function FlightPageHero({
     </>
   )
 }
-

@@ -34,7 +34,7 @@ export function Header() {
       <header
         className={isHomePage
           ? 'absolute inset-x-0 top-0 z-50 w-full'
-          : 'relative z-50 w-full bg-[var(--green-dark)] shadow-[0_4px_16px_rgba(0,0,0,0.12)]'}
+          : 'relative z-50 w-full bg-[var(--green-dark)] shadow-[0_4px_16px_rgba(0,0,0,0.12)] lg:pb-4'}
         role="banner"
       >
         {/* Main nav bar */}
@@ -60,18 +60,12 @@ export function Header() {
             </Link>
 
             <DesktopNavigation />
-            <div className={`flex shrink-0 items-center gap-2 sm:gap-3 ${isHomePage ? 'lg:col-start-3 lg:translate-y-4' : ''}`}>
-              {isHomePage && (
-                <>
-                  <Link href="/contact" className="hidden h-8 items-center rounded-full bg-[var(--yellow)] px-4 text-xs font-bold text-[var(--green-dark)] shadow-[0_6px_18px_rgba(255,210,26,0.22)] transition hover:brightness-105 lg:inline-flex">
-                    Contact Us
-                  </Link>
-                  <span className="hidden text-xs font-semibold tracking-wide text-white/90 lg:inline" aria-label="Language: English">EN</span>
-                </>
-              )}
-              <div className={isHomePage ? 'hidden lg:block' : ''}>
-                <AccountEntry />
-              </div>
+            <div className={`flex shrink-0 items-center gap-2 sm:gap-3 lg:translate-y-4 ${isHomePage ? 'lg:col-start-3' : ''}`}>
+              <Link href="/contact" className="hidden h-8 items-center rounded-full bg-[var(--yellow)] px-4 text-xs font-bold text-[var(--green-dark)] shadow-[0_6px_18px_rgba(255,210,26,0.22)] transition hover:brightness-105 lg:inline-flex">
+                Contact Us
+              </Link>
+              <span className="hidden text-xs font-semibold tracking-wide text-white/90 lg:inline" aria-label="Language: English">EN</span>
+              <AccountEntry />
 
               <Link
                 href="/wishlist"

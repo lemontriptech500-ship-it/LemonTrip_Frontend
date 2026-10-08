@@ -28,8 +28,7 @@ export function DesktopNavigation() {
 
   return (
     <nav aria-label="Main navigation" className={cn(
-      'hidden shrink-0 items-center gap-0.5 lg:flex lg:gap-1',
-      isHomePage && 'col-start-2 justify-self-center rounded-full border border-white/25 bg-white/15 px-2 shadow-[0_8px_24px_rgba(0,0,0,0.12)] backdrop-blur-md lg:translate-y-4'
+      'col-start-2 hidden shrink-0 items-center justify-self-center gap-0.5 rounded-full border border-white/25 bg-white/15 px-2 shadow-[0_8px_24px_rgba(0,0,0,0.12)] backdrop-blur-md lg:flex lg:gap-1 lg:translate-y-4'
     )}>
       {primaryItems.map((item) => (
         <Link
@@ -38,10 +37,8 @@ export function DesktopNavigation() {
           aria-current={isActive(item.href) ? 'page' : undefined}
           className={cn(
             cn(
-              'relative whitespace-nowrap px-2.5 py-2.5 text-[12px] font-medium text-white drop-shadow-[0_1px_3px_rgba(0,0,0,0.35)] transition hover:text-white/80',
-              !isHomePage && 'px-1.5 py-5 text-[13px]',
-              isHomePage && isActive(item.href) && 'rounded-full bg-white/15',
-              !isHomePage && isActive(item.href) && 'after:absolute after:bottom-[12px] after:left-2 after:right-2 after:h-[3px] after:rounded-full after:bg-[var(--yellow)]'
+              'relative whitespace-nowrap rounded-full px-2.5 py-2.5 text-[12px] font-medium text-white drop-shadow-[0_1px_3px_rgba(0,0,0,0.35)] transition hover:bg-white/10 hover:text-white',
+              isActive(item.href) && 'bg-white/15'
             )
           )}
         >
@@ -50,8 +47,7 @@ export function DesktopNavigation() {
       ))}
       <details className="group relative">
         <summary className={cn(
-          'flex cursor-pointer list-none items-center gap-1 whitespace-nowrap px-2.5 py-2.5 text-[12px] font-medium text-white drop-shadow-[0_1px_3px_rgba(0,0,0,0.35)] transition hover:text-white/80 [&::-webkit-details-marker]:hidden',
-          !isHomePage && 'px-1.5 py-5 text-[13px]'
+          'flex cursor-pointer list-none items-center gap-1 whitespace-nowrap rounded-full px-2.5 py-2.5 text-[12px] font-medium text-white drop-shadow-[0_1px_3px_rgba(0,0,0,0.35)] transition hover:bg-white/10 hover:text-white [&::-webkit-details-marker]:hidden'
         )}>
           More <ChevronDown size={14} className="transition group-open:rotate-180" aria-hidden="true" />
         </summary>
