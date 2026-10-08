@@ -24,6 +24,14 @@
   --font-sans:  var(--font-inter), system-ui, -apple-system, 'Segoe UI', sans-serif;
   --font-heading: var(--font-cormorant), Georgia, 'Times New Roman', serif;
 
+  /* Fluid type scale: comfortable on phones, calm on wide screens. */
+  --type-body: 1rem;
+  --type-small: 0.875rem;
+  --type-caption: 0.75rem;
+  --type-display: clamp(2.75rem, 6.2vw, 5.75rem);
+  --type-title: clamp(2.25rem, 4vw, 3.25rem);
+  --type-section: clamp(1.875rem, 3.2vw, 2.75rem);
+
   /* ─── Brand Primary ─── */
   --color-primary:        var(--yellow);
   --color-primary-hover:  #e4bb00;
@@ -147,14 +155,14 @@
     background-color: var(--color-background);
     color: var(--color-text-primary);
     font-family: var(--font-sans);
-    font-size: 0.9375rem;
-    line-height: 1.65;
-    letter-spacing: -0.003em;
+    font-size: var(--type-body);
+    line-height: 1.6;
+    letter-spacing: -0.01em;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     text-rendering: optimizeLegibility;
     overflow-x: clip;
-    overflow-wrap: anywhere;
+    overflow-wrap: break-word;
   }
 
   /* Form controls do not inherit fonts by default. */
@@ -197,6 +205,13 @@
   h5,
   h6 {
     font-family: var(--font-heading);
+    text-wrap: balance;
+    font-weight: 600;
+    line-height: 1.12;
+  }
+
+  p {
+    text-wrap: pretty;
   }
 }
 
@@ -209,35 +224,27 @@
 @layer components {
   .text-display {
     font-family: var(--font-heading);
-    @apply text-5xl font-bold leading-[1.02] tracking-tight;
-  }
-  @media (min-width: 768px) {
-    .text-display { font-size: clamp(3.4rem, 6.4vw, 5.9rem); letter-spacing: -0.015em; }
+    font-size: var(--type-display);
+    @apply font-semibold leading-[0.98] tracking-tight;
+    letter-spacing: -0.035em;
   }
 
   .text-h1 {
     font-family: var(--font-heading);
-    @apply text-4xl font-bold leading-[1.05] tracking-tight;
-  }
-  @media (min-width: 768px) {
-    .text-h1 { font-size: 2.95rem; }
+    font-size: var(--type-title);
+    @apply font-semibold leading-[1.02] tracking-tight;
   }
 
   .text-h2 {
     font-family: var(--font-heading);
-    @apply text-3xl font-semibold leading-[1.1] tracking-tight;
-  }
-  @media (min-width: 768px) {
-    .text-h2 { font-size: 2.6rem; }
+    font-size: var(--type-section);
+    @apply font-semibold leading-[1.08] tracking-tight;
   }
 
   .text-h3 {
-    @apply text-lg font-semibold leading-[1.25];
+    @apply text-xl font-semibold leading-[1.2];
     font-family: var(--font-heading);
     letter-spacing: -0.01em;
-  }
-  @media (min-width: 768px) {
-    .text-h3 { font-size: 1.25rem; }
   }
 
   .text-h4 {
@@ -247,21 +254,16 @@
   }
 
   .text-body-lg {
-    @apply text-base font-normal leading-relaxed;
-  }
-  @media (min-width: 768px) {
-    .text-body-lg { font-size: 1.0625rem; }
+    @apply text-lg font-normal leading-relaxed;
   }
 
   .text-body {
-    @apply text-sm font-normal leading-relaxed;
-  }
-  @media (min-width: 768px) {
-    .text-body { font-size: 0.9375rem; }
+    @apply text-base font-normal leading-relaxed;
   }
 
   .text-body-sm {
-    @apply text-sm font-normal leading-normal;
+    font-size: var(--type-small);
+    @apply font-normal leading-relaxed;
   }
 
   .text-label {
@@ -270,7 +272,8 @@
   }
 
   .text-caption {
-    @apply text-xs font-normal leading-normal tracking-wide;
+    font-size: var(--type-caption);
+    @apply font-normal leading-normal tracking-wide;
     font-family: var(--font-sans);
   }
 
@@ -413,21 +416,6 @@
   :root {
     --gutter-x: 1rem;
     --section-gap: 1.5rem;
-  }
-
-  .text-display {
-    font-size: clamp(2.35rem, 11vw, 3rem);
-    line-height: 1.02;
-  }
-
-  .text-h1 {
-    font-size: clamp(2rem, 8.5vw, 2.4rem);
-    line-height: 1.06;
-  }
-
-  .text-h2 {
-    font-size: clamp(1.75rem, 7.5vw, 2.1rem);
-    line-height: 1.1;
   }
 
   .section-gap {
