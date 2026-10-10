@@ -4,22 +4,16 @@ import { useState } from 'react'
 import Link from 'next/link'
 import { ArrowRight, Clock3, FileCheck2, FileText, Globe2, Search, X } from 'lucide-react'
 import type { VisaService } from '@/data/visaServices'
+import { CountryFlag } from '@/components/visa/CountryFlag'
 
 const focusStyle = 'focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[var(--green-2)]'
 const countryRegions: Record<string, string> = { 'United Kingdom': 'Europe', France: 'Europe', Australia: 'Oceania', 'United States': 'North America', Singapore: 'Asia', Thailand: 'Asia' }
 
 function VisaCard({ service }: { service: VisaService }) {
-  const [imageFailed, setImageFailed] = useState(false)
-
   return (
     <article className="group grid grid-cols-[80px_1fr] items-start gap-4 rounded-xl border border-[var(--color-border)] bg-white p-4 transition-shadow hover:shadow-md sm:grid-cols-[110px_1fr] sm:gap-6 sm:p-6 xl:grid-cols-[110px_1fr_175px] xl:items-center">
       <Link href={`/visa/${service.id}`} aria-label={`View visa requirements for ${service.country}`} className={`relative block h-24 overflow-hidden rounded-lg bg-[var(--color-secondary-soft)] sm:h-32 ${focusStyle}`}>
-        <div className="absolute inset-0 flex items-center justify-center"><Globe2 size={36} strokeWidth={1} aria-hidden="true" className="text-[var(--green-2)]" /></div>
-        {!imageFailed && (
-          // Destination artwork is supplied by the visa service catalog.
-          // eslint-disable-next-line @next/next/no-img-element
-          <img src={service.imageUrl} alt="" loading="lazy" onError={() => setImageFailed(true)} className="absolute inset-0 h-full w-full object-cover transition-transform duration-700 group-hover:scale-105" />
-        )}
+        <CountryFlag country={service.country} className="absolute inset-0 h-full w-full text-5xl transition-transform duration-300 group-hover:scale-105 sm:text-6xl" />
       </Link>
       <div>
         <p className="text-[10px] font-semibold uppercase tracking-[0.12em] text-[var(--green-2)]">{countryRegions[service.country] || 'Visa assistance'}</p>
