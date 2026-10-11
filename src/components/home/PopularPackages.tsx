@@ -3,7 +3,7 @@ import Link from 'next/link'
 import { Container, SectionHeading, Card, Button } from '@/components/ui'
 import { searchPackages } from '@/services/packageService'
 import { popularPackages as fallbackPackages } from '@/data/packages'
-import { Clock, CheckCircle2 } from 'lucide-react'
+import { Clock, CheckCircle2, ArrowRight } from 'lucide-react'
 
 /**
  * PopularPackages
@@ -78,9 +78,12 @@ export async function PopularPackages() {
                 </div>
 
                 <h3 className="text-h3 mb-2">{pkg.destination}</h3>
-                <p className="text-body-sm text-[var(--color-text-secondary)] mb-4 flex-grow">
-                  {pkg.description}
+                <p className="text-body-sm text-[var(--color-text-secondary)] mb-1 line-clamp-3 leading-6">
+                  {pkg.shortDescription || pkg.description}
                 </p>
+                <Link href={`/packages/${pkg.id}`} className="mb-4 inline-flex w-fit items-center gap-1 text-xs font-bold text-[var(--green-2)] transition hover:gap-2 hover:text-[var(--green-dark)] focus-visible:rounded-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[var(--green-2)]">
+                  Read more <ArrowRight size={14} aria-hidden="true" />
+                </Link>
 
                 <div className="mb-5 space-y-1.5">
                   {pkg.highlights.slice(0, 3).map((highlight, i) => (
