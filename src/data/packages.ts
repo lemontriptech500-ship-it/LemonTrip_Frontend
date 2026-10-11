@@ -8,6 +8,20 @@ export interface HolidayPackage {
   highlights: string[];
   imageFallbackColor: string;
   imageUrl?: string;
+  shortDescription?: string | null;
+  location?: string | null;
+  bestFor?: string | null;
+  itinerary?: { day: string; title: string; description: string }[];
+  inclusions?: string[];
+  exclusions?: string[];
+  accommodationDetails?: string | null;
+  mealPlan?: string | null;
+  transportDetails?: string | null;
+  notes?: string[];
+  gallery?: string[];
+  availableDates?: string[];
+  cancellationPolicy?: string | null;
+  termsAndConditions?: string | null;
   badge?: string; // e.g., "Best Seller" | "Popular" | "Luxury" — optional pill shown on the package card
 }
 

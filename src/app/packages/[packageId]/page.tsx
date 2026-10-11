@@ -1,8 +1,10 @@
 import Link from 'next/link'
 import { ArrowLeft, BedDouble, CalendarDays, Check, CircleHelp, Clock3, MapPin, Plane, Users } from 'lucide-react'
-import { Button, Card, Container, Badge } from '@/components/ui'
+import { Button, Card, Container } from '@/components/ui'
 import { getPackageById } from '@/services/packageService'
 import { TravelRazorpayCheckout } from '@/components/booking/TravelRazorpayCheckout'
+import { PackageGalleryCarousel } from '@/components/packages/PackageGalleryCarousel'
+import { getPackageImages } from '@/data/packageImages'
 
 export const dynamic = 'force-dynamic'
 
@@ -67,33 +69,37 @@ export default async function PackageDetailsPage({ params }: { params: Promise<{
     </Card></Container></div>
   }
 
-  const copy = parsePackageDescription(pkg.description)
+  const parsedCopy = parsePackageDescription(pkg.description)
+  const copy: PackageCopy = {
+    overview: pkg.shortDescription || parsedCopy.overview,
+    location: pkg.location || parsedCopy.location,
+    bestFor: pkg.bestFor || parsedCopy.bestFor,
+    itinerary: pkg.itinerary?.length ? pkg.itinerary.map((day) => `${day.day}: ${day.title}${day.description ? ` — ${day.description}` : ''}`) : parsedCopy.itinerary,
+    included: pkg.inclusions?.length ? pkg.inclusions : parsedCopy.included,
+    excluded: pkg.exclusions?.length ? pkg.exclusions : parsedCopy.excluded,
+    important: pkg.notes?.length ? pkg.notes : parsedCopy.important,
+  }
   const amount = Number(pkg.startingPrice.replace(/[^0-9.]/g, ''))
   const price = Number.isFinite(amount) && amount > 0 ? `₹${amount.toLocaleString('en-IN')}` : pkg.startingPrice
-  const image = pkg.imageUrl
+  const images = getPackageImages(pkg)
 
   return (
     <main className="bg-[var(--color-background)] pb-16">
       <Container className="max-w-6xl pt-4 sm:pt-8">
         <Button variant="ghost" size="sm" asChild icon={<ArrowLeft size={16} />}><Link href="/packages">All holiday packages</Link></Button>
 
-        <section className={`relative mt-4 min-h-[360px] overflow-hidden rounded-3xl ${pkg.imageFallbackColor}`}>
-          {image && <img src={image} alt={`${pkg.destination} holiday`} className="absolute inset-0 h-full w-full object-cover" />}
-          <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-black/5" />
-          <div className="absolute inset-x-0 bottom-0 p-6 text-white sm:p-10">
-            <div className="mb-3 flex flex-wrap gap-2"><Badge variant="neutral" className="bg-white/90 text-slate-900">{pkg.category === 'international' ? 'International' : 'Domestic'}</Badge><Badge variant="neutral" className="bg-white/90 text-slate-900">{pkg.duration}</Badge></div>
-            <h1 className="max-w-3xl text-3xl font-bold sm:text-5xl">{pkg.destination}</h1>
-            {copy.location && <p className="mt-3 flex items-center gap-2 text-sm text-white/90"><MapPin size={16} />{copy.location}</p>}
-          </div>
-        </section>
+        <div className={`mt-4 rounded-3xl ${pkg.imageFallbackColor}`}>
+          <PackageGalleryCarousel images={images} title={pkg.destination} duration={pkg.duration} category={pkg.category === 'international' ? 'International' : 'Domestic'} />
+          {copy.location && <p className="mt-3 flex items-center gap-2 text-sm text-[var(--color-text-secondary)]"><MapPin size={16} />{copy.location}</p>}
+        </div>
 
         <div className="mt-6 grid gap-8 lg:grid-cols-[minmax(0,1fr)_340px]">
           <div className="space-y-6">
             <section className="grid gap-3 sm:grid-cols-3">
               {[
                 { icon: Clock3, label: 'Duration', value: pkg.duration },
-                { icon: BedDouble, label: 'Accommodation', value: 'Hotel, subject to availability' },
-                { icon: Plane, label: 'Meals & transfers', value: 'Breakfast and selected transfers' },
+                { icon: BedDouble, label: 'Accommodation', value: pkg.accommodationDetails || 'Details confirmed in the written quote' },
+                { icon: Plane, label: 'Meals & transfers', value: [pkg.mealPlan, pkg.transportDetails].filter(Boolean).join(' ') || 'Details confirmed in the written quote' },
               ].map(({ icon: Icon, label, value }) => <div key={label} className="rounded-2xl border border-[var(--color-border)] bg-[var(--color-surface)] p-4">
                 <Icon size={18} className="text-[var(--color-primary)]" /><p className="mt-3 text-xs font-semibold uppercase tracking-wide text-[var(--color-text-secondary)]">{label}</p><p className="mt-1 text-sm font-semibold text-[var(--color-text-primary)]">{value}</p>
               </div>)}
@@ -111,6 +117,8 @@ export default async function PackageDetailsPage({ params }: { params: Promise<{
               <DetailList title="Package includes" items={copy.included} />
               <DetailList title="Package excludes" items={copy.excluded} />
             </div>}
+            {pkg.cancellationPolicy && <p className="text-sm leading-6 text-[var(--color-text-secondary)]"><strong>Cancellation:</strong> {pkg.cancellationPolicy}</p>}
+            {pkg.termsAndConditions && <p className="text-sm leading-6 text-[var(--color-text-secondary)]"><strong>Terms:</strong> {pkg.termsAndConditions}</p>}
             {copy.important.length > 0 && <aside className="flex gap-3 rounded-2xl border border-amber-200 bg-amber-50 p-5 text-sm leading-6 text-amber-950">
               <CircleHelp size={19} className="mt-0.5 shrink-0" /> <div><strong>Good to know</strong>{copy.important.map((note) => <p key={note} className="mt-1">{note}</p>)}</div>
             </aside>}

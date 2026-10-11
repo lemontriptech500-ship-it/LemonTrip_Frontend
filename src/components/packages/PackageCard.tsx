@@ -6,6 +6,7 @@ import { ArrowRight, Clock, CheckCircle2, ShoppingCart, Check, Sparkles, MapPin,
 import { Button, Card } from '@/components/ui'
 import { useCartStore } from '@/store/cartStore'
 import type { HolidayPackage } from '@/data/packages'
+import { getPackageImages } from '@/data/packageImages'
 
 interface PackageCardProps {
   pkg: HolidayPackage
@@ -28,6 +29,7 @@ export function PackageCard({ pkg, featured = false }: PackageCardProps) {
   const addItem = useCartStore((state) => state.addItem)
   const [justAdded, setJustAdded] = useState(false)
   const [imageFailed, setImageFailed] = useState(false)
+  const coverImage = getPackageImages(pkg)[0]
 
   const handleAddToCart = () => {
     addItem({
@@ -50,10 +52,10 @@ export function PackageCard({ pkg, featured = false }: PackageCardProps) {
     <Card className={`group h-full overflow-hidden rounded-2xl border-[var(--color-border)] ${featured ? 'flex flex-col md:grid md:grid-cols-[1.1fr_1fr]' : 'flex flex-col'}`} hover padding="none">
       <Link href={`/packages/${pkg.id}`} aria-label={`Explore ${pkg.destination}`} className={`relative block shrink-0 overflow-hidden ${featured ? 'h-72 md:h-full md:min-h-[410px]' : 'h-72 sm:h-80'} bg-[var(--color-secondary-soft)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-[-4px] focus-visible:outline-[var(--yellow)] ${pkg.imageFallbackColor}`}>
         <div className="absolute inset-0 flex items-center justify-center"><Compass size={64} strokeWidth={1} aria-hidden="true" className="text-[var(--green-2)]" /></div>
-        {pkg.imageUrl && !imageFailed && (
+        {coverImage && !imageFailed && (
           // Package images may come from any host supplied by the catalog API.
           // eslint-disable-next-line @next/next/no-img-element
-          <img src={pkg.imageUrl} alt="" loading="lazy" onError={() => setImageFailed(true)} className="absolute inset-0 h-full w-full object-cover transition-transform duration-700 group-hover:scale-105" />
+          <img src={coverImage} alt={`${pkg.destination} holiday destination`} loading="lazy" onError={() => setImageFailed(true)} className="absolute inset-0 h-full w-full object-cover transition-transform duration-700 group-hover:scale-105" />
         )}
         <div className="absolute inset-0 bg-gradient-to-t from-[#062d1b]/70 via-transparent to-black/10" />
         <div className="absolute inset-x-4 top-4 flex flex-wrap items-start justify-between gap-2">
