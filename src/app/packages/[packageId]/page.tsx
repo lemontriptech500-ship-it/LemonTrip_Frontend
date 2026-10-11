@@ -124,7 +124,7 @@ export default async function PackageDetailsPage({ params }: { params: Promise<{
 
   return (
     <main className="pb-20">
-      <div className="bg-gradient-to-b from-[#eaf2ec] via-[var(--color-background)] to-[var(--color-background)] px-4 pb-8 pt-[88px] sm:px-6 sm:pb-12 sm:pt-[104px]">
+      <div className="bg-gradient-to-b from-[#eaf2ec] via-[var(--color-background)] to-[var(--color-background)] px-4 pb-8 pt-6 sm:px-6 sm:pb-12 sm:pt-7">
         <Container className="max-w-6xl">
           <Link href="/packages" className="mb-5 inline-flex items-center gap-2 rounded-full border border-white/80 bg-white/80 px-4 py-2 text-xs font-semibold text-[var(--green-dark)] shadow-sm transition hover:bg-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-[var(--green-2)]"><ArrowLeft size={15} />All holiday packages</Link>
           <PackageGalleryCarousel images={images} title={pkg.destination} duration={pkg.duration} category={pkg.category === 'international' ? 'International' : 'Domestic'} location={copy.location} />

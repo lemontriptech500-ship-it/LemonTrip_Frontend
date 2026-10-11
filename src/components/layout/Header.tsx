@@ -30,8 +30,10 @@ const OVERLAY_ROUTES = ['/flights', '/hotels', '/trains','/buses','/packages','/
  */
 export function Header() {
   const pathname = usePathname()
-  const isOverlayHeader =
+  const isPackageDetailsPage = /^\/packages\/[^/]+/.test(pathname)
+  const isOverlayHeader = !isPackageDetailsPage && (
     pathname === '/' || OVERLAY_ROUTES.some((route) => pathname.startsWith(route))
+  )
   const pageHeroImage = getPageHeroImage(pathname)
   const { toggleCart, totalItems, hasHydrated } = useCartStore()
   const cartCount = hasHydrated ? totalItems() : 0
