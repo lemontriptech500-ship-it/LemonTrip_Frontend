@@ -1,186 +1,157 @@
 'use client'
 
-import { useState } from 'react'
+import { useMemo, useState } from 'react'
 import Link from 'next/link'
-import { ArrowRight, BookOpen, Clock3, Compass, Search, X } from 'lucide-react'
+import { ArrowLeft, ArrowRight, BookOpen, CalendarDays, Check, ChevronDown, Clock3, Compass, Leaf, Map, Plane, Search, Utensils, X } from 'lucide-react'
+import { Container } from '@/components/ui'
 import type { BlogPost } from '@/data/blogPosts'
 
-function StoryImage({ post, featured = false }: { post: BlogPost; featured?: boolean }) {
-  const [failed, setFailed] = useState(false)
-
-  return (
-    <div className={`relative h-full min-h-[220px] overflow-hidden bg-[var(--color-secondary-soft)] ${post.imageFallbackColor}`}>
-      <div className="absolute inset-0 flex items-center justify-center text-[var(--green-2)]" aria-hidden="true">
-        <Compass size={64} strokeWidth={1} />
-      </div>
-      {post.imageUrl && !failed && (
-        // Blog images may come from any host configured by the content API.
-        // eslint-disable-next-line @next/next/no-img-element
-        <img
-          src={post.imageUrl}
-          alt=""
-          loading={featured ? 'eager' : 'lazy'}
-          className="absolute inset-0 h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
-          onError={() => setFailed(true)}
-        />
-      )}
-      {featured && <span className="absolute left-5 top-5 rounded-full bg-[var(--yellow)] px-4 py-2 text-xs font-bold text-[var(--green-dark)]">Featured story</span>}
-    </div>
-  )
-}
-
-function StoryMeta({ post }: { post: BlogPost }) {
-  return (
-    <div className="flex flex-wrap items-center gap-x-4 gap-y-2 text-xs text-[var(--color-text-muted)]">
-      <span>Updated {post.updatedAt || post.date}</span>
-      {post.readTime && <span className="inline-flex items-center gap-1.5"><Clock3 size={13} aria-hidden="true" />{post.readTime}</span>}
-    </div>
-  )
-}
-
+const PAGE_SIZE = 6
 const focusStyle = 'focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[var(--green-2)]'
+
+const categoryIcons: Record<string, typeof Compass> = {
+  'Travel Tips': Plane,
+  Destinations: Map,
+  'Travel Guides': BookOpen,
+  'Visa Guide': BookOpen,
+  'Food & Culture': Utensils,
+  Lifestyle: Leaf,
+  'Packing Tips': Compass,
+}
+
+function ArticleCard({ post }: { post: BlogPost }) {
+  return (
+    <article className="h-full">
+      <Link href={`/blog/${post.id}`} className={`group flex h-full flex-col overflow-hidden rounded-2xl border border-[var(--color-border-light)] bg-[var(--color-surface)] transition duration-200 hover:-translate-y-0.5 hover:shadow-[var(--shadow-md)] ${focusStyle}`}>
+        <div className={`relative aspect-[1.72] overflow-hidden ${post.imageFallbackColor}`}>
+          {post.imageUrl && <img src={post.imageUrl} alt="" loading="lazy" className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-[1.04]" />}
+          <span className="absolute left-3 top-3 rounded-full bg-white/95 px-3 py-1.5 text-[11px] font-semibold text-[var(--green-dark)] shadow-sm">{post.category}</span>
+        </div>
+        <div className="flex flex-1 flex-col p-4 sm:p-5">
+          <div className="flex flex-wrap items-center gap-x-4 gap-y-1.5 text-[11px] text-[var(--color-text-muted)]">
+            <span className="inline-flex items-center gap-1.5"><CalendarDays size={13} />{post.updatedAt || post.date}</span>
+            {post.readTime && <span className="inline-flex items-center gap-1.5"><Clock3 size={13} />{post.readTime}</span>}
+          </div>
+          <h3 className="mt-3 line-clamp-2 font-heading text-[1.45rem] font-semibold leading-[1.08] text-[var(--green-dark)] transition-colors group-hover:text-[var(--green-2)]">{post.title}</h3>
+          <p className="mt-2 line-clamp-3 text-sm leading-6 text-[var(--color-text-secondary)]">{post.excerpt}</p>
+          <span className="mt-auto flex items-center gap-2 pt-4 text-sm font-semibold text-[var(--green-2)]">Read more <ArrowRight size={16} className="transition-transform group-hover:translate-x-1" /></span>
+        </div>
+      </Link>
+    </article>
+  )
+}
 
 export function BlogJournal({ posts }: { posts: BlogPost[] }) {
   const [category, setCategory] = useState<string | null>(null)
   const [search, setSearch] = useState('')
-  const [sort, setSort] = useState('recommended')
-  const categories = Array.from(new Set(posts.map((post) => post.category)))
+  const [sort, setSort] = useState('newest')
+  const [page, setPage] = useState(1)
+  const categories = useMemo(() => Array.from(new Set(posts.map((post) => post.category))), [posts])
   const query = search.trim().toLowerCase()
-  const filteredPosts = posts.filter((post) => (
-    (category === null || post.category === category)
-    && (!query || `${post.title} ${post.excerpt} ${post.category}`.toLowerCase().includes(query))
-  ))
-  if (sort === 'newest') {
-    filteredPosts.sort((a, b) => (Date.parse(b.updatedAt || b.date) || 0) - (Date.parse(a.updatedAt || a.date) || 0))
+
+  const filteredPosts = useMemo(() => {
+    const result = posts.filter((post) => (
+      (category === null || post.category === category)
+      && (!query || `${post.title} ${post.excerpt} ${post.category}`.toLowerCase().includes(query))
+    ))
+    if (sort === 'newest') result.sort((a, b) => (Date.parse(b.updatedAt || b.date) || 0) - (Date.parse(a.updatedAt || a.date) || 0))
+    if (sort === 'oldest') result.sort((a, b) => (Date.parse(a.updatedAt || a.date) || 0) - (Date.parse(b.updatedAt || b.date) || 0))
+    return result
+  }, [category, posts, query, sort])
+
+  const pageCount = Math.max(1, Math.ceil(filteredPosts.length / PAGE_SIZE))
+  const currentPage = Math.min(page, pageCount)
+  const pagePosts = filteredPosts.slice((currentPage - 1) * PAGE_SIZE, currentPage * PAGE_SIZE)
+  const popularPosts = [...posts].sort((a, b) => (Date.parse(b.updatedAt || b.date) || 0) - (Date.parse(a.updatedAt || a.date) || 0)).slice(0, 5)
+
+  function updateCategory(value: string | null) {
+    setCategory(value)
+    setPage(1)
   }
-  const featured = posts[0]
-  const quickReads = posts.filter(post => post.id !== featured?.id).slice(0, 2)
 
-  function resetFilters() {
-    setCategory(null)
-    setSearch('')
+  function updateSearch(value: string) {
+    setSearch(value)
+    setPage(1)
   }
 
-  return (
-    <>
-      {featured && (
-        <section aria-labelledby="featured-story-heading">
-          <div className="mb-6 flex flex-wrap items-end justify-between gap-4">
-            <div>
-              <p className="text-xs font-bold uppercase tracking-[0.18em] text-[var(--green-2)]">A little inspiration, a world of possibilities</p>
-              <h2 id="featured-story-heading" className="mt-2 font-heading text-4xl font-semibold leading-tight text-[var(--green-dark)] sm:text-5xl">Your next adventure starts here.</h2>
-            </div>
-            <span className="inline-flex items-center gap-2 text-sm text-[var(--color-text-muted)]"><Compass size={18} aria-hidden="true" />The LemonTrip journal</span>
-          </div>
-          <div className="grid gap-6 lg:grid-cols-[1.7fr_1fr]">
-            <Link href={`/blog/${featured.id}`} className={`group relative block min-h-[420px] overflow-hidden rounded-3xl bg-[var(--green-dark)] sm:min-h-[470px] ${focusStyle}`}>
-              <div className="absolute inset-0"><StoryImage key={featured.imageUrl} post={featured} featured /></div>
-              <span aria-hidden="true" className="absolute inset-0 bg-gradient-to-t from-[#031f18] via-[#031f18]/50 to-transparent" />
-              <div className="absolute inset-x-0 bottom-0 p-6 text-white sm:p-9">
-                <span className="text-xs font-bold uppercase tracking-[0.15em] text-[var(--yellow)]">{featured.category}</span>
-                <h3 className="mt-3 max-w-xl font-heading text-3xl font-semibold leading-tight sm:text-4xl">{featured.title}</h3>
-                <p className="mt-3 max-w-xl line-clamp-2 text-sm leading-6 text-white/80">{featured.excerpt}</p>
-                <div className="mt-5 flex flex-wrap items-center justify-between gap-4">
-                  <span className="text-xs text-white/75">Updated {featured.updatedAt || featured.date}{featured.readTime ? ` · ${featured.readTime}` : ''}</span>
-                  <span className="inline-flex items-center gap-2 text-sm font-semibold">Read the story <ArrowRight size={16} aria-hidden="true" /></span>
-                </div>
-              </div>
-            </Link>
-            <aside aria-labelledby="journal-quick-heading" className="flex flex-col rounded-3xl border border-[var(--color-border)] bg-white p-6 sm:p-7">
-              <p className="text-xs font-bold uppercase tracking-[0.16em] text-[var(--green-2)]">More to explore</p>
-              <h3 id="journal-quick-heading" className="mt-2 font-heading text-3xl font-semibold text-[var(--green-dark)]">A moment of wanderlust</h3>
-              <div className="mt-5 flex-1 divide-y divide-[var(--color-border)]">
-                {quickReads.map(post => <Link key={post.id} href={`/blog/${post.id}`} className={`group grid grid-cols-[80px_1fr] items-center gap-4 py-5 first:pt-0 ${focusStyle}`}>
-                  <span className={`relative block h-24 overflow-hidden rounded-xl ${post.imageFallbackColor}`}>
-                    {post.imageUrl ? (
-                      // Editorial thumbnails use the same API artwork as the story cards.
-                      // eslint-disable-next-line @next/next/no-img-element
-                      <img src={post.imageUrl} alt="" loading="lazy" className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105" />
-                    ) : <Compass size={28} aria-hidden="true" className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 text-[var(--green-2)]" />}
-                  </span>
-                  <span><span className="text-[10px] font-bold uppercase tracking-wider text-[var(--green-2)]">{post.category}</span><span className="mt-1 block font-heading text-xl font-semibold leading-tight text-[var(--green-dark)] group-hover:text-[var(--green-2)]">{post.title}</span>{post.readTime && <span className="mt-2 block text-xs text-[var(--color-text-muted)]">{post.readTime}</span>}</span>
-                </Link>)}
-              </div>
-              <a href="#journal-stories-heading" className={`mt-4 inline-flex items-center justify-between border-t border-[var(--color-border)] pt-4 text-sm font-semibold text-[var(--green-dark)] hover:text-[var(--green-2)] ${focusStyle}`}>Browse all stories <ArrowRight size={16} aria-hidden="true" /></a>
-            </aside>
-          </div>
-        </section>
-      )}
-
-      <section aria-labelledby="journal-stories-heading" className="mt-12 sm:mt-16">
-        <div className="flex flex-col justify-between gap-5 sm:flex-row sm:items-end">
-          <div>
-            <p className="text-xs font-bold uppercase tracking-[0.18em] text-[var(--green-2)]">Explore the journal</p>
-            <h2 id="journal-stories-heading" className="scroll-mt-6 mt-2 font-heading text-3xl font-semibold text-[var(--green-dark)] sm:text-4xl">Good reads. Great journeys.</h2>
-            <p className="mt-2 text-sm text-[var(--color-text-secondary)]">Destination inspiration and practical advice for every kind of traveller.</p>
-          </div>
-          <div role="search" className="relative w-full sm:w-72 sm:shrink-0">
-            <label htmlFor="journal-search" className="sr-only">Search travel stories</label>
+  return <div className="bg-[var(--color-background)] pb-16 sm:pb-20">
+    <Container className="pt-[90px] sm:pt-[104px]">
+      <section className="relative isolate overflow-hidden rounded-2xl bg-[var(--green-dark)] shadow-[var(--shadow-sm)]" aria-labelledby="blog-hero-title">
+        <div className="absolute inset-0 -z-10 bg-cover bg-center" style={{ backgroundImage: "url('/goa1.jpg')" }} />
+        <div className="absolute inset-0 -z-10 bg-gradient-to-r from-white/95 via-white/80 to-white/10" />
+        <div className="max-w-3xl px-6 py-8 sm:px-10 sm:py-10 lg:px-12 lg:py-12">
+          <p className="text-[11px] font-bold uppercase tracking-[0.2em] text-[var(--green-2)]">LemonTrip journal</p>
+          <h1 id="blog-hero-title" className="mt-2 max-w-2xl font-heading text-4xl font-semibold leading-[0.98] tracking-tight text-[var(--green-dark)] sm:text-5xl lg:text-[3.65rem]">Travel stories, tips &amp; inspiration</h1>
+          <p className="mt-3 max-w-xl text-sm leading-6 text-[var(--color-text-secondary)] sm:text-base">Discover new destinations, get practical travel tips, and make more of your next journey.</p>
+          <div role="search" className="relative mt-5 max-w-md">
+            <label htmlFor="journal-search" className="sr-only">Search articles</label>
             <Search size={18} aria-hidden="true" className="pointer-events-none absolute left-4 top-1/2 -translate-y-1/2 text-[var(--color-text-muted)]" />
-            <input id="journal-search" type="search" value={search} onChange={(event) => setSearch(event.target.value)} placeholder="Search stories…" className="w-full rounded-full border border-[var(--color-border)] bg-white py-3 pl-11 pr-10 text-sm outline-none focus:border-[var(--green-2)] focus:ring-2 focus:ring-[var(--color-accent-soft)] [&::-webkit-search-cancel-button]:appearance-none" />
-            {search && <button type="button" aria-label="Clear search" onClick={() => setSearch('')} className={`absolute right-2 top-1/2 -translate-y-1/2 rounded-full p-2 text-[var(--color-text-muted)] hover:text-[var(--green-dark)] ${focusStyle}`}><X size={16} /></button>}
+            <input id="journal-search" type="search" value={search} onChange={(event) => updateSearch(event.target.value)} placeholder="Search articles…" className={`w-full rounded-full border border-white/80 bg-white/95 py-3 pl-11 pr-12 text-sm text-[var(--color-text-primary)] shadow-sm outline-none placeholder:text-[var(--color-text-muted)] focus:border-[var(--green-2)] focus:ring-2 focus:ring-[var(--green-2)]/20 [&::-webkit-search-cancel-button]:appearance-none`} />
+            {search ? <button type="button" onClick={() => updateSearch('')} aria-label="Clear search" className={`absolute right-2 top-1/2 grid size-9 -translate-y-1/2 place-items-center rounded-full bg-[var(--color-accent)] text-[var(--green-dark)] ${focusStyle}`}><X size={16} /></button> : <span aria-hidden="true" className="absolute right-2 top-1/2 grid size-9 -translate-y-1/2 place-items-center rounded-full bg-[var(--color-accent)] text-[var(--green-dark)]"><ArrowRight size={17} /></span>}
           </div>
-        </div>
-
-        <div aria-label="Filter stories by category" role="group" className="mt-7 flex flex-wrap gap-2 border-b border-[var(--color-border)] pb-6">
-          {[null, ...categories].map((item) => (
-            <button key={item ?? '__all__'} type="button" aria-pressed={category === item} onClick={() => setCategory(item)} className={`rounded-full border px-4 py-2.5 text-sm font-medium transition-colors ${focusStyle} ${category === item ? 'border-[var(--green-dark)] bg-[var(--green-dark)] text-white' : 'border-[var(--color-border)] bg-white text-[var(--color-text-secondary)] hover:border-[var(--green-2)] hover:text-[var(--green-dark)]'}`}>
-              {item ?? 'All stories'}
-            </button>
-          ))}
-        </div>
-
-        <div className="my-5 flex flex-wrap items-center justify-between gap-3">
-        <p role="status" aria-live="polite" aria-atomic="true" className="text-xs text-[var(--color-text-muted)]">{filteredPosts.length} {filteredPosts.length === 1 ? 'story' : 'stories'}{category ? ` in ${category}` : ' to inspire your next trip'}{query ? ` matching “${search.trim()}”` : ''}</p>
-          <div className="flex items-center gap-2 text-xs text-[var(--color-text-muted)]">
-            <label htmlFor="journal-sort">Sort by</label>
-            <select id="journal-sort" value={sort} onChange={event => setSort(event.target.value)} className={`rounded-lg border border-[var(--color-border)] bg-white px-3 py-2 text-xs font-medium text-[var(--green-dark)] ${focusStyle}`}>
-              <option value="recommended">Recommended</option>
-              <option value="newest">Newest first</option>
-            </select>
-          </div>
-        </div>
-
-        {filteredPosts.length > 0 ? (
-          <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-            {filteredPosts.map((post) => (
-              <article key={post.id} className="h-full">
-                <Link href={`/blog/${post.id}`} className={`group flex h-full flex-col overflow-hidden rounded-[22px] border border-[var(--color-border)] bg-white transition-shadow hover:shadow-lg ${focusStyle}`}>
-                  <div className="relative h-56 shrink-0">
-                    <StoryImage key={post.imageUrl} post={post} />
-                    <span className="absolute bottom-4 left-4 rounded-full bg-white px-3 py-1.5 text-xs font-semibold text-[var(--green-dark)]">{post.category}</span>
-                  </div>
-                  <div className="flex flex-1 flex-col p-6">
-                    <StoryMeta post={post} />
-                    <h3 className="mt-3 font-heading text-2xl font-semibold leading-tight text-[var(--green-dark)] transition-colors group-hover:text-[var(--green-2)]">{post.title}</h3>
-                    <p className="mt-3 line-clamp-3 text-sm leading-6 text-[var(--color-text-secondary)]">{post.excerpt}</p>
-                    <div className="mt-auto pt-6"><span className="flex items-center justify-between border-t border-[var(--color-border-light)] pt-4 text-sm font-semibold text-[var(--green-dark)]">Read article <ArrowRight size={17} aria-hidden="true" className="transition-transform group-hover:translate-x-1" /></span></div>
-                  </div>
-                </Link>
-              </article>
-            ))}
-          </div>
-        ) : (
-          <div className="rounded-3xl border border-dashed border-[var(--color-border-strong)] bg-white px-6 py-16 text-center">
-            <BookOpen size={32} aria-hidden="true" className="mx-auto text-[var(--green-2)]" />
-            <h3 className="mt-4 font-heading text-3xl font-semibold text-[var(--green-dark)]">{posts.length ? 'No stories found' : 'New adventures are on the way'}</h3>
-            <p className="mt-2 text-sm text-[var(--color-text-secondary)]">{posts.length ? 'Try another keyword or explore a different category.' : 'Check back soon for fresh travel stories and guides.'}</p>
-            {posts.length > 0 && <button type="button" onClick={resetFilters} className={`mt-5 rounded-full bg-[var(--green-dark)] px-5 py-3 text-sm font-semibold text-white hover:bg-[var(--green-2)] ${focusStyle}`}>Show all stories</button>}
-          </div>
-        )}
-      </section>
-
-      <section aria-labelledby="journal-trip-heading" className="relative mt-12 overflow-hidden rounded-3xl bg-[var(--green-dark)] p-7 sm:mt-16 sm:p-10">
-        <Compass size={200} strokeWidth={0.7} aria-hidden="true" className="pointer-events-none absolute -right-10 -top-8 text-white/10" />
-        <div className="relative flex flex-col justify-between gap-6 sm:flex-row sm:items-center">
-          <div>
-            <p className="text-xs font-bold uppercase tracking-[0.16em] text-[var(--yellow)]">From inspiration to itinerary</p>
-            <h2 id="journal-trip-heading" className="mt-2 font-heading text-3xl font-semibold text-white sm:text-4xl">Make your next story a travel story.</h2>
-            <p className="mt-3 max-w-xl text-sm leading-6 text-white/80">Find your perfect getaway and let LemonTrip take care of the journey.</p>
-          </div>
-          <Link href="/packages" className={`inline-flex w-fit shrink-0 items-center gap-3 rounded-full bg-[var(--yellow)] px-6 py-3.5 text-sm font-bold text-[var(--green-dark)] transition-colors hover:bg-[var(--yellow-soft)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white`}>Explore holidays <ArrowRight size={17} aria-hidden="true" /></Link>
         </div>
       </section>
-    </>
-  )
+    </Container>
+
+    <Container className="pt-7 sm:pt-9">
+      <div className="mb-5 flex items-center gap-2 text-xs text-[var(--color-text-muted)]"><Link href="/" className="hover:text-[var(--green-2)]">Home</Link><span aria-hidden="true">/</span><span className="font-semibold text-[var(--green-dark)]">Blog</span></div>
+      <div className="grid items-start gap-7 lg:grid-cols-[minmax(0,1fr)_290px] xl:grid-cols-[minmax(0,1fr)_320px] xl:gap-8">
+        <main className="min-w-0">
+          <div className="mb-5 flex flex-wrap items-end justify-between gap-4">
+            <div><p className="text-[11px] font-bold uppercase tracking-[0.16em] text-[var(--green-2)]">Ideas for your next escape</p><h2 className="mt-1 font-heading text-3xl font-semibold leading-tight text-[var(--green-dark)] sm:text-4xl">Latest travel articles</h2></div>
+            <label className="flex items-center gap-2 text-xs text-[var(--color-text-secondary)]">Sort by
+              <span className="relative"><select value={sort} onChange={(event) => { setSort(event.target.value); setPage(1) }} className="appearance-none rounded-xl border border-[var(--color-border-light)] bg-[var(--color-surface)] py-2.5 pl-3 pr-9 text-xs font-medium text-[var(--green-dark)] outline-none focus:border-[var(--green-2)] focus:ring-2 focus:ring-[var(--green-2)]/15"><option value="newest">Most recent</option><option value="recommended">Recommended</option><option value="oldest">Oldest</option></select><ChevronDown size={14} aria-hidden="true" className="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-[var(--green-dark)]" /></span>
+            </label>
+          </div>
+
+          <div className="mb-5 flex flex-wrap items-center justify-between gap-3 border-b border-[var(--color-border-light)] pb-4">
+            <div role="group" aria-label="Filter articles by category" className="flex flex-wrap gap-2">
+              <button type="button" aria-pressed={category === null} onClick={() => updateCategory(null)} className={`rounded-full border px-3.5 py-2 text-xs font-semibold transition ${focusStyle} ${category === null ? 'border-[var(--green-dark)] bg-[var(--green-dark)] text-white' : 'border-[var(--color-border-light)] bg-white text-[var(--color-text-secondary)] hover:border-[var(--green-2)]'}`}>All articles</button>
+              {categories.map((item) => <button key={item} type="button" aria-pressed={category === item} onClick={() => updateCategory(item)} className={`rounded-full border px-3.5 py-2 text-xs font-semibold transition ${focusStyle} ${category === item ? 'border-[var(--green-dark)] bg-[var(--green-dark)] text-white' : 'border-[var(--color-border-light)] bg-white text-[var(--color-text-secondary)] hover:border-[var(--green-2)]'}`}>{item}</button>)}
+            </div>
+            <p role="status" aria-live="polite" className="text-xs text-[var(--color-text-muted)]">{filteredPosts.length} {filteredPosts.length === 1 ? 'article' : 'articles'}</p>
+          </div>
+
+          {pagePosts.length ? <div className="grid gap-4 sm:grid-cols-2 xl:gap-5">{pagePosts.map((post) => <ArticleCard key={post.id} post={post} />)}</div> : <div className="rounded-2xl border border-dashed border-[var(--color-border)] bg-white px-6 py-14 text-center"><BookOpen size={30} className="mx-auto text-[var(--green-2)]" /><h3 className="mt-3 font-heading text-2xl font-semibold text-[var(--green-dark)]">No articles found</h3><p className="mt-1 text-sm text-[var(--color-text-secondary)]">Try another search or select a different category.</p><button type="button" onClick={() => { updateCategory(null); updateSearch('') }} className={`mt-4 text-sm font-semibold text-[var(--green-2)] underline underline-offset-4 ${focusStyle}`}>Clear filters</button></div>}
+
+          {pageCount > 1 && <nav aria-label="Article pages" className="mt-6 flex items-center justify-center gap-2">
+            <button type="button" onClick={() => setPage(Math.max(1, currentPage - 1))} disabled={currentPage === 1} aria-label="Previous page" className={`grid size-9 place-items-center rounded-full border border-[var(--color-border-light)] bg-white text-[var(--green-dark)] disabled:cursor-not-allowed disabled:opacity-40 ${focusStyle}`}><ArrowLeft size={15} /></button>
+            {Array.from({ length: pageCount }, (_, index) => index + 1).map((pageNumber) => <button key={pageNumber} type="button" onClick={() => setPage(pageNumber)} aria-current={currentPage === pageNumber ? 'page' : undefined} aria-label={`Page ${pageNumber}`} className={`grid size-9 place-items-center rounded-full border text-xs font-semibold ${focusStyle} ${currentPage === pageNumber ? 'border-[var(--green-dark)] bg-[var(--green-dark)] text-white' : 'border-[var(--color-border-light)] bg-white text-[var(--green-dark)] hover:border-[var(--green-2)]'}`}>{pageNumber}</button>)}
+            <button type="button" onClick={() => setPage(Math.min(pageCount, currentPage + 1))} disabled={currentPage === pageCount} aria-label="Next page" className={`grid size-9 place-items-center rounded-full border border-[var(--color-border-light)] bg-white text-[var(--green-dark)] disabled:cursor-not-allowed disabled:opacity-40 ${focusStyle}`}><ArrowRight size={15} /></button>
+          </nav>}
+        </main>
+
+        <aside className="space-y-4 lg:sticky lg:top-5">
+          <section className="rounded-2xl border border-[var(--color-border-light)] bg-[var(--color-surface)] p-5" aria-labelledby="blog-categories-heading">
+            <div className="mb-3 flex items-center justify-between"><h2 id="blog-categories-heading" className="font-heading text-xl font-semibold text-[var(--green-dark)]">Categories</h2><span className="h-0.5 w-7 rounded-full bg-[var(--color-accent)]" /></div>
+            <ul className="space-y-1">
+              {categories.map((item) => {
+                const Icon = categoryIcons[item] || Compass
+                const count = posts.filter((post) => post.category === item).length
+                return <li key={item}><button type="button" onClick={() => updateCategory(category === item ? null : item)} aria-pressed={category === item} className={`flex w-full items-center gap-3 rounded-xl px-2 py-2 text-left text-sm transition hover:bg-[var(--color-primary-soft)] ${focusStyle} ${category === item ? 'bg-[var(--color-primary-soft)] text-[var(--green-dark)]' : 'text-[var(--color-text-secondary)]'}`}><span className="grid size-8 shrink-0 place-items-center rounded-full bg-[var(--color-primary-soft)] text-[var(--green-dark)]"><Icon size={16} /></span><span className="flex-1">{item}</span><span className="grid size-7 place-items-center rounded-full bg-[var(--color-background)] text-[11px] text-[var(--color-text-muted)]">{count}</span></button></li>
+              })}
+            </ul>
+          </section>
+
+          <section className="rounded-2xl border border-[var(--color-border-light)] bg-[var(--color-surface)] p-5" aria-labelledby="popular-posts-heading">
+            <div className="mb-2 flex items-center justify-between"><h2 id="popular-posts-heading" className="font-heading text-xl font-semibold text-[var(--green-dark)]">Popular reads</h2><span className="h-0.5 w-7 rounded-full bg-[var(--color-accent)]" /></div>
+            <div className="divide-y divide-[var(--color-border-light)]">
+              {popularPosts.map((post) => <Link key={post.id} href={`/blog/${post.id}`} className={`group flex gap-3 py-3 first:pt-2 last:pb-0 ${focusStyle}`}>
+                <span className={`h-[62px] w-[72px] shrink-0 overflow-hidden rounded-lg ${post.imageFallbackColor}`}>{post.imageUrl && <img src={post.imageUrl} alt="" loading="lazy" className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105" />}</span>
+                <span className="min-w-0 self-center"><span className="line-clamp-2 text-xs font-semibold leading-5 text-[var(--green-dark)] group-hover:text-[var(--green-2)]">{post.title}</span><span className="mt-1 block text-[10px] text-[var(--color-text-muted)]">{post.updatedAt || post.date}{post.readTime ? ` · ${post.readTime}` : ''}</span></span>
+              </Link>)}
+            </div>
+          </section>
+
+          <section className="relative isolate overflow-hidden rounded-2xl bg-[var(--green-dark)] p-5 text-white" aria-labelledby="blog-trip-heading">
+            <div className="absolute inset-0 -z-10 bg-cover bg-center opacity-35" style={{ backgroundImage: "url('/goa3.jpg')" }} />
+            <span className="inline-flex items-center gap-1.5 text-[10px] font-bold uppercase tracking-[0.15em] text-[var(--color-accent)]"><Check size={13} /> LemonTrip picks</span>
+            <h2 id="blog-trip-heading" className="mt-2 font-heading text-2xl font-semibold leading-tight">From reading to roaming.</h2>
+            <p className="mt-2 text-sm leading-5 text-white/80">Find a getaway to turn your travel ideas into plans.</p>
+            <Link href="/packages" className={`mt-4 inline-flex items-center gap-2 rounded-full bg-[var(--color-accent)] px-4 py-2.5 text-xs font-bold text-[var(--green-dark)] transition hover:brightness-95 ${focusStyle}`}>Explore packages <ArrowRight size={14} /></Link>
+          </section>
+        </aside>
+      </div>
+    </Container>
+  </div>
 }
