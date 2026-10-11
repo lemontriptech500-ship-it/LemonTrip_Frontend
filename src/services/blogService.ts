@@ -1,4 +1,4 @@
-import { apiRequest } from '@/lib/apiClient'
+import { ApiError, apiRequest } from '@/lib/apiClient'
 import { blogPosts, type BlogPost } from '@/data/blogPosts'
 
 export async function getBlogPosts(): Promise<BlogPost[]> {
@@ -13,7 +13,10 @@ export async function getBlogPosts(): Promise<BlogPost[]> {
 export async function getBlogPostById(id: string): Promise<BlogPost | null> {
   try {
     return await apiRequest<BlogPost>(`/blog/${encodeURIComponent(id)}`)
-  } catch {
+  } catch (error) {
+    if (error instanceof ApiError && (error.status === 0 || error.status >= 500)) {
+      return blogPosts.find((post) => post.id === id) || null
+    }
     return null
   }
 }

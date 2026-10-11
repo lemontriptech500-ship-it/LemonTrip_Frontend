@@ -32,7 +32,7 @@ function StoryImage({ post, featured = false }: { post: BlogPost; featured?: boo
 function StoryMeta({ post }: { post: BlogPost }) {
   return (
     <div className="flex flex-wrap items-center gap-x-4 gap-y-2 text-xs text-[var(--color-text-muted)]">
-      <span>{post.date}</span>
+      <span>Updated {post.updatedAt || post.date}</span>
       {post.readTime && <span className="inline-flex items-center gap-1.5"><Clock3 size={13} aria-hidden="true" />{post.readTime}</span>}
     </div>
   )
@@ -51,7 +51,7 @@ export function BlogJournal({ posts }: { posts: BlogPost[] }) {
     && (!query || `${post.title} ${post.excerpt} ${post.category}`.toLowerCase().includes(query))
   ))
   if (sort === 'newest') {
-    filteredPosts.sort((a, b) => (Date.parse(b.date) || 0) - (Date.parse(a.date) || 0))
+    filteredPosts.sort((a, b) => (Date.parse(b.updatedAt || b.date) || 0) - (Date.parse(a.updatedAt || a.date) || 0))
   }
   const featured = posts[0]
   const quickReads = posts.filter(post => post.id !== featured?.id).slice(0, 2)
@@ -81,7 +81,7 @@ export function BlogJournal({ posts }: { posts: BlogPost[] }) {
                 <h3 className="mt-3 max-w-xl font-heading text-3xl font-semibold leading-tight sm:text-4xl">{featured.title}</h3>
                 <p className="mt-3 max-w-xl line-clamp-2 text-sm leading-6 text-white/80">{featured.excerpt}</p>
                 <div className="mt-5 flex flex-wrap items-center justify-between gap-4">
-                  <span className="text-xs text-white/75">{featured.date}{featured.readTime ? ` · ${featured.readTime}` : ''}</span>
+                  <span className="text-xs text-white/75">Updated {featured.updatedAt || featured.date}{featured.readTime ? ` · ${featured.readTime}` : ''}</span>
                   <span className="inline-flex items-center gap-2 text-sm font-semibold">Read the story <ArrowRight size={16} aria-hidden="true" /></span>
                 </div>
               </div>
