@@ -75,14 +75,15 @@ export function BlogJournal({ posts }: { posts: BlogPost[] }) {
   }
 
   return <div className="bg-[var(--color-background)] pb-16 sm:pb-20">
-    <Container className="pt-[90px] sm:pt-[104px]">
-      <section className="relative isolate overflow-hidden rounded-2xl bg-[var(--green-dark)] shadow-[var(--shadow-sm)]" aria-labelledby="blog-hero-title">
-        <div className="absolute inset-0 -z-10 bg-cover bg-center" style={{ backgroundImage: "url('/goa1.jpg')" }} />
-        <div className="absolute inset-0 -z-10 bg-gradient-to-r from-white/95 via-white/80 to-white/10" />
-        <div className="max-w-3xl px-6 py-8 sm:px-10 sm:py-10 lg:px-12 lg:py-12">
-          <p className="text-[11px] font-bold uppercase tracking-[0.2em] text-[var(--green-2)]">LemonTrip journal</p>
-          <h1 id="blog-hero-title" className="mt-2 max-w-2xl font-heading text-4xl font-semibold leading-[0.98] tracking-tight text-[var(--green-dark)] sm:text-5xl lg:text-[3.65rem]">Travel stories, tips &amp; inspiration</h1>
-          <p className="mt-3 max-w-xl text-sm leading-6 text-[var(--color-text-secondary)] sm:text-base">Discover new destinations, get practical travel tips, and make more of your next journey.</p>
+      <section className="relative isolate overflow-hidden bg-[var(--green-dark)] pb-8 pt-[98px] sm:pb-10 sm:pt-[112px]" aria-labelledby="blog-hero-title">
+        <div className="absolute inset-0 -z-20 bg-cover bg-center" style={{ backgroundImage: "url('/goa1.jpg')" }} />
+        <div className="absolute inset-0 -z-10 bg-gradient-to-r from-[#031f18]/80 via-[#031f18]/45 to-[#031f18]/10" />
+        <div className="absolute inset-x-0 top-0 -z-10 h-28 bg-gradient-to-b from-[#031f18]/55 to-transparent" />
+        <Container>
+        <div className="max-w-3xl py-3 sm:py-5">
+          <p className="text-[11px] font-bold uppercase tracking-[0.2em] text-[var(--color-accent)]">LemonTrip journal</p>
+          <h1 id="blog-hero-title" className="mt-2 max-w-2xl font-heading text-4xl font-semibold leading-[0.98] tracking-tight text-white sm:text-5xl lg:text-[3.65rem]">Travel stories, tips &amp; inspiration</h1>
+          <p className="mt-3 max-w-xl text-sm leading-6 text-white/85 sm:text-base">Discover new destinations, get practical travel tips, and make more of your next journey.</p>
           <div role="search" className="relative mt-5 max-w-md">
             <label htmlFor="journal-search" className="sr-only">Search articles</label>
             <Search size={18} aria-hidden="true" className="pointer-events-none absolute left-4 top-1/2 -translate-y-1/2 text-[var(--color-text-muted)]" />
@@ -90,8 +91,8 @@ export function BlogJournal({ posts }: { posts: BlogPost[] }) {
             {search ? <button type="button" onClick={() => updateSearch('')} aria-label="Clear search" className={`absolute right-2 top-1/2 grid size-9 -translate-y-1/2 place-items-center rounded-full bg-[var(--color-accent)] text-[var(--green-dark)] ${focusStyle}`}><X size={16} /></button> : <span aria-hidden="true" className="absolute right-2 top-1/2 grid size-9 -translate-y-1/2 place-items-center rounded-full bg-[var(--color-accent)] text-[var(--green-dark)]"><ArrowRight size={17} /></span>}
           </div>
         </div>
+        </Container>
       </section>
-    </Container>
 
     <Container className="pt-7 sm:pt-9">
       <div className="mb-5 flex items-center gap-2 text-xs text-[var(--color-text-muted)]"><Link href="/" className="hover:text-[var(--green-2)]">Home</Link><span aria-hidden="true">/</span><span className="font-semibold text-[var(--green-dark)]">Blog</span></div>

@@ -1,5 +1,5 @@
 import Link from 'next/link'
-import { ArrowLeft, ArrowRight, BookOpen, CalendarDays, Clock3, Compass, Sparkles } from 'lucide-react'
+import { ArrowLeft, ArrowRight, BookOpen, CalendarDays, Clock3, Sparkles } from 'lucide-react'
 import { Button, Card, Container } from '@/components/ui'
 import { BlogImageCarousel, type BlogGalleryImage } from '@/components/blog/BlogImageCarousel'
 import { getBlogPostById, getRelatedPosts } from '@/services/blogService'
@@ -21,7 +21,6 @@ function ArticleContent({ content }: { content: string }) {
 }
 
 function getGallery(post: NonNullable<Awaited<ReturnType<typeof getBlogPostById>>>, related: Awaited<ReturnType<typeof getRelatedPosts>>): BlogGalleryImage[] {
-  const cover = post.imageUrl || '/herosection_bgimage.webp'
   const articleSpecificImages: Record<string, BlogGalleryImage[]> = {
     'blog-1': [
       { src: '/goa1.jpg', alt: 'Palm-lined beach in Goa', caption: 'Leave space in your bag for easy beach days.' },
@@ -40,10 +39,7 @@ function getGallery(post: NonNullable<Awaited<ReturnType<typeof getBlogPostById>
     caption: item.excerpt,
   }))
 
-  return [
-    { src: cover, alt: post.title, caption: post.excerpt },
-    ...curated.filter((image) => image.src !== cover),
-  ]
+  return curated.filter((image) => image.src !== post.imageUrl)
 }
 
 export default async function BlogDetailsPage({ params }: { params: Promise<{ postId: string }> }) {
@@ -55,26 +51,28 @@ export default async function BlogDetailsPage({ params }: { params: Promise<{ po
   const gallery = getGallery(post, relatedPosts)
 
   return <div className="min-h-screen bg-[var(--color-background)] pb-16 sm:pb-20">
-    <Container className="pt-7 sm:pt-10">
-      <div className="mb-5 flex flex-wrap items-center justify-between gap-4">
-        <Button variant="ghost" size="sm" asChild icon={<ArrowLeft size={16} />}><Link href="/blog">Travel journal</Link></Button>
-        <Link href="/blog" className="inline-flex items-center gap-2 text-sm font-semibold text-[var(--green-dark)] transition hover:text-[var(--green-2)]"><Compass size={16} /> More travel stories</Link>
-      </div>
+    <section className="relative isolate min-h-[300px] overflow-hidden bg-[var(--green-dark)] pb-6 pt-[104px] sm:min-h-[330px] sm:pb-8 sm:pt-[116px] lg:min-h-[370px] lg:pb-8 lg:pt-[130px]">
+      <div className="pointer-events-none absolute inset-0 -z-10 bg-cover bg-center" style={{ backgroundImage: `url('${post.imageUrl || '/Traveler Overlooking a Mosque Waterfront.png'}')` }} aria-hidden="true" />
+      <div className="pointer-events-none absolute inset-0 -z-10 bg-gradient-to-r from-[#031f18]/90 via-[#063b24]/65 to-[#063b24]/25" aria-hidden="true" />
+      <div className="pointer-events-none absolute inset-x-0 top-0 -z-10 h-40 bg-gradient-to-b from-black/35 to-transparent" aria-hidden="true" />
+      <Container>
+        <div className="max-w-3xl text-white">
+          <div className="flex flex-wrap items-center gap-x-4 gap-y-2 text-[11px] font-bold uppercase tracking-[0.14em] text-[var(--color-accent)]">
+            <span className="inline-flex items-center gap-2"><BookOpen size={14} />{post.category}</span>
+            <span className="inline-flex items-center gap-1.5 text-white/75"><CalendarDays size={14} />Updated {post.updatedAt || post.date}</span>
+            {post.readTime && <span className="inline-flex items-center gap-1.5 text-white/75"><Clock3 size={14} />{post.readTime}</span>}
+          </div>
+          <h1 className="mt-3 max-w-3xl font-heading text-4xl font-semibold leading-[1.02] tracking-tight sm:text-5xl lg:text-[3.6rem]">{post.title}</h1>
+          <p className="mt-4 max-w-2xl text-base leading-7 text-white/85 sm:text-lg">{post.excerpt}</p>
+        </div>
+      </Container>
+    </section>
 
+    <Container className="pt-8 sm:pt-10">
       <div className="grid items-start gap-8 lg:grid-cols-[minmax(0,1fr)_320px] xl:gap-10">
         <main className="min-w-0">
-          <header className="mb-6 max-w-4xl">
-            <div className="flex flex-wrap items-center gap-x-4 gap-y-2 text-xs font-bold uppercase tracking-[0.14em] text-[var(--green-2)]">
-              <span className="inline-flex items-center gap-2"><BookOpen size={15} />{post.category}</span>
-              <span className="inline-flex items-center gap-1.5 text-[var(--color-text-secondary)]"><CalendarDays size={14} />Updated {post.updatedAt || post.date}</span>
-              {post.readTime && <span className="inline-flex items-center gap-1.5 text-[var(--color-text-secondary)]"><Clock3 size={14} />{post.readTime}</span>}
-            </div>
-            <h1 className="mt-4 max-w-4xl font-heading text-4xl font-semibold leading-[1.08] tracking-tight text-[var(--green-dark)] sm:text-5xl lg:text-[3.6rem]">{post.title}</h1>
-            <p className="mt-5 max-w-3xl text-lg leading-8 text-[var(--color-text-secondary)] sm:text-xl">{post.excerpt}</p>
-          </header>
-
+          <Link href="/blog" className="mb-3 inline-flex items-center gap-2 text-sm font-semibold text-[var(--green-dark)] transition hover:text-[var(--green-2)]"><ArrowLeft size={16} />Travel journal</Link>
           <BlogImageCarousel images={gallery} />
-
           <article className="mx-auto max-w-[760px] pt-2">
             <div className="my-7 flex flex-wrap gap-2" aria-label="Article topics">
               {[post.category, 'Trip planning', 'LemonTrip guide'].map((tag) => <span key={tag} className="rounded-full border border-[var(--color-border-light)] bg-[var(--color-surface)] px-4 py-2 text-xs font-semibold text-[var(--green-dark)]">{tag}</span>)}
