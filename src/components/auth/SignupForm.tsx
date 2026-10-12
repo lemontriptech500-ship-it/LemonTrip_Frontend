@@ -1,7 +1,9 @@
+
 'use client'
 
 import React, { useState } from 'react'
 import { useRouter } from 'next/navigation'
+import Link from 'next/link'
 import { Eye, EyeOff, LockKeyhole, Mail, Phone, UserRound } from 'lucide-react'
 import { Alert, Button, Input } from '@/components/ui'
 import { GoogleSignInButton } from '@/components/auth/GoogleSignInButton'
@@ -150,7 +152,14 @@ export function SignupForm({ onSuccess, compact = false }: SignupFormProps) {
 
   return (
     <form onSubmit={handleSubmit} noValidate className="space-y-3">
-      {error && <Alert variant="error" title="Registration error">{error}</Alert>}
+      {error && <div className="space-y-2">
+        <Alert variant="error" title="Registration error">{error}</Alert>
+        {(/already|registered|proceed to login/i.test(error)) && (
+          <Link href="/login" className="inline-block text-sm font-semibold text-[var(--color-primary)] underline">
+            Go to Login →
+          </Link>
+        )}
+      </div>}
       <GoogleSignInButton mode="signup" onCredential={handleGoogleCredential} />
       <div className="relative py-1 text-center text-xs text-[var(--color-text-secondary)] before:absolute before:left-0 before:right-0 before:top-1/2 before:border-t before:border-[var(--color-border)]">
         <span className="relative bg-[var(--color-surface)] px-3">or create with email</span>
