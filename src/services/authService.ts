@@ -79,7 +79,8 @@ export async function forgotPassword(email: string): Promise<{ success: boolean;
 export async function resetPassword(token: string, password: string): Promise<{ success: boolean; message: string }> {
   try {
     const result = await apiRequest<{ message: string }>('/auth/reset-password', {
-      method: 'POST', body: JSON.stringify({ token, password }),
+      method: 'POST',
+body: JSON.stringify({ token, newPassword: password }),
     })
     return { success: true, message: result.message }
   } catch (error) {
