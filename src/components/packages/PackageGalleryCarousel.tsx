@@ -28,7 +28,7 @@ export function PackageGalleryCarousel({ images, title, duration, category, loca
           {location && <p className="mt-3 flex items-center gap-2 text-sm font-medium text-white/90"><MapPin size={15} className="text-[var(--yellow)]" />{location}</p>}
         </div>
       </div>
-      <div className="flex gap-2 overflow-x-auto bg-white p-3 sm:gap-3 sm:p-4" aria-label="Choose a package photo">
+      <div className="flex flex-wrap gap-2 bg-white p-3 sm:gap-3 sm:p-4" aria-label="Choose a package photo">
         {images.map((src, index) => <button key={`${src}-${index}`} type="button" aria-label={`Show package photo ${index + 1}`} aria-current={active === index} onClick={() => setActive(index)} className={`h-16 w-24 shrink-0 overflow-hidden rounded-xl border-2 transition sm:h-20 sm:w-32 ${active === index ? 'border-[var(--green-2)] shadow-sm' : 'border-transparent opacity-65 hover:opacity-100'}`}>
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img src={src} alt="" loading="lazy" className="h-full w-full object-cover" />

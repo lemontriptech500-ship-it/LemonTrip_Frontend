@@ -76,10 +76,10 @@ export function AuthModal() {
         aria-modal="true"
         aria-labelledby="auth-modal-title"
         tabIndex={-1}
-        className="relative z-10 flex max-h-[90vh] w-full max-w-[920px] overflow-hidden rounded-2xl bg-[var(--color-surface)] shadow-2xl outline-none animate-in fade-in zoom-in-95"
+        className="relative z-10 flex max-h-[calc(100dvh-1.5rem)] sm:max-h-[calc(100dvh-3rem)] w-full max-w-[920px] overflow-hidden rounded-2xl bg-[var(--color-surface)] shadow-2xl outline-none animate-in fade-in zoom-in-95"
       >
         {/* Brand panel (hidden on small screens) */}
-        <aside className="relative hidden w-[420px] shrink-0 overflow-hidden bg-neutral-900 md:block">
+        <aside className="relative hidden w-[360px] shrink-0 overflow-hidden bg-neutral-900 lg:block">
         <div
   className="absolute inset-0 bg-cover bg-[position:70%_center]"
   style={{ backgroundImage: "url('/hero.png?hero-v=20260908')" }}
@@ -107,7 +107,7 @@ export function AuthModal() {
         {/* Form panel */}
         <div className="min-w-0 flex-1 overflow-y-auto p-5 sm:p-6">
           {/* Tabs + close button share one row so they never overlap */}
-          <div className="mb-4 flex items-center gap-3">
+          <div className="mb-4 flex items-center gap-2 sm:gap-3">
             <div
               role="tablist"
               aria-label="Sign in or create account"
@@ -122,7 +122,7 @@ export function AuthModal() {
                     role="tab"
                     aria-selected={active}
                     onClick={() => setMode(tab)}
-                    className={`rounded-full px-3 py-1.5 text-[13px] font-semibold transition ${
+                    className={`min-h-10 rounded-full px-1.5 py-1.5 text-xs font-semibold transition sm:px-3 sm:text-[13px] ${
                       active
                         ? 'bg-[var(--color-primary)] text-[var(--green-dark)] shadow-sm'
                         : 'text-[var(--color-text-secondary)] hover:text-[var(--color-text-primary)]'

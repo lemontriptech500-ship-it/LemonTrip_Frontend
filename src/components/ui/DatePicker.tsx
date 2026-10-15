@@ -1,6 +1,7 @@
 'use client'
 
 import React, { useState, useRef, useEffect } from 'react'
+import { createPortal } from 'react-dom'
 import { ChevronLeft, ChevronRight, Calendar } from 'lucide-react'
 import { cn } from '@/lib/utils'
 
@@ -31,6 +32,7 @@ export function DatePicker({
   const [currentMonth, setCurrentMonth] = useState(new Date())
   const containerRef = useRef<HTMLDivElement>(null)
   const triggerRef = useRef<HTMLButtonElement>(null)
+  const popupRef = useRef<HTMLDivElement>(null)
   const [popupPosition, setPopupPosition] = useState({ top: 0, left: 0 })
 
   const updatePopupPosition = () => {
@@ -38,19 +40,25 @@ export function DatePicker({
     if (!trigger) return
 
     const rect = trigger.getBoundingClientRect()
-    const popupWidth = Math.min(288, window.innerWidth - 24)
-    const popupHeight = Math.min(390, window.innerHeight - 24)
+    const viewport = window.visualViewport
+    const viewportTop = viewport?.offsetTop ?? 0
+    const viewportLeft = viewport?.offsetLeft ?? 0
+    const viewportWidth = viewport?.width ?? window.innerWidth
+    const viewportHeight = viewport?.height ?? window.innerHeight
+    const popupWidth = Math.min(288, viewportWidth - 24)
+    const popupHeight = Math.min(popupRef.current?.offsetHeight || 390, viewportHeight - 24)
     const gap = 8
-    const top = rect.bottom + gap + popupHeight <= window.innerHeight
+    const preferredTop = rect.bottom + gap + popupHeight <= viewportTop + viewportHeight - 12
       ? rect.bottom + gap
-      : Math.max(12, rect.top - popupHeight - gap)
-    const left = Math.min(Math.max(12, rect.left), window.innerWidth - popupWidth - 12)
+      : rect.top - popupHeight - gap
+    const top = Math.max(viewportTop + 12, Math.min(preferredTop, viewportTop + viewportHeight - popupHeight - 12))
+    const left = Math.min(Math.max(viewportLeft + 12, rect.left), viewportLeft + viewportWidth - popupWidth - 12)
     setPopupPosition({ top, left })
   }
 
   useEffect(() => {
     function handleClickOutside(event: MouseEvent) {
-      if (containerRef.current && !containerRef.current.contains(event.target as Node)) {
+      if (containerRef.current && !containerRef.current.contains(event.target as Node) && !popupRef.current?.contains(event.target as Node)) {
         setIsOpen(false)
       }
     }
@@ -71,9 +79,13 @@ export function DatePicker({
     const handleViewportChange = () => updatePopupPosition()
     window.addEventListener('resize', handleViewportChange)
     window.addEventListener('scroll', handleViewportChange, true)
+    window.visualViewport?.addEventListener('resize', handleViewportChange)
+    window.visualViewport?.addEventListener('scroll', handleViewportChange)
     return () => {
       window.removeEventListener('resize', handleViewportChange)
       window.removeEventListener('scroll', handleViewportChange, true)
+      window.visualViewport?.removeEventListener('resize', handleViewportChange)
+      window.visualViewport?.removeEventListener('scroll', handleViewportChange)
     }
   }, [isOpen, minDate, value])
 
@@ -176,9 +188,18 @@ export function DatePicker({
           </span>
         </button>
 
-        {isOpen && (
+        {isOpen && createPortal(
           <div
-            className="fixed z-[120] max-h-[calc(100vh-1.5rem)] w-[min(18rem,calc(100vw-1.5rem))] overflow-y-auto rounded-[var(--radius-lg)] border border-[var(--color-border)] bg-[var(--color-surface)] p-4 shadow-xl animate-fade-in"
+            ref={popupRef}
+            role="dialog"
+            aria-label="Choose date"
+            onKeyDown={(event) => {
+              if (event.key === 'Escape') {
+                setIsOpen(false)
+                triggerRef.current?.focus()
+              }
+            }}
+            className="fixed z-[120] max-h-[calc(100dvh-1.5rem)] w-[min(18rem,calc(100vw-1.5rem))] overflow-y-auto rounded-[var(--radius-lg)] border border-[var(--color-border)] bg-[var(--color-surface)] p-4 shadow-xl animate-fade-in"
             style={{ top: popupPosition.top, left: popupPosition.left, maxWidth: 'calc(100vw - 1.5rem)' }}
           >
             {/* Header */}
@@ -257,7 +278,8 @@ export function DatePicker({
                 Today
               </button>
             </div>
-          </div>
+          </div>,
+          document.body
         )}
       </div>
     </div>
