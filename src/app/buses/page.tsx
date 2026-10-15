@@ -34,7 +34,7 @@ export default async function BusesPage({ searchParams }: BusesPageProps) {
       <Container className="pt-6">
         <div className="grid gap-5 lg:grid-cols-3">
           {buses.map((bus) => (
-            <BusResultCard key={bus.id} bus={bus} />
+            <BusResultCard key={bus.id} bus={bus} travelDate={params.travelDate} />
           ))}
         </div>
       </Container>

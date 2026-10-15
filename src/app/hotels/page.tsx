@@ -6,9 +6,9 @@ import { Building, Filter } from 'lucide-react'
 import { Button, Container } from '@/components/ui'
 import { EmptyState } from '@/components/common'
 import type { Hotel } from '@/types/hotels'
-import { searchHotels } from '@/services/hotelService'
+import { getHotelCatalog, searchHotels } from '@/services/hotelService'
 import { useHotelFilters } from '@/hooks/useHotelFilters'
-import { getHotelSearchFromUrl, getNightCount } from '@/lib/hotelUtils'
+import { getHotelSearchFromUrl, getNightCount, isHotelSearchComplete } from '@/lib/hotelUtils'
 import { HotelPageHero } from '@/components/hotels/HotelPageHero'
 import { HotelSearchForm } from '@/components/search/HotelSearchForm' // <-- check this name/path
 import { HotelFilters, HotelMobileFilters } from '@/components/hotels/HotelFilters'
@@ -21,6 +21,7 @@ function HotelResultsContent() {
   const searchQuery = searchParams.toString()
   const search = useMemo(() => getHotelSearchFromUrl(new URLSearchParams(searchQuery)), [searchQuery])
   const nights = getNightCount(search.checkIn, search.checkOut)
+  const hasLiveSearch = isHotelSearchComplete(search)
 
   const [isMobileFiltersOpen, setIsMobileFiltersOpen] = useState(false)
 
@@ -33,7 +34,8 @@ function HotelResultsContent() {
     let active = true
     setIsLoading(true)
     setSearchError('')
-    searchHotels(search)
+    const request = hasLiveSearch ? searchHotels(search) : getHotelCatalog()
+    request
       .then((result) => {
         if (active) setMatchedHotels(result.hotels)
       })
@@ -49,7 +51,7 @@ function HotelResultsContent() {
     return () => {
       active = false
     }
-  }, [search, retryCount])
+  }, [search, hasLiveSearch, retryCount])
 
   const {
     filters,
@@ -79,7 +81,7 @@ function HotelResultsContent() {
     // No `section-gap`: the hero handles its own top spacing
     <div className="pb-20">
       <HotelPageHero title={heroTitle} subtitle="Compare stays and book the right room in minutes.">
-        <div className="rounded-[var(--radius-xl)] border border-[var(--color-border-light)] bg-white p-4 shadow-lg sm:p-6">
+        <div id="hotel-search-form" className="rounded-[var(--radius-xl)] border border-[var(--color-border-light)] bg-white p-4 shadow-lg sm:p-6">
           <HotelSearchForm />
         </div>
       </HotelPageHero>
@@ -122,6 +124,7 @@ function HotelResultsContent() {
             </div>
 
             <div className="flex-1 min-w-0">
+              {!hasLiveSearch && <p className="mb-4 rounded-lg bg-[var(--color-surface-secondary)] p-3 text-sm text-[var(--color-text-secondary)]">Featured stays from our catalog. Enter your destination and dates above to check live Hotelbeds availability and rates.</p>}
               <HotelResultsHeader
                 totalResults={totalResults}
                 filteredCount={filteredCount}

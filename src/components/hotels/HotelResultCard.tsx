@@ -133,9 +133,15 @@ export function HotelResultCard({ hotel, nights, search }: HotelResultCardProps)
                 )}
               </div>
 
-              <Button asChild size="sm" className="w-full md:w-auto">
-                <Link href={detailsHref}>View rooms</Link>
-              </Button>
+              {hotel.supplier === 'CATALOG' ? (
+                <Button asChild size="sm" className="w-full md:w-auto">
+                  <Link href="#hotel-search-form">Search dates for rooms</Link>
+                </Button>
+              ) : (
+                <Button asChild size="sm" className="w-full md:w-auto">
+                  <Link href={detailsHref}>View rooms</Link>
+                </Button>
+              )}
             </div>
           </div>
         </div>

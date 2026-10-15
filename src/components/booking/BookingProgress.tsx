@@ -25,6 +25,12 @@ export const HOTEL_BOOKING_STEPS: BookingProgressStep[] = [
   { id: 'confirmation', label: 'Confirmation' },
 ];
 
+export const CATALOG_BOOKING_STEPS: BookingProgressStep[] = [
+  { id: 'trip', label: 'Trip' },
+  { id: 'passengers', label: 'Passengers' },
+  { id: 'review', label: 'Review' },
+];
+
 interface BookingProgressProps {
   currentStep: string;
   steps?: BookingProgressStep[];
@@ -59,8 +65,8 @@ export function BookingProgress({
               <div 
                 className={cn(
                   "w-8 h-8 rounded-full flex items-center justify-center text-sm font-medium transition-colors duration-300 border-2",
-                  isCompleted ? "bg-[var(--color-primary)] border-[var(--color-primary)] text-[var(--color-surface)]" :
-                  isActive ? "bg-[var(--color-surface)] border-[var(--color-primary)] text-[var(--color-primary)]" :
+                  isCompleted ? "bg-[var(--color-primary)] border-[var(--color-primary)] text-[var(--green-dark)]" :
+                  isActive ? "bg-[var(--color-surface)] border-[var(--color-primary)] text-[var(--green-dark)] shadow-[0_0_0_4px_rgba(250,211,17,0.18)]" :
                   "bg-[var(--color-surface)] border-[var(--color-border)] text-[var(--color-text-muted)]"
                 )}
               >
@@ -69,7 +75,7 @@ export function BookingProgress({
               <span className={cn(
                 "max-w-[4.5rem] text-center text-[10px] font-medium leading-tight sm:max-w-none sm:whitespace-nowrap sm:text-xs",
                 isCompleted ? "text-[var(--color-text-primary)]" :
-                isActive ? "text-[var(--color-primary)]" :
+                isActive ? "font-bold text-[var(--color-secondary)]" :
                 "text-[var(--color-text-muted)]"
               )}>
                 {step.label}

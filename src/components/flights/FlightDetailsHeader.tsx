@@ -1,66 +1,28 @@
-import React from 'react';
-import { Flight } from '@/types/flights';
-import { Badge } from '@/components/ui';
-import { Plane } from 'lucide-react';
+import React from 'react'
+import { Plane } from 'lucide-react'
+import type { Flight } from '@/types/flights'
 
-interface FlightDetailsHeaderProps {
-  flight: Flight;
-}
+interface FlightDetailsHeaderProps { flight: Flight }
 
 export function FlightDetailsHeader({ flight }: FlightDetailsHeaderProps) {
-  const formatTime = (isoString: string) => {
-    return new Date(isoString).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
-  };
-
-  const formatDate = (isoString: string) => {
-    return new Date(isoString).toLocaleDateString(undefined, { weekday: 'short', month: 'short', day: 'numeric' });
-  };
+  const formatTime = (value: string) => new Date(value).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
+  const formatDate = (value: string) => new Date(value).toLocaleDateString(undefined, { weekday: 'short', month: 'short', day: 'numeric' })
 
   return (
-    <div className="bg-[var(--color-surface)] rounded-[var(--radius-xl)] shadow-sm border border-[var(--color-border)] p-6 mb-6">
-      <div className="flex flex-col md:flex-row items-center justify-between gap-6">
-        
-        {/* Airline Info */}
-        <div className="flex items-center gap-4">
-          <div className="w-14 h-14 rounded-full bg-[var(--color-surface-secondary)] flex items-center justify-center font-bold text-[var(--color-primary)] text-xl shrink-0">
-            {flight.airlineCode}
-          </div>
-          <div>
-            <h2 className="text-xl font-bold text-[var(--color-text-primary)]">{flight.airline}</h2>
-            <p className="text-sm text-[var(--color-text-secondary)]">Flight {flight.flightNumber}</p>
-          </div>
+    <section className="relative mb-6 overflow-hidden rounded-2xl bg-gradient-to-br from-[#063b24] via-[#0b512e] to-[#173e14] p-6 text-white shadow-[var(--shadow-lg)] sm:p-8">
+      <div className="pointer-events-none absolute -right-12 -top-20 h-64 w-64 rounded-full bg-[var(--yellow)]/10 blur-3xl" aria-hidden />
+      <div className="relative flex flex-wrap items-center justify-between gap-4">
+        <div className="flex items-center gap-3">
+          <span className="flex h-12 w-12 items-center justify-center rounded-xl bg-[var(--yellow)] font-bold text-[var(--green-dark)]">{flight.airlineCode}</span>
+          <div><p className="text-xs font-bold uppercase tracking-[0.16em] text-[var(--yellow)]">Flight itinerary</p><h2 className="mt-1 text-lg font-bold sm:text-xl">{flight.airline}</h2><p className="text-sm text-white/75">Flight {flight.flightNumber}</p></div>
         </div>
-
-        {/* Flight Summary */}
-        <div className="flex-1 max-w-lg w-full flex items-center justify-between gap-4">
-          <div className="text-right flex-1">
-            <p className="text-2xl font-bold text-[var(--color-text-primary)]">{formatTime(flight.departureTime)}</p>
-            <p className="font-semibold text-[var(--color-text-primary)]">{flight.origin}</p>
-            <p className="text-xs text-[var(--color-text-secondary)]">{formatDate(flight.departureTime)}</p>
-          </div>
-
-          <div className="flex flex-col items-center px-4 flex-1">
-            <span className="text-sm text-[var(--color-text-secondary)] mb-1">
-              {Math.floor(flight.durationMinutes / 60)}h {flight.durationMinutes % 60}m
-            </span>
-            <div className="w-full flex items-center gap-2">
-              <div className="h-px bg-[var(--color-border-strong)] flex-1"></div>
-              <Plane size={18} className="text-[var(--color-primary)] shrink-0" />
-              <div className="h-px bg-[var(--color-border-strong)] flex-1"></div>
-            </div>
-            <span className="text-xs font-medium text-[var(--color-text-primary)] mt-1">
-              {flight.stops === 0 ? 'Non-stop' : `${flight.stops} Stop${flight.stops > 1 ? 's' : ''}`}
-            </span>
-          </div>
-
-          <div className="text-left flex-1">
-            <p className="text-2xl font-bold text-[var(--color-text-primary)]">{formatTime(flight.arrivalTime)}</p>
-            <p className="font-semibold text-[var(--color-text-primary)]">{flight.destination}</p>
-            <p className="text-xs text-[var(--color-text-secondary)]">{formatDate(flight.arrivalTime)}</p>
-          </div>
-        </div>
-
+        <span className="rounded-full border border-white/20 bg-white/10 px-3 py-1 text-xs font-medium text-white/90">{flight.stops === 0 ? 'Non-stop' : `${flight.stops} stop${flight.stops > 1 ? 's' : ''}`}</span>
       </div>
-    </div>
-  );
+      <div className="relative mt-8 grid items-center gap-4 sm:grid-cols-[1fr_auto_1fr]">
+        <div><p className="text-3xl font-bold tracking-tight sm:text-4xl">{formatTime(flight.departureTime)}</p><p className="mt-1 font-semibold">{flight.origin}</p><p className="text-sm text-white/70">{formatDate(flight.departureTime)}</p></div>
+        <div className="flex items-center gap-2 text-sm text-white/75 sm:flex-col"><span className="h-px w-10 bg-white/30 sm:h-8 sm:w-px"/><Plane size={18} className="text-[var(--yellow)]"/><span>{Math.floor(flight.durationMinutes / 60)}h {flight.durationMinutes % 60}m</span><span className="h-px w-10 bg-white/30 sm:h-8 sm:w-px"/></div>
+        <div className="sm:text-right"><p className="text-3xl font-bold tracking-tight sm:text-4xl">{formatTime(flight.arrivalTime)}</p><p className="mt-1 font-semibold">{flight.destination}</p><p className="text-sm text-white/70">{formatDate(flight.arrivalTime)}</p></div>
+      </div>
+    </section>
+  )
 }

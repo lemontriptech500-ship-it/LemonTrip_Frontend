@@ -43,10 +43,9 @@ export function FlightImportantInfo({ fareOption }: FlightImportantInfoProps) {
   ];
 
   return (
-    <div className="mt-8 mb-8">
-      <h3 className="text-lg font-bold text-[var(--color-text-primary)] mb-4">Important Information</h3>
-      <div className="bg-[var(--color-surface)] rounded-[var(--radius-xl)] shadow-sm border border-[var(--color-border)] overflow-hidden">
-        {/* We use Accordion assuming it maps these items correctly based on our knowledge of UI components */}
+    <div className="mb-8 mt-8">
+      <h3 className="text-h3 mb-4 text-[var(--color-text-primary)]">Important Information</h3>
+      <div className="overflow-hidden rounded-[var(--radius-xl)] border border-[var(--color-border)] bg-[var(--color-surface)] shadow-sm">
         <Accordion items={items} />
       </div>
     </div>

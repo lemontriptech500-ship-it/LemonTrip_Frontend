@@ -5,14 +5,15 @@ import { useRouter, useSearchParams } from 'next/navigation';
 import { Container } from '@/components/ui';
 import { EmptyState } from '@/components/common';
 import { ArrowLeft } from 'lucide-react';
-import { MOCK_FLIGHTS } from '@/data/flights';
 import { Flight } from '@/types/flights';
+import { getFlightById } from '@/services/flightService';
 
 import { FlightDetailsHeader } from '@/components/flights/FlightDetailsHeader';
 import { FlightJourneyDetails } from '@/components/flights/FlightJourneyDetails';
 import { FareSelection } from '@/components/flights/FareSelection';
 import { FlightBookingSummary } from '@/components/flights/FlightBookingSummary';
 import { FlightImportantInfo } from '@/components/flights/FlightImportantInfo';
+import { BookingProgress } from '@/components/booking/BookingProgress';
 
 export default function FlightDetailsPage({ params }: { params: Promise<{ flightId: string }> }) {
   const { flightId } = React.use(params);
@@ -33,16 +34,19 @@ export default function FlightDetailsPage({ params }: { params: Promise<{ flight
   }
 
   useEffect(() => {
-    // Find flight by ID
-    const found = MOCK_FLIGHTS.find(f => f.id === flightId);
-    if (found) {
-      setFlight(found);
-      // Default behavior: Select the lowest fare (first one in array)
-      if (found.fareOptions && found.fareOptions.length > 0) {
-        setSelectedFareId(found.fareOptions[0].id);
+    let active = true;
+    getFlightById(flightId).then((found) => {
+      if (!active) return;
+      if (found) {
+        setFlight(found);
+        if (found.fareOptions && found.fareOptions.length > 0) setSelectedFareId(found.fareOptions[0].id);
       }
-    }
-    setIsLoaded(true);
+    }).catch(() => {
+      if (active) setFlight(null);
+    }).finally(() => {
+      if (active) setIsLoaded(true);
+    });
+    return () => { active = false; };
   }, [flightId]);
 
   if (!isLoaded) return null; // Avoid initial hydration mismatch
@@ -74,18 +78,20 @@ export default function FlightDetailsPage({ params }: { params: Promise<{ flight
 
   return (
     <div className="pt-6 pb-20 bg-[var(--color-background)] min-h-screen sm:pt-8">
-      <Container>
+      <Container className="max-w-6xl">
         
         {/* Back Navigation */}
-        <div className="mb-6">
+        <div className="mb-3">
           <button 
             onClick={() => router.back()}
-            className="flex items-center gap-2 text-sm font-medium text-[var(--color-primary)] hover:underline"
+              className="inline-flex items-center gap-2 rounded-full border border-[var(--color-border)] bg-white px-4 py-2 text-sm font-semibold text-[var(--color-secondary)] shadow-sm transition hover:border-[var(--color-primary)] hover:bg-[var(--color-primary-soft)]"
           >
             <ArrowLeft size={16} />
             Back to Search Results
           </button>
         </div>
+
+        <BookingProgress currentStep="flight" className="mx-auto mb-3 max-w-3xl" />
 
         <div className="flex flex-col lg:flex-row gap-8 items-start">
           

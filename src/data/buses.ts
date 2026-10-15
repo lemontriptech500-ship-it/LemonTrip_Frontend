@@ -9,6 +9,13 @@ export interface BusOption {
   busType: string
   price: string
   seatsLeft: number
+  currency?: string
+  metadata?: {
+    amenities?: string[]
+    boardingPoints?: string[]
+    dropPoints?: string[]
+    cancellation?: string
+  }
 }
 
 export const mockBuses: BusOption[] = [

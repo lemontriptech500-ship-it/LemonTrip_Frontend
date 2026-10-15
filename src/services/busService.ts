@@ -11,8 +11,13 @@ export async function searchBuses(params: {
   to?: string
   date?: string
 }): Promise<BusSearchResult> {
+  const query = new URLSearchParams()
+  Object.entries(params).forEach(([key, value]) => {
+    if (typeof value === 'string' && value.trim()) query.set(key, value.trim())
+  })
+
   try {
-    return await apiRequest<BusSearchResult>(`/buses/search?${new URLSearchParams(params as Record<string, string>).toString()}`, { suppressErrorLog: true })
+    return await apiRequest<BusSearchResult>(`/buses/search${query.size ? `?${query}` : ''}`, { suppressErrorLog: true })
   } catch {
     let buses = [...mockBuses]
     if (params.from) buses = buses.filter((bus) => bus.from.toLowerCase().includes(params.from!.toLowerCase()))

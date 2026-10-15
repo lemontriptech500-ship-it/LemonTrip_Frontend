@@ -22,9 +22,14 @@ export async function searchTrains(params: {
   trainClass?: string
   quota?: string
 }): Promise<TrainSearchResult> {
+  const query = new URLSearchParams()
+  Object.entries(params).forEach(([key, value]) => {
+    if (typeof value === 'string' && value.trim()) query.set(key, value.trim())
+  })
+
   if (isApiConfigured) {
     try {
-      return await apiRequest<TrainSearchResult>(`/trains/search?${new URLSearchParams(params as Record<string, string>).toString()}`, { suppressErrorLog: true })
+      return await apiRequest<TrainSearchResult>(`/trains/search${query.size ? `?${query}` : ''}`, { suppressErrorLog: true })
     } catch (error) {
       if (process.env.NODE_ENV === 'production') throw error
     }

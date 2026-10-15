@@ -40,6 +40,10 @@ export async function searchHotels(params: HotelSearchParams): Promise<HotelSear
   return apiRequest<HotelSearchResult>(`/hotels/search?${query.toString()}`)
 }
 
+export async function getHotelCatalog(): Promise<HotelSearchResult> {
+  return apiRequest<HotelSearchResult>('/hotels/catalog')
+}
+
 export async function getHotel(id: string, params?: HotelSearchParams): Promise<Hotel | null> {
   const query = params ? `?${new URLSearchParams({ destination: params.destination, checkIn: params.checkIn, checkOut: params.checkOut, rooms: String(params.rooms), adults: String(params.adults), children: String(params.children) }).toString()}` : ''
   return apiRequest<Hotel>(`/hotels/${encodeURIComponent(id)}${query}`)

@@ -8,6 +8,7 @@ import type { BusOption } from '@/data/buses'
 
 interface BusResultCardProps {
   bus: BusOption
+  travelDate?: string
 }
 
 function parseBusPrice(price: string): number {
@@ -16,7 +17,7 @@ function parseBusPrice(price: string): number {
   return Number(match[0].replace(/,/g, '')) || 0
 }
 
-export function BusResultCard({ bus }: BusResultCardProps) {
+export function BusResultCard({ bus, travelDate }: BusResultCardProps) {
   const { toggleItem, isWishlisted, hasHydrated } = useWishlistStore()
   const wishlistId = `bus-${bus.id}`
   const wishlisted = hasHydrated && isWishlisted(wishlistId)
@@ -82,7 +83,7 @@ export function BusResultCard({ bus }: BusResultCardProps) {
       <div className="mt-auto flex items-center justify-between gap-3 border-t border-[var(--color-border-light)] pt-5">
         <span className="font-semibold text-[var(--color-text-primary)]">{bus.price}</span>
         <Button variant="outline" size="sm" icon={<ArrowRight size={15} />} asChild>
-          <Link href={`/buses/${bus.id}`}>View ride</Link>
+          <Link href={`/buses/${bus.id}${travelDate ? `?travelDate=${encodeURIComponent(travelDate)}` : ''}`}>View ride</Link>
         </Button>
       </div>
     </Card>

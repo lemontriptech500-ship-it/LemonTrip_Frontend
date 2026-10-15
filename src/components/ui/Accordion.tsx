@@ -53,17 +53,17 @@ export function Accordion({
               aria-controls={`accordion-panel-${item.id}`}
               onClick={() => toggleItem(item.id)}
               className={cn(
-                'flex w-full items-center justify-between py-4 text-left font-medium text-[var(--color-text-primary)]',
-                'transition-colors hover:text-[var(--color-primary-active)]',
+                'flex w-full items-center justify-between py-4 text-left font-sans font-medium text-[var(--color-text-primary)]',
+                'transition-colors hover:text-[var(--color-secondary)]',
                 'focus-visible:outline-none focus-visible:bg-[var(--color-surface-secondary)]'
               )}
             >
-              <span className="text-body-lg">{item.title}</span>
+              <span className="text-base leading-6">{item.title}</span>
               <ChevronDown
                 size={20}
                 className={cn(
                   'text-[var(--color-text-muted)] transition-transform duration-200',
-                  isExpanded && 'rotate-180 transform text-[var(--color-primary)]'
+                  isExpanded && 'rotate-180 transform text-[var(--color-secondary)]'
                 )}
                 aria-hidden
               />
