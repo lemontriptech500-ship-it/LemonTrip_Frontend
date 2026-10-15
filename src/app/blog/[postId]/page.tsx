@@ -69,7 +69,7 @@ export default async function BlogDetailsPage({ params }: { params: Promise<{ po
     </section>
 
     <Container className="pt-8 sm:pt-10">
-      <div className="grid items-start gap-8 lg:grid-cols-[minmax(0,1fr)_320px] xl:gap-10">
+      <div className="grid grid-cols-1 items-start gap-8 lg:grid-cols-[minmax(0,1fr)_320px] xl:gap-10">
         <main className="min-w-0">
           <Link href="/blog" className="mb-3 inline-flex items-center gap-2 text-sm font-semibold text-[var(--green-dark)] transition hover:text-[var(--green-2)]"><ArrowLeft size={16} />Travel journal</Link>
           <BlogImageCarousel images={gallery} />

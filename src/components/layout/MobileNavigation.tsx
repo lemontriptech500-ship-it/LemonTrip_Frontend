@@ -56,11 +56,13 @@ export function MobileNavigation() {
 
       <div
         className={cn(
-          'fixed left-0 top-0 z-[60] flex h-screen min-h-screen w-[min(86vw,360px)] transform flex-col bg-white shadow-2xl transition-transform duration-300 ease-in-out',
+          'fixed left-0 top-0 z-[60] flex h-dvh w-[min(86vw,360px)] transform flex-col bg-white shadow-2xl transition-transform duration-300 ease-in-out',
           isOpen ? 'translate-x-0' : '-translate-x-full'
         )}
         role="dialog"
-        aria-modal="true"
+        aria-modal={isOpen || undefined}
+        aria-hidden={!isOpen}
+        inert={!isOpen}
         aria-label="Mobile Navigation Menu"
       >
         <div className="flex items-center justify-between border-b border-[var(--green)]/20 bg-[var(--green-dark)] px-4 py-3">
@@ -76,7 +78,7 @@ export function MobileNavigation() {
           </Button>
         </div>
 
-        <nav className="flex-1 overflow-y-auto bg-white px-3 py-4">
+        <nav className="min-h-0 flex-1 overflow-y-auto overscroll-contain bg-white px-3 py-4">
           {NAV_ITEMS.map((item) => {
             const isActive = pathname === item.href || (item.href !== '/' && pathname.startsWith(`${item.href}/`))
             return (

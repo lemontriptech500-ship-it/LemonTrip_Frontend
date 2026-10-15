@@ -175,7 +175,7 @@ export function TravelRazorpayCheckout({
       {showPaymentMethod && (
         <div className="mb-6">
           <p className="mb-3 text-sm font-medium text-[var(--color-text-secondary)]">Payment Method</p>
-          <div className="flex gap-3">
+          <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
             <button
               onClick={() => setPaymentMethod('razorpay')}
               className={`flex-1 rounded-[var(--radius-md)] border-2 p-3 text-center font-medium transition ${

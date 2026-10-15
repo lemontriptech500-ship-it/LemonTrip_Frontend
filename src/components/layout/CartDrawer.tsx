@@ -15,7 +15,7 @@ export function CartDrawer() {
   return (
     <>
       <div className="fixed inset-0 z-[60] bg-[rgba(44,62,80,0.40)] backdrop-blur-sm" onClick={closeCart} />
-      <div className="fixed right-0 top-0 z-[70] h-full w-full max-w-md bg-[var(--color-surface)] shadow-2xl flex flex-col">
+      <div className="fixed right-0 top-0 z-[70] h-dvh w-full max-w-md bg-[var(--color-surface)] shadow-2xl flex flex-col">
         <div className="flex items-center justify-between p-5 border-b border-[var(--color-border)]">
           <div className="flex items-center gap-2">
             <ShoppingBag size={20} className="text-[var(--color-primary)]" />
@@ -31,7 +31,7 @@ export function CartDrawer() {
           </button>
         </div>
 
-        <div className="flex-1 overflow-y-auto p-5">
+        <div className="min-h-0 flex-1 overflow-y-auto overscroll-contain p-5">
           {items.length === 0 ? (
             <div className="flex flex-col items-center justify-center h-full text-center gap-4">
               <ShoppingBag size={48} className="text-[var(--color-border)]" />
@@ -62,7 +62,7 @@ export function CartDrawer() {
                     <p className="text-xs text-[var(--color-text-secondary)] mb-3 line-clamp-2">{item.description}</p>
                   )}
 
-                  <div className="flex items-center justify-between">
+                  <div className="flex flex-wrap items-center justify-between gap-3">
                     <div className="flex items-center gap-2">
                       <button
                         onClick={() => updateQuantity(item.id, item.quantity - 1)}

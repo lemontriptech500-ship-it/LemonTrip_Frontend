@@ -25,7 +25,7 @@ const sizeClasses = {
   md: 'max-w-md',
   lg: 'max-w-lg',
   xl: 'max-w-xl',
-  full: 'max-w-[90vw] h-[90vh]',
+  full: 'max-w-[90vw] h-[90dvh]',
 }
 
 export function Modal({
@@ -86,7 +86,7 @@ export function Modal({
           'relative flex w-[calc(100%-1rem)] max-w-[calc(100%-1rem)] flex-col bg-[var(--color-surface)] shadow-xl sm:w-full sm:max-w-none sm:rounded-[var(--radius-xl)]',
           'animate-in fade-in zoom-in-95 duration-200',
           sizeClasses[size],
-          size === 'full' ? 'h-[calc(100%-1rem)] rounded-none sm:h-full sm:rounded-none' : 'max-h-[calc(100vh-1rem)]',
+          size === 'full' ? 'h-[calc(100%-1rem)] rounded-none sm:h-full sm:rounded-none' : 'max-h-[calc(100dvh-1rem)]',
           className
         )}
       >

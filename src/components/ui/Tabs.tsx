@@ -68,7 +68,7 @@ export function Tabs({
         role="tablist"
         aria-orientation="horizontal"
         className={cn(
-          'flex items-center overflow-x-auto border-b border-[var(--color-border)] hide-scrollbar',
+          'flex flex-wrap items-center gap-x-1 border-b border-[var(--color-border)]',
           tabListClassName
         )}
       >
@@ -86,7 +86,7 @@ export function Tabs({
               onClick={() => handleTabClick(tab.id)}
               onKeyDown={(e) => handleKeyDown(e, index)}
               className={cn(
-                'flex items-center gap-2 whitespace-nowrap px-4 py-3 font-medium transition-all',
+                'flex min-h-11 max-w-full items-center gap-2 px-3 py-3 text-sm sm:px-4 sm:text-base font-medium transition-all',
                 'focus-visible:outline-none focus-visible:bg-[var(--color-surface-secondary)]',
                 isActive
                   ? 'border-b-2 border-[var(--color-primary)] text-[var(--color-primary)]'
