@@ -26,16 +26,21 @@ function HotelResultsContent() {
 
   const [matchedHotels, setMatchedHotels] = useState<Hotel[]>([])
   const [isLoading, setIsLoading] = useState(true)
+  const [searchError, setSearchError] = useState('')
+  const [retryCount, setRetryCount] = useState(0)
 
   useEffect(() => {
     let active = true
     setIsLoading(true)
+    setSearchError('')
     searchHotels(search)
       .then((result) => {
         if (active) setMatchedHotels(result.hotels)
       })
-      .catch(() => {
-        if (active) setMatchedHotels([])
+      .catch((error) => {
+        if (!active) return
+        setMatchedHotels([])
+        setSearchError(error instanceof Error ? error.message : 'Unable to load hotels. Please try again.')
       })
       .finally(() => {
         if (active) setIsLoading(false)
@@ -44,7 +49,7 @@ function HotelResultsContent() {
     return () => {
       active = false
     }
-  }, [search])
+  }, [search, retryCount])
 
   const {
     filters,
@@ -85,6 +90,13 @@ function HotelResultsContent() {
             <HotelResultSkeleton />
             <HotelResultSkeleton />
           </div>
+        ) : searchError ? (
+          <EmptyState
+            title="Could not load hotels"
+            description={searchError}
+            icon={<Building />}
+            action={{ label: 'Try again', onClick: () => setRetryCount((count) => count + 1) }}
+          />
         ) : totalResults === 0 ? (
           <EmptyState
             title="No stays found"
