@@ -66,6 +66,7 @@ export function TrainSearchForm() {
         <Input
           name="journeyDate"
           type="date"
+          min={new Date().toLocaleDateString('en-CA')}
           label="Journey Date"
           leadingIcon={<Calendar size={16} />}
           required

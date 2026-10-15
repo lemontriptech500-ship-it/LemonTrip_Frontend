@@ -90,7 +90,7 @@ export function DatePicker({
   }, [isOpen, minDate, value])
 
   const formatDate = (date: Date) => {
-    return date.toISOString().split('T')[0]
+    return `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}-${String(date.getDate()).padStart(2, '0')}`
   }
 
   const parseDate = (dateString: string) => {
@@ -126,7 +126,7 @@ export function DatePicker({
   const isDateDisabled = (day: number) => {
     if (!minDate) return false
     const date = new Date(currentMonth.getFullYear(), currentMonth.getMonth(), day)
-    return date < new Date(minDate)
+    return date < parseDate(minDate)
   }
 
   const isDateSelected = (day: number) => {
