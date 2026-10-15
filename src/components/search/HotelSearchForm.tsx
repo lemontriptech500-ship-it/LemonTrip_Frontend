@@ -77,7 +77,7 @@ export function HotelSearchForm({ defaults, onSuccess }: HotelSearchFormProps) {
     onSuccess?.()
   }
 
-  const today = new Date().toISOString().split('T')[0]
+  const today = new Date().toLocaleDateString('en-CA')
 
   return (
     <form onSubmit={handleSearch} className="w-full">

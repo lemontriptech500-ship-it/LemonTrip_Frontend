@@ -72,7 +72,7 @@ export function FlightSearchForm() {
     router.push(`/flights?${params.toString()}`)
   }
 
-  const today = new Date().toISOString().split('T')[0]
+  const today = new Date().toLocaleDateString('en-CA')
 
   const swapCities = () => {
     setFromCity(toCity)

@@ -70,6 +70,7 @@ export function BusSearchForm() {
         <Input
           name="travelDate"
           type="date"
+          min={new Date().toLocaleDateString('en-CA')}
           label="Travel Date"
           leadingIcon={<Calendar size={16} />}
           required
