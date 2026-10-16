@@ -16,6 +16,7 @@ const primaryItems = [
 ]
 
 const moreItems = [
+  { label: 'AI Trip Planner', href: '/trip-planner' },
   { label: 'Offers', href: '/offers' },
   { label: 'Travel Stories', href: '/blog' },
   { label: 'Help', href: '/contact' },

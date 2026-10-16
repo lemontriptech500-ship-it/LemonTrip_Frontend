@@ -20,7 +20,7 @@ import { getPageHeroImage } from '@/constants/pageHeroImages'
  * On these routes the header floats transparently on top of the banner
  * (same style as the home page). Add more prefixes here as needed.
  */
-const OVERLAY_ROUTES = ['/flights', '/hotels', '/trains','/buses','/packages','/visa','/offers','/blog','/contact']
+const OVERLAY_ROUTES = ['/flights', '/hotels', '/trains','/buses','/packages','/visa','/offers','/blog','/contact','/trip-planner']
 
 /**
  * Header

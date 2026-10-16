@@ -15,8 +15,8 @@ type ContactFormValues = {
 
 const initialValues: ContactFormValues = { name: '', email: '', phone: '', subject: '', message: '' }
 
-export function ContactForm() {
-  const [form, setForm] = useState(initialValues)
+export function ContactForm({ initialSubject = '', initialMessage = '' }: { initialSubject?: string; initialMessage?: string } = {}) {
+  const [form, setForm] = useState({ ...initialValues, subject: initialSubject, message: initialMessage })
   const [loading, setLoading] = useState(false)
   const [status, setStatus] = useState<{ type: 'success' | 'error'; message: string } | null>(null)
 

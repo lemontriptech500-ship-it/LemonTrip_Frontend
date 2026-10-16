@@ -19,6 +19,7 @@ export const NAV_ITEMS = [
   { label: 'Buses', href: '/buses' },
   { label: 'Trains', href: '/trains' },
   { label: 'Tours & Packages', href: '/packages' },
+  { label: 'AI Trip Planner', href: '/trip-planner' },
   { label: 'Services', href: '/services' },
   { label: 'Visa Services', href: '/visa' },
   { label: 'Offers', href: '/offers' },
