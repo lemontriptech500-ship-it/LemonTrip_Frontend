@@ -97,7 +97,7 @@ export function TripPlanner() {
       <Image src={PAGE_HERO_IMAGES.travel} alt="" fill priority sizes="100vw" className={ui.heroImage} />
       <div className={ui.heroShade} />
       <Container className="relative z-10">
-        <Link href="/packages" className={ui.backLink}>Holidays <span aria-hidden="true">/</span> Smart Trip Planner</Link>
+        <nav aria-label="Breadcrumb" className={ui.backLink}><Link href="/">Home</Link><span aria-hidden="true">/</span><Link href="/packages">Holidays</Link><span aria-hidden="true">/</span><span aria-current="page">AI Trip Planner</span></nav>
         <p className={ui.heroBadge}><Sparkles size={14} aria-hidden="true" /> A LITTLE AI. A WORLD OF POSSIBILITIES.</p>
         <h1>Plan your perfect trip.<br /><em>Make it entirely yours.</em></h1>
         <p className={ui.heroDescription}>The places you dream of. The things you love. A thoughtful day-by-day plan, made around you and your budget.</p>

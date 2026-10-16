@@ -4,7 +4,7 @@ import { TravelSearchWidget } from '@/components/search/TravelSearchWidget'
 
 export function HeroSection() {
   return (
-    <section className="relative min-h-[100svh] overflow-hidden bg-neutral-900 pb-8 max-md:min-h-0 max-md:overflow-visible max-md:bg-[#f8f7ef] max-md:pb-0  lg:h-[min(760px,92svh)] lg:min-h-[660px] lg:pb-0">
+    <section className="relative min-h-[100svh] overflow-hidden bg-neutral-900 pb-8 max-md:min-h-0 max-md:overflow-visible max-md:bg-[#f8f7ef] max-md:pb-0  lg:h-[min(760px,92svh)] lg:min-h-[760px] lg:pb-0">
       <div className="pointer-events-none absolute inset-0 z-0 overflow-hidden bg-neutral-900 max-md:bottom-[50%]">
         <div
           className="absolute inset-0 bg-cover bg-no-repeat md:hidden"
@@ -32,7 +32,7 @@ export function HeroSection() {
         <div className="absolute inset-x-0 bottom-0 h-48 bg-gradient-to-t from-black/30 to-transparent max-md:hidden" />
       </div>
 
-      <div className="relative z-10 mx-auto hidden w-full max-w-[1350px] px-14 lg:block lg:pt-[clamp(130px,14svh,140px)]">
+      <div className="relative z-10 mx-auto hidden w-full max-w-[1350px] px-14 lg:block lg:pt-[calc(var(--site-header-height)+36px)]">
 
      <p className="inline-flex items-center gap-2 rounded-full border border-[var(--yellow)]/35 bg-[rgba(6,59,36,0.58)] px-3 py-1 text-[11px] font-bold tracking-[0.08em] text-[var(--yellow)] backdrop-blur-sm">
           <span aria-hidden="true">✦</span> EXPLORE THE WORLD
@@ -50,7 +50,7 @@ export function HeroSection() {
         </ul>
       </div>
 
-      <div className="relative z-10 mx-auto block w-full max-w-[560px] px-5 pb-5 pt-[104px] text-white lg:hidden">
+      <div className="relative z-10 mx-auto block w-full max-w-[560px] px-5 pb-5 pt-[calc(var(--site-header-height)+28px)] text-white lg:hidden">
         <p className="mb-3 inline-flex items-center gap-1.5 rounded-full border border-[var(--yellow)]/35 bg-[rgba(6,59,36,0.58)] px-2.5 py-1 text-[10px] font-bold tracking-[0.08em] text-[var(--yellow)]">✦ EXPLORE THE WORLD</p>
         <h1 className="max-w-[520px] font-heading text-[clamp(2.25rem,9vw,3.25rem)] font-semibold leading-[0.96] tracking-[-0.04em] drop-shadow-[0_2px_10px_rgba(0,0,0,0.48)]">
           Your next adventure<br /><span className="text-[var(--yellow)]">starts here.</span>

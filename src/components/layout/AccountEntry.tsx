@@ -32,33 +32,32 @@ export function AccountEntry() {
 
   // Avoid a flash of the wrong state before the persisted store rehydrates
   if (!hasHydrated) {
-    return <div className="hidden h-8 w-[72px] lg:block" aria-hidden="true" />
+    return <div className="hidden h-11 w-[72px] md:block" aria-hidden="true" />
   }
 
   if (!isAuthenticated || !user) {
     return (
-      <div className="hidden items-center gap-2 lg:flex">
-        {/* Opens the pop-up on the "Create account" tab instead of /signup */}
+      <div className="hidden items-center gap-2 md:flex">
         <button
           type="button"
-          onClick={() => openAuthModal('signup')}
-          className="inline-flex h-8 shrink-0 items-center justify-center whitespace-nowrap rounded-lg bg-[var(--yellow)] px-4 text-xs font-bold text-[var(--green-dark)] shadow-[0_8px_18px_rgba(255,210,26,0.25)]"
+          onClick={() => openAuthModal('signin')}
+          className="inline-flex h-11 shrink-0 items-center justify-center whitespace-nowrap rounded-full border border-white/30 px-4 text-sm font-semibold text-white transition hover:bg-white/10 focus-visible:outline focus-visible:outline-2 focus-visible:outline-[var(--yellow)]"
         >
-          Sign Up
+          Sign in / Create account
         </button>
       </div>
     )
   }
 
   return (
-    <div className="relative hidden lg:block" ref={containerRef}>
+    <div className="relative hidden md:block" ref={containerRef}>
       <button
         type="button"
         onClick={() => setIsOpen((current) => !current)}
         aria-haspopup="true"
         aria-expanded={isOpen}
         aria-label="Account menu"
-        className="inline-flex h-8 w-8 items-center justify-center overflow-hidden rounded-full border border-white/70 bg-white/10 text-white backdrop-blur-sm"
+        className="inline-flex h-11 w-11 items-center justify-center overflow-hidden rounded-full border border-white/70 bg-white/10 text-white backdrop-blur-sm"
       >
         {user.avatar ? (
           // eslint-disable-next-line @next/next/no-img-element
