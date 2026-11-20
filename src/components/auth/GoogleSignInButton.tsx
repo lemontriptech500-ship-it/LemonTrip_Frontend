@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from 'react'
 import { Alert } from '@/components/ui'
+import { apiRequest } from '@/lib/apiClient'
 
 interface GoogleCredentialResponse {
   credential: string
@@ -87,13 +88,30 @@ export function GoogleSignInButton({ mode, onCredential }: GoogleSignInButtonPro
   const onCredentialRef = useRef(onCredential)
   const [error, setError] = useState('')
   const [ready, setReady] = useState(false)
-  const clientId = process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID
-  const isConfigured = Boolean(clientId && !clientId.startsWith('replace-with-'))
+  const [clientId, setClientId] = useState('')
+  const [loadingConfig, setLoadingConfig] = useState(true)
 
   onCredentialRef.current = onCredential
 
   useEffect(() => {
-    if (!isConfigured || !clientId || !buttonRef.current) return
+    let cancelled = false
+    apiRequest<{ clientId: string }>('/auth/google/config', { suppressErrorLog: true })
+      .then((config) => {
+        if (cancelled) return
+        if (config.clientId) setClientId(config.clientId)
+        else setError('Google Sign-In is not configured on the server.')
+      })
+      .catch((reason: unknown) => {
+        if (!cancelled) setError(reason instanceof Error ? reason.message : 'Google Sign-In is unavailable.')
+      })
+      .finally(() => {
+        if (!cancelled) setLoadingConfig(false)
+      })
+    return () => { cancelled = true }
+  }, [])
+
+  useEffect(() => {
+    if (!clientId || !buttonRef.current) return
 
     let cancelled = false
     initializeGoogle(clientId, (idToken) => {
@@ -119,9 +137,9 @@ export function GoogleSignInButton({ mode, onCredential }: GoogleSignInButtonPro
     return () => {
       cancelled = true
     }
-  }, [clientId, isConfigured, mode])
+  }, [clientId, mode])
 
-  if (!isConfigured) {
+  if (!clientId) {
     return (
       <div className="space-y-2">
         <button
@@ -130,9 +148,9 @@ export function GoogleSignInButton({ mode, onCredential }: GoogleSignInButtonPro
           className="flex h-11 w-full items-center justify-center gap-3 rounded-[var(--radius-md)] border border-[var(--color-border)] bg-[var(--color-surface)] text-sm font-medium text-[var(--color-text-secondary)] opacity-70"
         >
           <span className="font-semibold">G</span>
-          Continue with Google
+          {loadingConfig ? 'Loading Google Sign-In…' : 'Google Sign-In unavailable'}
         </button>
-        <p className="text-center text-xs text-[var(--color-text-secondary)]">Google Sign-In will be available after its client ID is added.</p>
+        {error && <Alert variant="error" title="Google Sign-In unavailable">{error}</Alert>}
       </div>
     )
   }

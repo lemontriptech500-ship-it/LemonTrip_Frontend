@@ -14,6 +14,7 @@ export function getPageHeroImage(pathname: string): string {
   if (pathname === '/' || pathname.startsWith('/flights')) return PAGE_HERO_IMAGES.flight
   if (pathname.startsWith('/hotels')) return PAGE_HERO_IMAGES.hotel
   if (pathname.startsWith('/buses')) return PAGE_HERO_IMAGES.bus
+  if (pathname.startsWith('/cabs')) return PAGE_HERO_IMAGES.travel
   if (pathname.startsWith('/trains')) return PAGE_HERO_IMAGES.train
   if (pathname.startsWith('/packages')) return PAGE_HERO_IMAGES.package
   if (pathname.startsWith('/visa')) return PAGE_HERO_IMAGES.visa

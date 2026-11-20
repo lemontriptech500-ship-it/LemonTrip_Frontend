@@ -1,6 +1,6 @@
 /** Shared route rules keep the navigation and page banners in sync. */
 const discoveryPages = new Set(['/packages', '/offers', '/blog', '/visa', '/services', '/trip-planner'])
-const searchPages = new Set(['/flights', '/hotels', '/trains', '/buses'])
+const searchPages = new Set(['/flights', '/hotels', '/trains', '/buses', '/cabs'])
 const imagePages = new Set([...discoveryPages, ...searchPages, '/contact'])
 
 export function getPageHeaderVariant(pathname: string) {
@@ -14,7 +14,7 @@ export function hasOverlayHeader(pathname: string) {
 }
 
 const sectionLabels: Record<string, string> = {
-  flights: 'Flights', hotels: 'Hotels', trains: 'Trains', buses: 'Buses',
+  flights: 'Flights', hotels: 'Hotels', trains: 'Trains', buses: 'Buses', cabs: 'Cabs',
   packages: 'Holidays', offers: 'Offers', blog: 'Travel stories', visa: 'Visa',
   services: 'Services', contact: 'Contact', profile: 'My profile',
   wallet: 'My wallet', bookings: 'My bookings', cart: 'Your cart',

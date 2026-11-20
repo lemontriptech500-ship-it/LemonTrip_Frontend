@@ -1,6 +1,6 @@
 import React from 'react'
 import Link from 'next/link'
-import { Plane, Bed, BusFront, TrainFront, Briefcase, FileText } from 'lucide-react'
+import { Plane, Bed, BusFront, CarFront, TrainFront, Briefcase, FileText } from 'lucide-react'
 import { Container } from '@/components/ui'
 
 /**
@@ -25,6 +25,7 @@ const categories = [
   { id: 'flights', label: 'Flights', icon: Plane, href: '/flights' },
   { id: 'hotels', label: 'Hotels', icon: Bed, href: '/hotels' },
   { id: 'bus', label: 'Buses', icon: BusFront, href: '/buses' },
+  { id: 'cabs', label: 'Cabs', icon: CarFront, href: '/cabs' },
   { id: 'trains', label: 'Trains', icon: TrainFront, href: '/trains' },
   { id: 'packages', label: 'Packages', icon: Briefcase, href: '/packages' },
   { id: 'visa', label: 'Visa', icon: FileText, href: '/visa' },
@@ -34,7 +35,7 @@ export function QuickCategories() {
   return (
     <section className="border-b border-[var(--color-border-light)] bg-[var(--color-surface)] pb-12 pt-12 sm:pt-16 lg:pt-20">
       <Container>
-        <div className="grid grid-cols-2 gap-3 md:grid-cols-3 lg:grid-cols-6">
+        <div className="grid grid-cols-2 gap-3 md:grid-cols-4 lg:grid-cols-7">
           {categories.map((cat) => {
             const Icon = cat.icon
             return (

@@ -3,7 +3,7 @@
 import { useEffect, useRef } from 'react'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
-import { Plane, Building2, TrainFront, BusFront, Palmtree, BookOpenCheck, MapPin, BadgePercent, BookOpenText, ConciergeBell, Headset } from 'lucide-react'
+import { Plane, Building2, TrainFront, BusFront, CarFront, Palmtree, BookOpenCheck, MapPin, BadgePercent, BookOpenText, ConciergeBell, Headset } from 'lucide-react'
 import { cn } from '@/lib/utils'
 
 const services = [
@@ -11,6 +11,7 @@ const services = [
   { label: 'Hotels', href: '/hotels', icon: Building2 },
   { label: 'Trains', href: '/trains', icon: TrainFront },
   { label: 'Buses', href: '/buses', icon: BusFront },
+  { label: 'Cabs', href: '/cabs', icon: CarFront },
   { label: 'Holidays', href: '/packages', icon: Palmtree },
   { label: 'Visa', href: '/visa', icon: BookOpenCheck },
   { label: 'AI Trip Planner', shortLabel: 'AI Planner', href: '/trip-planner', icon: MapPin },

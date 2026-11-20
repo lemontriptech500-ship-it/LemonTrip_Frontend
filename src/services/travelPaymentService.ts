@@ -1,6 +1,6 @@
 import { apiRequest } from '@/lib/apiClient'
 
-export type TravelItemType = 'hotel' | 'bus' | 'train' | 'package'
+export type TravelItemType = 'hotel' | 'bus' | 'train' | 'package' | 'cab'
 export type PaymentMethod = 'razorpay' | 'wallet'
 
 export interface RazorpayTravelOrder {

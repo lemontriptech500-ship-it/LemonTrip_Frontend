@@ -1,7 +1,7 @@
 'use client'
 
 import { useEffect, useState } from 'react'
-import { CalendarDays, ChevronRight, ReceiptText, Plane, Bus, Hotel, TrainFront, Package, FileText } from 'lucide-react'
+import { CalendarDays, ChevronRight, ReceiptText, Plane, Bus, CarFront, Hotel, TrainFront, Package, FileText } from 'lucide-react'
 import { Container, Card, Badge, Button } from '@/components/ui'
 import { getUserBookings, type Booking } from '@/services/bookingService'
 import { formatCurrency } from '@/lib/utils'
@@ -31,6 +31,7 @@ function getStatusVariant(status: Booking['status']) {
 const TYPE_META: Record<Booking['type'], { label: string; icon: typeof Plane; className: string }> = {
   flight: { label: 'Flight', icon: Plane, className: 'bg-[var(--color-accent-soft)] text-[var(--color-secondary)]' },
   bus: { label: 'Bus', icon: Bus, className: 'bg-[var(--color-accent-soft)] text-[var(--color-secondary)]' },
+  cab: { label: 'Cab', icon: CarFront, className: 'bg-[var(--color-accent-soft)] text-[var(--color-secondary)]' },
   hotel: { label: 'Hotel', icon: Hotel, className: 'bg-[var(--color-accent-soft)] text-[var(--color-secondary)]' },
   train: { label: 'Train', icon: TrainFront, className: 'bg-[var(--color-accent-soft)] text-[var(--color-secondary)]' },
   package: { label: 'Package', icon: Package, className: 'bg-[var(--color-accent-soft)] text-[var(--color-secondary)]' },

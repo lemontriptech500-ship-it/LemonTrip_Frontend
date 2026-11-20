@@ -44,7 +44,7 @@ export async function PopularPackages() {
           action={{ label: 'Explore Packages', href: '/packages' }}
         />
 
-        <div className="mt-6 grid grid-cols-1 gap-5 lg:grid-cols-3">
+        <div className="mt-6 grid grid-cols-1 items-start gap-5 lg:grid-cols-3">
           {packages.slice(0, 3).map((pkg) => (
             <Card
               key={pkg.id}
@@ -52,7 +52,7 @@ export async function PopularPackages() {
               padding="none"
               className="group flex h-full flex-col overflow-hidden rounded-[var(--radius-2xl)] !shadow-[var(--shadow-md)] hover:!shadow-[var(--shadow-lg)]"
             >
-              <div className={`relative h-44 w-full ${pkg.imageFallbackColor}`}>
+              <div className={`relative h-36 w-full ${pkg.imageFallbackColor}`}>
                 {pkg.imageUrl && (
                   <Image
                     src={pkg.imageUrl}
@@ -71,24 +71,24 @@ export async function PopularPackages() {
                 )}
               </div>
 
-              <div className="flex flex-grow flex-col p-5">
-                <div className="mb-2 flex items-center gap-2 text-[var(--color-text-secondary)]">
-                  <Clock size={16} />
+              <div className="flex flex-col p-4">
+                <div className="mb-1.5 flex items-center gap-2 text-[var(--color-text-secondary)]">
+                  <Clock size={14} />
                   <span className="text-xs font-medium">{pkg.duration}</span>
                 </div>
 
-                <h3 className="text-h3 mb-2">{pkg.destination}</h3>
-                <p className="text-body-sm text-[var(--color-text-secondary)] mb-1 line-clamp-3 leading-6">
+                <h3 className="text-h3 mb-1">{pkg.destination}</h3>
+                <p className="text-body-sm mb-1 line-clamp-2 leading-5 text-[var(--color-text-secondary)]">
                   {pkg.shortDescription || pkg.description}
                 </p>
-                <Link href={`/packages/${pkg.id}`} className="mb-4 inline-flex w-fit items-center gap-1 text-xs font-bold text-[var(--green-2)] transition hover:gap-2 hover:text-[var(--green-dark)] focus-visible:rounded-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[var(--green-2)]">
+                <Link href={`/packages/${pkg.id}`} className="mb-3 inline-flex w-fit items-center gap-1 text-xs font-bold text-[var(--green-2)] transition hover:gap-2 hover:text-[var(--green-dark)] focus-visible:rounded-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[var(--green-2)]">
                   Read more <ArrowRight size={14} aria-hidden="true" />
                 </Link>
 
-                <div className="mb-5 space-y-1.5">
-                  {pkg.highlights.slice(0, 3).map((highlight, i) => (
+                <div className="mb-4 space-y-1">
+                  {pkg.highlights.slice(0, 2).map((highlight, i) => (
                     <div key={i} className="flex items-center gap-2 text-xs text-[var(--color-text-primary)]">
-                      <CheckCircle2 size={16} className="text-[var(--color-success)] shrink-0" />
+                      <CheckCircle2 size={14} className="text-[var(--color-success)] shrink-0" />
                       <span>{highlight}</span>
                     </div>
                   ))}
@@ -96,7 +96,7 @@ export async function PopularPackages() {
 
                 {/* Price + CTA footer row, matching the reference's
                     package card layout */}
-                <div className="mt-auto flex items-center justify-between border-t border-[var(--color-border)] pt-4">
+                <div className="flex items-center justify-between border-t border-[var(--color-border)] pt-3">
                   <div>
                     <p className="text-caption text-[var(--color-text-muted)]">Starting from</p>
                     <p className="text-base font-bold text-[var(--color-success)]">{pkg.startingPrice}</p>

@@ -3,7 +3,7 @@ import { apiRequest, isApiConfigured } from '@/lib/apiClient'
 export interface Booking {
   id: string
   bookingReference?: string
-  type: 'flight' | 'hotel' | 'bus' | 'train' | 'package' | 'visa'
+  type: 'flight' | 'hotel' | 'bus' | 'cab' | 'train' | 'package' | 'visa'
   status: 'confirmed' | 'cancelled' | 'pending' | 'completed'
   title: string
   date: string

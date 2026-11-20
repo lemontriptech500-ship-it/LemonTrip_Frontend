@@ -4,6 +4,7 @@ import Image from 'next/image'
 import {
   ArrowRight,
   BusFront,
+  CarFront,
   FileText,
   Hotel,
   Plane,
@@ -40,6 +41,13 @@ const services = [
     href: '/buses',
     icon: BusFront,
     image: 'https://images.unsplash.com/photo-1544620347-c4fd4a3d5957?w=900&q=85',
+  },
+  {
+    title: 'City Cabs',
+    description: 'Find a city cab for airport pickups, everyday rides, and trips beyond the city.',
+    href: '/cabs',
+    icon: CarFront,
+    image: 'https://images.unsplash.com/photo-1503376780353-7e6692767b70?w=900&q=85',
   },
   {
     title: 'Train Tickets',
